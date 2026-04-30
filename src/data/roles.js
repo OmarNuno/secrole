@@ -1,395 +1,189 @@
 export const ENTRA_ROLES = [
-  {
-    id: "e1", name: "Global Administrator", product: "Entra", category: "Identity", risk: "Critical",
-    description: "Full access to all administrative features in Microsoft Entra ID and all services that use Microsoft Entra identities. The most powerful role in the tenant.",
-    permissions: "All permissions across all Microsoft 365 services, Entra ID, Azure AD, and connected applications.",
-    leastPrivilege: "Reserve exclusively for break-glass emergency accounts. Assign specific scoped roles for all regular admin work. Require PIM activation with MFA and justification.",
-    tags: ["identity", "global", "admin", "all-permissions"],
-    relatedRoles: ["e5", "e3", "e6"]
-  },
-  {
-    id: "e2", name: "Global Reader", product: "Entra", category: "Identity", risk: "Low",
-    description: "Read-only equivalent of Global Administrator. Can read everything a Global Admin can see but cannot make any changes.",
-    permissions: "Read-only access across all Microsoft 365 services and Entra ID configurations.",
-    leastPrivilege: "Preferred role for auditors, compliance reviewers, and reporting personas who need broad visibility without write access.",
-    tags: ["identity", "read-only", "audit", "reporting"],
-    relatedRoles: ["e1", "e23"]
-  },
-  {
-    id: "e3", name: "Security Administrator", product: "Entra", category: "Security", risk: "High",
-    description: "Manages security-related features across Microsoft 365 Defender, Entra ID Protection, Conditional Access, and Microsoft Defender for Cloud Apps.",
-    permissions: "Read and manage security policies, alerts, identity protection, Conditional Access, and security configurations.",
-    leastPrivilege: "Assign to dedicated security team members only. Avoid assigning to help desk or general IT staff.",
-    tags: ["security", "defender", "policies", "alerts"],
-    relatedRoles: ["e4", "e7", "e1"]
-  },
-  {
-    id: "e4", name: "Security Reader", product: "Entra", category: "Security", risk: "Low",
-    description: "Read-only access to security features including security alerts, identity protection reports, Conditional Access policies, and Secure Score.",
-    permissions: "Read security reports, alerts, identity protection data, and security configurations.",
-    leastPrivilege: "Ideal for SOC analysts and security reviewers who need visibility without the ability to change configurations.",
-    tags: ["security", "read-only", "soc", "alerts"],
-    relatedRoles: ["e3", "e2"]
-  },
-  {
-    id: "e5", name: "Privileged Role Administrator", product: "Entra", category: "Privileged Access", risk: "Critical",
-    description: "Manages role assignments in Microsoft Entra ID and Privileged Identity Management (PIM). Can grant any Entra role to any user including Global Administrator.",
-    permissions: "Assign and remove all Entra roles, configure PIM policies, manage eligible assignments and activation settings.",
-    leastPrivilege: "Strictly limit to 1-2 identity governance team members. Require PIM activation with approval and full justification. Treat as near-equivalent to Global Admin.",
-    tags: ["pim", "roles", "privileged", "role-management"],
-    relatedRoles: ["e1", "e21"]
-  },
-  {
-    id: "e6", name: "User Administrator", product: "Entra", category: "Identity", risk: "Medium",
-    description: "Creates and manages users and groups, resets passwords for non-administrators, manages licenses, and monitors service health.",
-    permissions: "Create/delete users, manage groups, reset passwords for non-admin users, assign licenses.",
-    leastPrivilege: "Scope to Administrative Units where possible to limit blast radius. Appropriate for HR-adjacent IT roles.",
-    tags: ["users", "groups", "helpdesk", "passwords"],
-    relatedRoles: ["e12", "e13", "e8"]
-  },
-  {
-    id: "e7", name: "Conditional Access Administrator", product: "Entra", category: "Security", risk: "High",
-    description: "Creates and manages Conditional Access policies that control how, when, and from where users can access Microsoft 365 resources.",
-    permissions: "Create, modify, enable, disable, and delete Conditional Access policies tenant-wide.",
-    leastPrivilege: "Limit to security architects and senior identity engineers. A misconfigured policy can lock all users out of the tenant.",
-    tags: ["conditional-access", "policies", "mfa", "zero-trust"],
-    relatedRoles: ["e3", "e9"]
-  },
-  {
-    id: "e8", name: "Authentication Administrator", product: "Entra", category: "Identity", risk: "High",
-    description: "Can view, set, and reset authentication methods and credentials for non-administrator users. Cannot modify admin accounts.",
-    permissions: "Reset passwords and authentication methods for non-admin users, require re-registration of MFA.",
-    leastPrivilege: "Appropriate for tier-1 helpdesk staff. Cannot reset admin credentials. Scope to Administrative Units for larger orgs.",
-    tags: ["authentication", "helpdesk", "mfa", "passwords"],
-    relatedRoles: ["e21", "e6", "e9"]
-  },
-  {
-    id: "e9", name: "Authentication Policy Administrator", product: "Entra", category: "Identity", risk: "High",
-    description: "Configures the tenant-wide authentication methods policy, MFA settings, password protection policy, and SSPR settings.",
-    permissions: "Manage authentication methods policy, MFA settings, banned password lists, smart lockout configuration.",
-    leastPrivilege: "Assign only to identity security team leads. Changes affect authentication for all users in the tenant.",
-    tags: ["mfa", "policies", "authentication", "password-protection"],
-    relatedRoles: ["e7", "e8"]
-  },
-  {
-    id: "e10", name: "Application Administrator", product: "Entra", category: "Applications", risk: "High",
-    description: "Creates and manages all aspects of app registrations and enterprise applications including credentials, permissions, and assignments.",
-    permissions: "Manage all app registrations, enterprise apps, service principals, OAuth consent, and application credentials.",
-    leastPrivilege: "Limit to developers and app owners. This role can update app credentials and escalate privileges via app permission abuse.",
-    tags: ["apps", "registrations", "service-principals", "oauth"],
-    relatedRoles: ["e11", "e1"]
-  },
-  {
-    id: "e11", name: "Cloud Application Administrator", product: "Entra", category: "Applications", risk: "High",
-    description: "Same permissions as Application Administrator except cannot manage Application Proxy settings.",
-    permissions: "Manage app registrations, enterprise apps, service principals — excludes Application Proxy.",
-    leastPrivilege: "Use instead of Application Administrator when Application Proxy management is not needed. Smaller scope.",
-    tags: ["apps", "cloud", "service-principals"],
-    relatedRoles: ["e10"]
-  },
-  {
-    id: "e12", name: "Helpdesk Administrator", product: "Entra", category: "Identity", risk: "Medium",
-    description: "Resets passwords and invalidates refresh tokens for non-admin users and users assigned lower-privilege admin roles.",
-    permissions: "Reset passwords for non-admin users, invalidate sessions, manage service requests, monitor service health.",
-    leastPrivilege: "Standard role for tier-1 support staff. Scope to Administrative Units in large orgs to limit reach.",
-    tags: ["helpdesk", "passwords", "support", "reset"],
-    relatedRoles: ["e6", "e8"]
-  },
-  {
-    id: "e13", name: "Groups Administrator", product: "Entra", category: "Identity", risk: "Low",
-    description: "Creates and manages Microsoft 365 groups and security groups including membership, settings, naming policies, and expiration.",
-    permissions: "Create, modify, delete groups; manage group membership, settings, naming policies, and expiration policies.",
-    leastPrivilege: "Good for collaboration administrators managing Teams and M365 Groups. Low risk as it doesn't touch user credentials.",
-    tags: ["groups", "teams", "collaboration", "m365"],
-    relatedRoles: ["e6"]
-  },
-  {
-    id: "e14", name: "License Administrator", product: "Entra", category: "Identity", risk: "Low",
-    description: "Manages product license assignments on users and groups. Cannot manage users or groups beyond license assignment.",
-    permissions: "Assign and remove product licenses to users and groups.",
-    leastPrivilege: "Safe for procurement or IT operations team members managing license assignments. Very limited scope.",
-    tags: ["licenses", "billing", "assignments"],
-    relatedRoles: ["e6"]
-  },
-  {
-    id: "e15", name: "Intune Administrator", product: "Entra", category: "Device Management", risk: "High",
-    description: "Full administrative access to Microsoft Intune including device enrollment, compliance policies, configuration profiles, and app deployment.",
-    permissions: "Manage all Intune features: device enrollment, compliance policies, configuration profiles, app deployment, and reporting.",
-    leastPrivilege: "Assign to dedicated endpoint management team only. This role has access to deploy software and policies to all enrolled devices.",
-    tags: ["intune", "devices", "mdm", "endpoint", "compliance"],
-    relatedRoles: ["e22", "e1"]
-  },
-  {
-    id: "e16", name: "Exchange Administrator", product: "Entra", category: "Collaboration", risk: "High",
-    description: "Manages all aspects of Exchange Online including mailboxes, distribution groups, mail flow rules, and email security settings.",
-    permissions: "Manage mailboxes, distribution lists, mail flow rules, transport settings, connectors, and email security.",
-    leastPrivilege: "Assign to Exchange or messaging team. Note this role provides access to all mailbox content and email metadata.",
-    tags: ["exchange", "email", "mailbox", "mail-flow"],
-    relatedRoles: ["e17", "e18"]
-  },
-  {
-    id: "e17", name: "SharePoint Administrator", product: "Entra", category: "Collaboration", risk: "High",
-    description: "Manages all SharePoint Online sites, storage quotas, external sharing settings, and OneDrive for Business configurations.",
-    permissions: "Manage all SharePoint site collections, settings, external access, storage, and OneDrive policies.",
-    leastPrivilege: "Assign to SharePoint/OneDrive team. Can access all SharePoint and OneDrive content across the organization.",
-    tags: ["sharepoint", "onedrive", "sites", "external-sharing"],
-    relatedRoles: ["e16", "e18"]
-  },
-  {
-    id: "e18", name: "Teams Administrator", product: "Entra", category: "Collaboration", risk: "Medium",
-    description: "Manages Microsoft Teams settings, policies, calling features, meetings configurations, and Teams apps.",
-    permissions: "Manage Teams policies, calling features, meeting settings, messaging policies, and Teams app governance.",
-    leastPrivilege: "Appropriate for collaboration or unified communications team managing Teams deployment.",
-    tags: ["teams", "meetings", "voice", "collaboration"],
-    relatedRoles: ["e16", "e17"]
-  },
-  {
-    id: "e19", name: "Billing Administrator", product: "Entra", category: "Billing", risk: "Medium",
-    description: "Manages billing subscriptions, makes purchases, manages support tickets, and monitors Microsoft 365 service health.",
-    permissions: "Manage subscriptions, make purchases, view invoices, manage support tickets, monitor service health.",
-    leastPrivilege: "Assign to finance or procurement roles. Has no access to user data, security settings, or directory objects.",
-    tags: ["billing", "subscriptions", "finance", "purchases"],
-    relatedRoles: []
-  },
-  {
-    id: "e20", name: "Directory Readers", product: "Entra", category: "Identity", risk: "Low",
-    description: "Read-only access to basic directory information. Commonly assigned to applications that need to read directory data via Microsoft Graph.",
-    permissions: "Read basic directory data including users, groups, contacts, and application registrations.",
-    leastPrivilege: "Use for service accounts and applications needing minimal directory read access. Not recommended for human users.",
-    tags: ["directory", "read-only", "apps", "graph"],
-    relatedRoles: ["e2"]
-  },
-  {
-    id: "e21", name: "Privileged Authentication Administrator", product: "Entra", category: "Privileged Access", risk: "Critical",
-    description: "Can reset authentication methods and credentials for ALL users in the tenant, including Global Administrators. Highest risk authentication role.",
-    permissions: "Reset passwords and authentication methods for all users without exception, including all admin roles.",
-    leastPrivilege: "Extremely dangerous. Effectively equivalent risk to Global Administrator. Limit to absolute minimum. Require PIM with approval workflow.",
-    tags: ["authentication", "privileged", "critical", "all-users"],
-    relatedRoles: ["e8", "e5", "e1"]
-  },
-  {
-    id: "e22", name: "Cloud Device Administrator", product: "Entra", category: "Device Management", risk: "Medium",
-    description: "Enables, disables, and deletes devices in Microsoft Entra ID. Can read BitLocker recovery keys for managed devices.",
-    permissions: "Enable/disable/delete Entra-joined devices, read BitLocker recovery keys.",
-    leastPrivilege: "Assign to endpoint or helpdesk team for device lifecycle management. Separate from Intune Administrator.",
-    tags: ["devices", "bitlocker", "endpoint", "entra-join"],
-    relatedRoles: ["e15"]
-  },
-  {
-    id: "e23", name: "Reports Reader", product: "Entra", category: "Reporting", risk: "Low",
-    description: "Reads sign-in and audit reports in Microsoft Entra ID, and usage reports in the Microsoft 365 admin center.",
-    permissions: "Read sign-in logs, audit logs, and usage reports across Microsoft 365 services.",
-    leastPrivilege: "Safe for operations, BI, or management teams needing usage analytics and audit trail visibility.",
-    tags: ["reports", "audit", "analytics", "sign-in-logs"],
-    relatedRoles: ["e2", "e4"]
-  },
-  {
-    id: "e24", name: "Attack Simulation Administrator", product: "Entra", category: "Security", risk: "Medium",
-    description: "Creates, launches, and manages phishing simulation campaigns and attack simulations in Microsoft Defender for Office 365.",
-    permissions: "Create and manage attack simulations, phishing campaigns, payloads, and review simulation results.",
-    leastPrivilege: "Assign to security awareness team running phishing simulations. Results visible to all admins in tenant.",
-    tags: ["defender", "simulation", "phishing", "awareness"],
-    relatedRoles: ["e3"]
-  },
+  // ── IDENTITY & USER MANAGEMENT ──────────────────────────────────────────
+  { id:"e1", name:"Global Administrator", product:"Entra", category:"Identity", risk:"Critical", description:"Full access to all administrative features in Microsoft Entra ID and all services that use Microsoft Entra identities. The most powerful role in the tenant.", permissions:"All permissions across all Microsoft 365 services and Entra ID.", leastPrivilege:"Reserve exclusively for break-glass accounts. Use specific scoped roles for all regular admin work. Require PIM with MFA and justification.", tags:["global","admin","all-permissions"], relatedRoles:["e5","e3","e6"] },
+  { id:"e2", name:"Global Reader", product:"Entra", category:"Identity", risk:"Low", description:"Read-only equivalent of Global Administrator. Can read everything a Global Admin can see but cannot make any changes.", permissions:"Read-only access across all Microsoft 365 services and Entra ID.", leastPrivilege:"Preferred for auditors and reporting personas who need broad visibility without write access.", tags:["read-only","audit","reporting"], relatedRoles:["e1","e23"] },
+  { id:"e3", name:"Security Administrator", product:"Entra", category:"Security", risk:"High", description:"Manages security features across Microsoft 365 Defender, Entra ID Protection, Conditional Access, and Defender for Cloud Apps.", permissions:"Read and manage security policies, alerts, identity protection, and security configurations.", leastPrivilege:"Assign to dedicated security team members only. Do not assign to help desk or general IT staff.", tags:["security","defender","policies"], relatedRoles:["e4","e7"] },
+  { id:"e4", name:"Security Reader", product:"Entra", category:"Security", risk:"Low", description:"Read-only access to security features including alerts, identity protection reports, Conditional Access policies, and Secure Score.", permissions:"Read security reports, alerts, identity protection data, and configurations.", leastPrivilege:"Ideal for SOC analysts who need visibility without the ability to change configurations.", tags:["security","read-only","soc"], relatedRoles:["e3"] },
+  { id:"e5", name:"Privileged Role Administrator", product:"Entra", category:"Privileged Access", risk:"Critical", description:"Manages role assignments in Entra ID and Privileged Identity Management. Can grant any Entra role to any user including Global Administrator.", permissions:"Assign and remove all Entra roles, configure PIM policies, manage eligible assignments.", leastPrivilege:"Limit to 1-2 identity governance team members. Require PIM activation with approval. Near-equivalent risk to Global Admin.", tags:["pim","roles","privileged"], relatedRoles:["e1","e21"] },
+  { id:"e6", name:"User Administrator", product:"Entra", category:"Identity", risk:"Medium", description:"Creates and manages users and groups, resets passwords for non-administrators, and manages licenses.", permissions:"Create/delete users, manage groups, reset passwords for non-admin users, assign licenses.", leastPrivilege:"Scope to Administrative Units where possible. Appropriate for HR-adjacent IT roles.", tags:["users","groups","helpdesk"], relatedRoles:["e12","e13"] },
+  { id:"e7", name:"Conditional Access Administrator", product:"Entra", category:"Security", risk:"High", description:"Creates and manages Conditional Access policies that control how, when, and from where users can access Microsoft 365 resources.", permissions:"Create, modify, enable, disable, and delete Conditional Access policies tenant-wide.", leastPrivilege:"Limit to security architects. Misconfigured policy can lock all users out of the tenant.", tags:["conditional-access","policies","mfa","zero-trust"], relatedRoles:["e3","e9"] },
+  { id:"e8", name:"Authentication Administrator", product:"Entra", category:"Identity", risk:"High", description:"Can view, set, and reset authentication methods and credentials for non-administrator users. Cannot modify admin accounts.", permissions:"Reset passwords and authentication methods for non-admin users, require re-registration of MFA.", leastPrivilege:"Appropriate for tier-1 helpdesk. Scope to Administrative Units in larger orgs.", tags:["authentication","helpdesk","mfa"], relatedRoles:["e21","e9"] },
+  { id:"e9", name:"Authentication Policy Administrator", product:"Entra", category:"Identity", risk:"High", description:"Configures tenant-wide authentication methods policy, MFA settings, password protection policy, and SSPR settings.", permissions:"Manage authentication methods policy, MFA, banned password lists, smart lockout configuration.", leastPrivilege:"Assign only to identity security team leads. Changes affect authentication for all users.", tags:["mfa","policies","authentication"], relatedRoles:["e7","e8"] },
+  { id:"e10", name:"Application Administrator", product:"Entra", category:"Applications", risk:"High", description:"Creates and manages all aspects of app registrations and enterprise applications including credentials, permissions, and assignments.", permissions:"Manage all app registrations, enterprise apps, service principals, OAuth consent, and application credentials.", leastPrivilege:"Limit to developers and app owners. Can escalate privileges via app credential abuse.", tags:["apps","registrations","service-principals","oauth"], relatedRoles:["e11"] },
+  { id:"e11", name:"Cloud Application Administrator", product:"Entra", category:"Applications", risk:"High", description:"Same as Application Administrator except cannot manage Application Proxy settings.", permissions:"Manage app registrations, enterprise apps, service principals — excludes Application Proxy.", leastPrivilege:"Use instead of Application Administrator when App Proxy management is not needed.", tags:["apps","cloud","service-principals"], relatedRoles:["e10"] },
+  { id:"e12", name:"Helpdesk Administrator", product:"Entra", category:"Identity", risk:"Medium", description:"Resets passwords and invalidates refresh tokens for non-admin users and users assigned lower-privilege admin roles.", permissions:"Reset passwords for non-admin users, invalidate sessions, manage service requests.", leastPrivilege:"Standard role for tier-1 support. Scope to Administrative Units in large orgs.", tags:["helpdesk","passwords","support"], relatedRoles:["e6","e8"] },
+  { id:"e13", name:"Groups Administrator", product:"Entra", category:"Identity", risk:"Low", description:"Creates and manages Microsoft 365 groups and security groups including membership, settings, naming policies, and expiration.", permissions:"Create, modify, delete groups; manage group membership, settings, and expiration policies.", leastPrivilege:"Good for collaboration administrators managing Teams and M365 Groups.", tags:["groups","teams","collaboration"], relatedRoles:["e6"] },
+  { id:"e14", name:"License Administrator", product:"Entra", category:"Identity", risk:"Low", description:"Manages product license assignments on users and groups.", permissions:"Assign and remove product licenses to users and groups.", leastPrivilege:"Safe for procurement or IT operations teams managing license assignments.", tags:["licenses","billing"], relatedRoles:["e6"] },
+  { id:"e15", name:"Intune Administrator", product:"Entra", category:"Device Management", risk:"High", description:"Full administrative access to Microsoft Intune including device enrollment, compliance policies, configuration profiles, and app deployment.", permissions:"Manage all Intune features: devices, compliance, configuration profiles, app deployment.", leastPrivilege:"Assign to dedicated endpoint management team only.", tags:["intune","devices","mdm","endpoint"], relatedRoles:["e22"] },
+  { id:"e16", name:"Exchange Administrator", product:"Entra", category:"Collaboration", risk:"High", description:"Manages all aspects of Exchange Online including mailboxes, distribution groups, mail flow rules, and email security settings.", permissions:"Manage mailboxes, distribution lists, mail flow rules, transport settings, and email security.", leastPrivilege:"Assign to Exchange/messaging team. Has access to all mailbox content.", tags:["exchange","email","mailbox"], relatedRoles:["e17","e18","e42"] },
+  { id:"e17", name:"SharePoint Administrator", product:"Entra", category:"Collaboration", risk:"High", description:"Manages all SharePoint Online sites, storage quotas, external sharing settings, and OneDrive configurations.", permissions:"Manage all SharePoint sites, settings, external access, storage, and OneDrive policies.", leastPrivilege:"Assign to SharePoint/OneDrive team. Can access all SharePoint and OneDrive content.", tags:["sharepoint","onedrive","sites"], relatedRoles:["e16","e18"] },
+  { id:"e18", name:"Teams Administrator", product:"Entra", category:"Collaboration", risk:"Medium", description:"Manages Microsoft Teams settings, policies, calling features, meetings configurations, and Teams apps.", permissions:"Manage Teams policies, calling, meeting settings, messaging policies, and app governance.", leastPrivilege:"Appropriate for collaboration or UC team managing Teams deployment.", tags:["teams","meetings","voice"], relatedRoles:["e16","e17","e43","e44"] },
+  { id:"e19", name:"Billing Administrator", product:"Entra", category:"Billing", risk:"Medium", description:"Manages billing subscriptions, makes purchases, manages support tickets, and monitors service health.", permissions:"Manage subscriptions, purchases, view invoices, manage support tickets.", leastPrivilege:"Assign to finance or procurement. No access to user data or security settings.", tags:["billing","subscriptions","finance"], relatedRoles:[] },
+  { id:"e20", name:"Directory Readers", product:"Entra", category:"Identity", risk:"Low", description:"Read-only access to basic directory information. Commonly assigned to applications needing directory read access via Graph.", permissions:"Read basic directory data including users, groups, contacts, and app registrations.", leastPrivilege:"Use for service accounts and apps needing minimal directory read. Not recommended for humans.", tags:["directory","read-only","apps","graph"], relatedRoles:["e2"] },
+  { id:"e21", name:"Privileged Authentication Administrator", product:"Entra", category:"Privileged Access", risk:"Critical", description:"Can reset authentication methods and credentials for ALL users including Global Administrators. Highest risk authentication role.", permissions:"Reset passwords and authentication methods for all users without exception, including all admin roles.", leastPrivilege:"Effectively equivalent risk to Global Administrator. Require PIM with approval workflow. Absolute minimum assignees.", tags:["authentication","privileged","critical"], relatedRoles:["e8","e5"] },
+  { id:"e22", name:"Cloud Device Administrator", product:"Entra", category:"Device Management", risk:"Medium", description:"Enables, disables, and deletes devices in Microsoft Entra ID. Can read BitLocker recovery keys.", permissions:"Enable/disable/delete Entra-joined devices, read BitLocker recovery keys.", leastPrivilege:"Assign to endpoint or helpdesk team for device lifecycle management.", tags:["devices","bitlocker","endpoint"], relatedRoles:["e15"] },
+  { id:"e23", name:"Reports Reader", product:"Entra", category:"Reporting", risk:"Low", description:"Reads sign-in and audit reports in Entra ID, and usage reports in the Microsoft 365 admin center.", permissions:"Read sign-in logs, audit logs, and usage reports across Microsoft 365.", leastPrivilege:"Safe for operations or BI teams needing usage analytics.", tags:["reports","audit","analytics"], relatedRoles:["e2","e4"] },
+  { id:"e24", name:"Attack Simulation Administrator", product:"Entra", category:"Security", risk:"Medium", description:"Creates, launches, and manages all aspects of attack simulation campaigns and phishing simulations in Microsoft Defender.", permissions:"Create and manage attack simulations, phishing campaigns, payloads, and review results.", leastPrivilege:"Assign to security awareness team running phishing simulations.", tags:["defender","simulation","phishing","awareness"], relatedRoles:["e3","e25"] },
+  { id:"e25", name:"Attack Payload Author", product:"Entra", category:"Security", risk:"Low", description:"Can create attack payloads that an administrator can initiate later. Cannot launch simulations independently.", permissions:"Create and modify attack payloads only — cannot launch simulations.", leastPrivilege:"Use instead of Attack Simulation Administrator for team members who only build payloads.", tags:["defender","simulation","payloads"], relatedRoles:["e24"] },
+
+  // ── CUSTOM SECURITY ATTRIBUTES ──────────────────────────────────────────
+  { id:"e26", name:"Attribute Assignment Administrator", product:"Entra", category:"Custom Attributes", risk:"Medium", description:"Assigns and removes custom security attribute keys and values to supported Microsoft Entra objects like users and service principals.", permissions:"Assign and remove custom security attribute values on users, groups, and service principals.", leastPrivilege:"Assign to identity governance or data classification teams managing attribute-based access.", tags:["attributes","custom-security","classification"], relatedRoles:["e27","e28"] },
+  { id:"e27", name:"Attribute Assignment Reader", product:"Entra", category:"Custom Attributes", risk:"Low", description:"Read-only access to custom security attribute keys and values for supported Microsoft Entra objects.", permissions:"Read custom security attribute values on all supported objects.", leastPrivilege:"Safe for auditors reviewing attribute-based access control configurations.", tags:["attributes","read-only","classification"], relatedRoles:["e26"] },
+  { id:"e28", name:"Attribute Definition Administrator", product:"Entra", category:"Custom Attributes", risk:"Medium", description:"Defines and manages the definition of custom security attributes used across the tenant.", permissions:"Create, update, and delete custom security attribute definitions and sets.", leastPrivilege:"Assign to identity architects responsible for ABAC schema design.", tags:["attributes","definition","schema"], relatedRoles:["e26","e27"] },
+  { id:"e29", name:"Attribute Definition Reader", product:"Entra", category:"Custom Attributes", risk:"Low", description:"Read-only access to the definitions of custom security attributes.", permissions:"Read custom security attribute definitions and attribute sets.", leastPrivilege:"Safe for developers and auditors needing schema visibility.", tags:["attributes","read-only","definition"], relatedRoles:["e28"] },
+  { id:"e30", name:"Attribute Log Administrator", product:"Entra", category:"Custom Attributes", risk:"Low", description:"Reads audit logs and configures diagnostic settings for events related to custom security attributes.", permissions:"Read attribute audit logs and configure diagnostic settings.", leastPrivilege:"Assign to security operations team monitoring attribute changes.", tags:["attributes","audit","logs"], relatedRoles:["e26"] },
+  { id:"e31", name:"Attribute Log Reader", product:"Entra", category:"Custom Attributes", risk:"Low", description:"Read-only access to audit logs related to custom security attributes.", permissions:"Read audit logs for custom security attribute events only.", leastPrivilege:"Use instead of Attribute Log Administrator when configuration access is not needed.", tags:["attributes","audit","read-only"], relatedRoles:["e30"] },
+
+  // ── AI & AGENT ROLES ─────────────────────────────────────────────────────
+  { id:"e32", name:"AI Administrator", product:"Entra", category:"AI & Copilot", risk:"High", description:"Manages all aspects of Microsoft 365 Copilot and AI-related enterprise services including policies, settings, and configurations.", permissions:"Manage Microsoft 365 Copilot settings, AI feature policies, and enterprise AI service configurations.", leastPrivilege:"Assign to designated Copilot/AI program owners. Can control AI access for the entire tenant.", tags:["ai","copilot","m365","policies"], relatedRoles:[] },
+  { id:"e33", name:"Agent ID Administrator", product:"Entra", category:"AI & Copilot", risk:"High", description:"Manages all aspects of AI agents in the tenant including identity lifecycle for agent blueprints, service principals, and agentic users.", permissions:"Create, manage, and delete agent identities, blueprints, service principals, and agentic users.", leastPrivilege:"New role for AI agent governance. Assign to identity team members responsible for AI agent lifecycle.", tags:["ai","agents","identity","blueprints"], relatedRoles:["e34"] },
+  { id:"e34", name:"Agent ID Developer", product:"Entra", category:"AI & Copilot", risk:"Medium", description:"Can create an agent blueprint and its service principal. User is added as owner of the blueprint.", permissions:"Create agent blueprints and service principals — scoped to owned objects only.", leastPrivilege:"Appropriate for developers building AI agent integrations. More limited than Agent ID Administrator.", tags:["ai","agents","developer","blueprints"], relatedRoles:["e33"] },
+
+  // ── AZURE B2C ────────────────────────────────────────────────────────────
+  { id:"e35", name:"B2C IEF Keyset Administrator", product:"Entra", category:"Azure B2C", risk:"High", description:"Manages secrets, keys, and certificates for federation and encryption in the Identity Experience Framework.", permissions:"Manage token encryption keys, token signing keys, and claim encryption secrets in B2C IEF.", leastPrivilege:"Limit to B2C platform engineers. Compromise enables token forgery.", tags:["b2c","ief","keys","federation"], relatedRoles:["e36"] },
+  { id:"e36", name:"B2C IEF Policy Administrator", product:"Entra", category:"Azure B2C", risk:"High", description:"Creates and manages all custom trust framework policies in Azure AD B2C Identity Experience Framework. Full control over B2C authentication flows.", permissions:"Create, update, delete all custom B2C policies including HTML, CSS, federation, and user data handling.", leastPrivilege:"Highly sensitive. Assign only to dedicated B2C engineers on production tenants.", tags:["b2c","ief","policies","federation"], relatedRoles:["e35"] },
+
+  // ── COMPLIANCE & INFORMATION PROTECTION ─────────────────────────────────
+  { id:"e37", name:"Compliance Administrator", product:"Entra", category:"Compliance", risk:"High", description:"Reads and manages compliance configuration and reports in Entra ID and Microsoft 365. Overlaps with Purview compliance features.", permissions:"Manage compliance policies, eDiscovery, retention, DLP configuration, and compliance reports.", leastPrivilege:"Assign to compliance officers. Overlaps with Purview Compliance Administrator — review which is needed.", tags:["compliance","dlp","retention","ediscovery"], relatedRoles:["e38"] },
+  { id:"e38", name:"Compliance Data Administrator", product:"Entra", category:"Compliance", risk:"High", description:"Creates and manages compliance content including policies, and has access to data protected by compliance policies.", permissions:"All Compliance Administrator permissions plus read access to compliance-protected content.", leastPrivilege:"More privileged than Compliance Administrator. Only assign when data access is needed.", tags:["compliance","data-access","content"], relatedRoles:["e37"] },
+  { id:"e39", name:"Azure Information Protection Administrator", product:"Entra", category:"Compliance", risk:"High", description:"Manages all aspects of Azure Information Protection service including label configuration and protection templates.", permissions:"Configure AIP labels, manage protection templates, activate protection. No access to Entra ID Protection or PIM.", leastPrivilege:"Assign to information protection team. AIP is legacy — prefer Microsoft Purview sensitivity labels.", tags:["aip","information-protection","labels"], relatedRoles:[] },
+  { id:"e40", name:"Customer LockBox Access Approver", product:"Entra", category:"Compliance", risk:"Medium", description:"Can approve or deny Microsoft support engineer requests to access customer organizational data during support incidents.", permissions:"Review and approve/deny Microsoft LockBox access requests to customer data.", leastPrivilege:"Assign to senior IT or legal team members. Critical for data sovereignty compliance.", tags:["lockbox","support","data-access","compliance"], relatedRoles:[] },
+
+  // ── DEVICE & ENDPOINT ────────────────────────────────────────────────────
+  { id:"e41", name:"Desktop Analytics Administrator", product:"Entra", category:"Device Management", risk:"Medium", description:"Accesses and manages Desktop Analytics tools and services for Windows device insights and update readiness.", permissions:"Access Desktop Analytics data, manage update policies, view device compliance insights.", leastPrivilege:"Assign to endpoint management team responsible for Windows update planning.", tags:["desktop-analytics","windows","devices","updates"], relatedRoles:["e15"] },
+  { id:"e42", name:"Exchange Recipient Administrator", product:"Entra", category:"Collaboration", risk:"Medium", description:"Creates or updates Exchange Online recipients (mailboxes, distribution groups, contacts) within the Exchange Online organization.", permissions:"Create and update Exchange Online recipients — more limited than Exchange Administrator.", leastPrivilege:"Use instead of Exchange Administrator when full Exchange management is not needed.", tags:["exchange","recipients","mailbox","distribution-groups"], relatedRoles:["e16"] },
+
+  // ── TEAMS & COMMUNICATIONS ──────────────────────────────────────────────
+  { id:"e43", name:"Teams Communications Administrator", product:"Entra", category:"Collaboration", risk:"Medium", description:"Manages calling and meetings features within the Microsoft Teams service.", permissions:"Manage Teams calling policies, meeting policies, phone numbers, and call quality settings.", leastPrivilege:"Use instead of Teams Administrator when only calling/meetings management is needed.", tags:["teams","calling","meetings","voice"], relatedRoles:["e18","e44","e45"] },
+  { id:"e44", name:"Teams Communications Support Engineer", product:"Entra", category:"Collaboration", risk:"Low", description:"Troubleshoots communications issues within Teams using advanced diagnostic tools.", permissions:"Access advanced Teams call quality tools, diagnostics, and user call records.", leastPrivilege:"Appropriate for senior helpdesk staff troubleshooting Teams call quality issues.", tags:["teams","support","troubleshooting","diagnostics"], relatedRoles:["e43","e45"] },
+  { id:"e45", name:"Teams Communications Support Specialist", product:"Entra", category:"Collaboration", risk:"Low", description:"Troubleshoots communications issues within Teams using basic diagnostic tools. More limited than Support Engineer.", permissions:"Access basic Teams diagnostics — cannot see full call records.", leastPrivilege:"For tier-1 Teams support. Use before Teams Communications Support Engineer.", tags:["teams","support","basic-tools"], relatedRoles:["e44"] },
+  { id:"e46", name:"Teams Devices Administrator", product:"Entra", category:"Collaboration", risk:"Low", description:"Performs management tasks on Teams-certified devices such as phones, collaboration bars, and meeting room devices.", permissions:"Manage Teams device configuration, updates, and troubleshooting for certified devices.", leastPrivilege:"Assign to AV/collaboration team managing physical Teams devices.", tags:["teams","devices","phones","room-systems"], relatedRoles:["e18"] },
+  { id:"e47", name:"Teams Telephony Administrator", product:"Entra", category:"Collaboration", risk:"Medium", description:"Manages voice and telephony features and troubleshoots communication issues within Microsoft Teams.", permissions:"Manage phone numbers, voice policies, calling plans, and telephony configuration.", leastPrivilege:"Assign to telecoms/UC team. More focused than Teams Administrator for voice-only scenarios.", tags:["teams","telephony","voice","pstn"], relatedRoles:["e18","e43"] },
+  { id:"e48", name:"Teams Reader", product:"Entra", category:"Collaboration", risk:"Low", description:"Read-only access to everything in the Teams admin center. Cannot make any updates.", permissions:"Read all Teams admin center settings, policies, and configurations.", leastPrivilege:"Use for auditors and managers who need Teams admin center visibility without change access.", tags:["teams","read-only","audit"], relatedRoles:["e18"] },
+
+  // ── HYBRID IDENTITY & DIRECTORY ─────────────────────────────────────────
+  { id:"e49", name:"Hybrid Identity Administrator", product:"Entra", category:"Hybrid Identity", risk:"High", description:"Manages Active Directory to Entra cloud provisioning, Azure AD Connect, PTA, PHS, seamless SSO, and federation settings.", permissions:"Manage all hybrid identity features: AD Connect, provisioning, federation, SSO. No access to Connect Health.", leastPrivilege:"Assign to hybrid identity engineers. Controls how on-prem AD syncs to Entra — highly impactful.", tags:["hybrid","ad-connect","federation","sso","provisioning"], relatedRoles:["e1"] },
+  { id:"e50", name:"Directory Writers", product:"Entra", category:"Identity", risk:"Medium", description:"Can read and write basic directory information. Intended for applications, not users.", permissions:"Read and write basic directory information — for application use only.", leastPrivilege:"Only assign to applications requiring directory write access. Not intended for human users.", tags:["directory","write","apps"], relatedRoles:["e20"] },
+  { id:"e51", name:"Domain Name Administrator", product:"Entra", category:"Identity", risk:"High", description:"Manages domain names in cloud and on-premises, including adding, verifying, and removing domains.", permissions:"Add, verify, configure, and remove domain names from the tenant.", leastPrivilege:"Assign to senior identity engineers. Incorrect domain changes can disrupt authentication for all users.", tags:["domains","dns","federation"], relatedRoles:["e49"] },
+  { id:"e52", name:"Guest Inviter", product:"Entra", category:"Identity", risk:"Low", description:"Can invite guest users independent of the 'members can invite guests' tenant setting.", permissions:"Invite external guest users to the tenant.", leastPrivilege:"Assign when guest invitation needs to be controlled but broad invitations need to be enabled for specific users.", tags:["guests","b2b","invitations"], relatedRoles:[] },
+  { id:"e53", name:"External Identity Provider Administrator", product:"Entra", category:"Identity", risk:"High", description:"Configures identity providers for use in direct federation with external organizations or B2B.", permissions:"Add, configure, and remove external identity providers for federation.", leastPrivilege:"Assign to identity architects. Misconfiguration can allow unintended external identities to authenticate.", tags:["federation","external-idp","b2b","oidc"], relatedRoles:["e49"] },
+
+  // ── IDENTITY GOVERNANCE ──────────────────────────────────────────────────
+  { id:"e54", name:"Identity Governance Administrator", product:"Entra", category:"Identity Governance", risk:"High", description:"Manages access using Entra ID for identity governance scenarios including access reviews, entitlement management, and lifecycle workflows.", permissions:"Manage access packages, access reviews, entitlement management policies, and lifecycle workflows.", leastPrivilege:"Assign to IAM/governance team. Controls who gets access to what resources.", tags:["governance","access-reviews","entitlement","lifecycle"], relatedRoles:["e5"] },
+  { id:"e55", name:"Lifecycle Workflows Administrator", product:"Entra", category:"Identity Governance", risk:"High", description:"Creates and manages all aspects of workflows and tasks associated with Lifecycle Workflows in Microsoft Entra ID.", permissions:"Create, manage, and monitor lifecycle workflows for joiner, mover, and leaver scenarios.", leastPrivilege:"Assign to IAM team responsible for automated identity lifecycle management.", tags:["lifecycle","workflows","joiner-mover-leaver","governance"], relatedRoles:["e54"] },
+
+  // ── MICROSOFT 365 SERVICE ADMINS ────────────────────────────────────────
+  { id:"e56", name:"Dynamics 365 Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"High", description:"Manages all aspects of the Dynamics 365 product including environments, configurations, and user access.", permissions:"Full administrative control over all Dynamics 365 environments and configurations.", leastPrivilege:"Assign to Dynamics 365 platform team only.", tags:["dynamics","crm","erp","power-platform"], relatedRoles:["e57","e65"] },
+  { id:"e57", name:"Power Platform Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"High", description:"Creates and manages all aspects of Microsoft Dynamics 365, Power Apps, and Power Automate.", permissions:"Full control over Power Platform environments, connectors, policies, and DLP settings.", leastPrivilege:"Assign to Power Platform COE team. Can deploy apps and flows to the entire organization.", tags:["power-platform","power-apps","power-automate","dynamics"], relatedRoles:["e56"] },
+  { id:"e58", name:"Fabric Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"High", description:"Manages all aspects of Microsoft Fabric and Power BI products including workspaces, capacities, and tenant settings.", permissions:"Full administrative control over Microsoft Fabric, Power BI tenant settings, capacities, and workspaces.", leastPrivilege:"Assign to data platform team. Can access all Power BI content in the tenant.", tags:["fabric","power-bi","data","analytics"], relatedRoles:[] },
+  { id:"e59", name:"Skype for Business Administrator", product:"Entra", category:"Collaboration", risk:"Medium", description:"Manages all aspects of the Skype for Business product.", permissions:"Full administrative control over Skype for Business settings and user policies.", leastPrivilege:"Legacy role — most orgs have migrated to Teams. Only assign if Skype for Business is still in use.", tags:["skype","legacy","collaboration"], relatedRoles:["e18"] },
+  { id:"e60", name:"Yammer Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Medium", description:"Manages all aspects of the Yammer service including communities, network settings, and user management.", permissions:"Full administrative control over Yammer/Viva Engage network.", leastPrivilege:"Assign to internal communications team managing Yammer.", tags:["yammer","viva-engage","communities"], relatedRoles:[] },
+  { id:"e61", name:"Kaizala Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Manages settings for Microsoft Kaizala.", permissions:"Manage Kaizala organizational settings and user access.", leastPrivilege:"Legacy role — Kaizala retired. Only relevant for organizations still using the service.", tags:["kaizala","legacy","mobile"], relatedRoles:[] },
+  { id:"e62", name:"Knowledge Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Configures knowledge, learning, and other intelligent features in Microsoft 365.", permissions:"Configure Microsoft Viva Topics, learning apps, and knowledge management features.", leastPrivilege:"Assign to knowledge management or L&D teams.", tags:["viva-topics","knowledge","learning"], relatedRoles:["e63"] },
+  { id:"e63", name:"Knowledge Manager", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Organizes, creates, manages, and promotes topics and knowledge within Viva Topics.", permissions:"Create and manage topic pages, promote topics, manage knowledge content.", leastPrivilege:"Appropriate for subject matter experts managing content — lower privilege than Knowledge Administrator.", tags:["viva-topics","knowledge","content"], relatedRoles:["e62"] },
+  { id:"e64", name:"Office Apps Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Medium", description:"Manages Office apps cloud services including policy management, settings, and 'What's New' feature content for end users.", permissions:"Manage Office apps policies, cloud settings, and control feature rollout announcements.", leastPrivilege:"Assign to M365 platform team managing app policy and client configuration.", tags:["office","m365-apps","policies"], relatedRoles:[] },
+  { id:"e65", name:"Dynamics 365 Business Central Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"High", description:"Accesses and performs all administrative tasks on Dynamics 365 Business Central environments.", permissions:"Full administrative access to all Business Central environments.", leastPrivilege:"Assign to Business Central platform team only.", tags:["dynamics","business-central","erp"], relatedRoles:["e56"] },
+  { id:"e66", name:"Windows 365 Administrator", product:"Entra", category:"Device Management", risk:"High", description:"Provisions and manages all aspects of Cloud PCs in Windows 365.", permissions:"Create, manage, and deprovision Cloud PC deployments, policies, and assignments.", leastPrivilege:"Assign to endpoint team managing Cloud PC deployments.", tags:["windows-365","cloud-pc","endpoint"], relatedRoles:["e15"] },
+  { id:"e67", name:"Edge Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Manages all aspects of Microsoft Edge enterprise settings including policies and configurations.", permissions:"Manage Edge browser policies, configurations, and enterprise settings.", leastPrivilege:"Assign to endpoint team managing browser configuration.", tags:["edge","browser","policies"], relatedRoles:[] },
+  { id:"e68", name:"Search Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Creates and manages all aspects of Microsoft Search settings and content.", permissions:"Manage Microsoft Search settings, bookmarks, Q&As, and search verticals.", leastPrivilege:"Assign to intranet/search team managing M365 Search configuration.", tags:["search","m365","intranet"], relatedRoles:["e69"] },
+  { id:"e69", name:"Search Editor", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Creates and manages editorial content for Microsoft Search such as bookmarks, Q&As, and locations.", permissions:"Create and manage search bookmarks, Q&As, locations, and floor plans.", leastPrivilege:"Use instead of Search Administrator for content editors who don't need full search settings.", tags:["search","content","bookmarks"], relatedRoles:["e68"] },
+
+  // ── VIVA & INSIGHTS ──────────────────────────────────────────────────────
+  { id:"e70", name:"Insights Administrator", product:"Entra", category:"Viva & Insights", risk:"Medium", description:"Has administrative access in the Microsoft 365 Insights app (Viva Insights).", permissions:"Manage Viva Insights app configuration, data sources, and admin settings.", leastPrivilege:"Assign to HR/people analytics team managing Viva Insights.", tags:["viva-insights","analytics","productivity"], relatedRoles:["e71","e72"] },
+  { id:"e71", name:"Insights Analyst", product:"Entra", category:"Viva & Insights", risk:"Low", description:"Accesses analytical capabilities in Viva Insights and can run custom queries.", permissions:"Run custom Viva Insights queries and access analytical data.", leastPrivilege:"Appropriate for people analytics analysts. Use before Insights Administrator.", tags:["viva-insights","analyst","queries"], relatedRoles:["e70"] },
+  { id:"e72", name:"Insights Business Leader", product:"Entra", category:"Viva & Insights", risk:"Low", description:"Views and shares dashboards and insights via the Microsoft 365 Insights app.", permissions:"View and share Viva Insights dashboards and group-level data.", leastPrivilege:"Safe for business leaders reviewing aggregated organizational insights.", tags:["viva-insights","dashboards","leadership"], relatedRoles:["e70"] },
+  { id:"e73", name:"Viva Goals Administrator", product:"Entra", category:"Viva & Insights", risk:"Low", description:"Manages and configures all aspects of Microsoft Viva Goals.", permissions:"Manage Viva Goals tenant settings, integrations, and administrative controls.", leastPrivilege:"Assign to HR or strategy team managing OKR platform.", tags:["viva-goals","okr"], relatedRoles:[] },
+  { id:"e74", name:"Viva Pulse Administrator", product:"Entra", category:"Viva & Insights", risk:"Low", description:"Manages all settings for the Microsoft Viva Pulse survey app.", permissions:"Manage Viva Pulse app settings, survey policies, and configurations.", leastPrivilege:"Assign to HR team managing employee listening programs.", tags:["viva-pulse","surveys","hr"], relatedRoles:[] },
+  { id:"e75", name:"Viva Glint Tenant Administrator", product:"Entra", category:"Viva & Insights", risk:"Medium", description:"Manages and configures Microsoft Viva Glint settings in the Microsoft 365 admin center.", permissions:"Manage Viva Glint tenant settings, survey configurations, and reporting.", leastPrivilege:"Assign to HR team managing employee engagement surveys.", tags:["viva-glint","surveys","hr","engagement"], relatedRoles:[] },
+
+  // ── NETWORKING & INFRASTRUCTURE ──────────────────────────────────────────
+  { id:"e76", name:"Network Administrator", product:"Entra", category:"Infrastructure", risk:"Low", description:"Manages network locations and reviews enterprise network design insights for Microsoft 365 SaaS applications.", permissions:"Manage network locations, view network insights and connectivity reports for M365.", leastPrivilege:"Assign to network engineering team responsible for M365 connectivity optimization.", tags:["network","locations","connectivity","m365"], relatedRoles:[] },
+  { id:"e77", name:"Global Secure Access Administrator", product:"Entra", category:"Security", risk:"High", description:"Creates and manages all aspects of Global Secure Internet Access and Microsoft Global Secure Private Access.", permissions:"Manage Global Secure Access profiles, policies, endpoints, and public/private access settings.", leastPrivilege:"Assign to network security team responsible for ZTNA/SSE deployment.", tags:["global-secure-access","ztna","sase","network-security"], relatedRoles:["e3"] },
+  { id:"e78", name:"Global Secure Access Log Reader", product:"Entra", category:"Security", risk:"Low", description:"Read-only access to network traffic logs in Microsoft Entra Internet Access and Private Access.", permissions:"Read network traffic logs for Global Secure Access services.", leastPrivilege:"Assign to SOC analysts monitoring network access logs.", tags:["global-secure-access","logs","read-only","network"], relatedRoles:["e77"] },
+
+  // ── HARDWARE & PRINTING ──────────────────────────────────────────────────
+  { id:"e79", name:"Printer Administrator", product:"Entra", category:"Infrastructure", risk:"Low", description:"Manages all aspects of printers and printer connectors in Universal Print.", permissions:"Register, manage, and delete printers and printer connectors.", leastPrivilege:"Assign to IT operations team managing print infrastructure.", tags:["printers","universal-print","infrastructure"], relatedRoles:["e80"] },
+  { id:"e80", name:"Printer Technician", product:"Entra", category:"Infrastructure", risk:"Low", description:"Can register and unregister printers and update printer status in Universal Print.", permissions:"Register/unregister printers and update status — cannot manage connectors.", leastPrivilege:"Use instead of Printer Administrator for field technicians managing device registration.", tags:["printers","universal-print","technician"], relatedRoles:["e79"] },
+  { id:"e81", name:"Microsoft Hardware Warranty Administrator", product:"Entra", category:"Infrastructure", risk:"Low", description:"Creates and manages all aspects of warranty claims and entitlements for Microsoft manufactured hardware.", permissions:"Create, manage, and review warranty claims for Surface and HoloLens devices.", leastPrivilege:"Assign to IT asset management team handling Microsoft hardware warranties.", tags:["hardware","warranty","surface","hololens"], relatedRoles:["e82"] },
+  { id:"e82", name:"Microsoft Hardware Warranty Specialist", product:"Entra", category:"Infrastructure", risk:"Low", description:"Creates and reads warranty claims for Microsoft manufactured hardware.", permissions:"Create and read warranty claims — cannot manage or close claims.", leastPrivilege:"Use instead of Hardware Warranty Administrator for staff only submitting claims.", tags:["hardware","warranty","surface"], relatedRoles:["e81"] },
+
+  // ── REPORTING & MESSAGING ────────────────────────────────────────────────
+  { id:"e83", name:"Message Center Reader", product:"Entra", category:"Reporting", risk:"Low", description:"Reads messages and updates for the organization in Office 365 Message Center only.", permissions:"Read Message Center posts and service announcements.", leastPrivilege:"Safe for IT staff who need change management visibility into M365 updates.", tags:["message-center","communications","updates"], relatedRoles:["e84"] },
+  { id:"e84", name:"Message Center Privacy Reader", product:"Entra", category:"Reporting", risk:"Low", description:"Reads security messages and updates in Office 365 Message Center only.", permissions:"Read security-related Message Center posts including privacy and data protection updates.", leastPrivilege:"Use for security/privacy team members monitoring security-related M365 announcements.", tags:["message-center","privacy","security"], relatedRoles:["e83"] },
+  { id:"e85", name:"Usage Summary Reports Reader", product:"Entra", category:"Reporting", risk:"Low", description:"Reads usage reports and Adoption Score but cannot access individual user details.", permissions:"Read aggregated usage reports and Adoption Score — no user-level data.", leastPrivilege:"Safe for management teams reviewing M365 adoption without user privacy concerns.", tags:["reports","usage","adoption","privacy"], relatedRoles:["e23"] },
+  { id:"e86", name:"Organizational Messages Writer", product:"Entra", category:"Reporting", risk:"Low", description:"Writes, publishes, manages, and reviews organizational messages for end-users through Microsoft product surfaces.", permissions:"Create and publish organizational messages via M365 admin center.", leastPrivilege:"Assign to internal communications team managing employee notifications.", tags:["communications","messages","notifications"], relatedRoles:["e87"] },
+  { id:"e87", name:"Organizational Messages Approver", product:"Entra", category:"Reporting", risk:"Low", description:"Reviews, approves, or rejects new organizational messages before they are sent to users.", permissions:"Approve or reject organizational messages in the M365 admin center workflow.", leastPrivilege:"Use for governance of organizational messaging — separate from authoring role.", tags:["communications","approvals","messages"], relatedRoles:["e86"] },
+
+  // ── MISCELLANEOUS ────────────────────────────────────────────────────────
+  { id:"e88", name:"Service Support Administrator", product:"Entra", category:"Identity", risk:"Low", description:"Reads service health information and manages support tickets with Microsoft.", permissions:"Read service health, create and manage Microsoft support tickets.", leastPrivilege:"Assign to IT operations staff who manage Microsoft support cases.", tags:["support","service-health","tickets"], relatedRoles:[] },
+  { id:"e89", name:"Tenant Creator", product:"Entra", category:"Identity", risk:"High", description:"Can create new Microsoft Entra or Azure AD B2C tenants.", permissions:"Create new Microsoft Entra tenants and Azure AD B2C tenants.", leastPrivilege:"Restrict tightly — uncontrolled tenant creation can create shadow IT environments.", tags:["tenant","create","admin"], relatedRoles:["e1"] },
+  { id:"e90", name:"Permissions Management Administrator", product:"Entra", category:"Security", risk:"High", description:"Manages all aspects of Microsoft Entra Permissions Management (CIEM) across multi-cloud environments.", permissions:"Full administrative control over Entra Permissions Management for Azure, AWS, and GCP.", leastPrivilege:"Assign to cloud security team managing multi-cloud permission governance.", tags:["permissions-management","ciem","cloud","aws","azure","gcp"], relatedRoles:["e3"] },
+  { id:"e91", name:"IoT Device Administrator", product:"Entra", category:"Device Management", risk:"Medium", description:"Provisions new IoT devices, manages their lifecycle, configures certificates, and manages device templates.", permissions:"Create, manage, and deprovision IoT devices and their identity configurations.", leastPrivilege:"Assign to IoT engineering team. New role for organizations deploying IoT with Entra identity.", tags:["iot","devices","certificates","lifecycle"], relatedRoles:["e15"] },
+  { id:"e92", name:"Microsoft Entra Joined Device Local Administrator", product:"Entra", category:"Device Management", risk:"Medium", description:"Users assigned this role are added to the local administrators group on Microsoft Entra joined devices.", permissions:"Local administrator rights on all Entra-joined devices.", leastPrivilege:"Use with caution — grants local admin on all joined devices. Prefer scoped device admin via Intune.", tags:["devices","local-admin","entra-join"], relatedRoles:["e15","e22"] },
+  { id:"e93", name:"Extended Directory User Administrator", product:"Entra", category:"Identity", risk:"Medium", description:"Manages all aspects of external user profiles in the extended directory for Teams.", permissions:"Create, update, and delete external user profiles in the Teams extended directory.", leastPrivilege:"Assign to Teams administrators managing external collaboration user profiles.", tags:["teams","external-users","directory"], relatedRoles:["e6"] },
+  { id:"e94", name:"External ID User Flow Administrator", product:"Entra", category:"Identity", risk:"High", description:"Creates and manages all aspects of user flows for External ID (customer-facing applications).", permissions:"Create, manage, and delete user flows, authentication flows, and self-service sign-up.", leastPrivilege:"Assign to developers building customer-facing apps with External ID.", tags:["external-id","user-flows","b2c","ciam"], relatedRoles:["e95"] },
+  { id:"e95", name:"External ID User Flow Attribute Administrator", product:"Entra", category:"Identity", risk:"Medium", description:"Creates and manages the attribute schema available to all External ID user flows.", permissions:"Define and manage custom attributes collected during External ID user flows.", leastPrivilege:"Assign to identity architects designing External ID user schemas.", tags:["external-id","attributes","user-flows","ciam"], relatedRoles:["e94"] },
+  { id:"e96", name:"Azure DevOps Administrator", product:"Entra", category:"Developer Tools", risk:"Medium", description:"Manages Azure DevOps policies and organizational settings for the tenant.", permissions:"Manage Azure DevOps organization policies including OAuth access, tenant restrictions.", leastPrivilege:"Assign to DevOps platform team managing Azure DevOps governance.", tags:["azure-devops","developer","policies"], relatedRoles:[] },
+  { id:"e97", name:"People Administrator", product:"Entra", category:"Identity", risk:"Low", description:"Manages profile photos of users and people settings for all users in the organization.", permissions:"Update profile photos and people settings for all users.", leastPrivilege:"Low-risk role for HR or comms teams managing user profile standards.", tags:["profile","photos","people-settings"], relatedRoles:["e6"] },
+  { id:"e98", name:"Places Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Manages all aspects of the Microsoft Places service for workplace management.", permissions:"Manage Microsoft Places settings, building data, room configurations, and workplace analytics.", leastPrivilege:"Assign to facilities/workplace team managing hybrid work infrastructure.", tags:["places","workplace","rooms","buildings"], relatedRoles:[] },
+  { id:"e99", name:"Organizational Branding Administrator", product:"Entra", category:"Identity", risk:"Low", description:"Manages all aspects of organizational branding in the tenant including sign-in page customization.", permissions:"Customize sign-in page, company branding, and tenant-wide visual identity.", leastPrivilege:"Assign to marketing or IT team managing corporate brand standards in M365.", tags:["branding","sign-in","customization"], relatedRoles:[] },
+  { id:"e100", name:"Microsoft 365 Backup Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"High", description:"Backs up and restores content across SharePoint, OneDrive, and Exchange Online using Microsoft 365 Backup.", permissions:"Configure and manage backup policies, run restores across SharePoint, OneDrive, and Exchange.", leastPrivilege:"Assign to backup/DR team. Has broad restore capability across M365 content.", tags:["backup","restore","sharepoint","onedrive","exchange"], relatedRoles:["e16","e17"] },
+  { id:"e101", name:"Windows Update Deployment Administrator", product:"Entra", category:"Device Management", risk:"Medium", description:"Creates and manages all aspects of Windows Update deployments through Windows Update for Business.", permissions:"Create and manage Windows Update deployment rings, policies, and compliance reporting.", leastPrivilege:"Assign to endpoint team managing Windows patching strategy.", tags:["windows-update","patching","endpoint","wufb"], relatedRoles:["e15"] },
+  { id:"e102", name:"Microsoft Graph Data Connect Administrator", product:"Entra", category:"Developer Tools", risk:"High", description:"Manages aspects of Microsoft Graph Data Connect service including approval of data extraction requests.", permissions:"Manage Graph Data Connect configurations and approve/deny data extraction requests.", leastPrivilege:"Assign to data governance team. Approves bulk M365 data extraction — high data exposure risk.", tags:["graph","data-connect","data-extraction"], relatedRoles:[] },
+  { id:"e103", name:"Attribute Provisioning Administrator", product:"Entra", category:"Custom Attributes", risk:"Medium", description:"Reads and edits the provisioning configuration of all active custom security attributes for an application.", permissions:"Read and update attribute provisioning configuration for applications.", leastPrivilege:"Assign to identity engineers managing attribute-based provisioning workflows.", tags:["attributes","provisioning","applications"], relatedRoles:["e26","e28"] },
+  { id:"e104", name:"Attribute Provisioning Reader", product:"Entra", category:"Custom Attributes", risk:"Low", description:"Read-only access to the provisioning configuration of all active custom security attributes for an application.", permissions:"Read attribute provisioning configuration for applications.", leastPrivilege:"Use before Attribute Provisioning Administrator when write access is not needed.", tags:["attributes","provisioning","read-only"], relatedRoles:["e103"] },
+  { id:"e105", name:"Dragon Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Medium", description:"Manages all aspects of the Microsoft Dragon admin center.", permissions:"Full administrative control over the Dragon (speech/AI) admin center settings.", leastPrivilege:"Assign to team responsible for Dragon AI service deployment and configuration.", tags:["dragon","ai","speech"], relatedRoles:[] },
+  { id:"e106", name:"Microsoft 365 Migration Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"High", description:"Performs all migration functionality to migrate content to Microsoft 365 using Migration Manager.", permissions:"Access and use Migration Manager to migrate content from various sources to M365.", leastPrivilege:"Assign to migration project team. Has broad access to source and destination content.", tags:["migration","m365","sharepoint","content"], relatedRoles:["e17"] },
+  { id:"e107", name:"User Experience Success Manager", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Views product feedback, survey results, and reports to identify training and communication opportunities.", permissions:"Read product feedback reports, survey results, and adoption data.", leastPrivilege:"Safe for change management and adoption teams.", tags:["adoption","feedback","ux","training"], relatedRoles:["e85"] },
+  { id:"e108", name:"Virtual Visits Administrator", product:"Entra", category:"Microsoft 365 Services", risk:"Low", description:"Manages and shares Virtual Visits information and metrics from admin centers or the Virtual Visits app.", permissions:"Manage Virtual Visits configuration, reporting, and settings.", leastPrivilege:"Assign to healthcare or customer engagement team using Virtual Visits.", tags:["virtual-visits","healthcare","meetings"], relatedRoles:[] },
+  { id:"e109", name:"Organizational Data Source Administrator", product:"Entra", category:"Viva & Insights", risk:"Medium", description:"Sets up and manages the ingestion of organizational data into Microsoft 365 for use in Viva Insights.", permissions:"Configure and manage organizational data imports and data source connections.", leastPrivilege:"Assign to HR/people analytics team managing workforce data for Viva.", tags:["viva-insights","data-ingestion","hr-data"], relatedRoles:["e70"] },
+  { id:"e110", name:"SharePoint Advanced Management Administrator", product:"Entra", category:"Collaboration", risk:"High", description:"Manages all aspects of SharePoint Advanced Management features.", permissions:"Manage SharePoint Advanced Management settings including content governance and restricted access.", leastPrivilege:"Assign to SharePoint governance team. Extends SharePoint Administrator capabilities.", tags:["sharepoint","governance","advanced-management"], relatedRoles:["e17"] },
+  { id:"e111", name:"SharePoint Embedded Administrator", product:"Entra", category:"Collaboration", risk:"High", description:"Manages all aspects of SharePoint Embedded containers for app-hosted content storage.", permissions:"Create, manage, and delete SharePoint Embedded containers and configurations.", leastPrivilege:"Assign to developers and architects building apps with SharePoint Embedded storage.", tags:["sharepoint","embedded","containers","developers"], relatedRoles:["e17"] },
 ];
 
 export const PURVIEW_ROLES = [
-  {
-    id: "p1", name: "Compliance Administrator", product: "Purview", category: "Compliance", risk: "High",
-    description: "Manages compliance features in the Microsoft Purview portal including DLP policies, retention policies, sensitivity labels, and eDiscovery configuration.",
-    permissions: "Manage all compliance policies, DLP rules, retention policies, sensitivity labels, communication compliance, and insider risk settings.",
-    leastPrivilege: "Assign to compliance officers and data protection leads. Has broad access to configure policies that affect all users and data.",
-    tags: ["compliance", "dlp", "retention", "labels", "ediscovery"],
-    relatedRoles: ["p2", "p12", "p13"]
-  },
-  {
-    id: "p2", name: "Compliance Data Administrator", product: "Purview", category: "Compliance", risk: "High",
-    description: "All permissions of Compliance Administrator plus access to data protected by compliance policies including content under review.",
-    permissions: "All Compliance Administrator permissions plus read access to compliance-protected data and content.",
-    leastPrivilege: "More privileged than Compliance Administrator. Assign only when direct data access is required in addition to policy management.",
-    tags: ["compliance", "data-access", "dlp", "content"],
-    relatedRoles: ["p1"]
-  },
-  {
-    id: "p3", name: "eDiscovery Administrator", product: "Purview", category: "eDiscovery", risk: "High",
-    description: "Manages all eDiscovery cases across the organization and can access content associated with any case regardless of membership.",
-    permissions: "Create and manage all eDiscovery cases, access all content under legal hold, export case data across the entire organization.",
-    leastPrivilege: "Assign to legal/compliance team leads only. Has unrestricted access to all eDiscovery cases and their content.",
-    tags: ["ediscovery", "legal", "hold", "cases", "export"],
-    relatedRoles: ["p4", "p1"]
-  },
-  {
-    id: "p4", name: "eDiscovery Manager", product: "Purview", category: "eDiscovery", risk: "Medium",
-    description: "Creates and manages eDiscovery cases they are a member of. Cannot access cases created by other eDiscovery Managers.",
-    permissions: "Create and manage own eDiscovery cases, search content, place holds, export case-specific data.",
-    leastPrivilege: "Appropriate for legal staff managing specific matters. Scoped to their own cases only — use instead of eDiscovery Administrator when possible.",
-    tags: ["ediscovery", "legal", "search", "cases", "holds"],
-    relatedRoles: ["p3"]
-  },
-  {
-    id: "p5", name: "Audit Manager", product: "Purview", category: "Audit", risk: "Medium",
-    description: "Searches and exports audit logs across Microsoft 365 services. Can manage audit settings including enabling and disabling audit logging.",
-    permissions: "Search audit logs, export audit data, enable/disable audit logging, manage audit retention policies.",
-    leastPrivilege: "Assign to compliance or security operations team. Use Audit Reader instead if only log searching is needed.",
-    tags: ["audit", "logs", "export", "compliance", "investigation"],
-    relatedRoles: ["p6"]
-  },
-  {
-    id: "p6", name: "Audit Reader", product: "Purview", category: "Audit", risk: "Low",
-    description: "Read-only access to search and view audit logs across Microsoft 365. Cannot export logs or manage audit settings.",
-    permissions: "Search and view audit logs only. No export, no settings management.",
-    leastPrivilege: "Good for SOC analysts who need to review audit trails without management capabilities. Use this before Audit Manager.",
-    tags: ["audit", "logs", "read-only", "soc"],
-    relatedRoles: ["p5"]
-  },
-  {
-    id: "p7", name: "Insider Risk Management", product: "Purview", category: "Insider Risk", risk: "High",
-    description: "Full administrative access to Insider Risk Management including policy creation, alert management, case management, and viewing user activity content.",
-    permissions: "Create and manage insider risk policies, view all alerts, manage cases, access user activity content and evidence.",
-    leastPrivilege: "Strictly limit to insider risk program administrators. Has access to sensitive employee behavior data and communications.",
-    tags: ["insider-risk", "user-activity", "alerts", "cases", "policies"],
-    relatedRoles: ["p8", "p9"]
-  },
-  {
-    id: "p8", name: "Insider Risk Management Analysts", product: "Purview", category: "Insider Risk", risk: "Medium",
-    description: "Access to Insider Risk Management alerts and cases but cannot view the underlying user activity content or evidence.",
-    permissions: "View and triage alerts, manage case metadata, add notes — no access to user activity content or evidence files.",
-    leastPrivilege: "Appropriate for risk analysts doing initial triage. Cannot see raw user activity — assign Investigators role when content access is needed.",
-    tags: ["insider-risk", "alerts", "analyst", "triage"],
-    relatedRoles: ["p7", "p9"]
-  },
-  {
-    id: "p9", name: "Insider Risk Management Investigators", product: "Purview", category: "Insider Risk", risk: "High",
-    description: "Full access to insider risk alerts, cases, and the ability to view user activity content and evidence for active investigations.",
-    permissions: "View all insider risk case data including user activity content, evidence, communications, and export case data.",
-    leastPrivilege: "Higher privilege than Analysts. Assign only to investigators with confirmed business need to access user content evidence.",
-    tags: ["insider-risk", "investigation", "user-content", "evidence"],
-    relatedRoles: ["p7", "p8"]
-  },
-  {
-    id: "p10", name: "Communication Compliance", product: "Purview", category: "Communication Compliance", risk: "High",
-    description: "Full access to Communication Compliance including creating policies that monitor employee communications and reviewing flagged messages.",
-    permissions: "Create communication compliance policies, review flagged messages and communications, manage cases and remediation.",
-    leastPrivilege: "Limit to HR/compliance team leads. Reviewers can read monitored employee communications. Require documented business justification.",
-    tags: ["communication", "compliance", "messages", "review", "policies"],
-    relatedRoles: ["p11"]
-  },
-  {
-    id: "p11", name: "Communication Compliance Analysts", product: "Purview", category: "Communication Compliance", risk: "Medium",
-    description: "Reviews Communication Compliance alerts and investigates policy matches. Cannot create policies or access full unredacted message content.",
-    permissions: "Review policy match alerts, investigate cases, limited message preview — no policy management or full content access.",
-    leastPrivilege: "Appropriate for first-level reviewers. Use instead of full Communication Compliance role when policy management is not needed.",
-    tags: ["communication", "compliance", "analyst", "review"],
-    relatedRoles: ["p10"]
-  },
-  {
-    id: "p12", name: "DLP Compliance Management", product: "Purview", category: "Data Protection", risk: "High",
-    description: "Creates and manages Data Loss Prevention policies to prevent sharing of sensitive information across Exchange, SharePoint, Teams, and endpoints.",
-    permissions: "Create, modify, delete, enable, and disable DLP policies across all Microsoft 365 workloads and endpoints.",
-    leastPrivilege: "Assign to data protection officers and compliance engineers. DLP policy misconfiguration can block legitimate business workflows.",
-    tags: ["dlp", "data-protection", "policies", "sensitive-data"],
-    relatedRoles: ["p1", "p13"]
-  },
-  {
-    id: "p13", name: "Information Protection Admin", product: "Purview", category: "Data Protection", risk: "High",
-    description: "Creates and manages sensitivity labels, label policies, and information protection policies including auto-labeling configurations.",
-    permissions: "Create and publish sensitivity labels, manage label policies, configure auto-labeling for Exchange, SharePoint, and OneDrive.",
-    leastPrivilege: "Assign to information protection team. Label policies affect how documents and emails are classified across the organization.",
-    tags: ["sensitivity-labels", "information-protection", "auto-labeling", "policies"],
-    relatedRoles: ["p14", "p12", "p1"]
-  },
-  {
-    id: "p14", name: "Information Protection Analyst", product: "Purview", category: "Data Protection", risk: "Medium",
-    description: "Read-only access to Information Protection features including sensitivity labels, label analytics, and Activity Explorer data.",
-    permissions: "View sensitivity labels, label policies, Activity Explorer data, and label analytics reports.",
-    leastPrivilege: "Good for compliance analysts monitoring labeling activity. Use before Information Protection Admin when write access is not needed.",
-    tags: ["sensitivity-labels", "analytics", "read-only", "activity-explorer"],
-    relatedRoles: ["p13"]
-  },
-  {
-    id: "p15", name: "Content Explorer Content Viewer", product: "Purview", category: "Data Protection", risk: "High",
-    description: "Can open and view the actual content of items discovered by Content Explorer including sensitive documents and emails.",
-    permissions: "View full content of all scanned items in Content Explorer including documents, emails, and Teams messages.",
-    leastPrivilege: "Very sensitive role. Assign only to investigators with documented business need to view the actual content of classified items.",
-    tags: ["content-explorer", "sensitive-data", "documents", "content-access"],
-    relatedRoles: ["p16"]
-  },
-  {
-    id: "p16", name: "Content Explorer List Viewer", product: "Purview", category: "Data Protection", risk: "Medium",
-    description: "Views the list of items discovered in Content Explorer including file names and metadata, but cannot open or read the actual content.",
-    permissions: "View file list, names, locations, and metadata in Content Explorer — no ability to open or read content.",
-    leastPrivilege: "Safe for data mapping and inventory exercises. Use before Content Explorer Content Viewer when actual content access is not needed.",
-    tags: ["content-explorer", "metadata", "read-only", "inventory"],
-    relatedRoles: ["p15"]
-  },
-  {
-    id: "p17", name: "Records Management", product: "Purview", category: "Records", risk: "Medium",
-    description: "Manages records management including retention labels, file plans, event-based retention, and disposition reviews.",
-    permissions: "Create retention labels for records, manage file plans, configure event-based retention, approve or reject dispositions.",
-    leastPrivilege: "Assign to records managers and compliance staff managing the information lifecycle. Separate from general Retention Management.",
-    tags: ["records", "retention", "disposition", "file-plan"],
-    relatedRoles: ["p18"]
-  },
-  {
-    id: "p18", name: "Retention Management", product: "Purview", category: "Records", risk: "Medium",
-    description: "Creates and manages retention policies and retention labels across all Microsoft 365 workloads.",
-    permissions: "Create and publish retention policies and labels across Exchange, SharePoint, OneDrive, Teams, and Viva Engage.",
-    leastPrivilege: "Assign to compliance team. Misconfigured retention policies can cause premature deletion of business-critical data.",
-    tags: ["retention", "policies", "labels", "compliance", "lifecycle"],
-    relatedRoles: ["p17", "p1"]
-  },
-  {
-    id: "p19", name: "Data Governance Administrator", product: "Purview", category: "Data Governance", risk: "High",
-    description: "Full administrative access to Microsoft Purview Data Governance including Data Map, Unified Catalog, governance domains, and role assignments.",
-    permissions: "Manage all data governance features, create and manage governance domains, collections, and assign governance roles.",
-    leastPrivilege: "Assign to data governance program leads. This role can grant access to all governance resources in the tenant.",
-    tags: ["data-governance", "data-map", "catalog", "domains", "admin"],
-    relatedRoles: ["p20", "p21"]
-  },
-  {
-    id: "p20", name: "Data Curator", product: "Purview", category: "Data Governance", risk: "Medium",
-    description: "Creates and manages data assets in the Purview Unified Catalog including classifications, glossary terms, and asset metadata.",
-    permissions: "Create, read, modify, move, and delete data assets; apply classifications; create and manage glossary terms.",
-    leastPrivilege: "Appropriate for data stewards managing the data catalog. Does not grant access to actual underlying data.",
-    tags: ["data-catalog", "metadata", "classifications", "steward", "glossary"],
-    relatedRoles: ["p19", "p21"]
-  },
-  {
-    id: "p21", name: "Data Reader", product: "Purview", category: "Data Governance", risk: "Low",
-    description: "Read-only access to data assets, classifications, collections, and glossary terms in the Purview Data Map and Unified Catalog.",
-    permissions: "Read data assets, view classifications, browse collections, read glossary terms.",
-    leastPrivilege: "Safe for business users who need to discover and understand data assets without modifying them.",
-    tags: ["data-catalog", "read-only", "discovery", "browse"],
-    relatedRoles: ["p20"]
-  },
-  {
-    id: "p22", name: "Privacy Management", product: "Purview", category: "Privacy", risk: "High",
-    description: "Manages privacy risk management features including subject rights requests, privacy assessments, and privacy risk policies.",
-    permissions: "Manage subject rights requests, create privacy assessments, configure privacy risk policies, view personal data reports.",
-    leastPrivilege: "Assign to privacy officers and legal team members. Has access to personal data inventory and privacy risk reports.",
-    tags: ["privacy", "gdpr", "subject-rights", "dsr", "risk"],
-    relatedRoles: ["p23"]
-  },
-  {
-    id: "p23", name: "Subject Rights Request Administrator", product: "Purview", category: "Privacy", risk: "Medium",
-    description: "Creates and manages data subject rights requests (access, deletion, export) to support compliance with GDPR, CCPA, and other privacy regulations.",
-    permissions: "Create and manage all subject rights requests, run data searches, view associated personal data.",
-    leastPrivilege: "Assign to privacy team members handling GDPR/CCPA requests. Has access to personal data discovered during request processing.",
-    tags: ["privacy", "subject-rights", "gdpr", "ccpa", "dsr"],
-    relatedRoles: ["p22"]
-  },
-  {
-    id: "p24", name: "Purview Administrator", product: "Purview", category: "Administration", risk: "High",
-    description: "Administrative role for the Microsoft Purview platform covering role management, domain management, and admin unit extension management.",
-    permissions: "Role Management, Purview Domain Manager, Admin Unit Extension Manager across the Purview platform.",
-    leastPrivilege: "Assign to Purview platform administrators responsible for the governance infrastructure setup and maintenance.",
-    tags: ["admin", "purview", "roles", "domains", "platform"],
-    relatedRoles: ["p19", "p1"]
-  },
+  { id:"p1", name:"Compliance Administrator", product:"Purview", category:"Compliance", risk:"High", description:"Manages compliance features in the Microsoft Purview portal including DLP, retention, sensitivity labels, and eDiscovery configuration.", permissions:"Manage all compliance policies, DLP rules, retention policies, sensitivity labels, communication compliance, and insider risk settings.", leastPrivilege:"Assign to compliance officers. Has broad access to configure policies affecting all users and data.", tags:["compliance","dlp","retention","labels","ediscovery"], relatedRoles:["p2","p12","p13"] },
+  { id:"p2", name:"Compliance Data Administrator", product:"Purview", category:"Compliance", risk:"High", description:"All permissions of Compliance Administrator plus access to data protected by compliance policies.", permissions:"All Compliance Administrator permissions plus read access to compliance-protected data.", leastPrivilege:"More privileged than Compliance Administrator. Only assign when direct data access is required.", tags:["compliance","data-access","dlp"], relatedRoles:["p1"] },
+  { id:"p3", name:"eDiscovery Administrator", product:"Purview", category:"eDiscovery", risk:"High", description:"Manages all eDiscovery cases across the organization and can access content associated with any case.", permissions:"Create and manage all eDiscovery cases, access all content under legal hold, export case data organization-wide.", leastPrivilege:"Assign to legal/compliance team leads only. Has unrestricted access to all eDiscovery cases.", tags:["ediscovery","legal","hold","cases","export"], relatedRoles:["p4","p1"] },
+  { id:"p4", name:"eDiscovery Manager", product:"Purview", category:"eDiscovery", risk:"Medium", description:"Creates and manages eDiscovery cases they are a member of. Cannot access cases created by others.", permissions:"Create and manage own eDiscovery cases, search content, place holds, export case-specific data.", leastPrivilege:"Appropriate for legal staff managing specific matters. Scoped to their own cases only.", tags:["ediscovery","legal","search","cases"], relatedRoles:["p3"] },
+  { id:"p5", name:"Audit Manager", product:"Purview", category:"Audit", risk:"Medium", description:"Searches and exports audit logs across Microsoft 365. Can manage audit settings including enabling and disabling audit logging.", permissions:"Search audit logs, export audit data, enable/disable audit logging, manage retention policies.", leastPrivilege:"Assign to compliance or security operations. Use Audit Reader if only searching is needed.", tags:["audit","logs","export","compliance"], relatedRoles:["p6"] },
+  { id:"p6", name:"Audit Reader", product:"Purview", category:"Audit", risk:"Low", description:"Read-only access to search and view audit logs across Microsoft 365. Cannot export or manage audit settings.", permissions:"Search and view audit logs only — no export, no settings management.", leastPrivilege:"Good for SOC analysts reviewing audit trails. Use before Audit Manager.", tags:["audit","logs","read-only","soc"], relatedRoles:["p5"] },
+  { id:"p7", name:"Insider Risk Management", product:"Purview", category:"Insider Risk", risk:"High", description:"Full administrative access to Insider Risk Management including policy creation, alerts, cases, and user activity content.", permissions:"Create and manage insider risk policies, view all alerts, manage cases, access user activity content.", leastPrivilege:"Strictly limit to insider risk program administrators. Has access to sensitive employee behavior data.", tags:["insider-risk","user-activity","alerts","cases","policies"], relatedRoles:["p8","p9"] },
+  { id:"p8", name:"Insider Risk Management Analysts", product:"Purview", category:"Insider Risk", risk:"Medium", description:"Access to Insider Risk Management alerts and cases but cannot view the underlying user activity content.", permissions:"View and triage alerts, manage case metadata, add notes — no access to user activity content.", leastPrivilege:"Appropriate for risk analysts doing initial triage. Assign Investigators when content access is needed.", tags:["insider-risk","alerts","analyst","triage"], relatedRoles:["p7","p9"] },
+  { id:"p9", name:"Insider Risk Management Investigators", product:"Purview", category:"Insider Risk", risk:"High", description:"Full access to insider risk alerts, cases, and user activity content and evidence for investigations.", permissions:"View all insider risk case data including user activity, evidence, communications, and export data.", leastPrivilege:"Higher privilege than Analysts. Assign only to investigators who need content evidence access.", tags:["insider-risk","investigation","user-content","evidence"], relatedRoles:["p7","p8"] },
+  { id:"p10", name:"Insider Risk Management Approvers", product:"Purview", category:"Insider Risk", risk:"Medium", description:"Approves or denies policy action requests in Insider Risk Management, such as user restriction actions.", permissions:"Review and approve or deny insider risk management policy actions.", leastPrivilege:"Assign to compliance managers who oversee insider risk actions without direct investigation access.", tags:["insider-risk","approvals","policy-actions"], relatedRoles:["p7","p8"] },
+  { id:"p11", name:"Insider Risk Management Audit", product:"Purview", category:"Insider Risk", risk:"Low", description:"Read-only access to the Insider Risk Management audit log to review actions taken in the solution.", permissions:"View the insider risk management audit trail only.", leastPrivilege:"Safe for compliance auditors reviewing insider risk program activity.", tags:["insider-risk","audit","read-only"], relatedRoles:["p7"] },
+  { id:"p12", name:"Communication Compliance", product:"Purview", category:"Communication Compliance", risk:"High", description:"Full access to Communication Compliance including creating policies that monitor employee communications and reviewing flagged messages.", permissions:"Create communication compliance policies, review flagged messages and communications, manage cases.", leastPrivilege:"Limit to HR/compliance team leads. Can read monitored employee communications.", tags:["communication","compliance","messages","review"], relatedRoles:["p13c"] },
+  { id:"p13c", name:"Communication Compliance Analysts", product:"Purview", category:"Communication Compliance", risk:"Medium", description:"Reviews Communication Compliance alerts. Cannot create policies or access full unredacted message content.", permissions:"Review policy match alerts, investigate cases, limited message preview.", leastPrivilege:"Appropriate for first-level reviewers. Use instead of full Communication Compliance when policy management is not needed.", tags:["communication","compliance","analyst"], relatedRoles:["p12"] },
+  { id:"p14", name:"Communication Compliance Investigators", product:"Purview", category:"Communication Compliance", risk:"High", description:"Full investigative access to Communication Compliance cases including unredacted message content.", permissions:"Review full unredacted message content, manage cases, export evidence.", leastPrivilege:"Higher privilege than Analysts. Assign only when unredacted content access is required for investigation.", tags:["communication","compliance","investigation","content"], relatedRoles:["p12","p13c"] },
+  { id:"p15", name:"Communication Compliance Viewers", product:"Purview", category:"Communication Compliance", risk:"Low", description:"Read-only access to Communication Compliance reports and statistics without access to message content.", permissions:"View compliance reports and aggregate statistics only — no message content access.", leastPrivilege:"Safe for management reporting on communication compliance program effectiveness.", tags:["communication","compliance","reports","read-only"], relatedRoles:["p12"] },
+  { id:"p16", name:"DLP Compliance Management", product:"Purview", category:"Data Protection", risk:"High", description:"Creates and manages Data Loss Prevention policies to prevent sharing of sensitive information across Microsoft 365.", permissions:"Create, modify, delete, enable, and disable DLP policies across all M365 workloads and endpoints.", leastPrivilege:"Assign to data protection officers. DLP misconfiguration can block legitimate business workflows.", tags:["dlp","data-protection","policies","sensitive-data"], relatedRoles:["p1","p17"] },
+  { id:"p17", name:"Information Protection Admin", product:"Purview", category:"Data Protection", risk:"High", description:"Creates and manages sensitivity labels, label policies, and auto-labeling configurations.", permissions:"Create and publish sensitivity labels, manage label policies, configure auto-labeling.", leastPrivilege:"Assign to information protection team. Label policies affect all documents and emails.", tags:["sensitivity-labels","information-protection","auto-labeling"], relatedRoles:["p18","p16"] },
+  { id:"p18", name:"Information Protection Analyst", product:"Purview", category:"Data Protection", risk:"Medium", description:"Read-only access to Information Protection features including sensitivity labels, label analytics, and Activity Explorer.", permissions:"View sensitivity labels, label policies, Activity Explorer data, and label analytics.", leastPrivilege:"Use before Information Protection Admin when write access is not needed.", tags:["sensitivity-labels","analytics","read-only","activity-explorer"], relatedRoles:["p17"] },
+  { id:"p19", name:"Information Protection Reader", product:"Purview", category:"Data Protection", risk:"Low", description:"Read-only access to reports in the Information Protection section of the Microsoft Purview portal.", permissions:"View information protection reports and policy summaries — no label or policy access.", leastPrivilege:"Safe for executives and stakeholders reviewing information protection posture.", tags:["sensitivity-labels","reports","read-only"], relatedRoles:["p18"] },
+  { id:"p20", name:"Content Explorer Content Viewer", product:"Purview", category:"Data Protection", risk:"High", description:"Can open and view the actual content of items discovered by Content Explorer.", permissions:"View full content of all scanned items in Content Explorer including documents, emails, and Teams messages.", leastPrivilege:"Very sensitive. Assign only to investigators with documented business need to view classified content.", tags:["content-explorer","sensitive-data","documents","content-access"], relatedRoles:["p21"] },
+  { id:"p21", name:"Content Explorer List Viewer", product:"Purview", category:"Data Protection", risk:"Medium", description:"Views the list of items in Content Explorer including metadata, but cannot open or read the actual content.", permissions:"View file list, names, locations, and metadata in Content Explorer — no content access.", leastPrivilege:"Use before Content Explorer Content Viewer when content access is not needed.", tags:["content-explorer","metadata","read-only","inventory"], relatedRoles:["p20"] },
+  { id:"p22", name:"Records Management", product:"Purview", category:"Records", risk:"Medium", description:"Manages records management including retention labels, file plans, event-based retention, and disposition reviews.", permissions:"Create retention labels for records, manage file plans, configure event-based retention, approve dispositions.", leastPrivilege:"Assign to records managers and compliance staff managing the information lifecycle.", tags:["records","retention","disposition","file-plan"], relatedRoles:["p23"] },
+  { id:"p23", name:"Retention Management", product:"Purview", category:"Records", risk:"Medium", description:"Creates and manages retention policies and retention labels across all Microsoft 365 workloads.", permissions:"Create and publish retention policies and labels across Exchange, SharePoint, OneDrive, Teams.", leastPrivilege:"Assign to compliance team. Misconfigured retention can cause premature data deletion.", tags:["retention","policies","labels","compliance"], relatedRoles:["p22","p1"] },
+  { id:"p24", name:"Data Governance Administrator", product:"Purview", category:"Data Governance", risk:"High", description:"Full administrative access to Microsoft Purview Data Governance including Data Map, Unified Catalog, and role assignments.", permissions:"Manage all data governance features, domains, collections, and assign governance roles.", leastPrivilege:"Assign to data governance program leads. Can grant access to all governance resources.", tags:["data-governance","data-map","catalog","domains"], relatedRoles:["p25","p26"] },
+  { id:"p25", name:"Data Curator", product:"Purview", category:"Data Governance", risk:"Medium", description:"Creates and manages data assets in the Purview Unified Catalog including classifications, glossary terms, and metadata.", permissions:"Create, read, modify, move, and delete data assets; apply classifications; manage glossary terms.", leastPrivilege:"Appropriate for data stewards managing the data catalog.", tags:["data-catalog","metadata","classifications","steward"], relatedRoles:["p24","p26"] },
+  { id:"p26", name:"Data Reader", product:"Purview", category:"Data Governance", risk:"Low", description:"Read-only access to data assets, classifications, and glossary terms in the Purview Data Map.", permissions:"Read data assets, view classifications, browse collections, read glossary terms.", leastPrivilege:"Safe for business users discovering and understanding data assets.", tags:["data-catalog","read-only","discovery"], relatedRoles:["p25"] },
+  { id:"p27", name:"Data Source Administrator", product:"Purview", category:"Data Governance", risk:"Medium", description:"Manages data sources and scans in Microsoft Purview Data Map including registering sources and configuring scans.", permissions:"Register data sources, configure and run scans, manage scan rule sets.", leastPrivilege:"Assign to data engineering team responsible for data catalog population.", tags:["data-governance","data-sources","scans","catalog"], relatedRoles:["p24"] },
+  { id:"p28", name:"Privacy Management", product:"Purview", category:"Privacy", risk:"High", description:"Manages privacy risk management features including subject rights requests, assessments, and privacy risk policies.", permissions:"Manage subject rights requests, privacy assessments, configure privacy risk policies.", leastPrivilege:"Assign to privacy officers and legal team handling DSRs.", tags:["privacy","gdpr","subject-rights","dsr"], relatedRoles:["p29"] },
+  { id:"p29", name:"Subject Rights Request Administrator", product:"Purview", category:"Privacy", risk:"Medium", description:"Creates and manages data subject rights requests to support GDPR, CCPA, and other privacy regulations.", permissions:"Create and manage all subject rights requests, run data searches, view associated personal data.", leastPrivilege:"Assign to privacy team members handling DSRs. Has access to personal data discovered during processing.", tags:["privacy","subject-rights","gdpr","ccpa","dsr"], relatedRoles:["p28"] },
+  { id:"p30", name:"Privacy Management Analysts", product:"Purview", category:"Privacy", risk:"Medium", description:"Investigates and remediates privacy risk alerts in the Privacy Management solution.", permissions:"View and investigate privacy risk alerts, manage risk cases.", leastPrivilege:"Assign to privacy analysts doing risk triage. Less access than Privacy Management Administrator.", tags:["privacy","risk","analyst","alerts"], relatedRoles:["p28"] },
+  { id:"p31", name:"Privacy Management Investigators", product:"Purview", category:"Privacy", risk:"High", description:"Full investigative access to privacy management cases including personal data content.", permissions:"View all privacy risk cases, access personal data content for investigation, export findings.", leastPrivilege:"Higher privilege than Analysts. Assign only when content access is needed for investigation.", tags:["privacy","investigation","personal-data","content"], relatedRoles:["p28","p30"] },
+  { id:"p32", name:"Privacy Management Viewers", product:"Purview", category:"Privacy", risk:"Low", description:"Read-only access to privacy management reports and statistics.", permissions:"View privacy management reports and aggregate statistics — no case or content access.", leastPrivilege:"Safe for leadership reporting on privacy program effectiveness.", tags:["privacy","reports","read-only"], relatedRoles:["p28"] },
+  { id:"p33", name:"Purview Administrator", product:"Purview", category:"Administration", risk:"High", description:"Administrative role for the Microsoft Purview platform covering role management, domain management, and admin unit extensions.", permissions:"Role Management, Purview Domain Manager, Admin Unit Extension Manager.", leastPrivilege:"Assign to Purview platform administrators responsible for governance infrastructure.", tags:["admin","purview","roles","domains"], relatedRoles:["p24","p1"] },
+  { id:"p34", name:"Information Barriers Administrator", product:"Purview", category:"Compliance", risk:"High", description:"Creates and manages information barrier policies that prevent communication between specific groups of users.", permissions:"Define segments, create and apply information barrier policies across Teams, SharePoint, and OneDrive.", leastPrivilege:"Assign to compliance team in regulated industries (financial services, legal). Misconfiguration can block legitimate collaboration.", tags:["information-barriers","compliance","segments","policies"], relatedRoles:["p1"] },
+  { id:"p35", name:"Supervisory Review Administrator", product:"Purview", category:"Communication Compliance", risk:"High", description:"Creates and manages supervisory review policies for monitoring employee communications.", permissions:"Create and manage supervisory review policies, assign reviewers, and configure scope.", leastPrivilege:"Legacy role — replaced by Communication Compliance. Only relevant in older deployments.", tags:["supervisory-review","legacy","communication","compliance"], relatedRoles:["p12"] },
+  { id:"p36", name:"Quarantine Administrator", product:"Purview", category:"Data Protection", risk:"Medium", description:"Manages quarantined email messages across the organization in Microsoft Defender for Office 365.", permissions:"View, release, and delete quarantined messages for all users in the organization.", leastPrivilege:"Assign to mail security team. Can release quarantined email for all users.", tags:["quarantine","email","defender","mail-security"], relatedRoles:["p16"] },
+  { id:"p37", name:"Data Investigation Management", product:"Purview", category:"eDiscovery", risk:"High", description:"Creates and manages data investigations including searching for and remediating spilled data in Microsoft 365.", permissions:"Create investigations, search content, remediate (delete) spilled data across M365.", leastPrivilege:"Assign to security incident response team. Has ability to delete data — use with caution.", tags:["data-investigations","spill","remediation","incident-response"], relatedRoles:["p3","p4"] },
+  { id:"p38", name:"Sensitivity Label Administrator", product:"Purview", category:"Data Protection", risk:"High", description:"Creates, modifies, and publishes sensitivity labels and label policies. Specific to Purview portal label management.", permissions:"Full lifecycle management of sensitivity labels and publishing policies.", leastPrivilege:"Align with Information Protection Admin role — assign to information protection team only.", tags:["sensitivity-labels","labels","policies","classification"], relatedRoles:["p17","p18"] },
+  { id:"p39", name:"View-Only Audit Logs", product:"Purview", category:"Audit", risk:"Low", description:"View-only access to audit logs in the Microsoft Purview compliance portal.", permissions:"Search and view audit logs in the Purview portal — no export or management capabilities.", leastPrivilege:"Use for compliance reviewers who need audit log visibility in the Purview portal specifically.", tags:["audit","logs","view-only","compliance-portal"], relatedRoles:["p6"] },
+  { id:"p40", name:"View-Only Case", product:"Purview", category:"eDiscovery", risk:"Low", description:"Read-only access to eDiscovery cases in the Microsoft Purview portal.", permissions:"View eDiscovery cases, holds, and searches — cannot create or modify.", leastPrivilege:"Safe for legal operations staff who need case status visibility without management access.", tags:["ediscovery","cases","read-only"], relatedRoles:["p4"] },
 ];
 
 export const ALL_ROLES = [...ENTRA_ROLES, ...PURVIEW_ROLES];
-
 export const RISK_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3 };
-
 export const CATEGORIES = [...new Set(ALL_ROLES.map(r => r.category))].sort();

@@ -51,8 +51,8 @@ export default function Nav() {
 
         {/* Stats */}
         <div style={{ display: "flex", gap: 16, fontSize: 12, color: "var(--text-faint)" }}>
-          <span><b style={{ color: "var(--entra)" }}>24</b> Entra</span>
-          <span><b style={{ color: "var(--purview)" }}>24</b> Purview</span>
+          <span><b style={{ color: "var(--entra)" }}>111</b> Entra</span>
+          <span><b style={{ color: "var(--purview)" }}>40</b> Purview</span>
           <span><b style={{ color: "var(--critical)" }}>3</b> Critical</span>
         </div>
       </div>
