@@ -10,6 +10,14 @@ const SUGGESTIONS = [
   "What's the safest role for someone who only needs to read audit logs?",
 ];
 
+const formatMessage = (text) => {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '<br/><br/>')
+    .replace(/\n/g, '<br/>');
+};
+
 export default function AIAdvisor() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -46,10 +54,10 @@ Guidelines for responses:
 
     try {
       const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-    },
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           model: "claude-sonnet-4-5",
           max_tokens: 1000,
@@ -91,7 +99,7 @@ Guidelines for responses:
 
         <div ref={chatRef} style={{
           flex: 1, overflowY: "auto", padding: "20px",
-          display: "flex", flexDirection: "column", gap: 14,
+          display: "flex", flexDirection: "column", gap: 16,
         }}>
           {messages.length === 0 && (
             <div style={{ paddingTop: 20 }}>
@@ -123,10 +131,16 @@ Guidelines for responses:
               background: m.role === "user" ? "var(--entra)" : "var(--bg-subtle)",
               border: `1px solid ${m.role === "user" ? "var(--entra)" : "var(--border)"}`,
               borderRadius: m.role === "user" ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
-              padding: "11px 15px", fontSize: 13, lineHeight: 1.7,
-              color: m.role === "user" ? "white" : "var(--text-muted)",
+              padding: "12px 16px",
+              fontSize: 14,
+              lineHeight: 1.75,
+              color: m.role === "user" ? "white" : "var(--text)",
             }}>
-              {m.text}
+              {m.role === "user" ? (
+                m.text
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: formatMessage(m.text) }} />
+              )}
             </div>
           ))}
 
