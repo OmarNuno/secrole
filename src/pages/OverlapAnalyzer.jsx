@@ -2,6 +2,19 @@ import { useState, useRef, useEffect } from "react";
 import { ALL_ROLES } from "../data/roles";
 import { RiskBadge, ProductBadge } from "../components/Badges";
 
+const formatMessage = (text) => {
+  return text
+    .replace(/^### (.+)$/gm, '<h3 style="font-size:14px;font-weight:700;color:var(--text);margin:16px 0 6px;">$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2 style="font-size:15px;font-weight:700;color:var(--text);margin:20px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);">$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1 style="font-size:16px;font-weight:700;color:var(--text);margin:0 0 16px;">$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:16px 0;"/>')
+    .replace(/^- (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0;"><span style="color:var(--entra);flex-shrink:0;">•</span><span>$1</span></div>')
+    .replace(/\n\n/g, '<br/>')
+    .replace(/\n(?!<)/g, ' ');
+};
+
 function RoleSelector({ selected, onAdd, onRemove }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -20,7 +33,6 @@ function RoleSelector({ selected, onAdd, onRemove }) {
 
   return (
     <div>
-      {/* Selected roles */}
       {selected.length > 0 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
           {selected.map(r => (
@@ -41,7 +53,6 @@ function RoleSelector({ selected, onAdd, onRemove }) {
         </div>
       )}
 
-      {/* Search input */}
       {selected.length < 6 && (
         <div ref={ref} style={{ position: "relative" }}>
           <input
@@ -113,7 +124,7 @@ function AnalysisResult({ roles, result, loading }) {
   return (
     <div style={{ animation: "fadeUp 0.3s ease" }}>
       {/* Role risk summary */}
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${roles.length}, 1fr)`, gap: 12, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(roles.length, 3)}, 1fr)`, gap: 12, marginBottom: 20 }}>
         {roles.map(r => (
           <div key={r.id} style={{
             background: "var(--bg-subtle)", border: "1px solid var(--border)",
@@ -142,8 +153,11 @@ function AnalysisResult({ roles, result, loading }) {
           <span style={{ fontSize: 13, fontWeight: 600, color: "var(--entra)" }}>AI Overlap Analysis</span>
           <span style={{ fontSize: 11, color: "var(--text-faint)", marginLeft: "auto" }}>Powered by Claude</span>
         </div>
-        <div style={{ padding: "20px 24px" }}>
-          <div style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{result}</div>
+        <div style={{ padding: "24px 28px" }}>
+          <div
+            style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.8 }}
+            dangerouslySetInnerHTML={{ __html: formatMessage(result) }}
+          />
         </div>
       </div>
     </div>
@@ -173,24 +187,27 @@ ${roleDetails}
 
 Please provide a structured analysis covering:
 
-1. **OVERLAP ANALYSIS**: Which permissions overlap between these roles? Which roles include capabilities already covered by another role in this list?
+## 1. OVERLAP ANALYSIS
+Which permissions overlap between these roles? Which roles include capabilities already covered by another role in this list?
 
-2. **REDUNDANT ROLES**: Are any of these roles completely unnecessary given the others? Explain why.
+## 2. REDUNDANT ROLES
+Are any of these roles completely unnecessary given the others? Explain why.
 
-3. **RISK ASSESSMENT**: What is the combined risk of assigning all these roles together? Flag any dangerous combinations.
+## 3. RISK ASSESSMENT
+What is the combined risk of assigning all these roles together? Flag any dangerous combinations.
 
-4. **RECOMMENDATION**: What is the minimum set of roles that would satisfy legitimate needs? What single role or smaller combination would work?
+## 4. RECOMMENDATION
+What is the minimum set of roles that would satisfy legitimate needs? What single role or smaller combination would work?
 
-5. **PUSHBACK TEMPLATE**: Provide a 2-3 sentence response the admin can send back to the requester explaining why some roles are not needed.
+## 5. PUSHBACK TEMPLATE
+Provide a 2-3 sentence response the admin can send back to the requester explaining why some roles are not needed.
 
 Be direct and specific. Reference actual permission names where relevant.`;
 
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-    },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           model: "claude-sonnet-4-5",
           max_tokens: 1000,
@@ -220,9 +237,7 @@ Be direct and specific. Reference actual permission names where relevant.`;
       </div>
 
       {/* How it works */}
-      <div style={{
-        display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 28,
-      }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 28 }}>
         {[
           { n: "1", title: "Add the requested roles", desc: "Search and add up to 6 roles from a ticket or access request" },
           { n: "2", title: "Run the analysis", desc: "AI maps permission overlaps and flags redundant or dangerous combinations" },
@@ -266,9 +281,6 @@ Be direct and specific. Reference actual permission names where relevant.`;
           }}>
             {loading ? "Analyzing…" : `Analyze ${selectedRoles.length} Roles →`}
           </button>
-          {selectedRoles.length < 2 && (
-            <span style={{ fontSize: 12, color: "var(--text-faint)", marginLeft: 12 }}>Add at least 2 roles to analyze</span>
-          )}
         </div>
       )}
 
