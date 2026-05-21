@@ -7,6 +7,7 @@ export default function Nav() {
     { to: "/", label: "Role Library" },
     { to: "/analyzer", label: "Overlap Analyzer" },
     { to: "/advisor", label: "AI Advisor" },
+    { to: "/updates", label: "Updates" },
   ];
 
   return (
@@ -36,6 +37,7 @@ export default function Nav() {
         <nav style={{ display: "flex", gap: 4 }}>
           {links.map(({ to, label }) => {
             const active = pathname === to;
+            const isUpdates = to === "/updates";
             return (
               <Link key={to} to={to} style={{
                 padding: "6px 14px", borderRadius: 7, fontSize: 13, fontWeight: 500,
@@ -44,7 +46,11 @@ export default function Nav() {
                 border: `1px solid ${active ? "var(--entra-border)" : "transparent"}`,
                 transition: "all 0.15s",
                 textDecoration: "none",
-              }}>{label}</Link>
+                display: "flex", alignItems: "center", gap: 5,
+              }}>
+                {isUpdates && <span style={{ fontSize: 10, background: "#16a34a", color: "white", borderRadius: 4, padding: "1px 5px", fontWeight: 700, letterSpacing: "0.04em" }}>NEW</span>}
+                {label}
+              </Link>
             );
           })}
         </nav>
