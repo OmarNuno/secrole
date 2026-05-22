@@ -17,25 +17,17 @@ export default function RoleModal({ role, onClose }) {
     .map(id => ALL_ROLES.find(r => r.id === id))
     .filter(Boolean);
 
+  const riskMessages = {
+    Critical: "Treat as equivalent to Global Administrator. Strict controls required.",
+    High: "Significant permissions. Assign with documented justification only.",
+    Medium: "Moderate permissions. Scope carefully and review periodically.",
+    Low: "Limited permissions. Generally safe for appropriate team members.",
+  };
+
   return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed", inset: 0, background: "rgba(15,23,42,0.5)",
-        backdropFilter: "blur(4px)", zIndex: 200,
-        display: "flex", alignItems: "center", justifyContent: "center", padding: 24,
-      }}
-    >
-      <div
-        onClick={e => e.stopPropagation()}
-        style={{
-          background: "var(--bg)", borderRadius: 16,
-          border: "1px solid var(--border)",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
-          maxWidth: 640, width: "100%", maxHeight: "88vh", overflowY: "auto",
-          animation: "fadeUp 0.2s ease",
-        }}
-      >
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+
         {/* Header */}
         <div style={{ padding: "24px 28px 20px", borderBottom: "1px solid var(--border)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -51,20 +43,21 @@ export default function RoleModal({ role, onClose }) {
             <button onClick={onClose} style={{
               background: "var(--bg-muted)", border: "1px solid var(--border)",
               borderRadius: 8, width: 32, height: 32, display: "flex", alignItems: "center",
-              justifyContent: "center", color: "var(--text-muted)", fontSize: 16, flexShrink: 0,
+              justifyContent: "center", color: "var(--text-muted)", fontSize: 14, flexShrink: 0,
+              cursor: "pointer",
             }}>✕</button>
           </div>
         </div>
 
         {/* Risk banner */}
-        <div style={{ padding: "14px 28px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{
+          padding: "12px 28px",
+          borderBottom: "1px solid var(--border)",
+          display: "flex", alignItems: "center", gap: 12,
+          background: "var(--bg-subtle)",
+        }}>
           <RiskBadge risk={role.risk} />
-          <span style={{ fontSize: 13, color: "var(--text-muted)" }}>
-            {role.risk === "Critical" && "Treat as equivalent to Global Administrator. Strict controls required."}
-            {role.risk === "High" && "Significant permissions. Assign with documented justification only."}
-            {role.risk === "Medium" && "Moderate permissions. Scope carefully and review periodically."}
-            {role.risk === "Low" && "Limited permissions. Generally safe for appropriate team members."}
-          </span>
+          <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{riskMessages[role.risk]}</span>
         </div>
 
         {/* Content */}
@@ -127,13 +120,12 @@ function Section({ title, content, code, accent }) {
     <div>
       <div style={{ ...labelStyle, color: accent ? "var(--purview)" : "var(--text-faint)" }}>{title}</div>
       <p style={{
-        fontSize: 14, color: "var(--text-muted)", lineHeight: 1.7, margin: 0,
+        fontSize: code ? 13 : 14, color: "var(--text-muted)", lineHeight: 1.7, margin: 0,
         background: code ? "var(--bg-subtle)" : "transparent",
         border: code ? "1px solid var(--border)" : "none",
         borderRadius: code ? 8 : 0,
         padding: code ? "10px 14px" : 0,
         fontFamily: code ? "'SF Mono', 'Fira Code', monospace" : "inherit",
-        fontSize: code ? 13 : 14,
       }}>{content}</p>
     </div>
   );

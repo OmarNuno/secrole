@@ -4,21 +4,8 @@ import { RiskBadge, ProductBadge, CategoryBadge } from "../components/Badges";
 import RoleModal from "../components/RoleModal";
 
 function RoleCard({ role, onClick }) {
-  const [hovered, setHovered] = useState(false);
   return (
-    <div
-      onClick={() => onClick(role)}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: hovered ? "var(--bg)" : "var(--bg)",
-        border: `1px solid ${hovered ? "var(--entra-border)" : "var(--border)"}`,
-        borderRadius: 10, padding: "16px 18px", cursor: "pointer",
-        boxShadow: hovered ? "var(--shadow-md)" : "var(--shadow-sm)",
-        transition: "all 0.15s ease",
-        transform: hovered ? "translateY(-1px)" : "none",
-      }}
-    >
+    <div className="role-card" onClick={() => onClick(role)}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8, marginBottom: 8 }}>
         <span style={{ fontSize: 14, fontWeight: 600, color: "var(--text)", lineHeight: 1.3, flex: 1 }}>{role.name}</span>
         <RiskBadge risk={role.risk} size="sm" />
@@ -36,11 +23,15 @@ function RoleCard({ role, onClick }) {
 
 function SectionHeader({ label, color, count }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-      <div style={{ width: 3, height: 20, background: color, borderRadius: 2 }} />
-      <span style={{ fontSize: 12, fontWeight: 700, color, letterSpacing: "0.08em", textTransform: "uppercase" }}>{label}</span>
-      <span style={{ fontSize: 12, color: "var(--text-faint)", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 20, padding: "1px 8px" }}>{count} roles</span>
-      <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+    <div className="section-header">
+      <div style={{ width: 3, height: 20, background: color, borderRadius: 2, flexShrink: 0 }} />
+      <span style={{ fontSize: 12, fontWeight: 700, color, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{label}</span>
+      <span style={{
+        fontSize: 11, color: "var(--text-faint)",
+        background: "var(--bg-muted)", border: "1px solid var(--border)",
+        borderRadius: 20, padding: "1px 8px", whiteSpace: "nowrap",
+      }}>{count} roles</span>
+      <div className="section-divider" />
     </div>
   );
 }
@@ -66,16 +57,6 @@ export default function RoleLibrary() {
   const showPurview = filterProduct === "All" || filterProduct === "Purview";
   const totalShown = (showEntra ? entraRoles.length : 0) + (showPurview ? purviewRoles.length : 0);
 
-  const FilterBtn = ({ label, value, current, setter }) => (
-    <button onClick={() => setter(value)} style={{
-      padding: "5px 12px", borderRadius: 6, fontSize: 12, fontWeight: 500,
-      background: current === value ? "var(--text)" : "var(--bg)",
-      color: current === value ? "white" : "var(--text-muted)",
-      border: `1px solid ${current === value ? "var(--text)" : "var(--border)"}`,
-      transition: "all 0.15s",
-    }}>{label}</button>
-  );
-
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px" }}>
 
@@ -96,36 +77,31 @@ export default function RoleLibrary() {
         display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center",
       }}>
         <input
+          className="search-input"
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="🔍  Search roles, permissions, categories…"
-          style={{
-            background: "var(--bg)", border: "1px solid var(--border)",
-            borderRadius: 8, padding: "8px 14px", fontSize: 13, color: "var(--text)",
-            outline: "none", width: 280,
-          }}
         />
 
         <div style={{ display: "flex", gap: 4 }}>
-          {["All","Entra","Purview"].map(v => <FilterBtn key={v} label={v} value={v} current={filterProduct} setter={setFilterProduct} />)}
+          {["All","Entra","Purview"].map(v => (
+            <button key={v} className={`filter-btn ${filterProduct === v ? "active" : ""}`}
+              onClick={() => setFilterProduct(v)}>{v}</button>
+          ))}
         </div>
 
         <div style={{ width: 1, height: 20, background: "var(--border)" }} />
 
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-          {["All","Critical","High","Medium","Low"].map(v => <FilterBtn key={v} label={v} value={v} current={filterRisk} setter={setFilterRisk} />)}
+          {["All","Critical","High","Medium","Low"].map(v => (
+            <button key={v} className={`filter-btn ${filterRisk === v ? "active" : ""}`}
+              onClick={() => setFilterRisk(v)}>{v}</button>
+          ))}
         </div>
 
         <div style={{ width: 1, height: 20, background: "var(--border)" }} />
 
-        <select
-          value={filterCategory}
-          onChange={e => setFilterCategory(e.target.value)}
-          style={{
-            background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6,
-            padding: "6px 10px", fontSize: 12, color: "var(--text-muted)", outline: "none",
-          }}
-        >
+        <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)}>
           <option value="All">All Categories</option>
           {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
