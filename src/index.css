@@ -367,3 +367,82 @@ select:focus {
 .update-card:hover {
   box-shadow: var(--shadow-md);
 }
+
+/* ── MOBILE RESPONSIVE ───────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Filter bar stacks vertically */
+  .filter-bar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* Search input full width */
+  .search-input {
+    width: 100% !important;
+  }
+
+  /* Role cards single column */
+  .roles-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Page padding tighter */
+  .page-container {
+    padding: 20px 16px !important;
+  }
+
+  /* Hero text smaller */
+  .page-title {
+    font-size: 22px !important;
+  }
+
+  /* Modal full screen on mobile */
+  .modal-overlay {
+    padding: 0 !important;
+    align-items: flex-end !important;
+  }
+
+  .modal-content {
+    border-radius: 16px 16px 0 0 !important;
+    max-height: 92vh !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Chat messages full width */
+  .chat-message-user,
+  .chat-message-assistant {
+    max-width: 92% !important;
+  }
+
+  /* How it works grid — stack */
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Analyzer role cards stack */
+  .analyzer-roles-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Update cards padding tighter */
+  .update-card {
+    padding: 14px 16px !important;
+  }
+
+  /* Hide dividers in filter bar on mobile */
+  .filter-divider {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 20px !important;
+  }
+
+  .filter-btn {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+}

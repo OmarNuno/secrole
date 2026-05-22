@@ -58,11 +58,11 @@ export default function RoleLibrary() {
   const totalShown = (showEntra ? entraRoles.length : 0) + (showPurview ? purviewRoles.length : 0);
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px" }}>
+    <div className="page-container" style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px" }}>
 
       {/* Hero */}
-      <div style={{ marginBottom: 32, animation: "fadeUp 0.4s ease" }}>
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", letterSpacing: "-0.03em", marginBottom: 8 }}>
+      <div style={{ marginBottom: 28, animation: "fadeUp 0.4s ease" }}>
+        <h1 className="page-title" style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", letterSpacing: "-0.03em", marginBottom: 8 }}>
           Microsoft Role Intelligence
         </h1>
         <p style={{ fontSize: 15, color: "var(--text-muted)", maxWidth: 600 }}>
@@ -74,48 +74,49 @@ export default function RoleLibrary() {
       <div style={{
         background: "var(--bg-subtle)", border: "1px solid var(--border)",
         borderRadius: 12, padding: "16px 20px", marginBottom: 28,
-        display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center",
       }}>
-        <input
-          className="search-input"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="🔍  Search roles, permissions, categories…"
-        />
+        <div className="filter-bar" style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+          <input
+            className="search-input"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="🔍  Search roles, permissions, categories…"
+          />
 
-        <div style={{ display: "flex", gap: 4 }}>
-          {["All","Entra","Purview"].map(v => (
-            <button key={v} className={`filter-btn ${filterProduct === v ? "active" : ""}`}
-              onClick={() => setFilterProduct(v)}>{v}</button>
-          ))}
+          <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+            {["All","Entra","Purview"].map(v => (
+              <button key={v} className={`filter-btn ${filterProduct === v ? "active" : ""}`}
+                onClick={() => setFilterProduct(v)}>{v}</button>
+            ))}
+          </div>
+
+          <div className="filter-divider" style={{ width: 1, height: 20, background: "var(--border)" }} />
+
+          <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+            {["All","Critical","High","Medium","Low"].map(v => (
+              <button key={v} className={`filter-btn ${filterRisk === v ? "active" : ""}`}
+                onClick={() => setFilterRisk(v)}>{v}</button>
+            ))}
+          </div>
+
+          <div className="filter-divider" style={{ width: 1, height: 20, background: "var(--border)" }} />
+
+          <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)}>
+            <option value="All">All Categories</option>
+            {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+
+          <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--text-faint)" }}>
+            {totalShown} roles
+          </span>
         </div>
-
-        <div style={{ width: 1, height: 20, background: "var(--border)" }} />
-
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-          {["All","Critical","High","Medium","Low"].map(v => (
-            <button key={v} className={`filter-btn ${filterRisk === v ? "active" : ""}`}
-              onClick={() => setFilterRisk(v)}>{v}</button>
-          ))}
-        </div>
-
-        <div style={{ width: 1, height: 20, background: "var(--border)" }} />
-
-        <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)}>
-          <option value="All">All Categories</option>
-          {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-
-        <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--text-faint)" }}>
-          {totalShown} roles
-        </span>
       </div>
 
       {/* Entra Section */}
       {showEntra && entraRoles.length > 0 && (
         <div style={{ marginBottom: 36, animation: "fadeUp 0.4s ease" }}>
           <SectionHeader label="Microsoft Entra ID" color="var(--entra)" count={entraRoles.length} />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 12 }}>
+          <div className="roles-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 12 }}>
             {entraRoles.map(r => <RoleCard key={r.id} role={r} onClick={setSelectedRole} />)}
           </div>
         </div>
@@ -125,7 +126,7 @@ export default function RoleLibrary() {
       {showPurview && purviewRoles.length > 0 && (
         <div style={{ animation: "fadeUp 0.5s ease" }}>
           <SectionHeader label="Microsoft Purview" color="var(--purview)" count={purviewRoles.length} />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 12 }}>
+          <div className="roles-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 12 }}>
             {purviewRoles.map(r => <RoleCard key={r.id} role={r} onClick={setSelectedRole} />)}
           </div>
         </div>
