@@ -53,7 +53,14 @@ function UpdateCard({ update }) {
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10, gap: 12 }}>
         <h3 style={{ fontSize: 15, fontWeight: 600, color: "var(--text)", lineHeight: 1.3, flex: 1 }}>
-          {update.title}
+          {update.url ? (
+            <a href={update.url} target="_blank" rel="noopener noreferrer"
+               style={{ color: "inherit", textDecoration: "none" }}
+               onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+               onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}>
+              {update.title} ↗
+            </a>
+          ) : update.title}
         </h3>
         <ImportanceBadge importance={update.importance} />
       </div>
@@ -75,84 +82,30 @@ function UpdateCard({ update }) {
   );
 }
 
-function EmptyState({ onRefresh, refreshing }) {
-  return (
-    <div style={{ textAlign: "center", padding: "80px 24px" }}>
-      <div style={{ fontSize: 48, marginBottom: 16 }}>📡</div>
-      <h3 style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", marginBottom: 8 }}>
-        No updates loaded yet
-      </h3>
-      <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 24, maxWidth: 400, margin: "0 auto 24px" }}>
-        Click the button below to fetch the latest Microsoft Entra and Purview updates from official sources.
-      </p>
-      <button onClick={onRefresh} disabled={refreshing} style={{
-        background: "var(--entra)", color: "white", border: "none",
-        borderRadius: 8, padding: "11px 24px", fontSize: 14, fontWeight: 600,
-        cursor: refreshing ? "not-allowed" : "pointer",
-        opacity: refreshing ? 0.7 : 1,
-      }}>
-        {refreshing ? "Fetching updates…" : "Load Latest Updates"}
-      </button>
-    </div>
-  );
-}
-
 export default function Updates() {
   const [updates, setUpdates] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [stale, setStale] = useState(false);
   const [error, setError] = useState(null);
   const [filterCategory, setFilterCategory] = useState("All");
-  const [showRefreshInput, setShowRefreshInput] = useState(false);
-  const [refreshSecret, setRefreshSecret] = useState("");
 
   useEffect(() => {
-    fetchCached();
-  }, []);
-
-  const fetchCached = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/updates");
-      const data = await res.json();
-      if (data.updates?.length > 0) {
-        setUpdates(data.updates);
-        setLastUpdated(data.fetchedAt || data.lastUpdated);
-        setStale(data.stale || false);
-      }
-    } catch (e) {
-      setError("Failed to load updates.");
-    }
-    setLoading(false);
-  };
-
-  const handleRefresh = async () => {
-    if (!refreshSecret.trim()) return;
-    setRefreshing(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/updates", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ secret: refreshSecret }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Refresh failed. Check your secret key.");
-      } else {
+    // Static file written daily by the GitHub Action — no API call, no cost, no auth.
+    // Cache-bust so users don't get a stale CDN copy after the daily refresh.
+    fetch(`/updates-cache.json?t=${Date.now()}`)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
         setUpdates(data.updates || []);
-        setLastUpdated(data.fetchedAt);
-        setStale(false);
-        setShowRefreshInput(false);
-        setRefreshSecret("");
-      }
-    } catch (e) {
-      setError("Connection error during refresh.");
-    }
-    setRefreshing(false);
-  };
+        setLastUpdated(data.fetchedAt || data.lastUpdated);
+      })
+      .catch(() => {
+        setError("Updates couldn't be loaded right now. Try again in a few minutes.");
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const categories = ["All", ...Object.keys(CATEGORY_CONFIG)];
   const filtered = filterCategory === "All"
@@ -175,62 +128,19 @@ export default function Updates() {
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 24px" }}>
 
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32, flexWrap: "wrap", gap: 16 }}>
-        <div>
-          <h1 style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", letterSpacing: "-0.03em", marginBottom: 8 }}>
-            Entra & Purview Updates
-          </h1>
-          <p style={{ fontSize: 15, color: "var(--text-muted)" }}>
-            Latest role changes, feature announcements, and security advisories from Microsoft.
+      <div style={{ marginBottom: 32 }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", letterSpacing: "-0.03em", marginBottom: 8 }}>
+          Entra &amp; Purview Updates
+        </h1>
+        <p style={{ fontSize: 15, color: "var(--text-muted)" }}>
+          Latest role changes, feature announcements, and security advisories from Microsoft.
+          Refreshed daily.
+        </p>
+        {lastUpdated && (
+          <p style={{ fontSize: 12, color: "var(--text-faint)", marginTop: 6 }}>
+            ✓ Last refreshed: {formatDate(lastUpdated)}
           </p>
-          {lastUpdated && (
-            <p style={{ fontSize: 12, color: "var(--text-faint)", marginTop: 6 }}>
-              {stale ? "⚠️ Cache may be outdated · " : "✓ "}
-              Last refreshed: {formatDate(lastUpdated)}
-            </p>
-          )}
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end" }}>
-          <button
-            onClick={() => setShowRefreshInput(!showRefreshInput)}
-            style={{
-              background: "var(--bg-subtle)", border: "1px solid var(--border)",
-              borderRadius: 8, padding: "8px 16px", fontSize: 13,
-              color: "var(--text-muted)", cursor: "pointer", fontWeight: 500,
-            }}
-          >
-            🔄 Refresh Updates
-          </button>
-
-          {showRefreshInput && (
-            <div style={{ display: "flex", gap: 8, animation: "fadeUp 0.2s ease" }}>
-              <input
-                type="password"
-                value={refreshSecret}
-                onChange={e => setRefreshSecret(e.target.value)}
-                onKeyDown={e => e.key === "Enter" && handleRefresh()}
-                placeholder="Enter refresh key…"
-                style={{
-                  background: "var(--bg)", border: "1px solid var(--border)",
-                  borderRadius: 8, padding: "8px 12px", fontSize: 13,
-                  color: "var(--text)", outline: "none", width: 180,
-                }}
-              />
-              <button onClick={handleRefresh} disabled={refreshing || !refreshSecret.trim()} style={{
-                background: "var(--entra)", color: "white", border: "none",
-                borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 600,
-                cursor: "pointer", opacity: refreshing || !refreshSecret.trim() ? 0.5 : 1,
-              }}>
-                {refreshing ? "…" : "Go"}
-              </button>
-            </div>
-          )}
-
-          {error && (
-            <p style={{ fontSize: 12, color: "var(--critical)", maxWidth: 260, textAlign: "right" }}>{error}</p>
-          )}
-        </div>
+        )}
       </div>
 
       {/* Category filters */}
@@ -240,7 +150,7 @@ export default function Updates() {
             <button key={cat} onClick={() => setFilterCategory(cat)} style={{
               padding: "5px 12px", borderRadius: 6, fontSize: 12, fontWeight: 500,
               background: filterCategory === cat ? "var(--text)" : "var(--bg)",
-              color: filterCategory === cat ? "white" : "var(--text-muted)",
+              color: filterCategory === cat ? "var(--bg)" : "var(--text-muted)",
               border: `1px solid ${filterCategory === cat ? "var(--text)" : "var(--border)"}`,
               transition: "all 0.15s", cursor: "pointer",
             }}>{cat}</button>
@@ -255,7 +165,7 @@ export default function Updates() {
       {loading && (
         <div style={{ textAlign: "center", padding: "60px 24px" }}>
           <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 12 }}>
-            {[0,1,2].map(i => (
+            {[0, 1, 2].map(i => (
               <div key={i} style={{
                 width: 10, height: 10, borderRadius: "50%", background: "var(--entra)",
                 animation: "blink 1.2s infinite", animationDelay: `${i * 0.2}s`,
@@ -266,9 +176,17 @@ export default function Updates() {
         </div>
       )}
 
-      {/* Empty state */}
+      {/* Empty / error state — no button; the feed refreshes itself daily */}
       {!loading && updates.length === 0 && (
-        <EmptyState onRefresh={() => setShowRefreshInput(true)} refreshing={refreshing} />
+        <div style={{ textAlign: "center", padding: "80px 24px" }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>📡</div>
+          <h3 style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", marginBottom: 8 }}>
+            {error ? "Updates unavailable" : "No updates yet"}
+          </h3>
+          <p style={{ fontSize: 14, color: "var(--text-muted)", maxWidth: 420, margin: "0 auto" }}>
+            {error || "The feed refreshes automatically every morning. Check back soon for the latest Entra and Purview news."}
+          </p>
+        </div>
       )}
 
       {/* High impact section */}
