@@ -1,18 +1,18 @@
 # SecRole — CLAUDE_CONTEXT.md
 
-> **Purpose of this file:** Paste this at the start of every new Claude session to restore full project context instantly. Last updated: June 2026.
+> **Purpose of this file:** Paste this at the start of every new Claude session to restore full project context instantly. Last updated: July 20, 2026.
 
 ---
 
 ## 📌 Project Overview
 
-**SecRole** (`secrole.com`) is a Microsoft identity and security role intelligence tool built for IT admins, security engineers, and compliance officers. It provides a complete reference for all Microsoft Entra ID and Microsoft Purview RBAC roles with risk levels, permissions, least-privilege guidance, an AI-powered overlap analyzer, an AI role advisor, and a daily-refreshed news feed pulling Microsoft updates.
+**SecRole** (`secrole.com`) is a Microsoft identity and security role intelligence tool built for IT admins, security engineers, and compliance officers. It provides a complete reference for all Microsoft Entra ID and Microsoft Purview RBAC roles with risk levels, permissions, least-privilege guidance, an AI-powered overlap analyzer, an AI role advisor, and a daily-refreshed news feed pulling real Microsoft updates from official sources.
 
 **Owner:** Omar Nuno (Velotek.ai)
 **Repo:** github.com/OmarNuno/secrole
 **Live URL:** secrole.com (also secrole.vercel.app)
 **Started:** April 2026
-**Current Version:** V1.1
+**Current Version:** V1.1 (Updates pipeline live as of July 20, 2026)
 
 ---
 
@@ -20,12 +20,13 @@
 
 | Layer | Technology | Notes |
 |---|---|---|
-| Frontend | React + Vite | No TypeScript — plain JSX |
+| Frontend | React + Vite | No TypeScript — plain JSX. `"type": "module"` in package.json |
 | Routing | react-router-dom | SPA with BrowserRouter |
 | Styling | CSS variables + inline styles | Full light/dark theme via `data-theme` attribute |
-| AI | Anthropic Claude API | Sonnet 4.5 via `/api/chat` proxy |
+| AI (in-app) | Anthropic Claude API | Via `/api/chat` proxy |
+| AI (updates pipeline) | Claude Haiku (`claude-haiku-4-5-20251001`) | Runs in GitHub Action, ~$0.02/day |
 | API Proxy | Vercel Serverless Function | `api/chat.js` — handles CORS, rate limiting, logging |
-| Updates | GitHub Actions + static JSON | Daily cron → `public/updates-cache.json` |
+| Updates | GitHub Actions + static JSON | Daily cron 6am UTC → commits `public/updates-cache.json` |
 | Hosting | Vercel (Hobby free tier) | Auto-deploys on push to `main` |
 | Domain | name.com | DNS A record → 216.198.79.1, CNAME www → Vercel |
 | Version Control | GitHub | Public repo: OmarNuno/secrole |
@@ -39,12 +40,12 @@
 ```
 secrole/
 ├── api/
-│   ├── chat.js              ← Anthropic API proxy (rate limiting + logging)
-│   └── updates.js           ← Legacy — no longer used, can delete
+│   └── chat.js              ← Anthropic API proxy (rate limiting + logging)
+│                              (legacy api/updates.js DELETED July 2026)
 ├── public/
-│   └── updates-cache.json   ← Static JSON written by GitHub Action daily
+│   └── updates-cache.json   ← Written + committed daily by GitHub Action
 ├── scripts/
-│   └── fetch-updates.js     ← Node script run by GitHub Action
+│   └── fetch-updates.js     ← Updates pipeline (v3) — see Updates Pipeline section
 ├── src/
 │   ├── components/
 │   │   ├── Badges.jsx        ← RiskBadge, ProductBadge, CategoryBadge
@@ -58,17 +59,44 @@ secrole/
 │   │   ├── AIAdvisor.jsx     ← Chat interface for role recommendations
 │   │   ├── OverlapAnalyzer.jsx ← Multi-role overlap + pushback template generator
 │   │   ├── RoleLibrary.jsx   ← Main role grid with search + filters
-│   │   └── Updates.jsx       ← Reads from /updates-cache.json — no API calls
+│   │   └── Updates.jsx       ← Reads /updates-cache.json (rewritten July 2026)
 │   ├── App.jsx               ← Routes + theme initialization
 │   ├── index.css             ← CSS variables for light/dark themes + utility classes
 │   └── main.jsx              ← React entry point with BrowserRouter
 ├── .github/
 │   └── workflows/
-│       └── fetch-updates.yml ← Runs daily at 6am UTC
+│       └── fetch-updates.yml ← Daily 6am UTC + manual dispatch; commits cache
 ├── vercel.json               ← SPA rewrites + API routing
 ├── vite.config.js            ← Standard Vite config
 └── CLAUDE_CONTEXT.md         ← This file
 ```
+
+---
+
+## 📰 Updates Pipeline (built & verified July 20, 2026)
+
+The `/updates` page is a real, self-maintaining Entra/Purview news feed. Full chain:
+
+**GitHub Action (daily 6am UTC)** → runs `scripts/fetch-updates.js` (Node 22, zero npm deps) → fetches real Microsoft sources → sends compact batch to Claude Haiku for editorial triage → writes `public/updates-cache.json` → **commits as `secrole-bot`** → Vercel auto-deploys → users fetch a static file (free, instant, no per-user API cost).
+
+### Sources (in the script)
+| Source | Method | Notes |
+|---|---|---|
+| Microsoft Entra Release Notes | Raw markdown from `raw.githubusercontent.com/MicrosoftDocs/entra-docs/.../whats-new.md` | **The canonical place new Entra roles & permission changes are announced.** Parsed into per-announcement items with `[Type \| Service category]` tags |
+| Microsoft Purview What's New | HTML from `learn.microsoft.com/en-us/purview/whats-new` (repo is private) | 2 most recent months as "Digest:" items; Claude splits digests into individual cards |
+| M365 Roadmap API | JSON from `microsoft.com/releasecommunications/api/v1/m365`, no auth | Filtered to products containing entra/purview/azure active directory |
+| MSRC Security Update Guide | RSS `api.msrc.microsoft.com/update-guide/rss` | Keyword pre-filter (entra, ADFS, kerberos, identity, purview, dlp, …) — raw feed is ~2,000 CVEs on Patch Tuesday |
+| Tech Community Entra + Security blogs | RSS with fallback URL lists | ⚠️ Currently ALL fallback URLs return 0 items (see Gotchas) — page works fine without them |
+
+### Script safeguards (fetch-updates.js v3)
+- **Per-source cap of 12** items so no source floods the 50-item batch (learned the hard way: MSRC once contributed 2,061)
+- Prompt rules: Claude consolidates duplicate CVEs into one card (e.g., "7 DoS Vulnerabilities Patched in ADFS"), splits monthly digests, categorizes New Role / Permission Change / Feature Update / Security Advisory / Roadmap, and must keep a mix of sources/categories
+- **Anti-hallucination:** output URLs are validated against fetched URLs — Claude cannot invent articles
+- Graceful degradation: any single source failing logs a ⚠️ and continues; Claude failure keeps the old cache; unchanged results skip the commit
+- Run logs print per-source counts — first place to look when debugging
+
+### Frontend (Updates.jsx)
+Fetches `/updates-cache.json?t=${Date.now()}` (cache-buster). No refresh button, no secrets — the old secret-key UI is gone. Items with a `url` render clickable titles. Empty state says the feed refreshes daily.
 
 ---
 
@@ -83,23 +111,24 @@ secrole/
 - [x] Overlap Analyzer — add 2-6 roles, get AI analysis with pushback template
 - [x] AI Advisor — chat interface with role recommendations
 - [x] Markdown rendering in AI responses (bold, headers, bullets, HR)
-- [x] Updates page — reads static JSON, no API calls for end users
-- [x] GitHub Action — daily auto-refresh of updates-cache.json
+- [x] **Updates page — LIVE with real Microsoft news, daily auto-refresh, clickable sources** (July 2026)
+- [x] GitHub Action — daily fetch + commit of updates-cache.json (verified working, ~26s runs)
 - [x] Dark/light mode toggle — persists to localStorage, respects system preference
 - [x] Mobile hamburger menu — slide-out drawer on ≤768px
 - [x] Rate limiting — 10 requests/IP/hour in api/chat.js
 - [x] Usage logging — structured JSON logs in Vercel
 - [x] Custom domain — secrole.com live with SSL
+- [x] Legacy api/updates.js deleted; UPDATES_REFRESH_SECRET removed from Vercel
+- [x] Workflow actions on v5, Node 22 (deprecation warning silenced)
 
 ### Known Issues / Not Done Yet
 - [ ] Model name in AIAdvisor.jsx and OverlapAnalyzer.jsx still says `claude-sonnet-4-5` — update to `claude-haiku-4-5-20251001` to cut costs 70%
-- [ ] `api/updates.js` still exists but is no longer used — safe to delete
-- [ ] Rate limiter is in-memory only — resets on Vercel cold starts (good enough for now, upgrade to Upstash Redis for production scale)
+- [ ] Tech Community blog RSS feeds all return 0 (Microsoft killed them again) — page is healthy without them; revisit only if the feed feels thin
+- [ ] Rate limiter is in-memory only — resets on Vercel cold starts (fine for now; Upstash Redis is the upgrade path)
 - [ ] No SEO individual role pages yet (planned V1.2)
 - [ ] No side-by-side role comparison tool yet (planned V1.3)
 - [ ] README.md still has default Vite content — needs updating
 - [ ] Mobile layout for Overlap Analyzer and AI Advisor pages needs work
-- [ ] The `_lovable.www.secrole.com` TXT record on name.com was deleted (confirmed)
 
 ---
 
@@ -130,11 +159,12 @@ secrole/
     {
       "id": "unique-slug",
       "title": "Update title",
-      "summary": "2-3 sentence summary",
-      "category": "Feature Update | New Role | Permission Change | Security Advisory | Roadmap",
-      "source": "Microsoft Tech Community",
-      "date": "May 2026",
-      "importance": "high | medium | low"
+      "summary": "2-3 sentence summary (Claude-written, original wording)",
+      "category": "New Role | Permission Change | Feature Update | Security Advisory | Roadmap",
+      "source": "e.g. Microsoft Entra Release Notes",
+      "date": "Month YYYY",
+      "importance": "high | medium | low",
+      "url": "link to the original Microsoft source (optional but usually present)"
     }
   ]
 }
@@ -149,7 +179,7 @@ secrole/
 | `/` | RoleLibrary | Main role grid — default landing page |
 | `/analyzer` | OverlapAnalyzer | Multi-role overlap analysis |
 | `/advisor` | AIAdvisor | AI chat for role recommendations |
-| `/updates` | Updates | Microsoft Entra/Purview news feed |
+| `/updates` | Updates | Daily Entra/Purview news feed (static JSON) |
 | `/api/chat` | api/chat.js | Serverless function — Anthropic proxy |
 
 ---
@@ -159,13 +189,14 @@ secrole/
 ### Vercel (Settings → Environment Variables)
 | Key | Value | Used by |
 |---|---|---|
-| `VITE_ANTHROPIC_API_KEY` | `sk-ant-api03-...` | `api/chat.js` — Anthropic API proxy |
-| `UPDATES_REFRESH_SECRET` | any password you choose | Legacy `api/updates.js` — no longer needed |
+| `VITE_ANTHROPIC_API_KEY` | `sk-ant-api03-...` | `api/chat.js` — Anthropic API proxy. **DO NOT DELETE** |
 
-### GitHub (Settings → Secrets → Actions)
+(`UPDATES_REFRESH_SECRET` was removed July 2026 — no longer exists.)
+
+### GitHub (Settings → Secrets and variables → Actions)
 | Key | Value | Used by |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | `sk-ant-api03-...` | `scripts/fetch-updates.js` in GitHub Action |
+| `ANTHROPIC_API_KEY` | `sk-ant-api03-...` | `scripts/fetch-updates.js` in the daily Action |
 
 ### Local development (`.env` at project root — never commit)
 ```
@@ -177,25 +208,31 @@ VITE_ANTHROPIC_API_KEY=sk-ant-api03-...
 ## 🧠 Key Decisions & Why
 
 ### No database
-Role data is static — it changes maybe once a month when Microsoft adds roles. A database would add cost, complexity, and a Supabase dependency we explicitly moved away from. Data lives in `src/data/roles.js` and gets deployed with the app.
+Role data is static — it changes maybe once a month when Microsoft adds roles. Data lives in `src/data/roles.js` and deploys with the app.
 
 ### Vercel serverless proxy for AI calls
-Direct browser → Anthropic API calls fail with CORS errors. The `api/chat.js` serverless function runs server-side, passes the API key securely, and adds rate limiting. This is the correct architecture for any frontend app calling the Anthropic API.
+Direct browser → Anthropic API calls fail with CORS errors. `api/chat.js` runs server-side, passes the API key securely, and adds rate limiting.
 
-### Static JSON for Updates page
-Originally built with a secret-key refresh mechanism, but that meant users saw empty content. Switched to GitHub Actions writing a static JSON file daily. Users fetch a static file (free, instant, no API cost). The GitHub Action pays the API cost once per day (~$0.25).
+### Static JSON for Updates page (the architecture that finally worked)
+V1 used a serverless endpoint with a `/tmp` cache and a secret-key refresh — the cache died on every cold start and users saw a permanently empty page. Replaced entirely: the GitHub Action fetches, triages, and **commits** the JSON to the repo, so it deploys like any other static asset. Users pay zero API cost; the Action pays ~$0.02/day (Haiku).
+
+### Fetch real sources, let Claude only edit
+Claude never generates "news" from memory — the script fetches actual Microsoft content first, then Claude filters/summarizes/categorizes it, and output URLs are validated against input URLs. This eliminates stale or invented articles.
+
+### Entra Release Notes as the role-announcement source of truth
+`learn.microsoft.com/en-us/entra/fundamentals/whats-new` is where Microsoft announces new built-in roles and permission changes, and its raw markdown is publicly fetchable from the entra-docs GitHub repo with clean `Type` / `Service category` metadata. This powers the "New Role" and "Permission Change" categories.
 
 ### Dark mode as default
-Security tools skew toward dark mode users (SOC analysts, IT admins working late). GitHub-dark style (`#0d1117`) background. System preference respected on first visit, then persisted to localStorage.
+Security tools skew toward dark mode users. GitHub-dark style (`#0d1117`) background. System preference respected on first visit, then persisted.
 
 ### CSS variables for theming
-All colors defined as CSS variables on `:root` (light) and `[data-theme="dark"]`. Components use `var(--text)`, `var(--bg)` etc. Theme switches by toggling `data-theme` on `document.documentElement`. No CSS-in-JS library needed.
+All colors on `:root` (light) and `[data-theme="dark"]`. Theme switches by toggling `data-theme` on `document.documentElement`.
 
 ### In-memory rate limiting
-10 requests/IP/hour. Resets on cold starts which is acceptable — we're not a bank. Upgrade path is Upstash Redis (free tier, 1 line of code) when we need persistence.
+10 requests/IP/hour. Resets on cold starts — acceptable. Upgrade path is Upstash Redis.
 
 ### Haiku vs Sonnet
-Currently using `claude-sonnet-4-5` — should switch to `claude-haiku-4-5-20251001` for 70% cost reduction. For role lookup and recommendation tasks (pattern matching against known data) Haiku quality is sufficient.
+Updates pipeline already uses `claude-haiku-4-5-20251001`. The in-app AI Advisor and Overlap Analyzer still use Sonnet — switching them to Haiku is the top remaining cost optimization.
 
 ---
 
@@ -207,42 +244,42 @@ Currently using `claude-sonnet-4-5` — should switch to `claude-haiku-4-5-20251
    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
    nvm use --lts
    ```
-   Or add to `~/.zshrc` to make permanent.
 
-2. **Vercel rewrites catch /api routes.** The `vercel.json` must include the API route BEFORE the SPA catch-all or `/api/chat` returns 404. Current working config:
+2. **The bot commits to main daily → always `git pull --rebase` before pushing.** The Action commits `chore: refresh updates cache` most mornings, so local pushes get rejected until you pull. `git config pull.rebase true` is set so plain `git pull` rebases.
+
+3. **Tech Community RSS is a graveyard.** Microsoft has broken these feeds repeatedly (2024 platform migration killed `board.id` URLs; the `t5/s/` workaround died by mid-2026; plugin-style `custom-blog-rss` URLs also return empty). The script tries fallback URL lists and logs which URL served or that all were exhausted. Don't burn time here — the other four sources carry the page.
+
+4. **Purview docs repo is private.** Unlike entra-docs, there's no raw markdown for Purview's What's New — the script fetches the rendered learn.microsoft.com HTML and strips tags.
+
+5. **Vercel rewrites catch /api routes.** `vercel.json` must list the API route BEFORE the SPA catch-all or `/api/chat` returns 404:
    ```json
-   {
-     "rewrites": [
+   { "rewrites": [
        { "source": "/api/:path*", "destination": "/api/:path*" },
-       { "source": "/:path*", "destination": "/index.html" }
-     ]
-   }
+       { "source": "/:path*", "destination": "/index.html" } ] }
    ```
 
-3. **GitHub Actions needs ANTHROPIC_API_KEY secret separately** from Vercel's env vars. They are different systems. Vercel uses `VITE_ANTHROPIC_API_KEY`, GitHub Action uses `ANTHROPIC_API_KEY` (no VITE_ prefix).
+6. **Two separate API key homes.** Vercel uses `VITE_ANTHROPIC_API_KEY` (for api/chat.js); GitHub Actions uses `ANTHROPIC_API_KEY` (no VITE_ prefix, for the updates script). Different systems, both required.
 
-4. **Model string format matters.** Use `claude-haiku-4-5-20251001` not `claude-haiku-4-5` — Anthropic API requires the dated version string for current models.
+7. **Model string format matters.** Use dated versions like `claude-haiku-4-5-20251001`, not `claude-haiku-4-5`.
 
-5. **`/tmp` cache resets on Vercel cold starts.** The old `api/updates.js` used `/tmp` for caching which meant cache was lost frequently. This is why we switched to GitHub Actions writing to `public/updates-cache.json` instead.
+8. **Git push requires Personal Access Token** — stored in macOS keychain (`git config --global credential.helper osxkeychain`).
 
-6. **Git push requires Personal Access Token** on this machine — password auth is disabled by GitHub. Token stored in macOS keychain after first use (`git config --global credential.helper osxkeychain`).
+9. **Vite only reads `.env` on startup.** After editing `.env`, restart `npm run dev`.
 
-7. **Vite only reads `.env` on startup.** After creating or editing `.env`, always restart `npm run dev`.
+10. **Markdown in AI responses.** `AIAdvisor.jsx` and `OverlapAnalyzer.jsx` have a `formatMessage()` using `dangerouslySetInnerHTML` — only safe because content comes from our own API.
 
-8. **`useTheme` hook must be imported from `../hooks/useTheme`** — the hooks folder is inside `src/`. Easy to place it at root level by mistake.
+11. **Finder hides dotfolders** (`.github`, `.env`). Press **Cmd+Shift+.** to toggle visibility, or just use Terminal.
 
-9. **Markdown in AI responses.** Both `AIAdvisor.jsx` and `OverlapAnalyzer.jsx` have a `formatMessage()` function that converts `**bold**`, `## headers`, `- bullets`, and `---` to HTML. Uses `dangerouslySetInnerHTML` — only safe because content comes from our own API.
+12. **VS Code's `!` icon on .yml files is the YAML file-type icon**, not an error. `M` = modified/uncommitted (real signal); dot in the tab = unsaved.
 
-10. **Don't delete `api/updates.js` until confirming GitHub Action works** — it's unused but harmless. Delete after first successful Action run.
+13. **Debugging the updates pipeline:** Actions tab → latest run → "Fetch and categorize updates" step. Per-source counts print first (e.g. `Entra Release Notes: 11 | ... | MSRC: 23`). A source at 0 with a ⚠️ means its URL(s) died; everything else degrades gracefully.
 
 ---
 
 ## 📋 Next Steps (Priority Order)
 
 ### Immediate
-- [ ] Switch model to `claude-haiku-4-5-20251001` in AIAdvisor.jsx and OverlapAnalyzer.jsx
-- [ ] Add `ANTHROPIC_API_KEY` secret to GitHub repo for the Actions workflow
-- [ ] Trigger GitHub Action manually to test and populate updates-cache.json
+- [ ] Switch model to `claude-haiku-4-5-20251001` in AIAdvisor.jsx and OverlapAnalyzer.jsx (70% cost cut on in-app AI)
 - [ ] Update README.md with real project description
 
 ### V1.2 — SEO
@@ -256,7 +293,8 @@ Currently using `claude-sonnet-4-5` — should switch to `claude-haiku-4-5-20251
 - [ ] Side-by-side role comparison tool (pick 2-3 roles, compare columns)
 - [ ] "What role do I need?" wizard (3-4 question flow → recommendation)
 - [ ] Upgrade rate limiter to Upstash Redis for persistent limits
-- [ ] Add Purview roles discovered in Updates feed to roles.js data
+- [ ] Add new roles surfaced by the Updates feed (e.g. SOC Identity Responder, June 2026) to roles.js data — the feed now discovers these automatically; adding them to the library is manual
+- [ ] Mobile layout polish for Overlap Analyzer and AI Advisor
 
 ### V1.4 — Monetization (if traffic warrants)
 - [ ] Consider API key per-team model if enterprise interest
@@ -271,13 +309,12 @@ Currently using `claude-sonnet-4-5` — should switch to `claude-haiku-4-5-20251
 |---|---|---|
 | Vercel | Hobby (free) | $0 |
 | GitHub | Free (public repo) | $0 |
-| Anthropic API | Pay per use | ~$8-20 at 20-50 questions/day |
-| Updates fetch | GitHub Action once/day | ~$0.25/day = ~$7.50/mo |
+| Anthropic API (in-app AI) | Pay per use | ~$8-20 at 20-50 questions/day (drops ~70% after Haiku switch) |
+| Updates fetch | GitHub Action once/day, Haiku | ~$0.02/day = ~$0.60/mo |
 | name.com domain | Annual | ~$1/mo amortized |
-| **Total** | | **~$17-30/mo** |
+| **Total** | | **~$10-22/mo** |
 
 **Previous cost with Lovable + Supabase Pro:** ~$50-75/mo
-**Savings:** ~$30-45/mo
 
 ---
 
@@ -289,4 +326,4 @@ When starting a new Claude session for this project, say:
 
 ---
 
-*Generated from full project build session — April through June 2026.*
+*Regenerated July 20, 2026 after building and verifying the Updates pipeline end to end.*
