@@ -1,5 +1,5 @@
 /**
- * SecRole — fetch-updates.js  (v2)
+ * SecRole — fetch-updates.js  (v3)
  * Runs daily via GitHub Actions. Zero npm dependencies (Node 20+ native fetch).
  *
  * Pipeline:
@@ -8,12 +8,12 @@
  *        new roles & permission changes are announced; fetched as raw markdown)
  *      - Microsoft Purview "What's new" (learn.microsoft.com; fetched as HTML)
  *      - M365 Roadmap API (filtered to Entra + Purview products)
- *      - Tech Community Entra (Identity) blog RSS
- *      - Tech Community Security & Compliance blog RSS
- *      - MSRC Security Update Guide RSS
- *   2. Send the fetched items to Claude (Haiku) to filter for role/RBAC/identity
- *      relevance, summarize, consolidate duplicate CVEs, and categorize into the
- *      SecRole schema.
+ *      - Tech Community Entra blog RSS (with fallback URLs)
+ *      - Tech Community Security & Compliance blog RSS (with fallback URLs)
+ *      - MSRC Security Update Guide RSS (keyword-filtered to identity/access CVEs)
+ *   2. Balance composition with a per-source cap so no source floods the batch,
+ *      then send to Claude (Haiku) to filter, summarize, consolidate duplicate
+ *      CVEs, and categorize into the SecRole schema.
  *   3. Write public/updates-cache.json (committed by the workflow → deployed by Vercel).
  *
  * Claude NEVER invents news — it only works with items fetched in step 1,
@@ -30,8 +30,18 @@ const OUTPUT_PATH = join(__dirname, "..", "public", "updates-cache.json");
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = "claude-haiku-4-5-20251001";
 const LOOKBACK_DAYS = 30;       // only consider items from the last 30 days
+const PER_SOURCE_CAP = 12;      // max items any single source contributes
 const MAX_ITEMS_TO_CLAUDE = 50; // cap raw items sent for categorization
 const MAX_OUTPUT_ITEMS = 20;    // cap items shown on the Updates page
+
+// MSRC publishes thousands of CVEs; only identity/access-relevant ones matter here.
+const MSRC_KEYWORDS = [
+  "entra", "azure active directory", "azure ad", "active directory",
+  "adfs", "federation", "kerberos", "ntlm", "ldap", "domain controller",
+  "identity", "authentication", "authorization", "credential",
+  "purview", "information protection", "rights management", "dlp",
+  "defender for identity", "conditional access", "privileged",
+];
 
 // ---------------------------------------------------------------------------
 // Sources
@@ -50,18 +60,29 @@ const ENTRA_WHATS_NEW_PAGE =
 const PURVIEW_WHATS_NEW_PAGE =
   "https://learn.microsoft.com/en-us/purview/whats-new";
 
+// Tech Community RSS URLs break every time Microsoft migrates platforms, so each
+// blog gets a fallback list: the first URL that yields items wins, and the run
+// log records which one worked (or that all failed).
 const RSS_SOURCES = [
   {
     name: "Microsoft Entra Blog",
-    url: "https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=Identity",
+    urls: [
+      "https://techcommunity.microsoft.com/plugins/custom/microsoft/o365/custom-blog-rss?board=Identity&size=25",
+      "https://techcommunity.microsoft.com/plugins/custom/microsoft/o365/custom-blog-rss?board=MicrosoftEntraBlog&size=25",
+      "https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=Identity",
+    ],
   },
   {
     name: "Microsoft Security & Compliance Blog",
-    url: "https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=MicrosoftSecurityandCompliance",
+    urls: [
+      "https://techcommunity.microsoft.com/plugins/custom/microsoft/o365/custom-blog-rss?board=MicrosoftSecurityandCompliance&size=25",
+      "https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=MicrosoftSecurityandCompliance",
+    ],
   },
   {
     name: "MSRC Security Update Guide",
-    url: "https://api.msrc.microsoft.com/update-guide/rss",
+    urls: ["https://api.msrc.microsoft.com/update-guide/rss"],
+    keywordFilter: MSRC_KEYWORDS,
   },
 ];
 
@@ -130,7 +151,7 @@ async function fetchEntraReleaseNotes() {
     const md = await res.text();
 
     // Split into "## June 2026" month sections; keep months within lookback
-    // (a month counts if its 1st OR its last day is inside the window).
+    // (a month counts if its last day is inside the window).
     const monthSections = [...md.matchAll(/^## ([A-Z][a-z]+ \d{4})\n([\s\S]*?)(?=^## [A-Z][a-z]+ \d{4}|(?![\s\S]))/gm)];
     const items = [];
 
@@ -155,7 +176,7 @@ async function fetchEntraReleaseNotes() {
       }
     }
 
-    return items.slice(0, 25); // newest months come first in the doc
+    return items;
   } catch (e) {
     console.error(`⚠️  Entra release notes failed: ${e.message} — continuing without them.`);
     return [];
@@ -231,31 +252,50 @@ async function fetchRoadmap() {
 }
 
 // ---------------------------------------------------------------------------
-// Step 1d: RSS feeds
+// Step 1d: RSS feeds — with URL fallbacks + optional keyword filter
 // ---------------------------------------------------------------------------
 
-async function fetchRss({ name, url }) {
-  try {
-    const res = await fetchWithTimeout(url);
-    const xml = await res.text();
+function parseRssItems(xml, name) {
+  const items = [...xml.matchAll(/<item[\s>]([\s\S]*?)<\/item>/gi)].map((m) => m[1]);
+  return items
+    .map((item) => {
+      const pubDate = tag(item, "pubDate") || tag(item, "dc:date");
+      return {
+        source: name,
+        title: tag(item, "title"),
+        description: tag(item, "description").slice(0, 600),
+        date: pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "",
+        url: tag(item, "link") || (item.match(/<link[^>]*href="([^"]+)"/i)?.[1] ?? ""),
+      };
+    })
+    .filter((i) => i.title && (!i.date || new Date(i.date) >= cutoffDate));
+}
 
-    const items = [...xml.matchAll(/<item[\s>]([\s\S]*?)<\/item>/gi)].map((m) => m[1]);
-    return items
-      .map((item) => {
-        const pubDate = tag(item, "pubDate") || tag(item, "dc:date");
-        return {
-          source: name,
-          title: tag(item, "title"),
-          description: tag(item, "description").slice(0, 600),
-          date: pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "",
-          url: tag(item, "link") || (item.match(/<link[^>]*href="([^"]+)"/i)?.[1] ?? ""),
-        };
-      })
-      .filter((i) => i.title && (!i.date || new Date(i.date) >= cutoffDate));
-  } catch (e) {
-    console.error(`⚠️  RSS "${name}" failed: ${e.message} — continuing without it.`);
-    return [];
+async function fetchRss({ name, urls, keywordFilter }) {
+  for (const url of urls) {
+    try {
+      const res = await fetchWithTimeout(url);
+      const xml = await res.text();
+      let items = parseRssItems(xml, name);
+
+      if (keywordFilter) {
+        items = items.filter((i) => {
+          const haystack = `${i.title} ${i.description}`.toLowerCase();
+          return keywordFilter.some((kw) => haystack.includes(kw));
+        });
+      }
+
+      if (items.length > 0) {
+        if (urls.length > 1) console.log(`   ℹ️  "${name}" served by: ${url}`);
+        return items;
+      }
+      console.error(`⚠️  "${name}" returned 0 usable items from ${url} — trying next URL.`);
+    } catch (e) {
+      console.error(`⚠️  "${name}" failed at ${url}: ${e.message} — trying next URL.`);
+    }
   }
+  console.error(`⚠️  "${name}": all ${urls.length} URL(s) exhausted — continuing without it.`);
+  return [];
 }
 
 // ---------------------------------------------------------------------------
@@ -271,7 +311,7 @@ Below is a JSON array of REAL items fetched today from official Microsoft source
 2. For each selected item, write a fresh 2-3 sentence summary IN YOUR OWN WORDS explaining what changed and why an admin should care. Do not copy the source text.
 3. Categorize each as exactly one of: "New Role", "Permission Change", "Feature Update", "Security Advisory", "Roadmap". Roadmap API items are usually "Roadmap" unless they describe a new admin role or permission change. Items from "Microsoft Entra Release Notes" describing a new built-in role are "New Role"; items describing changed role permissions or scope are "Permission Change".
 4. Rate importance: "high" (new roles, permission changes, security advisories, breaking changes), "medium" (notable features), "low" (minor/cosmetic).
-5. Keep at most ${MAX_OUTPUT_ITEMS} items, prioritizing high importance and recency. New roles and permission changes ALWAYS make the cut.
+5. Keep at most ${MAX_OUTPUT_ITEMS} items, prioritizing high importance and recency. New roles and permission changes ALWAYS make the cut. Aim for a MIX of categories and sources — do not let one category dominate the page.
 6. Preserve each item's original "url" and "source" EXACTLY as given. Never invent items not in the input.
 7. CONSOLIDATE near-duplicate items: if multiple CVEs affect the same product with the same vulnerability class (e.g. several ADFS denial-of-service advisories), merge them into ONE item whose title names the product and count (e.g. "7 Denial of Service Vulnerabilities Patched in ADFS") and whose summary lists the CVE IDs. Use the most relevant single URL from the merged items.
 8. SPLIT digest items: an input item whose title starts with "Digest:" is a monthly rollup containing several announcements. Extract each DISTINCT role/RBAC/security-relevant announcement inside it as its OWN output item (with the digest's url and source), and skip the rest of the digest's content. Do not output the digest itself as one blob.
@@ -347,16 +387,25 @@ async function main() {
     ...RSS_SOURCES.map(fetchRss),
   ]);
 
-  const rawItems = [entraNotes, purviewNotes, roadmap, ...rssResults]
+  // Per-source cap keeps the batch balanced (newest first within each source),
+  // so a 2,000-item Patch Tuesday can't crowd out the other sources.
+  const capped = [entraNotes, purviewNotes, roadmap, ...rssResults].map((items) =>
+    [...items].sort((a, b) => (b.date || "").localeCompare(a.date || "")).slice(0, PER_SOURCE_CAP)
+  );
+
+  const rawItems = capped
     .flat()
     .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
     .slice(0, MAX_ITEMS_TO_CLAUDE);
 
-  console.log(
-    `   Entra Release Notes: ${entraNotes.length} | Purview What's New: ${purviewNotes.length} | Roadmap: ${roadmap.length} | ` +
-    RSS_SOURCES.map((s, i) => `${s.name}: ${rssResults[i].length}`).join(" | ")
-  );
-  console.log(`   → ${rawItems.length} items sent to Claude for triage.`);
+  const counts = [
+    `Entra Release Notes: ${entraNotes.length}`,
+    `Purview What's New: ${purviewNotes.length}`,
+    `Roadmap: ${roadmap.length}`,
+    ...RSS_SOURCES.map((s, i) => `${s.name}: ${rssResults[i].length}`),
+  ].join(" | ");
+  console.log(`   ${counts}`);
+  console.log(`   → ${rawItems.length} items sent to Claude for triage (per-source cap: ${PER_SOURCE_CAP}).`);
 
   if (rawItems.length === 0) {
     console.error("❌ Every source returned zero items. Keeping the existing cache untouched.");
