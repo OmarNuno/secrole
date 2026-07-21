@@ -1,0 +1,126 @@
+{
+  "lastUpdated": "2026-07-21T05:57:05.037Z",
+  "fetchedAt": "2026-07-21T05:57:05.037Z",
+  "updates": [
+    {
+      "id": "azure-ad-dos-cve-2026-50652",
+      "title": "CVE-2026-50652 Azure Active Directory Denial of Service Vulnerability",
+      "summary": "Microsoft published an update for a denial of service vulnerability affecting Azure Active Directory. Admins should review and apply available patches to protect against potential service disruptions.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50652"
+    },
+    {
+      "id": "azure-ad-dos-cve-2026-50653",
+      "title": "CVE-2026-50653 Azure Active Directory Denial of Service Vulnerability",
+      "summary": "A second denial of service vulnerability in Azure Active Directory was disclosed and patched. Organizations should prioritize applying these updates to maintain service availability.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50653"
+    },
+    {
+      "id": "adfs-dos-cve-2026-50304",
+      "title": "CVE-2026-50304 Windows Active Directory Federation Services Denial of Service Vulnerability",
+      "summary": "Microsoft released a patch for a denial of service vulnerability in Active Directory Federation Services (ADFS). Hybrid and federated identity environments should apply this update promptly.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50304"
+    },
+    {
+      "id": "adfs-dos-cve-2026-50368",
+      "title": "CVE-2026-50368 Windows Active Directory Federation Services Denial of Service Vulnerability",
+      "summary": "Another denial of service vulnerability affecting ADFS was identified and patched. Organizations managing federated identities should review and deploy this security update.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50368"
+    },
+    {
+      "id": "adfs-dos-cve-2026-50324",
+      "title": "CVE-2026-50324 Windows Active Directory Federation Services Denial of Service Vulnerability",
+      "summary": "A third ADFS denial of service vulnerability was disclosed requiring immediate patching. Federated environments should validate patch deployment across all ADFS servers.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50324"
+    },
+    {
+      "id": "adfs-dos-cve-2026-50355",
+      "title": "CVE-2026-50355 Windows Active Directory Federation Services Denial of Service Vulnerability",
+      "summary": "An additional denial of service vulnerability in ADFS was released alongside the others. Admins managing federation infrastructure should coordinate testing and rollout of these critical patches.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50355"
+    },
+    {
+      "id": "adfs-dos-cve-2026-50411",
+      "title": "CVE-2026-50411 Windows Active Directory Federation Services Denial of Service Vulnerability",
+      "summary": "Yet another ADFS denial of service vulnerability was identified and patched. Organizations should ensure comprehensive coverage of all ADFS infrastructure when applying these updates.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50411"
+    },
+    {
+      "id": "adfs-dos-cve-2026-50647",
+      "title": "CVE-2026-50647 Active Directory Federation Server Denial of Service Vulnerability",
+      "summary": "A denial of service vulnerability in Active Directory Federation Server was published. Patch immediately to prevent potential service interruptions in federated identity scenarios.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50647"
+    },
+    {
+      "id": "purview-dlp-restrict-external-emails-copilot",
+      "title": "Microsoft Purview: DLP to Restrict Processing External Emails in Microsoft 365 Copilot",
+      "summary": "Purview DLP is expanding to prevent Microsoft 365 Copilot and Copilot Chat from processing emails from external senders, reducing data exfiltration risks. Organizations relying on Copilot will gain granular control over sensitive external communications.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561552"
+    },
+    {
+      "id": "purview-dlp-graph-api-defender-alerts",
+      "title": "Microsoft Purview: DLP Enriches Defender Alerts Graph API with Event Data",
+      "summary": "DLP event data is now enriched in the Defender alerts Graph API, enabling seamless SIEM integration and automated workflow creation. This launched capability simplifies correlation between DLP matches and security alerts for comprehensive threat investigation.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558681"
+    },
+    {
+      "id": "purview-dlm-archive-retention",
+      "title": "Microsoft Purview: Data Lifecycle Management Archive OneDrive and SharePoint Files",
+      "summary": "Retention-based archiving now moves inactive OneDrive and SharePoint content to low-cost storage while keeping data discoverable and Copilot-searchable. Organizations can reduce storage costs without compromising compliance or user experience.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561208"
+    },
+    {
+      "id": "purview-irm-triage-agent-enhancements",
+      "title": "Microsoft Purview: Insider Risk Management Data Security Triage Agent Enhancements",
+      "summary": "The Insider Risk Management Triage Agent is rolling out improved user risk and activity explorer pattern summaries to increase investigation accuracy and decision quality. Enhanced context helps security teams identify and respond faster to potential insider threats.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557683"
+    }
+  ]
+}
