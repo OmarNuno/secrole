@@ -14,6 +14,8 @@ const IMPORTANCE_CONFIG = {
   low:    { label: "Low",         color: "#16a34a", bg: "#f0fdf4", border: "#bbf7d0" },
 };
 
+const NEW_ROLE_COLOR = CATEGORY_CONFIG["New Role"].color;
+
 function CategoryBadge({ category }) {
   const c = CATEGORY_CONFIG[category] || CATEGORY_CONFIG["Feature Update"];
   return (
@@ -82,6 +84,24 @@ function UpdateCard({ update }) {
   );
 }
 
+// Section header used by New Roles / High Impact / Other Updates
+function SectionHeader({ label, color, count }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+      <div style={{ width: 3, height: 20, background: color, borderRadius: 2 }} />
+      <span style={{ fontSize: 12, fontWeight: 700, color, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        {label}
+      </span>
+      {count != null && (
+        <span style={{ fontSize: 12, color: "var(--text-faint)", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 20, padding: "1px 8px" }}>
+          {count}
+        </span>
+      )}
+      <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+    </div>
+  );
+}
+
 export default function Updates() {
   const [updates, setUpdates] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -112,14 +132,35 @@ export default function Updates() {
     ? updates
     : updates.filter(u => u.category === filterCategory);
 
-  const highImpact = filtered.filter(u => u.importance === "high");
-  const other = filtered.filter(u => u.importance !== "high");
+  // New Roles are pinned to the top of the "All" view in their own section.
+  // While pinned, they're excluded from the High Impact / Other groupings below
+  // so they never appear twice. Selecting the "New Role" filter shows them
+  // through the normal filtered list instead.
+  const showNewRolesSection = filterCategory === "All";
+  const newRoles = showNewRolesSection
+    ? filtered.filter(u => u.category === "New Role")
+    : [];
+  const rest = showNewRolesSection
+    ? filtered.filter(u => u.category !== "New Role")
+    : filtered;
+
+  const highImpact = rest.filter(u => u.importance === "high");
+  const other = rest.filter(u => u.importance !== "high");
 
   const formatDate = (iso) => {
     if (!iso) return null;
     try {
       return new Date(iso).toLocaleDateString("en-US", {
         month: "long", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit"
+      });
+    } catch { return iso; }
+  };
+
+  const formatDateShort = (iso) => {
+    if (!iso) return null;
+    try {
+      return new Date(iso).toLocaleDateString("en-US", {
+        month: "long", day: "numeric", year: "numeric"
       });
     } catch { return iso; }
   };
@@ -189,19 +230,41 @@ export default function Updates() {
         </div>
       )}
 
+      {/* New Roles — pinned section, always first on the "All" view */}
+      {!loading && updates.length > 0 && showNewRolesSection && (
+        <div style={{ marginBottom: 32 }}>
+          <SectionHeader
+            label="✦ New Roles"
+            color={NEW_ROLE_COLOR}
+            count={newRoles.length > 0 ? newRoles.length : null}
+          />
+          {newRoles.length > 0 ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {newRoles.map(u => <UpdateCard key={u.id} update={u} />)}
+            </div>
+          ) : (
+            <div style={{
+              border: "1px dashed var(--border)", borderRadius: 12,
+              padding: "20px 24px", display: "flex", alignItems: "center", gap: 12,
+            }}>
+              <span style={{ fontSize: 20, color: NEW_ROLE_COLOR }}>✦</span>
+              <div>
+                <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text)", margin: 0 }}>
+                  No new Entra or Purview roles announced
+                </p>
+                <p style={{ fontSize: 12, color: "var(--text-faint)", margin: "4px 0 0" }}>
+                  Last checked {formatDateShort(lastUpdated) || "recently"} — new role announcements appear here first.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* High impact section */}
       {!loading && highImpact.length > 0 && (
         <div style={{ marginBottom: 32 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-            <div style={{ width: 3, height: 20, background: "var(--critical)", borderRadius: 2 }} />
-            <span style={{ fontSize: 12, fontWeight: 700, color: "var(--critical)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-              High Impact
-            </span>
-            <span style={{ fontSize: 12, color: "var(--text-faint)", background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 20, padding: "1px 8px" }}>
-              {highImpact.length}
-            </span>
-            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-          </div>
+          <SectionHeader label="High Impact" color="var(--critical)" count={highImpact.length} />
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {highImpact.map(u => <UpdateCard key={u.id} update={u} />)}
           </div>
@@ -212,13 +275,7 @@ export default function Updates() {
       {!loading && other.length > 0 && (
         <div>
           {highImpact.length > 0 && (
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-              <div style={{ width: 3, height: 20, background: "var(--entra)", borderRadius: 2 }} />
-              <span style={{ fontSize: 12, fontWeight: 700, color: "var(--entra)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                Other Updates
-              </span>
-              <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-            </div>
+            <SectionHeader label="Other Updates" color="var(--entra)" />
           )}
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {other.map(u => <UpdateCard key={u.id} update={u} />)}
