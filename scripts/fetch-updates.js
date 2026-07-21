@@ -1,19 +1,23 @@
 /**
- * SecRole — fetch-updates.js
+ * SecRole — fetch-updates.js  (v2)
  * Runs daily via GitHub Actions. Zero npm dependencies (Node 20+ native fetch).
  *
  * Pipeline:
  *   1. Fetch REAL content from official Microsoft sources:
+ *      - Microsoft Entra release notes (learn.microsoft.com "What's new" — where
+ *        new roles & permission changes are announced; fetched as raw markdown)
+ *      - Microsoft Purview "What's new" (learn.microsoft.com; fetched as HTML)
  *      - M365 Roadmap API (filtered to Entra + Purview products)
  *      - Tech Community Entra (Identity) blog RSS
  *      - Tech Community Security & Compliance blog RSS
  *      - MSRC Security Update Guide RSS
  *   2. Send the fetched items to Claude (Haiku) to filter for role/RBAC/identity
- *      relevance, summarize, and categorize into the SecRole schema.
+ *      relevance, summarize, consolidate duplicate CVEs, and categorize into the
+ *      SecRole schema.
  *   3. Write public/updates-cache.json (committed by the workflow → deployed by Vercel).
  *
  * Claude NEVER invents news — it only works with items fetched in step 1,
- * and every output item carries the original source URL.
+ * and every output item carries an original source URL.
  */
 
 import { writeFileSync, readFileSync, existsSync } from "fs";
@@ -25,8 +29,8 @@ const OUTPUT_PATH = join(__dirname, "..", "public", "updates-cache.json");
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = "claude-haiku-4-5-20251001";
-const LOOKBACK_DAYS = 30;   // only consider items from the last 30 days
-const MAX_ITEMS_TO_CLAUDE = 40; // cap raw items sent for categorization
+const LOOKBACK_DAYS = 30;       // only consider items from the last 30 days
+const MAX_ITEMS_TO_CLAUDE = 50; // cap raw items sent for categorization
 const MAX_OUTPUT_ITEMS = 20;    // cap items shown on the Updates page
 
 // ---------------------------------------------------------------------------
@@ -34,6 +38,17 @@ const MAX_OUTPUT_ITEMS = 20;    // cap items shown on the Updates page
 // ---------------------------------------------------------------------------
 
 const ROADMAP_API = "https://www.microsoft.com/releasecommunications/api/v1/m365";
+
+// Raw markdown behind learn.microsoft.com/en-us/entra/fundamentals/whats-new —
+// the canonical page where new Entra roles and permission changes are announced.
+const ENTRA_WHATS_NEW_RAW =
+  "https://raw.githubusercontent.com/MicrosoftDocs/entra-docs/main/docs/fundamentals/whats-new.md";
+const ENTRA_WHATS_NEW_PAGE =
+  "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new";
+
+// Purview's docs repo is private, so we fetch the rendered page and strip HTML.
+const PURVIEW_WHATS_NEW_PAGE =
+  "https://learn.microsoft.com/en-us/purview/whats-new";
 
 const RSS_SOURCES = [
   {
@@ -52,7 +67,7 @@ const RSS_SOURCES = [
 
 const FETCH_HEADERS = {
   "User-Agent": "SecRole-UpdatesBot/1.0 (+https://secrole.com)",
-  "Accept": "application/json, application/rss+xml, application/xml, text/xml, */*",
+  "Accept": "application/json, application/rss+xml, application/xml, text/html, text/markdown, */*",
 };
 
 // ---------------------------------------------------------------------------
@@ -63,11 +78,27 @@ const cutoffDate = new Date(Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000);
 
 function stripHtml(html = "") {
   return html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<[^>]*>/g, " ")
     .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function stripMarkdown(md = "") {
+  return md
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // [text](link) → text
+    .replace(/[*_`>#]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function monthToISO(monthYear) {
+  // "June 2026" → "2026-06-01" (for lookback filtering / sorting)
+  const d = new Date(`${monthYear} 1`);
+  return isNaN(d) ? "" : d.toISOString().slice(0, 10);
 }
 
 function tag(xml, name) {
@@ -90,7 +121,84 @@ async function fetchWithTimeout(url, ms = 20000) {
 }
 
 // ---------------------------------------------------------------------------
-// Step 1a: M365 Roadmap API — filter to Entra / Purview
+// Step 1a: Entra release notes (markdown) — new roles & permission changes
+// ---------------------------------------------------------------------------
+
+async function fetchEntraReleaseNotes() {
+  try {
+    const res = await fetchWithTimeout(ENTRA_WHATS_NEW_RAW, 30000);
+    const md = await res.text();
+
+    // Split into "## June 2026" month sections; keep months within lookback
+    // (a month counts if its 1st OR its last day is inside the window).
+    const monthSections = [...md.matchAll(/^## ([A-Z][a-z]+ \d{4})\n([\s\S]*?)(?=^## [A-Z][a-z]+ \d{4}|(?![\s\S]))/gm)];
+    const items = [];
+
+    for (const [, monthYear, body] of monthSections) {
+      const monthStart = new Date(`${monthYear} 1`);
+      if (isNaN(monthStart)) continue;
+      const monthEnd = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0);
+      if (monthEnd < cutoffDate) continue;
+
+      // Each announcement is a "### Heading" entry with **Type:** metadata.
+      const entries = [...body.matchAll(/^### (.+)\n([\s\S]*?)(?=^### |(?![\s\S]))/gm)];
+      for (const [, heading, entryBody] of entries) {
+        const type = entryBody.match(/\*\*Type:\*\*\s*([^\n]+)/)?.[1]?.trim() || "";
+        const category = entryBody.match(/\*\*Service category:\*\*\s*([^\n]+)/)?.[1]?.trim() || "";
+        items.push({
+          source: "Microsoft Entra Release Notes",
+          title: stripMarkdown(heading),
+          description: `[${type}${category ? ` | ${category}` : ""}] ${stripMarkdown(entryBody).slice(0, 500)}`,
+          date: monthToISO(monthYear),
+          url: ENTRA_WHATS_NEW_PAGE,
+        });
+      }
+    }
+
+    return items.slice(0, 25); // newest months come first in the doc
+  } catch (e) {
+    console.error(`⚠️  Entra release notes failed: ${e.message} — continuing without them.`);
+    return [];
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Step 1b: Purview "What's new" (HTML) — monthly digests
+// ---------------------------------------------------------------------------
+
+async function fetchPurviewWhatsNew() {
+  try {
+    const res = await fetchWithTimeout(PURVIEW_WHATS_NEW_PAGE, 30000);
+    const html = await res.text();
+
+    // Month sections are <h2>June 2026</h2> … up to the next <h2>.
+    const sections = [...html.matchAll(/<h2[^>]*>\s*([A-Z][a-z]+ \d{4})\s*<\/h2>([\s\S]*?)(?=<h2[^>]*>|$)/g)];
+    const items = [];
+
+    for (const [, monthYear, body] of sections.slice(0, 2)) { // 2 most recent months
+      const monthStart = new Date(`${monthYear} 1`);
+      if (isNaN(monthStart)) continue;
+      const monthEnd = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0);
+      if (monthEnd < cutoffDate) continue;
+
+      items.push({
+        source: "Microsoft Purview What's New",
+        title: `Digest: Microsoft Purview updates — ${monthYear}`,
+        description: stripHtml(body).slice(0, 2500),
+        date: monthToISO(monthYear),
+        url: PURVIEW_WHATS_NEW_PAGE,
+      });
+    }
+
+    return items;
+  } catch (e) {
+    console.error(`⚠️  Purview What's New failed: ${e.message} — continuing without it.`);
+    return [];
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Step 1c: M365 Roadmap API — filter to Entra / Purview
 // ---------------------------------------------------------------------------
 
 async function fetchRoadmap() {
@@ -123,7 +231,7 @@ async function fetchRoadmap() {
 }
 
 // ---------------------------------------------------------------------------
-// Step 1b: RSS feeds
+// Step 1d: RSS feeds
 // ---------------------------------------------------------------------------
 
 async function fetchRss({ name, url }) {
@@ -151,7 +259,7 @@ async function fetchRss({ name, url }) {
 }
 
 // ---------------------------------------------------------------------------
-// Step 2: Claude — filter, summarize, categorize into SecRole schema
+// Step 2: Claude — filter, summarize, consolidate, categorize
 // ---------------------------------------------------------------------------
 
 async function categorizeWithClaude(rawItems) {
@@ -161,10 +269,12 @@ Below is a JSON array of REAL items fetched today from official Microsoft source
 
 1. SELECT only items relevant to: Microsoft Entra ID (identity, authentication, Conditional Access, PIM, RBAC, admin roles, governance), Microsoft Purview (compliance, DLP, information protection, audit, roles), or security advisories affecting identity/access. DISCARD items about unrelated products (Teams calling, Outlook UI, Excel, etc.).
 2. For each selected item, write a fresh 2-3 sentence summary IN YOUR OWN WORDS explaining what changed and why an admin should care. Do not copy the source text.
-3. Categorize each as exactly one of: "New Role", "Permission Change", "Feature Update", "Security Advisory", "Roadmap". Roadmap API items are usually "Roadmap" unless they describe a new admin role or permission change.
+3. Categorize each as exactly one of: "New Role", "Permission Change", "Feature Update", "Security Advisory", "Roadmap". Roadmap API items are usually "Roadmap" unless they describe a new admin role or permission change. Items from "Microsoft Entra Release Notes" describing a new built-in role are "New Role"; items describing changed role permissions or scope are "Permission Change".
 4. Rate importance: "high" (new roles, permission changes, security advisories, breaking changes), "medium" (notable features), "low" (minor/cosmetic).
-5. Keep at most ${MAX_OUTPUT_ITEMS} items, prioritizing high importance and recency.
+5. Keep at most ${MAX_OUTPUT_ITEMS} items, prioritizing high importance and recency. New roles and permission changes ALWAYS make the cut.
 6. Preserve each item's original "url" and "source" EXACTLY as given. Never invent items not in the input.
+7. CONSOLIDATE near-duplicate items: if multiple CVEs affect the same product with the same vulnerability class (e.g. several ADFS denial-of-service advisories), merge them into ONE item whose title names the product and count (e.g. "7 Denial of Service Vulnerabilities Patched in ADFS") and whose summary lists the CVE IDs. Use the most relevant single URL from the merged items.
+8. SPLIT digest items: an input item whose title starts with "Digest:" is a monthly rollup containing several announcements. Extract each DISTINCT role/RBAC/security-relevant announcement inside it as its OWN output item (with the digest's url and source), and skip the rest of the digest's content. Do not output the digest itself as one blob.
 
 Respond with ONLY a valid JSON array (no markdown fences, no preamble) where each element is:
 {
@@ -190,7 +300,7 @@ ${JSON.stringify(rawItems, null, 1)}`;
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 4096,
+      max_tokens: 8000,
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -230,17 +340,22 @@ async function main() {
   }
 
   console.log("📡 Fetching sources…");
-  const [roadmap, ...rssResults] = await Promise.all([
+  const [entraNotes, purviewNotes, roadmap, ...rssResults] = await Promise.all([
+    fetchEntraReleaseNotes(),
+    fetchPurviewWhatsNew(),
     fetchRoadmap(),
     ...RSS_SOURCES.map(fetchRss),
   ]);
 
-  const rawItems = [roadmap, ...rssResults]
+  const rawItems = [entraNotes, purviewNotes, roadmap, ...rssResults]
     .flat()
     .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
     .slice(0, MAX_ITEMS_TO_CLAUDE);
 
-  console.log(`   Roadmap: ${roadmap.length} | ${RSS_SOURCES.map((s, i) => `${s.name}: ${rssResults[i].length}`).join(" | ")}`);
+  console.log(
+    `   Entra Release Notes: ${entraNotes.length} | Purview What's New: ${purviewNotes.length} | Roadmap: ${roadmap.length} | ` +
+    RSS_SOURCES.map((s, i) => `${s.name}: ${rssResults[i].length}`).join(" | ")
+  );
   console.log(`   → ${rawItems.length} items sent to Claude for triage.`);
 
   if (rawItems.length === 0) {
