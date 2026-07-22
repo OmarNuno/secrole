@@ -209,7 +209,7 @@ Be direct and specific. Reference actual permission names where relevant.`;
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-5",
+          model: "claude-haiku-4-5-20251001",
           max_tokens: 2000,
           system: "You are a Microsoft identity and security expert specializing in least-privilege access control for Entra ID and Microsoft Purview. You help IT administrators push back on over-privileged access requests with clear, evidence-based analysis. Be concise, structured, and practical.",
           messages: [{ role: "user", content: prompt }],
