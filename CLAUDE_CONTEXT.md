@@ -1,6 +1,6 @@
 # SecRole — CLAUDE_CONTEXT.md
 
-> **Purpose of this file:** Paste this at the start of every new Claude session to restore full project context instantly. Last updated: July 20, 2026.
+> **Purpose of this file:** Paste this at the start of every new Claude session to restore full project context instantly. Last updated: July 21, 2026.
 
 ---
 
@@ -12,7 +12,7 @@
 **Repo:** github.com/OmarNuno/secrole
 **Live URL:** secrole.com (also secrole.vercel.app)
 **Started:** April 2026
-**Current Version:** V1.1 (Updates pipeline live as of July 20, 2026)
+**Current Version:** V1.1 (Updates pipeline live July 20; pinned New Roles section + full Haiku switch July 21, 2026)
 
 ---
 
@@ -23,15 +23,17 @@
 | Frontend | React + Vite | No TypeScript — plain JSX. `"type": "module"` in package.json |
 | Routing | react-router-dom | SPA with BrowserRouter |
 | Styling | CSS variables + inline styles | Full light/dark theme via `data-theme` attribute |
-| AI (in-app) | Anthropic Claude API | Via `/api/chat` proxy |
+| AI (in-app) | Claude Haiku (`claude-haiku-4-5-20251001`) | Via `/api/chat` proxy — switched from Sonnet July 21, 2026 |
 | AI (updates pipeline) | Claude Haiku (`claude-haiku-4-5-20251001`) | Runs in GitHub Action, ~$0.02/day |
-| API Proxy | Vercel Serverless Function | `api/chat.js` — handles CORS, rate limiting, logging |
+| API Proxy | Vercel Serverless Function | `api/chat.js` — handles CORS, rate limiting, logging. Model string is passed from the frontend; chat.js is model-agnostic |
 | Updates | GitHub Actions + static JSON | Daily cron 6am UTC → commits `public/updates-cache.json` |
 | Hosting | Vercel (Hobby free tier) | Auto-deploys on push to `main` |
 | Domain | name.com | DNS A record → 216.198.79.1, CNAME www → Vercel |
 | Version Control | GitHub | Public repo: OmarNuno/secrole |
 
 **No database.** All role data is static JS. No Supabase. No auth.
+
+**The entire product now runs on Haiku end to end** — in-app AI and updates pipeline both use `claude-haiku-4-5-20251001`.
 
 ---
 
@@ -56,10 +58,10 @@ secrole/
 │   ├── hooks/
 │   │   └── useTheme.js       ← Dark/light theme hook (persists to localStorage)
 │   ├── pages/
-│   │   ├── AIAdvisor.jsx     ← Chat interface for role recommendations
-│   │   ├── OverlapAnalyzer.jsx ← Multi-role overlap + pushback template generator
+│   │   ├── AIAdvisor.jsx     ← Chat interface for role recommendations (Haiku, line ~62)
+│   │   ├── OverlapAnalyzer.jsx ← Multi-role overlap + pushback template (Haiku, line ~212)
 │   │   ├── RoleLibrary.jsx   ← Main role grid with search + filters
-│   │   └── Updates.jsx       ← Reads /updates-cache.json (rewritten July 2026)
+│   │   └── Updates.jsx       ← Reads /updates-cache.json; pinned New Roles section (July 21)
 │   ├── App.jsx               ← Routes + theme initialization
 │   ├── index.css             ← CSS variables for light/dark themes + utility classes
 │   └── main.jsx              ← React entry point with BrowserRouter
@@ -95,8 +97,16 @@ The `/updates` page is a real, self-maintaining Entra/Purview news feed. Full ch
 - Graceful degradation: any single source failing logs a ⚠️ and continues; Claude failure keeps the old cache; unchanged results skip the commit
 - Run logs print per-source counts — first place to look when debugging
 
-### Frontend (Updates.jsx)
-Fetches `/updates-cache.json?t=${Date.now()}` (cache-buster). No refresh button, no secrets — the old secret-key UI is gone. Items with a `url` render clickable titles. Empty state says the feed refreshes daily.
+### Frontend (Updates.jsx — rewritten July 20, pinned New Roles added July 21)
+Fetches `/updates-cache.json?t=${Date.now()}` (cache-buster). No refresh button, no secrets.
+
+**Pinned "✦ New Roles" section (July 21, 2026):**
+- On the "All" filter view, all `category: "New Role"` items render in a dedicated purple-accented section pinned ABOVE High Impact — new roles are SecRole's core value, so they're always first
+- While pinned, New Role items are **excluded** from the High Impact / Other groupings below (no duplicates). Selecting the "New Role" filter chip shows them via the normal filtered list instead
+- **Empty state:** when no New Role items exist in the cache, a dashed card shows "No new Entra or Purview roles announced — Last checked {date}" using `fetchedAt`. This is by design, not a bug — it will appear naturally once the SOC Identity Responder announcement ages out of the Entra release notes batch
+- Section headers (accent bar + label + count pill + divider) are refactored into a shared `SectionHeader` component used by New Roles / High Impact / Other Updates
+
+Items with a `url` render clickable titles. Page-level empty state says the feed refreshes daily.
 
 ---
 
@@ -111,7 +121,9 @@ Fetches `/updates-cache.json?t=${Date.now()}` (cache-buster). No refresh button,
 - [x] Overlap Analyzer — add 2-6 roles, get AI analysis with pushback template
 - [x] AI Advisor — chat interface with role recommendations
 - [x] Markdown rendering in AI responses (bold, headers, bullets, HR)
-- [x] **Updates page — LIVE with real Microsoft news, daily auto-refresh, clickable sources** (July 2026)
+- [x] Updates page — LIVE with real Microsoft news, daily auto-refresh, clickable sources (July 20, 2026)
+- [x] **Pinned ✦ New Roles section on /updates with empty-state fallback** (July 21, 2026 — verified live)
+- [x] **In-app AI switched to Haiku 4.5 — ~70% cost cut, verified working on live site** (July 21, 2026)
 - [x] GitHub Action — daily fetch + commit of updates-cache.json (verified working, ~26s runs)
 - [x] Dark/light mode toggle — persists to localStorage, respects system preference
 - [x] Mobile hamburger menu — slide-out drawer on ≤768px
@@ -122,13 +134,13 @@ Fetches `/updates-cache.json?t=${Date.now()}` (cache-buster). No refresh button,
 - [x] Workflow actions on v5, Node 22 (deprecation warning silenced)
 
 ### Known Issues / Not Done Yet
-- [ ] Model name in AIAdvisor.jsx and OverlapAnalyzer.jsx still says `claude-sonnet-4-5` — update to `claude-haiku-4-5-20251001` to cut costs 70%
 - [ ] Tech Community blog RSS feeds all return 0 (Microsoft killed them again) — page is healthy without them; revisit only if the feed feels thin
 - [ ] Rate limiter is in-memory only — resets on Vercel cold starts (fine for now; Upstash Redis is the upgrade path)
 - [ ] No SEO individual role pages yet (planned V1.2)
 - [ ] No side-by-side role comparison tool yet (planned V1.3)
 - [ ] README.md still has default Vite content — needs updating
 - [ ] Mobile layout for Overlap Analyzer and AI Advisor pages needs work
+- [ ] New Roles empty state on /updates is untested in production — it will show itself once the SOC Identity Responder item ages out of the source batch (expected, not a bug)
 
 ---
 
@@ -170,6 +182,8 @@ Fetches `/updates-cache.json?t=${Date.now()}` (cache-buster). No refresh button,
 }
 ```
 
+`category: "New Role"` is what drives the pinned New Roles section on /updates.
+
 ---
 
 ## 🛣️ Routes
@@ -179,7 +193,7 @@ Fetches `/updates-cache.json?t=${Date.now()}` (cache-buster). No refresh button,
 | `/` | RoleLibrary | Main role grid — default landing page |
 | `/analyzer` | OverlapAnalyzer | Multi-role overlap analysis |
 | `/advisor` | AIAdvisor | AI chat for role recommendations |
-| `/updates` | Updates | Daily Entra/Purview news feed (static JSON) |
+| `/updates` | Updates | Daily Entra/Purview news feed (static JSON, pinned New Roles first) |
 | `/api/chat` | api/chat.js | Serverless function — Anthropic proxy |
 
 ---
@@ -222,6 +236,12 @@ Claude never generates "news" from memory — the script fetches actual Microsof
 ### Entra Release Notes as the role-announcement source of truth
 `learn.microsoft.com/en-us/entra/fundamentals/whats-new` is where Microsoft announces new built-in roles and permission changes, and its raw markdown is publicly fetchable from the entra-docs GitHub repo with clean `Type` / `Service category` metadata. This powers the "New Role" and "Permission Change" categories.
 
+### New Roles pinned first on /updates (July 21, 2026)
+New role announcements are SecRole's core differentiator vs generic Microsoft news aggregators — they're what the team actually cares about. So they get a dedicated purple section always at the top of the "All" view, with a useful empty state ("No new roles announced — last checked {date}") rather than silently disappearing. Purely a frontend change; the pipeline already categorizes New Role items. This section is also the future hook for a one-click "add to Role Library" flow (V1.3).
+
+### Full Haiku (July 21, 2026)
+Everything now runs on `claude-haiku-4-5-20251001` — updates pipeline AND in-app AI Advisor / Overlap Analyzer. The model string lives in the frontend (`AIAdvisor.jsx` line ~62, `OverlapAnalyzer.jsx` line ~212) and passes through the model-agnostic `api/chat.js` proxy. Verified on the live site: response quality holds because the domain knowledge is in the system prompts, not the model. If answers ever feel thin, tune the prompts before considering a model upgrade.
+
 ### Dark mode as default
 Security tools skew toward dark mode users. GitHub-dark style (`#0d1117`) background. System preference respected on first visit, then persisted.
 
@@ -230,9 +250,6 @@ All colors on `:root` (light) and `[data-theme="dark"]`. Theme switches by toggl
 
 ### In-memory rate limiting
 10 requests/IP/hour. Resets on cold starts — acceptable. Upgrade path is Upstash Redis.
-
-### Haiku vs Sonnet
-Updates pipeline already uses `claude-haiku-4-5-20251001`. The in-app AI Advisor and Overlap Analyzer still use Sonnet — switching them to Haiku is the top remaining cost optimization.
 
 ---
 
@@ -274,13 +291,15 @@ Updates pipeline already uses `claude-haiku-4-5-20251001`. The in-app AI Advisor
 
 13. **Debugging the updates pipeline:** Actions tab → latest run → "Fetch and categorize updates" step. Per-source counts print first (e.g. `Entra Release Notes: 11 | ... | MSRC: 23`). A source at 0 with a ⚠️ means its URL(s) died; everything else degrades gracefully.
 
+14. **Files downloaded from Claude land in ~/Downloads — they don't replace project files by themselves.** July 21 lesson: a "did nothing change?" deploy turned out to be the old file still in `src/pages/` while the new one sat in Downloads. Quick sanity check before committing a Claude-provided file: `grep -c "<something unique to the new code>" <target file>` — if it prints 0, the copy never happened. Fix: `cp ~/Downloads/<file> <target path>`.
+
 ---
 
 ## 📋 Next Steps (Priority Order)
 
 ### Immediate
-- [ ] Switch model to `claude-haiku-4-5-20251001` in AIAdvisor.jsx and OverlapAnalyzer.jsx (70% cost cut on in-app AI)
 - [ ] Update README.md with real project description
+- [ ] Manually verify Haiku answer quality holds over a week of team use — tune system prompts if responses feel thin
 
 ### V1.2 — SEO
 - [ ] Add React Router routes for individual roles: `/roles/global-administrator`
@@ -288,12 +307,13 @@ Updates pipeline already uses `claude-haiku-4-5-20251001`. The in-app AI Advisor
 - [ ] Add sitemap.xml generation
 - [ ] Add comparison pages: `/compare/global-admin-vs-security-admin`
 - [ ] Submit to Google Search Console (verification TXT already on name.com)
+- [ ] Consider a dedicated `/new-roles` route (own URL to bookmark/share + SEO page) — the pinned section on /updates covers the need for now; this would be a small follow-up (new component reading the same cache filtered to New Role, plus route + nav link)
 
 ### V1.3 — Features
 - [ ] Side-by-side role comparison tool (pick 2-3 roles, compare columns)
 - [ ] "What role do I need?" wizard (3-4 question flow → recommendation)
 - [ ] Upgrade rate limiter to Upstash Redis for persistent limits
-- [ ] Add new roles surfaced by the Updates feed (e.g. SOC Identity Responder, June 2026) to roles.js data — the feed now discovers these automatically; adding them to the library is manual
+- [ ] Add new roles surfaced by the Updates feed (e.g. SOC Identity Responder, June 2026) to roles.js data — the feed now discovers these automatically; adding them to the library is manual. The pinned New Roles section is the natural home for a future "add to Role Library" action
 - [ ] Mobile layout polish for Overlap Analyzer and AI Advisor
 
 ### V1.4 — Monetization (if traffic warrants)
@@ -309,12 +329,12 @@ Updates pipeline already uses `claude-haiku-4-5-20251001`. The in-app AI Advisor
 |---|---|---|
 | Vercel | Hobby (free) | $0 |
 | GitHub | Free (public repo) | $0 |
-| Anthropic API (in-app AI) | Pay per use | ~$8-20 at 20-50 questions/day (drops ~70% after Haiku switch) |
+| Anthropic API (in-app AI, Haiku) | Pay per use | ~$2-6 at 20-50 questions/day (was ~$8-20 on Sonnet) |
 | Updates fetch | GitHub Action once/day, Haiku | ~$0.02/day = ~$0.60/mo |
 | name.com domain | Annual | ~$1/mo amortized |
-| **Total** | | **~$10-22/mo** |
+| **Total** | | **~$4-8/mo** |
 
-**Previous cost with Lovable + Supabase Pro:** ~$50-75/mo
+**Previous cost with Lovable + Supabase Pro:** ~$50-75/mo. Sonnet-era cost: ~$10-22/mo.
 
 ---
 
@@ -326,4 +346,4 @@ When starting a new Claude session for this project, say:
 
 ---
 
-*Regenerated July 20, 2026 after building and verifying the Updates pipeline end to end.*
+*Regenerated July 21, 2026 after shipping the pinned New Roles section on /updates and switching all in-app AI to Haiku 4.5.*
