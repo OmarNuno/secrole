@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
+import { ENTRA_ROLES, PURVIEW_ROLES, ALL_ROLES } from "../data/roles";
 
 export default function Nav() {
   const { pathname } = useLocation();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Derived from the role data so the nav badges update automatically
+  // whenever roles are added (e.g. via the role-drift PR flow).
+  const entraCount = ENTRA_ROLES.length;
+  const purviewCount = PURVIEW_ROLES.length;
+  const criticalCount = ALL_ROLES.filter((r) => r.risk === "Critical").length;
 
   const links = [
     { to: "/", label: "Role Library" },
@@ -132,9 +139,9 @@ export default function Nav() {
           {/* Desktop right side */}
           <div className="nav-stats" style={{ alignItems: "center", gap: 16 }}>
             <div style={{ display: "flex", gap: 14, fontSize: 12, color: "var(--text-faint)" }}>
-              <span><b style={{ color: "var(--entra)" }}>111</b> Entra</span>
-              <span><b style={{ color: "var(--purview)" }}>40</b> Purview</span>
-              <span><b style={{ color: "var(--critical)" }}>3</b> Critical</span>
+              <span><b style={{ color: "var(--entra)" }}>{entraCount}</b> Entra</span>
+              <span><b style={{ color: "var(--purview)" }}>{purviewCount}</b> Purview</span>
+              <span><b style={{ color: "var(--critical)" }}>{criticalCount}</b> Critical</span>
             </div>
             <button className="theme-toggle" onClick={toggleTheme} title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
               {theme === "dark" ? "☀️" : "🌙"}
@@ -197,9 +204,9 @@ export default function Nav() {
 
         {/* Stats at bottom */}
         <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--border)", display: "flex", gap: 16, fontSize: 13, color: "var(--text-faint)" }}>
-          <span><b style={{ color: "var(--entra)" }}>111</b> Entra</span>
-          <span><b style={{ color: "var(--purview)" }}>40</b> Purview</span>
-          <span><b style={{ color: "var(--critical)" }}>3</b> Critical</span>
+          <span><b style={{ color: "var(--entra)" }}>{entraCount}</b> Entra</span>
+          <span><b style={{ color: "var(--purview)" }}>{purviewCount}</b> Purview</span>
+          <span><b style={{ color: "var(--critical)" }}>{criticalCount}</b> Critical</span>
         </div>
       </div>
     </>
