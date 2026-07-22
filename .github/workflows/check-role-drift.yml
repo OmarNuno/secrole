@@ -1,0 +1,77 @@
+name: Check Role Drift
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"   # Weekly, Mondays 7:00 AM UTC (after the 6 AM updates run)
+  workflow_dispatch:        # Manual "Run workflow" button — use repeatedly to work through the initial backlog
+
+permissions:
+  contents: write           # Push the drift branch
+  pull-requests: write      # Open the review PR
+  issues: write             # Open an issue for retired-only drift
+
+jobs:
+  check-role-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Skip if a drift PR is already open awaiting review
+        id: guard
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          open=$(gh pr list --state open --json headRefName --jq '[.[] | select(.headRefName | startswith("role-drift/"))] | length')
+          if [ "$open" -gt 0 ]; then
+            echo "An open role-drift PR already exists — review/merge it first. Skipping this run."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check for role drift (drafts entries if found)
+        if: steps.guard.outputs.skip == 'false'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DRIFT_PR_BODY: ${{ runner.temp }}/drift-pr-body.md
+        run: node scripts/check-role-drift.js
+
+      - name: Open PR with drafted roles (if roles.js changed)
+        if: steps.guard.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "secrole-bot"
+          git config user.email "actions@github.com"
+
+          if ! git diff --quiet src/data/roles.js; then
+            branch="role-drift/$(date -u +%Y-%m-%d-%H%M)"
+            git checkout -b "$branch"
+            git add src/data/roles.js
+            git commit -m "feat: add new Microsoft roles detected by drift checker"
+            git push -u origin "$branch"
+            gh pr create \
+              --title "🤖 New Microsoft roles detected — review drafted entries" \
+              --body-file "${{ runner.temp }}/drift-pr-body.md" \
+              --base main --head "$branch"
+            echo "✅ PR opened for review."
+          elif [ -f "${{ runner.temp }}/drift-pr-body.md" ]; then
+            # Drift report exists but no file changes → retirement/rename flags only.
+            existing=$(gh issue list --state open --search "Role drift: possible retired roles in:title" --json number --jq 'length')
+            if [ "$existing" -eq 0 ]; then
+              gh issue create \
+                --title "Role drift: possible retired roles" \
+                --body-file "${{ runner.temp }}/drift-pr-body.md"
+              echo "⚠️ Issue opened for retirement flags."
+            else
+              echo "Retirement-flag issue already open — not duplicating."
+            fi
+          else
+            echo "✓ In sync — nothing to do."
+          fi
