@@ -1,52 +1,12 @@
 {
-  "lastUpdated": "2026-07-23T08:07:19.075Z",
-  "fetchedAt": "2026-07-23T08:07:19.075Z",
+  "lastUpdated": "2026-07-24T08:03:56.620Z",
+  "fetchedAt": "2026-07-24T08:03:56.620Z",
   "updates": [
     {
-      "id": "azure-ad-denial-of-service-vulnerabilities",
-      "title": "2 Denial of Service Vulnerabilities Patched in Azure Active Directory",
-      "summary": "Microsoft has published security updates for two denial-of-service vulnerabilities affecting Azure Active Directory (CVE-2026-50652 and CVE-2026-50653). Admins should review and apply patches to prevent potential service disruption from unauthenticated attackers.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50652"
-    },
-    {
-      "id": "adfs-denial-of-service-vulnerabilities",
-      "title": "4 Denial of Service Vulnerabilities Patched in Windows Active Directory Federation Services",
-      "summary": "Four denial-of-service vulnerabilities have been identified in Windows ADFS (CVE-2026-50304, CVE-2026-50368, CVE-2026-50324, CVE-2026-50355). Organizations using ADFS for federation should prioritize patching to maintain availability of identity services.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50304"
-    },
-    {
-      "id": "rabbitmq-vulnerabilities-consolidated",
-      "title": "4 Security Vulnerabilities Patched in RabbitMQ",
-      "summary": "Microsoft has published updates for four RabbitMQ vulnerabilities including credential disclosure (CVE-2026-57219), memory exhaustion denial of service (CVE-2026-57220), cross-tenant authorization bypass (CVE-2026-57217), and stored XSS in the federation plugin (CVE-2026-57213). Organizations using RabbitMQ should apply patches to prevent credential theft, service outages, and cross-tenant access.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-57219"
-    },
-    {
       "id": "soc-identity-responder-role",
-      "title": "New SOC Identity Responder Built-in Role",
-      "summary": "Microsoft Entra introduced the SOC Identity Responder role to enable security operations teams to execute identity containment actions from Microsoft Defender with minimal required privileges. This reduces the need for SOC analysts to hold multiple high-privilege roles or depend on identity administrators during incident response.",
+      "title": "New Built-in Entra Role: SOC Identity Responder",
+      "summary": "Microsoft Entra introduced a new built-in role designed for security operations center (SOC) analysts to perform identity containment actions from Microsoft Defender using least-privilege access. This eliminates the previous requirement for SOC teams to hold multiple high-privilege Entra roles or depend on identity administrators, reducing response delays during security incidents.",
       "category": "New Role",
-      "source": "Microsoft Entra Release Notes",
-      "date": "June 2026",
-      "importance": "high",
-      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
-    },
-    {
-      "id": "conditional-access-agent-protections",
-      "title": "Extended Conditional Access Protections for AI Agent User Accounts",
-      "summary": "Microsoft Entra Conditional Access now supports targeting and protecting AI agent user accounts with greater precision using Custom Security Attributes and agent-risk policies. Admins can now apply conditional policies specifically to agents, closing a security gap for service principal accounts used by automation and AI systems.",
-      "category": "Feature Update",
       "source": "Microsoft Entra Release Notes",
       "date": "June 2026",
       "importance": "high",
@@ -55,7 +15,7 @@
     {
       "id": "entra-backup-recovery-ga",
       "title": "Microsoft Entra Backup and Recovery Generally Available",
-      "summary": "Microsoft Entra Backup and Recovery is now generally available, automatically backing up critical directory objects including users, groups, applications, policies, and named locations. This built-in solution helps organizations recover from accidental or malicious changes without external tooling.",
+      "summary": "Microsoft Entra Backup and Recovery is now generally available as a built-in solution for tenant recovery from accidental or malicious changes. The service automatically backs up critical directory objects including users, groups, applications, Conditional Access policies, and authentication policies, with no additional configuration required.",
       "category": "Feature Update",
       "source": "Microsoft Entra Release Notes",
       "date": "June 2026",
@@ -63,19 +23,19 @@
       "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
     },
     {
-      "id": "authenticator-jailbreak-root-detection-ga",
-      "title": "Jailbreak/Root Detection in Authenticator App Generally Available",
-      "summary": "Microsoft Authenticator now blocks users with rooted or jailbroken devices from adding or using work or school accounts. This security-by-default feature reduces attack surface by preventing compromised mobile devices from accessing corporate resources.",
+      "id": "conditional-access-agent-protections",
+      "title": "Extended Conditional Access Protections for AI Agent User Accounts",
+      "summary": "Conditional Access now supports targeting and protecting AI agent user accounts with greater precision using Custom Security Attributes, agent-specific risk detection, and compliance requirements. Organizations can now apply granular policies to secure AI agents alongside human users.",
       "category": "Feature Update",
       "source": "Microsoft Entra Release Notes",
       "date": "June 2026",
-      "importance": "high",
+      "importance": "medium",
       "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
     },
     {
       "id": "external-users-access-packages",
       "title": "External Users Can Be Directly Assigned to Access Packages",
-      "summary": "Entitlement Management now allows admins to directly assign external users to access packages using their email address without pre-existing directory entries. External users are automatically invited as guests and governed by Entra ID Governance, simplifying partner and vendor access provisioning.",
+      "summary": "Entitlement Management now allows admins to directly assign external users to access packages using email addresses without pre-existing directory entries. External users are automatically invited as guests and governed through the access package workflow.",
       "category": "Feature Update",
       "source": "Microsoft Entra Release Notes",
       "date": "June 2026",
@@ -85,7 +45,7 @@
     {
       "id": "domainless-saml-federation",
       "title": "Domainless SAML IdP Federation for Workforce Tenants",
-      "summary": "Microsoft Entra B2B now supports domainless SAML federation, allowing external users to authenticate using their IdP credentials regardless of email domain matching. This eliminates complex domain-matching configuration requirements for organizations with diverse email domains.",
+      "summary": "Microsoft Entra now supports domainless SAML federation, allowing external users to authenticate using their IdP-managed credentials without requiring domain matching between email addresses and preconfigured IdP domains. This simplifies B2B access management and reduces federation configuration overhead.",
       "category": "Feature Update",
       "source": "Microsoft Entra Release Notes",
       "date": "June 2026",
@@ -93,9 +53,9 @@
       "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
     },
     {
-      "id": "ad-group-enforcement-preview",
-      "title": "AD Group Enforcement for Cloud Sync (Preview)",
-      "summary": "Entra Cloud Sync now supports AD group enforcement, allowing admins to designate specific Active Directory groups that can only be modified through Entra provisioning. This prevents unauthorized changes and maintains consistency between cloud and on-premises group management.",
+      "id": "ad-group-enforcement",
+      "title": "Prevent Unauthorized Changes to AD Groups with AD Group Enforcement",
+      "summary": "A new preview capability in Entra Cloud Sync allows organizations to designate specific Active Directory groups so modifications can only occur through the Entra provisioning service, preventing drift and maintaining consistency between Entra and on-premises AD. Changes made outside the provisioning service are blocked.",
       "category": "Feature Update",
       "source": "Microsoft Entra Release Notes",
       "date": "June 2026",
@@ -103,9 +63,29 @@
       "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
     },
     {
-      "id": "scim-2-apis-us-gov-cloud",
+      "id": "byod-windows-entra-registration",
+      "title": "BYOD Support for Windows Clients Using Entra Registration",
+      "summary": "Bring Your Own Device (BYOD) support for Windows clients using Entra registration is now generally available. Administrators can assign the Private Application traffic profile to users with internal accounts, simplifying BYOD deployment without prior device requirements.",
+      "category": "Feature Update",
+      "source": "Microsoft Entra Release Notes",
+      "date": "June 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
+    },
+    {
+      "id": "jailbreak-root-detection-authenticator",
+      "title": "Jailbreak/Root Detection in Authenticator App",
+      "summary": "Microsoft Authenticator now detects and blocks rooted or jailbroken devices from adding or using work or school accounts, enforcing secure-by-default device compliance. Users on non-compliant devices are blocked until they migrate to compliant hardware.",
+      "category": "Feature Update",
+      "source": "Microsoft Entra Release Notes",
+      "date": "June 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
+    },
+    {
+      "id": "scim-2-0-us-gov-cloud",
       "title": "SCIM 2.0 APIs for Microsoft Entra ID in US Gov Cloud",
-      "summary": "SCIM 2.0 APIs are now generally available in the US Gov cloud, enabling standards-based user and group provisioning for government organizations. This provides an industry-standard alternative for identity lifecycle management in restricted cloud environments.",
+      "summary": "SCIM 2.0 APIs are now generally available in the US Gov cloud, providing a standards-based option for managing users and groups in Microsoft Entra. This enables easier integration with third-party identity management systems in government environments.",
       "category": "Feature Update",
       "source": "Microsoft Entra Release Notes",
       "date": "June 2026",
@@ -113,29 +93,19 @@
       "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
     },
     {
-      "id": "dlp-file-quarantine-sharepoint-onedrive",
-      "title": "DLP File Quarantine Action for SharePoint and OneDrive",
-      "summary": "Microsoft Purview Data Loss Prevention now supports file quarantine for SharePoint and OneDrive, automatically moving flagged files to an admin-controlled restricted location. This provides immediate containment of sensitive data while preserving files for investigation and review.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557190"
+      "id": "kerberos-key-rotation-reliability",
+      "title": "Improved Reliability for Microsoft Entra Kerberos Key Rotation",
+      "summary": "Microsoft Entra Kerberos key rotation now includes enhanced validation logic to handle incoming trust referral flows more reliably. The system attempts decryption with both primary and secondary keys, preventing authentication failures that previously occurred during key rotation in referral scenarios.",
+      "category": "Permission Change",
+      "source": "Microsoft Entra Release Notes",
+      "date": "June 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
     },
     {
-      "id": "dlp-non-microsoft-connected-apps",
-      "title": "DLP and Auto-labeling for Non-Microsoft Connected Apps",
-      "summary": "Microsoft Purview Data Loss Prevention and auto-labeling now extend to non-Microsoft applications including Google Workspace, Box, Dropbox, Salesforce, and AWS. Organizations can now enforce consistent data protection policies across their entire cloud application ecosystem.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
-    },
-    {
-      "id": "dlp-copilot-external-email-protection",
-      "title": "DLP Protection for External Emails in Microsoft 365 Copilot",
-      "summary": "Microsoft Purview DLP now prevents Microsoft 365 Copilot and Copilot Chat from processing emails from senders external to the organization. This real-time control mitigates data leakage risks by blocking sensitive information from being processed by AI systems via untrusted external communications.",
+      "id": "purview-dlp-external-emails-copilot",
+      "title": "DLP Controls Prevent Copilot Processing of External Emails",
+      "summary": "Microsoft Purview DLP now blocks Microsoft 365 Copilot and Copilot Chat from processing emails from senders external to an organization. This mitigates risks of sensitive data exposure and prompt injection attacks when Copilot accesses external email as grounding data.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
@@ -143,49 +113,39 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561552"
     },
     {
-      "id": "dlp-copilot-web-search-protection",
-      "title": "DLP Protection Against Sensitive Data in Copilot Web Search",
-      "summary": "Microsoft Purview DLP now prevents Microsoft 365 Copilot and Copilot Chat from using sensitive data in external web searches. This control helps organizations mitigate oversharing and data leakage risks by blocking sensitive information from being sent to external search engines.",
+      "id": "purview-dlp-web-search-copilot",
+      "title": "DLP Safeguards Prevent Copilot External Web Searches with Sensitive Data",
+      "summary": "Microsoft Purview DLP now extends to prevent Microsoft 365 Copilot and Copilot Chat from using sensitive data in external web searches. This real-time control reduces data leakage and oversharing risks by blocking potentially exposed sensitive information.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
-      "importance": "medium",
+      "importance": "high",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870"
     },
     {
-      "id": "dlp-copilot-storage-location-support",
-      "title": "DLP Copilot Processing Control Extended to All Storage Locations",
-      "summary": "Microsoft Purview DLP policies that restrict Copilot processing of sensitivity-labeled files now apply regardless of file storage location. Previously limited to specific storage types, this expansion ensures consistent data protection across all file repositories.",
-      "category": "Permission Change",
+      "id": "purview-dlp-copilot-all-storage",
+      "title": "DLP Sensitivity Label Protections for Copilot Extend to All Storage Locations",
+      "summary": "The Microsoft Purview DLP policy restricting Copilot from processing files with sensitivity labels now applies regardless of file storage location. Previously limited to specific locations, this expanded scope ensures consistent data protection across Word, Excel, and PowerPoint regardless of where files are stored.",
+      "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
       "importance": "medium",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557255"
     },
     {
-      "id": "autolabel-scale-increase-sharepoint-onedrive",
-      "title": "Auto-labeling Scale Increase for SharePoint and OneDrive",
-      "summary": "Microsoft Purview auto-labeling capacity for SharePoint and OneDrive is increasing from 100,000 to 500,000 files per tenant per day. This enables organizations to label and protect more data at rest faster, closing labeling gaps before Copilot rollout.",
+      "id": "purview-dlp-file-quarantine",
+      "title": "DLP File Quarantine Action for SharePoint and OneDrive",
+      "summary": "Microsoft Purview DLP now includes a file quarantine action that automatically moves triggered files to a restricted, admin-controlled quarantine location on SharePoint and OneDrive. This instantly removes user access while preserving files for investigation, providing immediate containment of sensitive data exposure.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567890"
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557190"
     },
     {
-      "id": "dlp-graph-api-enrichment",
-      "title": "DLP Event Data Enrichment in Defender Alerts Graph API",
-      "summary": "Microsoft Purview DLP data is now available through the Defender Alerts Graph API alongside alert data, streamlining SIEM integration and automated workflow creation. This centralized access point eliminates the need to pull DLP event details from separate Management APIs.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558681"
-    },
-    {
-      "id": "dsi-endpoint-dlp-integration",
+      "id": "purview-dsi-endpoint-dlp",
       "title": "Data Security Investigations Integration with Endpoint DLP Alerts",
-      "summary": "Microsoft Purview Data Security Investigations can now be launched directly from endpoint DLP alerts, automatically gathering related files triggered by policies. This accelerates investigation workflows by correlating exfiltration events without manual file discovery.",
+      "summary": "Data Security Investigations now integrates with endpoint DLP alerts, allowing analysts to launch investigations directly from alerts and automatically gather related exfiltrated files for review. This accelerates forensic analysis by aggregating files tied to specific DLP events.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
@@ -193,14 +153,54 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558547"
     },
     {
-      "id": "dlp-network-integration-gsa",
-      "title": "DLP Integration with Microsoft Entra Global Secure Access",
-      "summary": "Microsoft Purview DLP now integrates with Microsoft Entra Global Secure Access to intercept and inspect text and AI interactions at the network layer, preventing sensitive data from reaching untrusted cloud applications. This provides network-level enforcement complementing application-level policies.",
+      "id": "purview-dlp-graph-api-defender-alerts",
+      "title": "DLP Event Data in Graph API for Defender Alert Enrichment",
+      "summary": "Microsoft Purview DLP event data is now available in the Graph API alongside alert data, enabling easier correlation and SIEM integration. Organizations can now export comprehensive DLP and alert information through a single API to streamline incident response and reporting workflows.",
       "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558681"
+    },
+    {
+      "id": "purview-dlp-non-microsoft-apps",
+      "title": "DLP and Auto-Labeling Extend to Non-Microsoft Connected Apps",
+      "summary": "Microsoft Purview DLP and Information Protection auto-labeling capabilities now extend to non-Microsoft applications including Google Workspace, Box, Dropbox, Salesforce, ServiceNow, AWS, and Cisco Webex. Supported actions and conditions vary by application, expanding data protection beyond Microsoft 365.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
       "importance": "high",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
+    },
+    {
+      "id": "purview-autolabel-scale-increase",
+      "title": "Auto-Labeling Scale Increase for SharePoint and OneDrive",
+      "summary": "Microsoft Purview auto-labeling maximum capacity for SharePoint and OneDrive has increased from 100,000 to 500,000 files per tenant per day. This enables organizations to close labeling gaps faster, protecting more data at rest and preparing data estates for Microsoft 365 Copilot with greater confidence.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567890"
+    },
+    {
+      "id": "purview-sharepoint-default-labels",
+      "title": "Apply Default SharePoint Library Labels to Data at Rest",
+      "summary": "Microsoft Purview Information Protection now auto-labels existing SharePoint files to match the default sensitivity label configured on their document library. This eliminates labeling gaps for data at rest and enforces consistent, secure-by-default protection without requiring manual user intervention.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=559105"
+    },
+    {
+      "id": "purview-data-lifecycle-archive",
+      "title": "Archive OneDrive and SharePoint Files Under Retention",
+      "summary": "Microsoft Purview Data Lifecycle Management now supports retention-based file archiving that moves inactive content to low-cost storage while keeping data discoverable. This reduces storage costs without compromising compliance or reducing Copilot result relevance.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561208"
     }
   ]
 }
