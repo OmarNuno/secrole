@@ -5,6 +5,7 @@ import RoleLibrary from "./pages/RoleLibrary";
 import OverlapAnalyzer from "./pages/OverlapAnalyzer";
 import AIAdvisor from "./pages/AIAdvisor";
 import Updates from "./pages/Updates";
+import ServicePrincipals from "./pages/ServicePrincipals";
 
 export default function App() {
   // Initialize theme on first load
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/analyzer" element={<OverlapAnalyzer />} />
           <Route path="/advisor" element={<AIAdvisor />} />
           <Route path="/updates" element={<Updates />} />
+          <Route path="/service-principals" element={<ServicePrincipals />} />
         </Routes>
       </main>
     </div>

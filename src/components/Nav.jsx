@@ -18,6 +18,7 @@ export default function Nav() {
     { to: "/", label: "Role Library" },
     { to: "/analyzer", label: "Overlap Analyzer" },
     { to: "/advisor", label: "AI Advisor" },
+    { to: "/service-principals", label: "Service Principals" },
     { to: "/updates", label: "Updates", badge: "NEW" },
   ];
 
