@@ -19,7 +19,7 @@ export default function Nav() {
     { to: "/analyzer", label: "Overlap Analyzer" },
     { to: "/advisor", label: "AI Advisor" },
     { to: "/service-principals", label: "Service Principals" },
-    { to: "/updates", label: "Updates", badge: "NEW" },
+    { to: "/updates", label: "Updates" },
   ];
 
   const closeMenu = () => setMenuOpen(false);

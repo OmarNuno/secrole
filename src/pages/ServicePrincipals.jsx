@@ -138,8 +138,14 @@ const css = `
 .sp-readout-note { font-size: 13px; color: var(--sp-muted); margin-left: auto; max-width: 440px; }
 @media (max-width: 720px){ .sp-readout-note { margin-left: 0; flex-basis: 100%; } }
 
+.sp-modeseg { display: inline-flex; gap: 4px; padding: 4px; background: var(--sp-bg); border: 1px solid var(--sp-border); border-radius: 10px; margin-bottom: 14px; }
+.sp-modeseg button { border: none; background: transparent; color: var(--sp-muted); font-family: var(--sp-sans); font-size: 13px; font-weight: 500; padding: 7px 13px; border-radius: 7px; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background .15s, color .15s; }
+.sp-modeseg button small { color: var(--sp-faint); font-weight: 400; font-size: 11.5px; }
+.sp-modeseg button.active { background: var(--sp-surface-2); color: var(--sp-text); box-shadow: inset 0 0 0 1px var(--sp-border); }
+.sp-modeseg button.active small { color: var(--sp-muted); }
 .sp-tenants { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
-@media (max-width: 760px){ .sp-tenants { grid-template-columns: 1fr; } }
+.sp-tenants.single { grid-template-columns: minmax(0, 460px); justify-content: center; }
+@media (max-width: 760px){ .sp-tenants, .sp-tenants.single { grid-template-columns: 1fr; } }
 .sp-tenant { border: 1px solid var(--sp-border); border-radius: 12px; padding: 15px; background: var(--sp-bg); min-height: 228px; transition: border-color .2s; }
 .sp-tenant.home { border-color: var(--sp-app-bd); }
 .sp-tenant-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
@@ -296,6 +302,7 @@ const APPID = "7f3b9c21-4e8a-4d6f-bb2c-1a9e0d5c8f42";
 const IDS = { appObj: "a13e6b40-…-9f2c", homeSp: "c91d0f72-…-4ab8", contoso: "e44f5a18-…-2d7e", fabrikam: "0b27c9e3-…-1f6a" };
 
 function Simulator() {
+  const [mode, setMode] = useState("single"); // "single" = your tenant | "multi" = SaaS
   const [reg, setReg] = useState(false);
   const [contoso, setContoso] = useState(false);
   const [fabrikam, setFabrikam] = useState(false);
@@ -303,22 +310,31 @@ function Simulator() {
   const [restored, setRestored] = useState(false);
   const [flash, setFlash] = useState("");
 
+  const multi = mode === "multi";
   const appObjExists = reg && (!deleted || restored);
   const homeSpExists = reg && !deleted;
   const appCount = appObjExists ? 1 : 0;
   const spCount = (homeSpExists ? 1 : 0) + (contoso ? 1 : 0) + (fabrikam ? 1 : 0);
 
   const reset = () => { setReg(false); setContoso(false); setFabrikam(false); setDeleted(false); setRestored(false); setFlash(""); };
+  const switchMode = (m) => { setMode(m); reset(); };
   const ping = (m) => { setFlash(m); setTimeout(() => setFlash(""), 2600); };
 
   const note = useMemo(() => {
-    if (!reg) return "Register the app to create its one application object — plus a service principal in its home tenant.";
-    if (deleted && !restored) return "Deleting the application object cascaded to its home-tenant service principal. Contoso and Fabrikam still have theirs — they live in different tenants.";
-    if (restored) return "The application object is back, but its home-tenant service principal did not return with it. You'd re-consent to recreate it.";
-    if (contoso && fabrikam) return "One application object, three service principals. Same appId everywhere; a distinct objectId per tenant.";
-    if (contoso || fabrikam) return "Each tenant that consents gets its own service principal — its local instance of the same global app.";
-    return "The home-tenant service principal was created automatically at registration. Now have a consumer tenant consent.";
-  }, [reg, contoso, fabrikam, deleted, restored]);
+    if (multi) {
+      if (!reg) return "Register the app to create its one application object — plus a service principal in its home tenant.";
+      if (deleted && !restored) return "Deleting the application object cascaded to its home-tenant service principal. Contoso and Fabrikam still have theirs — they live in different tenants.";
+      if (restored) return "The application object is back, but its home-tenant service principal did not return with it. You'd re-consent to recreate it.";
+      if (contoso && fabrikam) return "One application object, three service principals. Same appId everywhere; a distinct objectId per tenant.";
+      if (contoso || fabrikam) return "Each tenant that consents gets its own service principal — its local instance of the same global app.";
+      return "The home-tenant service principal was created automatically at registration. Now have a consumer tenant consent.";
+    }
+    // single tenant — the everyday internal-app case
+    if (!reg) return "This is the everyday case: an app registered in your own tenant. Register it to see what gets created.";
+    if (deleted && !restored) return "Deleting the application object also deleted its service principal — in your tenant the two are bound together.";
+    if (restored) return "The application object is back, but the service principal did not return with it. You'd re-register it to recreate the pair.";
+    return "One app, two objects, one tenant: the application object (the definition) and the service principal (what signs in and holds permissions). Wondering why it's two objects for one app? Switch to Multitenant.";
+  }, [multi, reg, contoso, fabrikam, deleted, restored]);
 
   const renderSp = (id) => (
     <>
@@ -332,24 +348,29 @@ function Simulator() {
 
   return (
     <div className="sp-sim">
+      <div className="sp-modeseg" role="tablist" aria-label="Tenant scenario">
+        <button role="tab" aria-selected={!multi} className={!multi ? "active" : ""} onClick={() => switchMode("single")}>Single tenant <small>your org</small></button>
+        <button role="tab" aria-selected={multi} className={multi ? "active" : ""} onClick={() => switchMode("multi")}>Multitenant <small>SaaS app</small></button>
+      </div>
+
       <div className="sp-sim-controls">
-        <button className="sp-btn primary" disabled={reg} onClick={() => { setReg(true); ping("Created: 1 application object + 1 home-tenant service principal in Adatum."); }}><I.plus /> Register app (Adatum)</button>
-        <button className="sp-btn go" disabled={!reg || deleted || contoso} onClick={() => { setContoso(true); ping("Contoso admin consented → new service principal in Contoso."); }}><I.plus /> Contoso consents</button>
-        <button className="sp-btn go" disabled={!reg || deleted || fabrikam} onClick={() => { setFabrikam(true); ping("Fabrikam admin consented → new service principal in Fabrikam."); }}><I.plus /> Fabrikam consents</button>
-        <button className="sp-btn warn" disabled={!reg || deleted} onClick={() => { setDeleted(true); setRestored(false); ping("Application object deleted — its home service principal went with it."); }}><I.trash /> Delete app object</button>
-        <button className="sp-btn ghost" disabled={!deleted || restored} onClick={() => { setRestored(true); ping("App object restored. Notice the home service principal is still gone."); }}><I.reset /> Restore app object</button>
+        <button className="sp-btn primary" disabled={reg} onClick={() => { setReg(true); ping(multi ? "Created: 1 application object + 1 home-tenant service principal in Adatum." : "Created: 1 application object + 1 service principal — together in your tenant."); }}><I.plus /> Register app{multi ? " (Adatum)" : ""}</button>
+        {multi && <button className="sp-btn go" disabled={!reg || deleted || contoso} onClick={() => { setContoso(true); ping("Contoso admin consented → new service principal in Contoso."); }}><I.plus /> Contoso consents</button>}
+        {multi && <button className="sp-btn go" disabled={!reg || deleted || fabrikam} onClick={() => { setFabrikam(true); ping("Fabrikam admin consented → new service principal in Fabrikam."); }}><I.plus /> Fabrikam consents</button>}
+        <button className="sp-btn warn" disabled={!reg || deleted} onClick={() => { setDeleted(true); setRestored(false); ping(multi ? "Application object deleted — its home service principal went with it." : "Application object deleted — its service principal went with it."); }}><I.trash /> Delete app object</button>
+        <button className="sp-btn ghost" disabled={!deleted || restored} onClick={() => { setRestored(true); ping("App object restored. Notice the service principal is still gone."); }}><I.reset /> Restore app object</button>
         <button className="sp-btn ghost" onClick={reset} style={{ marginLeft: "auto" }}><I.reset /> Reset</button>
       </div>
 
       <div className="sp-readout">
         <div className="sp-stat"><span className="sp-stat-num app">{appCount}</span><span className="sp-stat-lbl">application<br/>object</span></div>
-        <div className="sp-stat"><span className="sp-stat-num sp">{spCount}</span><span className="sp-stat-lbl">service<br/>principals</span></div>
+        <div className="sp-stat"><span className="sp-stat-num sp">{spCount}</span><span className="sp-stat-lbl">service<br/>principal{spCount === 1 ? "" : "s"}</span></div>
         <div className="sp-readout-note">{note}</div>
       </div>
 
-      <div className="sp-tenants">
+      <div className={"sp-tenants" + (multi ? "" : " single")}>
         <div className="sp-tenant home">
-          <div className="sp-tenant-hd"><span className="sp-tenant-name"><I.building style={{ width: 16, height: 16, color: "var(--sp-app)" }} /> Adatum</span><span className="sp-tenant-role home">Home tenant</span></div>
+          <div className="sp-tenant-hd"><span className="sp-tenant-name"><I.building style={{ width: 16, height: 16, color: "var(--sp-app)" }} /> Adatum</span><span className="sp-tenant-role home">{multi ? "Home tenant" : "Your tenant"}</span></div>
           {!reg && <div className="sp-empty">no app yet</div>}
           {appObjExists && (
             <div className="sp-obj app">
@@ -358,18 +379,22 @@ function Simulator() {
             </div>
           )}
           {homeSpExists && renderSp(IDS.homeSp)}
-          {restored && !homeSpExists && <div className="sp-empty" style={{ paddingTop: 18, paddingBottom: 6 }}>home SP not restored</div>}
+          {restored && !homeSpExists && <div className="sp-empty" style={{ paddingTop: 18, paddingBottom: 6 }}>service principal not restored</div>}
         </div>
 
-        <div className="sp-tenant">
-          <div className="sp-tenant-hd"><span className="sp-tenant-name"><I.building style={{ width: 16, height: 16, color: "var(--sp-muted)" }} /> Contoso</span><span className="sp-tenant-role">Consumer</span></div>
-          {contoso ? renderSp(IDS.contoso) : <div className="sp-empty">awaiting consent</div>}
-        </div>
+        {multi && (
+          <div className="sp-tenant">
+            <div className="sp-tenant-hd"><span className="sp-tenant-name"><I.building style={{ width: 16, height: 16, color: "var(--sp-muted)" }} /> Contoso</span><span className="sp-tenant-role">Consumer</span></div>
+            {contoso ? renderSp(IDS.contoso) : <div className="sp-empty">awaiting consent</div>}
+          </div>
+        )}
 
-        <div className="sp-tenant">
-          <div className="sp-tenant-hd"><span className="sp-tenant-name"><I.building style={{ width: 16, height: 16, color: "var(--sp-muted)" }} /> Fabrikam</span><span className="sp-tenant-role">Consumer</span></div>
-          {fabrikam ? renderSp(IDS.fabrikam) : <div className="sp-empty">awaiting consent</div>}
-        </div>
+        {multi && (
+          <div className="sp-tenant">
+            <div className="sp-tenant-hd"><span className="sp-tenant-name"><I.building style={{ width: 16, height: 16, color: "var(--sp-muted)" }} /> Fabrikam</span><span className="sp-tenant-role">Consumer</span></div>
+            {fabrikam ? renderSp(IDS.fabrikam) : <div className="sp-empty">awaiting consent</div>}
+          </div>
+        )}
       </div>
 
       <div className="sp-flash">{flash}</div>
@@ -487,9 +512,9 @@ export default function ServicePrincipals() {
       </div>
 
       <section className="sp-section"><div className="sp-wrap">
-        <SectionHead label="Interactive · build it" chip="6 steps" />
-        <h2 className="sp-h2">The multitenant model, one step at a time</h2>
-        <p className="sp-sub">Register an app, have consumer tenants consent, then try deleting the app object. Watch the object counts and the <span className="sp-mono-inline">appId</span> / <span className="sp-mono-inline">objectId</span> values as you go.</p>
+        <SectionHead label="Interactive · build it" chip="single + multi" />
+        <h2 className="sp-h2">Build the model, one step at a time</h2>
+        <p className="sp-sub">Start in a single tenant — the everyday case for an internal app in your own org — then switch to multitenant to see why one app needs two separate objects. Register an app, try deleting the app object, and watch the counts and the <span className="sp-mono-inline">appId</span> / <span className="sp-mono-inline">objectId</span> values as you go.</p>
         <Simulator />
       </div></section>
 
