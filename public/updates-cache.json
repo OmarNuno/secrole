@@ -1,11 +1,51 @@
 {
-  "lastUpdated": "2026-08-06T08:11:39.425Z",
-  "fetchedAt": "2026-08-06T08:11:39.425Z",
+  "lastUpdated": "2026-08-07T06:57:42.293Z",
+  "fetchedAt": "2026-08-07T06:57:42.293Z",
   "updates": [
     {
-      "id": "purview-dlp-copilot-web-search-safeguard",
-      "title": "Microsoft Purview DLP Extended to Safeguard Copilot Web Searches",
-      "summary": "Microsoft Purview DLP now prevents Microsoft 365 Copilot and Copilot Chat from conducting external web searches when sensitive data is detected in queries. This expansion closes a critical data leakage vector by ensuring sensitive information cannot be exposed through AI-powered search functionality.",
+      "id": "cve-2026-50481-azure-ad-elevation-privilege",
+      "title": "CVE-2026-50481: Azure Active Directory Elevation of Privilege Vulnerability",
+      "summary": "A vulnerability in Azure Active Directory allows authorized attackers to elevate privileges by modifying assumed-immutable data, potentially compromising identity security and access controls across your tenant. Admins should apply the latest security updates immediately to prevent unauthorized privilege escalation.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50481"
+    },
+    {
+      "id": "cve-2026-59115-entra-provisioning-service-privilege",
+      "title": "CVE-2026-59115: Microsoft Entra Provisioning Service Elevation of Privilege Vulnerability",
+      "summary": "A path traversal flaw in Microsoft Entra Provisioning Service (SyncFabric) enables authorized attackers to escalate privileges on the network. This affects identity synchronization and provisioning workflows, so admins should prioritize patching to maintain secure identity operations.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-59115"
+    },
+    {
+      "id": "cve-2026-62869-entra-id-spoofing",
+      "title": "CVE-2026-62869: Azure Entra ID Spoofing Vulnerability",
+      "summary": "Insufficient verification of data authenticity in Azure Entra ID allows authorized attackers to perform spoofing attacks over the network, potentially impersonating users or services. This threatens authentication integrity and should be patched urgently.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62869"
+    },
+    {
+      "id": "cve-2026-65668-purview-ediscovery-privilege",
+      "title": "CVE-2026-65668: Microsoft Purview eDiscovery Elevation of Privilege Vulnerability",
+      "summary": "An improper access control flaw in Microsoft Purview eDiscovery allows authorized attackers to elevate their privileges, potentially exposing sensitive litigation hold and case data. Compliance and legal teams relying on eDiscovery should ensure systems are patched promptly.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-65668"
+    },
+    {
+      "id": "purview-dlp-copilot-web-search-protection",
+      "title": "Microsoft Purview DLP for Microsoft 365 Copilot – Web Search Protection",
+      "summary": "Microsoft is expanding DLP controls to prevent sensitive data from being used in external web searches when users interact with Microsoft 365 Copilot and Copilot Chat. This real-time safeguard helps organizations prevent accidental data leakage through AI-powered features.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -13,9 +53,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870"
     },
     {
+      "id": "purview-dlp-non-microsoft-apps-integration",
+      "title": "Microsoft Purview DLP – Non-Microsoft Connected Apps Support",
+      "summary": "DLP and auto-labeling capabilities now extend to third-party services including Google Workspace, Box, Dropbox, Salesforce, ServiceNow, AWS, and Cisco Webex, giving organizations unified data protection across their entire app ecosystem. This reduces shadow IT risks and enforcement gaps.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
+    },
+    {
       "id": "purview-endpoint-dlp-device-health-dashboard",
-      "title": "Microsoft Purview Endpoint DLP Device Health Reporting Dashboard",
-      "summary": "A new dashboard enables administrators to monitor device health across their fleet, identifying systems that are not ready to receive policy updates and ensuring endpoint DLP deployment readiness. This visibility helps admins maintain consistent policy enforcement and quickly remediate health issues before they impact compliance.",
+      "title": "Microsoft Purview Endpoint DLP – Device Health Reporting Dashboard",
+      "summary": "Admins now have visibility into device health across their fleet to ensure systems are ready for policy updates and to quickly identify devices that may not be compliant or operational. This improves endpoint DLP deployment reliability and troubleshooting.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -23,9 +73,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561033"
     },
     {
-      "id": "purview-adaptive-scope-lifecycle-control",
-      "title": "Microsoft Purview Adaptive Scope Lifecycle State Evaluation Control",
-      "summary": "Administrators now gain explicit control over how Adaptive Scopes evaluate recipient and site owner lifecycle states, ensuring policy targeting remains aligned with organizational changes and user status. This enhancement reduces manual scope updates and improves compliance accuracy for dynamic environments.",
+      "id": "purview-adaptive-scope-lifecycle-evaluation",
+      "title": "Microsoft Purview Adaptive Scope – Recipient and Site Owner Lifecycle Status Control",
+      "summary": "Administrators can now explicitly control how lifecycle states (active, inactive, departed) are evaluated for recipients and site owners in Adaptive Scopes, ensuring retention and DLP policies target the right users as personnel changes occur. This improves governance accuracy during organizational transitions.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -33,19 +83,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568785"
     },
     {
-      "id": "purview-dlm-sharepoint-file-archiving",
-      "title": "Microsoft Purview Data Lifecycle Management Archive Support for SharePoint",
-      "summary": "Administrators can now include file archiving actions within SharePoint retention policies, moving inactive content to low-cost storage while maintaining discoverability and compliance. This capability extends data lifecycle management beyond retention and deletion, reducing storage costs without compromising governance.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561208"
-    },
-    {
-      "id": "purview-dlp-guided-diagnostics",
-      "title": "Microsoft Purview DLP Guided Diagnostics Experience",
-      "summary": "A new guided diagnostics tool helps users understand why DLP policies triggered, showing which conditions evaluated true or false and the order of policy evaluation. For E5 customers, Copilot-powered insights provide tailored recommendations to accelerate troubleshooting and policy optimization.",
+      "id": "purview-dlp-guided-diagnostics-experience",
+      "title": "Microsoft Purview DLP – Guided Diagnostics and Troubleshooting",
+      "summary": "A new diagnostic tool helps admins understand why DLP policies behave unexpectedly by displaying which policies triggered, evaluation order, and which conditions passed or failed. E5 customers also receive Copilot-powered insights and remediation recommendations.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -53,9 +93,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561032"
     },
     {
-      "id": "purview-autolabeling-capacity-increase",
-      "title": "Microsoft Purview Information Protection Auto-Labeling Scale Increase",
-      "summary": "The maximum auto-labeling capacity for SharePoint and OneDrive is increasing from 100,000 to 500,000 files per tenant per day, accelerating data classification at rest. This 5x increase helps organizations close labeling gaps and prepare larger data estates for Microsoft 365 Copilot deployment with greater confidence.",
+      "id": "purview-information-protection-auto-label-scale",
+      "title": "Microsoft Purview Information Protection – Auto-Labeling Scale Increase",
+      "summary": "Auto-labeling capacity for SharePoint and OneDrive is increasing from 100,000 to 500,000 files per tenant per day, enabling faster classification of larger data estates and better preparation for Microsoft 365 Copilot deployments. This helps organizations close labeling gaps more quickly.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
@@ -63,19 +103,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567890"
     },
     {
-      "id": "purview-dlp-copilot-government-clouds",
-      "title": "Microsoft Purview DLP for Copilot in Government Clouds",
-      "summary": "DLP protection for Microsoft 365 Copilot is expanding to government cloud environments, preventing Copilot from returning responses or using sensitive data for grounding when prompts contain classified information. This extends real-time data leakage controls to government and sovereign cloud users.",
+      "id": "purview-data-lifecycle-archive-sharepoint",
+      "title": "Microsoft Purview Data Lifecycle Management – Archive SharePoint Files Under Retention",
+      "summary": "Retention policies can now include archiving actions for inactive SharePoint content, allowing files to move to low-cost storage while remaining discoverable for compliance purposes. This extends lifecycle management capabilities beyond keep-or-delete decisions.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561892"
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561208"
     },
     {
-      "id": "purview-dlp-sla-alert-dashboard",
-      "title": "Microsoft Purview DLP SLA-Based Alert Reporting Dashboard",
-      "summary": "Out-of-box reporting shows DLP alert metrics including MTTA, MTTD, and MTTR, plus top sensitive information types exposed, with ability to define custom SLAs for different severity levels. This operational visibility helps security teams track and improve their incident response performance.",
+      "id": "purview-dlp-sla-alert-reporting-dashboard",
+      "title": "Microsoft Purview DLP – SLA-Based Alert Reporting Dashboard",
+      "summary": "A new dashboard provides out-of-the-box metrics for mean time to acknowledge (MTTA), mean time to detect (MTTD), and mean time to resolve (MTTR) against customizable SLAs, helping security teams track operational performance and trending sensitive data exposures. This enables data-driven prioritization of alert response.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
@@ -83,9 +123,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568372"
     },
     {
-      "id": "purview-dlp-alert-tagging-autoreso",
-      "title": "Microsoft Purview DLP Rule-Based Alert Tagging and Auto-Resolution",
-      "summary": "Administrators can define rules to automatically resolve or tag DLP alerts based on business context, reducing triage queue noise and improving alert routing efficiency. For example, rules can auto-resolve low-severity alerts for trusted partner domains or tag alerts by department.",
+      "id": "purview-dlp-rule-based-alert-tagging-resolution",
+      "title": "Microsoft Purview DLP – Rule-Based Alert Tagging and Auto-Resolution",
+      "summary": "Admins can now define rules to automatically tag and resolve predictable DLP alerts (e.g., resolve low-severity mail-only alerts, tag department-specific alerts), reducing triage burden and noise in alert queues. This improves SOC efficiency and focuses attention on genuine risks.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
@@ -94,8 +134,8 @@
     },
     {
       "id": "purview-sensitivity-labels-entra-security-groups",
-      "title": "Microsoft Purview Sensitivity Labels for Entra Security Groups",
-      "summary": "Sensitivity labels can now be applied to Microsoft Entra cloud security groups using the same label configuration as Microsoft 365 groups and sites. This extends classification and governance controls to cloud security groups without requiring separate label configuration.",
+      "title": "Microsoft Purview Information Protection – Sensitivity Labels for Entra Security Groups",
+      "summary": "Sensitivity labels can now be applied to Microsoft Entra cloud security groups using the same published labels configured for Microsoft 365 groups, extending classification and governance to identity-based resources without separate configuration. This unifies labeling policy across identity and collaboration surfaces.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
@@ -103,104 +143,54 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568217"
     },
     {
-      "id": "purview-dlm-graph-archive-mailboxes",
-      "title": "Microsoft Purview Data Lifecycle Management Graph API Support for Archive Mailboxes",
-      "summary": "Microsoft Graph API support for archive mailboxes (main and auxiliary) provides users a unified archive view across potentially distributed storage as EWS Graph APIs deprecate by October 2026. This enables seamless access and management of archived email data through modern APIs.",
+      "id": "purview-dlp-government-cloud-copilot",
+      "title": "Microsoft Purview DLP for Microsoft 365 Copilot – Government Cloud Support",
+      "summary": "DLP controls for Microsoft 365 Copilot are expanding to government cloud environments, allowing agencies to prevent sensitive data in prompts from being used for responses or grounding. This addresses compliance requirements in government tenants.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567313"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561892"
     },
     {
-      "id": "purview-dlm-azure-pst-import",
-      "title": "Microsoft Purview Data Lifecycle Management Azure PST Import",
-      "summary": "Azure PST Import enables direct migration of PST files from Azure Blob Storage into Exchange Online mailboxes using the Exchange Migration Service two-step pattern: analysis phase followed by execution. This provides a cloud-native migration path for organizations moving PST data without on-premises infrastructure.",
+      "id": "purview-dlp-network-data-security-gsa-integration",
+      "title": "Microsoft Purview DLP – Network Data Security Integration with Entra Global Secure Access",
+      "summary": "DLP now integrates with Microsoft Entra Global Secure Access to intercept and inspect text and AI interactions at the network layer, blocking sensitive data from reaching untrusted cloud applications across browsers, APIs, and generative AI platforms. This provides network-level data protection beyond traditional endpoint and cloud app controls.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-insider-risk-unified-alert-experience",
+      "title": "Microsoft Purview Insider Risk Management – Unified Alert Experience",
+      "summary": "Insider Risk Management now combines the Triage Agent and Standard alert dashboards into a single alerts list, allowing analysts to view classic and agent-triaged alerts together with agent summaries and user details in one location. This improves workflow efficiency for risk investigation and response.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-insider-risk-expanded-user-profile",
+      "title": "Microsoft Purview Insider Risk Management – Expanded User Profile Details",
+      "summary": "The unified alert experience now displays additional Entra ID user profile signals including office location, employee type, department, and last working date, providing investigators with richer context for user risk assessment. This helps correlate insider risk signals with organizational changes and personnel status.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "low",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-dlm-graph-api-archive-mailboxes",
+      "title": "Microsoft Purview Data Lifecycle Management – Graph API Support for Archive Mailboxes",
+      "summary": "Microsoft Graph API now provides access to Archive mailboxes (Main and Auxiliary combined), enabling a unified Archive view across multiple physical mailboxes as EWS Graph APIs sunset by October 2026. This simplifies mailbox archive management and policy application.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "July 2026",
       "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565865"
-    },
-    {
-      "id": "cve-2026-56163-aks-elevation",
-      "title": "CVE-2026-56163 Azure Kubernetes Service Elevation of Privilege",
-      "summary": "Missing authentication in a critical AKS function allows unauthorized attackers to elevate privileges over the network. Organizations running AKS clusters should prioritize patching to prevent unauthorized privilege escalation.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-56163"
-    },
-    {
-      "id": "cve-2026-62825-azure-keyvault-elevation",
-      "title": "CVE-2026-62825 Azure Key Vault Elevation of Privilege",
-      "summary": "Improper authentication in Azure Key Vault allows unauthorized attackers to elevate privileges over the network, potentially compromising secret and key management. Immediate patching is critical as Key Vault controls access to sensitive credentials and encryption keys.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62825"
-    },
-    {
-      "id": "cve-2026-56191-exchange-online-tampering",
-      "title": "CVE-2026-56191 Microsoft Exchange Online Tampering Vulnerability",
-      "summary": "Improper authentication in Exchange Online allows unauthorized attackers to tamper with data and configurations over the network. This vulnerability puts email security and compliance at risk; admins should apply patches promptly.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-56191"
-    },
-    {
-      "id": "cve-2026-58275-azure-dns-elevation",
-      "title": "CVE-2026-58275 Azure DNS Elevation of Privilege",
-      "summary": "Missing authorization in Azure DNS allows unauthorized attackers to elevate privileges, potentially compromising DNS resolution and network routing. Organizations should patch to prevent DNS hijacking and unauthorized access to DNS records.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-58275"
-    },
-    {
-      "id": "cve-2026-62835-online-services-disclosure",
-      "title": "CVE-2026-62835 Online Services Information Disclosure",
-      "summary": "Improper authorization in Online Services allows unauthorized attackers to disclose sensitive information over the network. This vulnerability could expose confidential data; patching should be prioritized.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62835"
-    },
-    {
-      "id": "cve-2026-56160-aro-elevation",
-      "title": "CVE-2026-56160 Azure Red Hat OpenShift Elevation of Privilege",
-      "summary": "Improper authorization in Azure Red Hat OpenShift allows authorized attackers to escalate privileges over the network. Organizations running ARO clusters should patch to prevent lateral privilege escalation.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-56160"
-    },
-    {
-      "id": "purview-insider-risk-unified-alerts",
-      "title": "Microsoft Purview Insider Risk Management Unified Alert Experience",
-      "summary": "The Insider Risk Management alert experience now consolidates Triage Agent and Standard alert dashboards into a single alerts list page with expanded user profile details from Microsoft Entra and enhanced note capabilities. This unified view streamlines alert management and investigation for security teams.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "July 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-network-data-security-dlp",
-      "title": "Microsoft Purview Network Data Security DLP Integration Preview",
-      "summary": "In preview: Purview DLP integrates with Microsoft Entra Global Secure Access to inspect text and AI interactions at the network layer, enforcing restrictive actions based on DLP policies to prevent sensitive data sharing to untrusted cloud apps. This network-layer protection extends DLP coverage to browsers, apps, APIs, and generative AI platforms.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567313"
     }
   ]
 }
