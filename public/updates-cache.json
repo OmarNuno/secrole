@@ -1,31 +1,51 @@
 {
-  "lastUpdated": "2026-08-10T07:04:53.875Z",
-  "fetchedAt": "2026-08-10T07:04:53.875Z",
+  "lastUpdated": "2026-08-11T06:43:32.698Z",
+  "fetchedAt": "2026-08-11T06:43:32.698Z",
   "updates": [
     {
-      "id": "cve-2026-50481-azure-ad-elevation-privilege",
-      "title": "CVE-2026-50481: Azure Active Directory Elevation of Privilege Vulnerability",
-      "summary": "A vulnerability in Azure Active Directory allows authorized attackers to modify assumed-immutable data and escalate privileges. Admins should apply patches immediately to prevent unauthorized privilege elevation within their identity infrastructure.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
+      "id": "purview-role-groups-ui-enhancements",
+      "title": "Microsoft Purview: Role Groups UI Enhancements",
+      "summary": "The Microsoft Purview compliance portal now enables admins to search and filter role group permissions by roles and memberships, improving visibility into access control configurations. This enhancement streamlines the process of auditing who has which permissions across the compliance environment.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-50481"
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562033"
     },
     {
-      "id": "cve-2026-59115-entra-provisioning-elevation-privilege",
-      "title": "CVE-2026-59115: Microsoft Entra Provisioning Service Elevation of Privilege Vulnerability",
-      "summary": "A path traversal vulnerability in Microsoft Entra Provisioning Service (SyncFabric) permits authorized attackers to escalate privileges on the network. This affects identity synchronization workflows and requires immediate patching to prevent unauthorized access.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
+      "id": "purview-dlp-copilot-government-clouds",
+      "title": "Microsoft Purview: Data Loss Prevention for Microsoft 365 Copilot in Government Clouds",
+      "summary": "DLP protection for Copilot prompts now extends to government cloud environments, preventing sensitive data from being leaked through AI interactions. This capability ensures that Copilot will block responses and refuse to use sensitive data for grounding when policy conditions are triggered.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
       "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-59115"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561892"
+    },
+    {
+      "id": "purview-dlp-block-external-domain-user",
+      "title": "Microsoft Purview: DLP Block External Domain/User Action for SharePoint and OneDrive",
+      "summary": "Admins can now configure DLP policies to block file access from specific external domains or individual users in SharePoint and OneDrive, providing granular control over sensitive content access. This feature helps prevent unintended data exposure while supporting compliance requirements.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557191"
+    },
+    {
+      "id": "purview-dspm-data-security-posture-agent",
+      "title": "Microsoft Purview: Data Security Posture Management – Data Security Posture Agent",
+      "summary": "A new intelligent agent uses natural language processing and LLMs to discover and analyze sensitive data across documents, emails, and messages, going beyond traditional keyword-based detection. This helps admins proactively identify and assess risks across their data estate.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=542790"
     },
     {
       "id": "cve-2026-65668-purview-ediscovery-elevation-privilege",
       "title": "CVE-2026-65668: Microsoft Purview eDiscovery Elevation of Privilege Vulnerability",
-      "summary": "Improper access control in Microsoft Purview eDiscovery allows authorized attackers to escalate privileges over a network. Compliance and legal teams relying on eDiscovery should prioritize patching to maintain secure audit and data control.",
+      "summary": "An improper access control vulnerability in Microsoft Purview eDiscovery allows authorized attackers to escalate privileges over the network. Admins should apply available patches immediately to prevent unauthorized access to sensitive compliance data.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "August 2026",
@@ -33,9 +53,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-65668"
     },
     {
-      "id": "purview-dlp-copilot-web-search-protection",
-      "title": "Microsoft Purview: Data Loss Prevention for Microsoft 365 Copilot Web Search Protection",
-      "summary": "DLP controls now prevent Microsoft 365 Copilot and Copilot Chat from performing external web searches on prompts containing sensitive data, reducing data leakage risks through AI interactions. This capability is rolling out and helps organizations govern generative AI usage in compliance with data protection policies.",
+      "id": "purview-dlp-external-web-search-protection",
+      "title": "Microsoft Purview: DLP Protection for External Web Search in Copilot",
+      "summary": "Microsoft Purview DLP now prevents Microsoft 365 Copilot and Copilot Chat from using sensitive data in external web searches, adding another layer of data loss prevention. This feature is rolling out to help organizations prevent data leakage through AI-powered search interactions.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -43,49 +63,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870"
     },
     {
-      "id": "purview-dlp-non-microsoft-apps",
-      "title": "Microsoft Purview: Data Loss Prevention for Non-Microsoft Connected Apps",
-      "summary": "DLP and Information Protection auto-labeling now extend to Google Workspace, Box, Dropbox, Salesforce, ServiceNow, AWS, and Cisco Webex, allowing admins to enforce consistent data protection policies across a broader SaaS ecosystem. This expansion is in development and significantly broadens governance scope beyond Microsoft 365.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
-    },
-    {
-      "id": "purview-adaptive-scope-lifecycle-control",
-      "title": "Microsoft Purview: Adaptive Scope Evaluation Control with Lifecycle Status",
-      "summary": "Adaptive Scopes now offer explicit control over lifecycle-state evaluation for recipients and site owners, ensuring policy targeting remains aligned with employee status changes. This feature helps admins maintain accurate scope membership as users join, transfer, or leave the organization.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568785"
-    },
-    {
-      "id": "purview-autolabeling-scale-increase",
-      "title": "Microsoft Purview: Information Protection Auto-Labeling Scale Increase for SharePoint and OneDrive",
-      "summary": "Auto-labeling capacity increases from 100,000 to 500,000 files per tenant per day across SharePoint and OneDrive, enabling faster data classification and protection at scale. This helps organizations close labeling gaps and prepare their data estates for Microsoft 365 Copilot.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567890"
-    },
-    {
-      "id": "purview-dlp-copilot-govcloud",
-      "title": "Microsoft Purview: Data Loss Prevention for Microsoft 365 Copilot in Government Clouds",
-      "summary": "DLP protection for Microsoft 365 Copilot is now rolling out to government cloud environments, preventing Copilot from returning responses or using sensitive data from prompts. This ensures organizations in GCC environments can safely adopt Copilot while maintaining compliance requirements.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561892"
-    },
-    {
-      "id": "purview-edlp-device-health-dashboard",
-      "title": "Microsoft Purview: Endpoint Data Loss Prevention Device Health Reporting Dashboard",
-      "summary": "A new dashboard lets admins monitor device health across all endpoints to ensure readiness for policy updates and quickly identify devices not reporting properly. Rolling out now, this improves visibility into endpoint DLP deployment status and system reliability.",
+      "id": "purview-endpoint-dlp-device-health-dashboard",
+      "title": "Microsoft Purview: Endpoint DLP Device Health Reporting Dashboard",
+      "summary": "A new dashboard allows admins to monitor device health status across all managed endpoints and quickly identify devices that are not ready for policy updates. This visibility helps ensure consistent DLP enforcement across the organization.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -93,19 +73,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561033"
     },
     {
-      "id": "purview-dlp-diagnostics-guided-experience",
-      "title": "Microsoft Purview: Data Loss Prevention Guided Diagnostics for Policy Troubleshooting",
-      "summary": "A new guided diagnostics experience helps users understand why DLP policies trigger, showing which policies matched, evaluation order, and per-condition details. For E5 customers, Copilot-powered insights and recommendations accelerate troubleshooting and policy optimization.",
+      "id": "purview-adaptive-scope-lifecycle-evaluation",
+      "title": "Microsoft Purview: Adaptive Scope Lifecycle Status Evaluation Control",
+      "summary": "Adaptive Scopes now provide explicit administrative control over lifecycle-state evaluation for recipients and site owners, enabling more precise policy targeting. This ensures scope membership aligns with organizational changes as users' employment status or site ownership changes.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561032"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568785"
     },
     {
-      "id": "purview-dlm-archive-sharepoint",
-      "title": "Microsoft Purview: Data Lifecycle Management SharePoint File Archiving under Retention",
-      "summary": "Admins can now add archiving actions to SharePoint retention policies, moving inactive content to low-cost storage while keeping it discoverable. This extends lifecycle management beyond keep-or-delete decisions and reduces storage costs without compromising compliance.",
+      "id": "purview-dlm-archive-sharepoint-retention",
+      "title": "Microsoft Purview: Data Lifecycle Management – Archive SharePoint Files Under Retention",
+      "summary": "Admins can now add archiving actions to SharePoint retention policies, moving inactive content to low-cost storage while keeping it discoverable and compliant. This feature extends data lifecycle management capabilities beyond simple keep-or-delete decisions.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -113,39 +93,39 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561208"
     },
     {
-      "id": "purview-autolabeling-policy-coverage-report",
-      "title": "Microsoft Purview: Information Protection Auto-Labeling Per-Policy Coverage Report",
-      "summary": "A new per-policy coverage report shows how files processed during auto-labeling enforcement compare to the latest simulation snapshot, revealing labeled, unlabeled, and newly processed files. This helps admins track enforcement progress and identify data state changes since simulation.",
+      "id": "purview-dlp-guided-diagnostics-experience",
+      "title": "Microsoft Purview: DLP Guided Diagnostics and Resolution Experience",
+      "summary": "A new guided diagnostics tool helps admins understand why DLP policies are or are not triggering as expected, showing which policies matched, evaluation order, and condition details. For E5 customers, Copilot-powered insights provide tailored recommendations to accelerate troubleshooting.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
       "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561032"
+    },
+    {
+      "id": "purview-information-protection-autolabeling-coverage-report",
+      "title": "Microsoft Purview: Information Protection Auto-labeling Per-Policy Coverage Report",
+      "summary": "Admins can now view per-policy coverage reports showing how many files have been labeled, remain unlabeled, and whether they were included in the latest simulation snapshot. This visibility helps track enforcement progress and identify gaps in auto-labeling policies.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "low",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568935"
     },
     {
-      "id": "purview-dlp-sla-alert-dashboard",
-      "title": "Microsoft Purview: Data Loss Prevention SLA-Based Alert Reporting Dashboard",
-      "summary": "A new out-of-box dashboard tracks DLP alert metrics including mean time to alert, detection, and resolution against custom SLAs for high, medium, and low severity alerts. Admins can monitor operational performance and identify top sensitive information types being exposed.",
+      "id": "purview-dlp-non-microsoft-connected-apps",
+      "title": "Microsoft Purview: DLP and Auto-labeling for Non-Microsoft Connected Apps",
+      "summary": "Microsoft Purview DLP and Information Protection auto-labeling now extend to non-Microsoft applications including Google Workspace, Box, Dropbox, Salesforce, ServiceNow, AWS, and Cisco Webex. Supported conditions and actions vary by application, enabling broader data protection across hybrid cloud environments.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568372"
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
     },
     {
-      "id": "purview-dlp-rule-based-alert-tagging-resolution",
-      "title": "Microsoft Purview: Data Loss Prevention Rule-Based Alert Tagging and Auto-Resolution",
-      "summary": "Admins can now define rules to automatically tag and resolve predictable DLP alerts based on business context—for example, auto-resolving low-severity mail alerts to trusted partners or labeling alerts for routing to specific teams. This reduces alert noise and accelerates triage workflows.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "July 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568371"
-    },
-    {
-      "id": "purview-dlp-network-security-gsa",
-      "title": "Microsoft Purview: Data Loss Prevention Network Security Integration with Entra Global Secure Access",
-      "summary": "DLP now integrates with Microsoft Entra Global Secure Access to inspect text and AI interactions at the network layer, enforcing restrictive actions on sensitive data shared through browsers, apps, APIs, and generative AI platforms. This preview capability prevents data leakage across untrusted cloud and third-party services.",
+      "id": "purview-july-2026-digest-dlp-gsa-integration",
+      "title": "Microsoft Purview: DLP Integration with Microsoft Entra Global Secure Access",
+      "summary": "DLP now integrates with Microsoft Entra Global Secure Access to intercept and inspect text and AI interactions at the network layer, enabling enforcement of restrictive actions against untrusted cloud applications. This capability prevents sensitive data leakage through browsers, apps, APIs, and generative AI platforms.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "July 2026",
@@ -153,9 +133,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-irm-unified-alert-experience",
+      "id": "purview-july-2026-digest-irm-unified-alerts",
       "title": "Microsoft Purview: Insider Risk Management Unified Alert Experience",
-      "summary": "Insider Risk Management now combines the Triage Agent and Standard alert dashboards into a single alerts list, allowing analysts to view, preview, and manage both classic and agent-triaged alerts in one location. System-generated notes automatically track status and assignment changes, improving investigation workflow efficiency.",
+      "summary": "Insider Risk Management now combines triage agent and standard alert dashboards into a single unified alerts list, allowing analysts to manage both classic and agent-triaged alerts from one location. This simplifies alert management and improves investigator efficiency.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "July 2026",
@@ -163,13 +143,23 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-irm-user-profile-entra-signals",
-      "title": "Microsoft Purview: Insider Risk Management Expanded User Profile Details from Entra",
-      "summary": "The unified alert experience now displays additional Microsoft Entra user profile signals including office location, employee type, department, and last working date directly in alert views. This enrichment helps analysts assess risk context more quickly and identify insider threats with organizational context.",
+      "id": "purview-july-2026-digest-irm-expanded-profile",
+      "title": "Microsoft Purview: Insider Risk Management – Expanded User Profile Details",
+      "summary": "Insider Risk Management alerts now display enriched user profile signals from Microsoft Entra including office location, employee type, department, and last working date. This additional context helps analysts make more informed decisions during alert triage and investigation.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "July 2026",
-      "importance": "medium",
+      "importance": "low",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-july-2026-digest-irm-notes-capabilities",
+      "title": "Microsoft Purview: Insider Risk Management – Expanded Notes on Alerts and Cases",
+      "summary": "Analysts and investigators can now add and view notes on both alerts and cases, with automatic system-generated notes for status changes, assignments, and case escalations. This improves collaboration and audit trails during investigation workflows.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "low",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     }
   ]
