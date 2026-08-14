@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-08-13T07:07:28.247Z",
-  "fetchedAt": "2026-08-13T07:07:28.247Z",
+  "lastUpdated": "2026-08-14T07:04:02.896Z",
+  "fetchedAt": "2026-08-14T07:04:02.896Z",
   "updates": [
     {
-      "id": "windows-active-directory-domain-services-rce",
-      "title": "CVE-2026-49179: Windows Active Directory Domain Services Remote Code Execution Vulnerability",
-      "summary": "A command injection vulnerability in Windows Active Directory Domain Services allows an unauthenticated attacker to execute code remotely over the network. This is a critical vulnerability affecting core identity infrastructure that admins should patch immediately.",
+      "id": "windows-active-directory-domain-services-rce-cve-2026-49179",
+      "title": "Windows Active Directory Domain Services Remote Code Execution Vulnerability",
+      "summary": "A command injection vulnerability in Windows Active Directory Domain Services (CVE-2026-49179) allows an unauthorized attacker to execute code remotely over the network. Admins should prioritize patching this critical identity infrastructure vulnerability to prevent unauthorized code execution on domain controllers.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "August 2026",
@@ -13,159 +13,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-49179"
     },
     {
-      "id": "windows-hello-for-business-macos-sso-mfa-second-factor",
-      "title": "Microsoft Entra: Windows Hello for Business and macOS Platform SSO as MFA Second Factor",
-      "summary": "Windows Hello for Business and macOS Platform SSO can now serve as a standalone second factor for multifactor authentication, eliminating the need for users to register a separate passkey for step-up authentication and sign-in frequency checks. This simplifies MFA enrollment while maintaining strong, phishing-resistant authentication.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568076"
-    },
-    {
-      "id": "purview-role-groups-ui-enhancements",
-      "title": "Microsoft Purview: Role Groups UI Enhancements",
-      "summary": "The Role Groups page in the Microsoft Purview compliance portal now includes the ability to search and look up permissions by roles and memberships, streamlining role administration and governance tasks. This improves visibility and management efficiency for compliance and security admins.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562033"
-    },
-    {
-      "id": "purview-dlp-endpoint-ftp-sftp-support",
-      "title": "Microsoft Purview: Endpoint Data Loss Prevention Support for FTP and SFTP",
-      "summary": "Endpoint DLP now extends protection to FTP and SFTP protocols, allowing organizations to monitor and prevent sensitive data exfiltration via file transfer protocols from managed endpoints. This closes a data protection gap for organizations relying on legacy file transfer methods.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565868"
-    },
-    {
-      "id": "purview-dlp-labeled-documents-condition",
-      "title": "Microsoft Purview: Data Loss Prevention – Count of Labeled Documents Condition",
-      "summary": "A new DLP condition for Exchange Online enables rules to trigger based on the count of sensitivity-labeled attachments in an email, helping detect bulk exfiltration of sensitive documents across multiple files. This addresses high-volume data leakage scenarios that individual file-level rules might miss.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562342"
-    },
-    {
-      "id": "purview-dlp-user-based-alert-aggregation",
-      "title": "Microsoft Purview: Data Loss Prevention – User-Based Alert Aggregation",
-      "summary": "DLP alerts can now be consolidated by user identity when multiple rules match the same incident, reducing alert noise and streamlining investigation workflows. This helps security teams focus on unique violations rather than duplicate alerts from overlapping policies.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564765"
-    },
-    {
-      "id": "purview-dlp-reusable-global-list-exchange",
-      "title": "Microsoft Purview: Data Loss Prevention – Reusable Global List for Exchange Online",
-      "summary": "Admins can now create and reuse centralized lists of keywords, domains, and email addresses across multiple DLP rules, reducing duplication and simplifying policy maintenance at scale. This improvement streamlines policy creation and reduces configuration errors.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561919"
-    },
-    {
-      "id": "purview-ediscovery-diagnostics",
-      "title": "Microsoft Purview: eDiscovery – In-Product Diagnostics",
-      "summary": "eDiscovery now includes built-in self-service diagnostics to identify common configuration issues with case permissions, security filters, and policy status. This reduces reliance on support and helps admins quickly troubleshoot and resolve typical eDiscovery challenges.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565222"
-    },
-    {
-      "id": "purview-ediscovery-hold-reports",
-      "title": "Microsoft Purview: eDiscovery (Premium) – Hold Reports",
-      "summary": "Out-of-the-box reports provide aggregated visibility into all legal holds associated with eDiscovery cases, with filtering and export capabilities for further analysis. This helps compliance teams monitor and audit hold management across cases.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=93268"
-    },
-    {
-      "id": "purview-dlp-endpoint-policy-sync-ai-investigation",
-      "title": "Microsoft Purview: Endpoint Data Loss Prevention – AI-Powered Policy Sync Investigation",
-      "summary": "An AI-powered capability provides visibility into Endpoint DLP policy deployment health across devices, proactively identifying sync failures and their root causes with recommended remediation steps. This helps admins quickly diagnose and resolve policy enforcement issues.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565374"
-    },
-    {
-      "id": "purview-dlp-endpoint-policy-sync-sla-reduction",
-      "title": "Microsoft Purview: Data Loss Prevention – Endpoint DLP Policy Sync Status Reporting SLA Reduction",
-      "summary": "The Endpoint DLP policy sync status update latency on the Purview UI is being reduced from 2 hours to 30 minutes, providing admins with faster visibility into policy deployment progress across managed devices. This improvement enables quicker troubleshooting and validation of policy rollouts.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558682"
-    },
-    {
-      "id": "purview-data-lifecycle-management-hard-delete",
-      "title": "Microsoft Purview: Data Lifecycle Management – Hard Delete for OneDrive and SharePoint",
-      "summary": "Data Lifecycle Management will support hard deletion of OneDrive and SharePoint content through secure priority cleanup workflows, allowing compliance admins to permanently remove content after retention periods while maintaining safeguards against accidental data loss. This enables stricter data retention enforcement when required.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558343"
-    },
-    {
-      "id": "purview-dlp-network-data-security-preview",
-      "title": "Microsoft Purview: Data Loss Prevention – Network Data Security with Microsoft Entra Global Secure Access",
-      "summary": "DLP integration with Microsoft Entra Global Secure Access enables network-layer inspection and enforcement of DLP policies on text and AI interactions, preventing sensitive data from reaching untrusted cloud applications including generative AI platforms. This extends DLP protection beyond traditional endpoints to cloud and SaaS interactions.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "July 2026",
-      "importance": "high",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-insider-risk-unified-alert-experience",
-      "title": "Microsoft Purview: Insider Risk Management – Unified Alert Experience",
-      "summary": "Insider Risk Management now consolidates the Triage Agent and Standard alert dashboards into a single alerts list, allowing analysts to view, manage, and preview both classic and AI-triaged alerts from one location. This improves workflow efficiency for insider risk investigation.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "July 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-insider-risk-expanded-user-profile",
-      "title": "Microsoft Purview: Insider Risk Management – Expanded User Profile Signals",
-      "summary": "Insider Risk alerts now include enriched user profile details from Microsoft Entra, such as office location, employee type, department, and last working date, providing investigators with additional context for risk assessment. This enables more informed decision-making during alert triage.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "July 2026",
-      "importance": "low",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-insider-risk-alert-case-notes",
-      "title": "Microsoft Purview: Insider Risk Management – Expanded Note Capabilities",
-      "summary": "Investigators can now add and view notes on both alerts and cases in Insider Risk Management, with system-generated notes automatically logged when status, assignment, or escalation changes. This improves documentation and audit trails for insider risk investigations.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "July 2026",
-      "importance": "low",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "sharepoint-server-elevation-privilege-vulnerability",
-      "title": "CVE-2026-62827: Microsoft SharePoint Server Elevation of Privilege Vulnerability",
-      "summary": "Improper authentication in SharePoint Server allows an authorized attacker to elevate privileges over a network. Organizations running on-premises SharePoint should apply patches promptly.",
+      "id": "sharepoint-server-elevation-of-privilege-cve-2026-62827",
+      "title": "Microsoft SharePoint Server Elevation of Privilege Vulnerability",
+      "summary": "Improper authentication in SharePoint Server (CVE-2026-62827) allows an authorized attacker to escalate privileges over the network. Organizations should apply patches immediately to prevent lateral movement and unauthorized access within SharePoint environments.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "August 2026",
@@ -173,14 +23,164 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62827"
     },
     {
-      "id": "sharepoint-server-tampering-vulnerability",
-      "title": "CVE-2026-63512: Microsoft SharePoint Server Tampering Vulnerability",
-      "summary": "Incorrect authorization in SharePoint Server allows an authorized attacker to tamper with content over a network. This vulnerability can result in unauthorized modification of SharePoint data.",
+      "id": "sharepoint-server-tampering-cve-2026-63512",
+      "title": "Microsoft SharePoint Server Tampering Vulnerability",
+      "summary": "Incorrect authorization logic in SharePoint Server (CVE-2026-63512) allows an authorized attacker to tamper with content over the network. This vulnerability may expose organizations to unauthorized modifications of sensitive business data and compliance records.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "August 2026",
       "importance": "high",
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-63512"
+    },
+    {
+      "id": "entra-windows-hello-business-macos-sso-mfa-second-factor",
+      "title": "Windows Hello for Business and macOS Platform SSO as MFA Second Factor",
+      "summary": "Windows Hello for Business and macOS Platform SSO can now serve as standalone second factors for multifactor authentication, eliminating the need for users to register separate passkeys for step-up authentication and sign-in frequency checks. This improves user experience while maintaining phishing-resistant authentication for conditional access and authentication strength policies.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568076"
+    },
+    {
+      "id": "purview-dlp-granular-classification-error-controls-exchange",
+      "title": "Microsoft Purview DLP: Granular Classification Error Controls for Exchange Online",
+      "summary": "Administrators can now create granular DLP policies in Exchange Online that respond to specific classification or text extraction failure types (timeout, throttling, etc.) rather than applying a single blanket policy to all scan errors. This enables more precise DLP enforcement and reduces false positives in email protection.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561916"
+    },
+    {
+      "id": "purview-dlp-count-labeled-documents-condition",
+      "title": "Microsoft Purview DLP: Count of Labeled Documents Condition for Exchange Online",
+      "summary": "A new DLP condition for Exchange Online policies allows admins to trigger rules based on the count of sensitivity-labeled attachments in an email, enabling detection of bulk data exfiltration attempts where multiple sensitive files collectively pose a compliance risk. This addresses scenarios where individual attachments may appear low-risk but collectively indicate unauthorized data transfer.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562342"
+    },
+    {
+      "id": "purview-dlp-reusable-global-list-exchange-online",
+      "title": "Microsoft Purview DLP: Reusable Global List for Exchange Online",
+      "summary": "Centralized keyword, domain, and email address lists eliminate duplication across DLP rules, reducing maintenance overhead for organizations managing large-scale policies. This streamlines policy management and ensures consistency across Exchange Online protection rules.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561919"
+    },
+    {
+      "id": "purview-dlp-user-based-aggregation-alerts",
+      "title": "Microsoft Purview DLP: User-Based Aggregation of DLP Alerts",
+      "summary": "DLP alerts can now be consolidated by user across multiple matched rules, reducing alert noise and simplifying investigation workflows. This enhancement helps security teams focus on the most relevant violations rather than processing redundant alerts for the same user.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564765"
+    },
+    {
+      "id": "purview-endpoint-dlp-ftp-sftp-support",
+      "title": "Microsoft Purview Endpoint DLP: FTP and SFTP Protection",
+      "summary": "Endpoint DLP now supports monitoring and protecting sensitive data transferred via FTP and SFTP from managed endpoints, extending data protection beyond modern cloud protocols. This enables organizations to maintain visibility and control over legacy file transfer methods used in their environments.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565868"
+    },
+    {
+      "id": "purview-endpoint-dlp-policy-sync-device-health-ai",
+      "title": "Microsoft Purview Endpoint DLP: AI-Powered Policy Sync and Device Health Investigation",
+      "summary": "An AI-powered visibility and diagnostic feature tracks Endpoint DLP policy deployment health across devices, identifying sync failures with root cause analysis and recommended remediation actions. This accelerates troubleshooting of policy deployment issues and improves overall enforcement coverage.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565374"
+    },
+    {
+      "id": "purview-endpoint-dlp-policy-sync-status-sla-reduction",
+      "title": "Microsoft Purview Endpoint DLP: Faster Policy Sync Status Reporting (30 min SLA)",
+      "summary": "Admins can now view Endpoint DLP policy sync status in the Purview portal within 30 minutes instead of 2 hours, providing faster visibility into deployment success or failure. This reduction in reporting latency helps admins more quickly identify and remediate policy enforcement gaps.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558682"
+    },
+    {
+      "id": "purview-ediscovery-in-product-diagnostics",
+      "title": "Microsoft Purview eDiscovery: In-Product Diagnostics for Troubleshooting",
+      "summary": "Self-service diagnostics tools in eDiscovery help admins identify and resolve common configuration issues around case permissions, security filters, and policy status without escalating to support. This embedded troubleshooting capability reduces friction when managing eDiscovery cases and legal holds.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565222"
+    },
+    {
+      "id": "purview-ediscovery-premium-hold-reports",
+      "title": "Microsoft Purview eDiscovery (Premium): Hold Reports",
+      "summary": "Out-of-the-box reporting for legal holds in eDiscovery cases allows admins to sort, filter, and download aggregated hold information across all cases in the Purview compliance portal. This streamlines legal hold tracking and reporting for compliance and litigation teams.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=93268"
+    },
+    {
+      "id": "purview-data-lifecycle-management-hard-delete-onedrive-sharepoint",
+      "title": "Microsoft Purview Data Lifecycle Management: Hard Delete for OneDrive and SharePoint",
+      "summary": "Compliance admins can now configure retention policies to permanently delete content in OneDrive and SharePoint through secure priority cleanup workflows, enabling stricter enforcement of data retention and deletion requirements. Hard delete capabilities must be carefully configured to avoid inadvertent data loss, as content is no longer recoverable from recycle bins.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558343"
+    },
+    {
+      "id": "purview-dlp-network-data-security-gsa-integration",
+      "title": "Microsoft Purview DLP: Network Data Security with Global Secure Access Integration",
+      "summary": "DLP integration with Microsoft Entra Global Secure Access enables organizations to intercept and inspect text and AI interactions at the network layer, enforcing DLP policies on traffic to untrusted cloud apps and generative AI platforms. This addresses data exfiltration risks through browsers, APIs, and add-ins by combining network-layer inspection with insider risk detection.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "high",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-insider-risk-management-unified-alert-experience",
+      "title": "Microsoft Purview Insider Risk Management: Unified Alert Experience",
+      "summary": "A single unified alerts dashboard consolidates Triage Agent and Standard alert workflows, allowing analysts to preview agent summaries and user details directly on the alerts list without switching views. This reduces friction in alert management and improves investigation efficiency.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-insider-risk-management-expanded-user-profile",
+      "title": "Microsoft Purview Insider Risk Management: Expanded User Profile Details",
+      "summary": "User profile information in the unified alert experience now includes Microsoft Entra signals such as office location, employee type, department, and last working date, enriching context for insider risk investigations. This integration improves analyst capability to assess user risk signals with organizational context.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-insider-risk-management-expanded-notes-capability",
+      "title": "Microsoft Purview Insider Risk Management: Expanded Note Capabilities",
+      "summary": "Analysts can now add and view notes on both alerts and cases, with system-generated notes automatically applied for status changes, assignments, closures, and escalations. This enhances documentation and collaboration during insider risk investigations.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "July 2026",
+      "importance": "low",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     }
   ]
 }
