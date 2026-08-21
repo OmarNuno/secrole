@@ -1,21 +1,41 @@
 {
-  "lastUpdated": "2026-08-20T06:22:56.133Z",
-  "fetchedAt": "2026-08-20T06:22:56.133Z",
+  "lastUpdated": "2026-08-21T06:23:11.311Z",
+  "fetchedAt": "2026-08-21T06:23:11.311Z",
   "updates": [
     {
-      "id": "dlp-data-security-triage-agent-confidence-scoring",
-      "title": "Microsoft Purview DLP: Data Security Triage Agent Confidence Scoring and Reasoning Trace",
-      "summary": "The Data Security Triage Agent in DLP now provides confidence scores and reasoning traces for each triaged alert, enabling analysts to understand and trust automation decisions without falling back to manual review. This transparency improves SOC efficiency by surfacing explainable, auditable outputs alongside agent recommendations.",
+      "id": "cve-2026-69851-entra-id-elevation-of-privilege",
+      "title": "CVE-2026-69851: Microsoft Entra ID Elevation of Privilege Vulnerability",
+      "summary": "A server-side request forgery vulnerability in Azure Active Directory allows an authorized attacker to elevate privileges over a network. Admins should apply available security updates immediately to prevent unauthorized privilege escalation in their identity infrastructure.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69851"
+    },
+    {
+      "id": "cve-2026-69836-entra-id-remote-code-execution",
+      "title": "CVE-2026-69836: Microsoft Entra ID Remote Code Execution Vulnerability",
+      "summary": "A deserialization vulnerability in Microsoft Entra ID allows an unauthorized attacker to execute arbitrary code over a network. This critical flaw requires immediate patching to prevent complete compromise of identity and access management systems.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69836"
+    },
+    {
+      "id": "dlp-web-search-safeguard-copilot",
+      "title": "Microsoft Purview: DLP Safeguards for Microsoft 365 Copilot Web Search",
+      "summary": "Microsoft Purview DLP now prevents sensitive data from being used in external web searches within Microsoft 365 Copilot and Copilot Chat, providing real-time protection against data leakage risks. This capability helps organizations maintain compliance by controlling sensitive data exposure when users leverage AI-powered search features.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560597"
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870"
     },
     {
-      "id": "dlp-file-quarantine-action-sharepoint-onedrive",
-      "title": "Microsoft Purview DLP: File Quarantine Action for SharePoint and OneDrive",
-      "summary": "DLP now supports a File Quarantine action that automatically moves non-compliant files to an admin-controlled restricted location, immediately revoking all user access while preserving the file for investigation. This provides immediate containment of sensitive data exposure and prevents further sharing or misuse.",
+      "id": "dlp-file-quarantine-sharepoint-onedrive",
+      "title": "Microsoft Purview: DLP File Quarantine Action for SharePoint and OneDrive",
+      "summary": "A new File Quarantine action in DLP policies for SharePoint and OneDrive automatically moves files to a restricted, admin-controlled location when policies are triggered, immediately removing user access while preserving files for review. This enforcement capability provides stronger, faster containment of sensitive data exposure incidents.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -23,29 +43,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557190"
     },
     {
-      "id": "dlp-policy-tips-outlook-mac",
-      "title": "Microsoft Purview DLP: Policy Tips Support in Outlook for Mac",
-      "summary": "DLP policy tips are now available in Microsoft Outlook for Mac, notifying users in real time when email contains sensitive information that violates policy, with options to remove non-compliant recipients or request override. This extends compliance enforcement to macOS users before they send non-compliant emails.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=484854"
-    },
-    {
-      "id": "dlp-decouple-policy-tips-email-notifications",
-      "title": "Microsoft Purview DLP: Decouple Policy Tips and Email Notifications for SharePoint and OneDrive",
-      "summary": "Admins can now independently configure whether DLP displays policy tips, sends email notifications, both, or neither for SharePoint and OneDrive rules, rather than being forced to enable both together. This flexibility allows organizations to tailor user experience and notification strategies per rule.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=394279"
-    },
-    {
       "id": "purview-permissions-audit-log-improvements",
       "title": "Microsoft Purview: Permissions Audit Log Improvements",
-      "summary": "Enhanced audit logs for the Microsoft Purview portal now provide clearer visibility into role and scoped-role access decisions, helping administrators troubleshoot authorization issues and monitor who accessed what and why. This improves governance and compliance documentation of administrative access.",
+      "summary": "Enhanced audit logging for the Purview portal now provides clearer visibility into role and scoped-role access decisions, helping administrators troubleshoot access issues and monitor authorization outcomes. This improvement strengthens accountability and compliance tracking for Purview administration.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -53,19 +53,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569363"
     },
     {
-      "id": "ediscovery-sharepoint-embedded-container-selection",
-      "title": "Microsoft Purview eDiscovery: Select User-Owned SharePoint Embedded Containers",
-      "summary": "eDiscovery users can now view and select SharePoint Embedded content containers owned by a specific person, including content from Loop, Copilot Pages, and Copilot Notebooks, expanding data source coverage. This ensures modern collaborative content is included in legal holds and investigations.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569364"
-    },
-    {
       "id": "ediscovery-cmk-direct-export",
-      "title": "Microsoft Purview eDiscovery: Customer-Managed Key for Direct Export",
-      "summary": "eDiscovery direct export now supports customer-managed key (CMK) encryption, allowing organizations to manage their own encryption keys for exported data in addition to Microsoft-managed encryption. This meets heightened compliance requirements for organizations requiring full encryption key control.",
+      "title": "Microsoft Purview: eDiscovery Customer-Managed Keys for Direct Export",
+      "summary": "eDiscovery now supports customer-managed key (CMK) encryption for direct export workflows, allowing organizations to control their own encryption keys in addition to Microsoft-managed encryption. This capability enhances data sovereignty and compliance requirements for sensitive investigations.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -73,9 +63,29 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565373"
     },
     {
+      "id": "ediscovery-sharepoint-embedded-container-datasource",
+      "title": "Microsoft Purview: eDiscovery Support for SharePoint Embedded Containers",
+      "summary": "eDiscovery users can now select and search user-owned SharePoint Embedded containers (used by Loop, Copilot Pages, and Copilot Notebooks) as data sources for investigations. This expands eDiscovery coverage to modern collaborative workspaces where sensitive business content resides.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569364"
+    },
+    {
+      "id": "dlp-security-triage-agent-reasoning-confidence",
+      "title": "Microsoft Purview: DLP Security Triage Agent Reasoning Trace and Confidence Score",
+      "summary": "The Data Security Triage Agent in DLP now provides explainable decision-making through reasoning traces and confidence scores alongside alert recommendations. This transparency allows analysts to evaluate the reliability of automated agent decisions and reduces unnecessary manual review overhead.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560597"
+    },
+    {
       "id": "dlp-alerts-defender-xdr-integration",
-      "title": "Microsoft Purview DLP: Alert Summaries in Microsoft Defender XDR",
-      "summary": "DLP alerts with Data Security Triage Agent summaries and categorizations are now available in Microsoft Defender XDR, centralizing security alert visibility and investigation workflows. This integration streamlines SOC operations by consolidating compliance and security alerts in one platform.",
+      "title": "Microsoft Purview: DLP Alert Integration with Microsoft Defender XDR",
+      "summary": "DLP alerts with Security Triage Agent summaries and categorizations are now available in Microsoft Defender XDR, consolidating security alert visibility. This integration allows SOC teams to investigate data loss incidents alongside other security threats from a unified platform.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -83,29 +93,39 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558860"
     },
     {
-      "id": "data-lifecycle-retention-last-accessed",
-      "title": "Microsoft Purview Data Lifecycle: Retention Based on Last Accessed Date",
-      "summary": "Retention policies can now apply to SharePoint and OneDrive files based on when they were last accessed by users, enabling smarter retention of infrequently used or stale content. This helps organizations retain active content while removing old, unused files in compliance with data governance policies.",
+      "id": "dlp-policy-tips-outlook-mac",
+      "title": "Microsoft Purview: DLP Policy Tips for Outlook on Mac",
+      "summary": "DLP policy tips are now available in Microsoft Outlook for Mac, providing real-time notifications when emails contain sensitive data that violates policies. Users can remove non-compliant recipients or request policy overrides directly from the mail tip UI.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
-      "importance": "low",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=484854"
+    },
+    {
+      "id": "retention-last-accessed-onedrive-sharepoint",
+      "title": "Microsoft Purview: Retention Policies Based on Last Accessed Date",
+      "summary": "Data Lifecycle Management now supports retention policies based on when files were last accessed in SharePoint and OneDrive, enabling organizations to automatically manage inactive data. This feature helps reduce storage costs and improves data governance by targeting stale content for disposal.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=472030"
     },
     {
-      "id": "cve-2026-49179-ad-rce",
-      "title": "CVE-2026-49179: Windows Active Directory Domain Services Remote Code Execution",
-      "summary": "A command injection vulnerability in Windows Active Directory Domain Services allows unauthorized attackers to execute arbitrary code over the network by exploiting improper input sanitization. Admins should apply security updates immediately as this could allow unauthenticated remote compromise of AD infrastructure.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
+      "id": "data-lifecycle-hard-delete-cleanup-workflow",
+      "title": "Microsoft Purview: Hard Delete Capability for OneDrive and SharePoint",
+      "summary": "A new hard delete capability in Data Lifecycle Management allows compliance admins to permanently remove content from OneDrive and SharePoint through secure priority cleanup workflows, enabling faster compliance enforcement. The feature includes safeguards to prevent inadvertent data loss from misconfigured policies.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-49179"
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561034"
     },
     {
-      "id": "cve-2026-62827-cve-2026-63512-sharepoint-auth-vulnerabilities",
-      "title": "2 Microsoft SharePoint Server Authorization Vulnerabilities (CVE-2026-62827, CVE-2026-63512)",
-      "summary": "Two authorization flaws in Microsoft Office SharePoint—one allowing elevation of privilege and another enabling tampering—allow authenticated attackers to exceed their permissions over the network. Organizations should patch SharePoint farms to prevent lateral privilege escalation and unauthorized data modification.",
+      "id": "cve-2026-62827-sharepoint-elevation-of-privilege",
+      "title": "CVE-2026-62827: Microsoft SharePoint Server Elevation of Privilege Vulnerability",
+      "summary": "An improper authentication flaw in Microsoft SharePoint allows an authorized attacker to elevate privileges over a network. Organizations running on-premises or hybrid SharePoint should prioritize patching to prevent privilege escalation attacks.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "August 2026",
@@ -113,9 +133,19 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62827"
     },
     {
-      "id": "purview-auto-labeling-simulation-mode",
-      "title": "Microsoft Purview Sensitivity Labels: Auto-Labeling Policy Simulation Mode",
-      "summary": "Admins can now run auto-labeling policies in simulation mode before enforcement to preview which items would be labeled and review match results and source distribution without making changes. This reduces risk of misconfigured policies affecting production data and improves confidence before enforcement.",
+      "id": "cve-2026-63512-sharepoint-tampering",
+      "title": "CVE-2026-63512: Microsoft SharePoint Server Tampering Vulnerability",
+      "summary": "An incorrect authorization flaw in Microsoft SharePoint allows an authorized attacker to tamper with content or settings over a network. Admins should apply security updates to prevent unauthorized modification of SharePoint data and configurations.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-63512"
+    },
+    {
+      "id": "sensitivity-labels-simulation-mode",
+      "title": "Microsoft Purview: Auto-Labeling Policy Simulation Mode",
+      "summary": "Before enforcing an auto-labeling policy, admins can now run it in simulation mode to preview which items would be labeled without making changes. The new Insights tab provides performance metrics and policy distribution data to help validate policy readiness before full enforcement.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -123,19 +153,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-auto-labeling-insights-tab",
-      "title": "Microsoft Purview Sensitivity Labels: Auto-Labeling Policy Insights Tab",
-      "summary": "A new Insights tab in auto-labeling policy details provides at-a-glance performance metrics showing how the policy identifies and labels content in real time, with different views for simulation versus enforcement mode. This helps admins assess labeling effectiveness and troubleshoot policy behavior.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "August 2026",
-      "importance": "low",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "dlp-network-data-security-entra-gsa",
-      "title": "Microsoft Purview DLP: Network Data Security with Microsoft Entra Global Secure Access",
-      "summary": "DLP integration with Microsoft Entra Global Secure Access enables organizations to intercept, inspect, and enforce policies on text and AI interactions at the network layer, preventing sensitive data leakage to untrusted cloud apps, browsers, and generative AI platforms. This protects data outside traditional SaaS boundaries and adds network-level compliance enforcement.",
+      "id": "dlp-network-layer-text-protection-gsa",
+      "title": "Microsoft Purview: DLP Integration with Entra Global Secure Access for Text Protection",
+      "summary": "DLP now integrates with Microsoft Entra Global Secure Access to intercept and inspect text and AI interactions at the network layer, enforcing DLP policies across browsers, apps, APIs, and generative AI platforms. This network-level protection prevents sensitive data from reaching untrusted cloud applications.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "July 2026",
@@ -144,8 +164,8 @@
     },
     {
       "id": "insider-risk-unified-alert-experience",
-      "title": "Microsoft Purview Insider Risk Management: Unified Alert Dashboard",
-      "summary": "Insider Risk Management now combines Triage Agent and Standard alert dashboards into a single unified alerts list, allowing analysts to view and manage both classic and AI-triaged alerts in one location with preview of summaries and user details. This streamlines alert management and reduces context-switching for investigators.",
+      "title": "Microsoft Purview: Insider Risk Management Unified Alert Experience",
+      "summary": "Insider Risk Management now combines Triage Agent and Standard alert dashboards into a single alerts list, allowing analysts to view and manage both classic and agent-triaged alerts in one location with integrated summaries and user details. This unified view reduces context-switching and improves alert response efficiency.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "July 2026",
@@ -153,19 +173,19 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "insider-risk-entra-profile-details",
-      "title": "Microsoft Purview Insider Risk Management: Expanded Microsoft Entra User Profile Details",
-      "summary": "The unified alert experience now displays additional user profile signals from Microsoft Entra, including office location, employee type, department, and last working date, providing investigators with richer context during alert triage. This enables smarter risk assessment and faster investigation prioritization based on user attributes.",
+      "id": "insider-risk-expanded-user-profile-signals",
+      "title": "Microsoft Purview: Insider Risk Management Expanded User Profile Details",
+      "summary": "Insider Risk Management now displays additional user profile signals from Microsoft Entra including office location, employee type, department, and last working date in alert details. These enriched signals help analysts better contextualize user behavior and assess insider risk more accurately.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "July 2026",
-      "importance": "low",
+      "importance": "medium",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "insider-risk-expanded-note-capabilities",
-      "title": "Microsoft Purview Insider Risk Management: Expanded Note Capabilities",
-      "summary": "Analysts can now add and view notes on both alerts and cases, with automatic system-generated notes when status, assignment, closure, or escalation changes occur. This improves collaboration and audit trails for investigation workflows.",
+      "id": "insider-risk-enhanced-note-capabilities",
+      "title": "Microsoft Purview: Insider Risk Management Enhanced Note Capabilities",
+      "summary": "Analysts can now add and view notes on both alerts and cases in Insider Risk Management, with automatic system-generated notes for status changes, reassignments, and escalations. This improves audit trail documentation and collaboration among investigation teams.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "July 2026",
