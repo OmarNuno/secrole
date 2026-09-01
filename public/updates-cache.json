@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-08-31T11:58:54.499Z",
-  "fetchedAt": "2026-08-31T11:58:54.499Z",
+  "lastUpdated": "2026-09-01T10:38:12.987Z",
+  "fetchedAt": "2026-09-01T10:38:12.987Z",
   "updates": [
     {
-      "id": "purview-insider-risk-management-content-preview",
+      "id": "purview-irm-content-preview",
       "title": "Microsoft Purview: Insider Risk Management – Content Preview in Alerts",
-      "summary": "Insider Risk Management now allows users with appropriate permissions to preview file content directly within IRM alerts without creating a case, streamlining investigation workflows. This reduces friction in responding to insider risk signals and accelerates threat assessment.",
+      "summary": "Insider Risk Management now allows authorized users to preview file content directly within IRM alerts without creating a case, streamlining investigation workflows. This reduces friction when reviewing potentially sensitive activity and helps security teams respond faster to insider risk signals.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -15,7 +15,7 @@
     {
       "id": "purview-dlp-adaptive-scopes-sharepoint",
       "title": "Microsoft Purview: Data Loss Prevention – Adaptive Scopes for SharePoint",
-      "summary": "DLP now supports dynamic adaptive scopes for SharePoint that automatically target policies based on site attributes like URL, name, or metadata, eliminating the 100-site static limit and reducing manual maintenance. Admins can now deploy policies at scale with continuous auto-evaluation.",
+      "summary": "DLP now supports dynamic adaptive scoping for SharePoint, automatically targeting policies based on site attributes like URL, name, and custom metadata instead of requiring manual site lists. This eliminates the 100-site static limit and enables scalable, self-maintaining policy deployment across evolving SharePoint environments.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -23,29 +23,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=549288"
     },
     {
-      "id": "purview-compliance-manager-ai-foundry-integration",
-      "title": "Microsoft Purview: Compliance Manager – AI Foundry Integration",
-      "summary": "Compliance Manager now integrates with Microsoft AI Foundry to automatically map AI agents to compliance regulations and evaluate their control posture. Organizations can track compliance status of AI systems and identify improvement actions in a unified interface.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=536576"
-    },
-    {
-      "id": "purview-compliance-manager-ai-regulatory-templates",
-      "title": "Microsoft Purview: Compliance Manager – AI-Powered Regulatory Templates",
-      "summary": "Compliance Manager can now convert complex regulatory documents in PDF format into actionable controls and compliance assessments across multi-cloud environments using AI. This accelerates the process of understanding regulatory requirements and identifying compliance gaps.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=523209"
-    },
-    {
-      "id": "purview-dlp-policy-sync-sla-improvement",
-      "title": "Microsoft Purview: Data Loss Prevention – Faster Policy Sync (30 Minutes)",
-      "summary": "DLP policy synchronization time has been reduced from 2 hours to 30 minutes, ensuring protection rules take effect more quickly across the organization. This improvement tightens the window between policy updates and enforcement.",
+      "id": "purview-dlp-policy-sync-sla",
+      "title": "Microsoft Purview: Data Loss Prevention – Faster Policy Sync (2 hours to 30 minutes)",
+      "summary": "DLP policy updates now synchronize across the organization in 30 minutes instead of up to 2 hours, ensuring protections take effect more quickly. This reduction in sync latency strengthens real-time data protection and compliance enforcement.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -53,9 +33,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562994"
     },
     {
-      "id": "purview-dlm-sharepoint-file-archiving",
+      "id": "purview-dlm-archive-sharepoint",
       "title": "Microsoft Purview: Data Lifecycle Management – Archive SharePoint Files Under Retention",
-      "summary": "Administrators can now configure retention policies in SharePoint Online to archive inactive files to low-cost storage, complementing keep and delete actions. This provides cost-effective compliance while maintaining discoverability of archived content.",
+      "summary": "Administrators can now configure archiving actions within retention policies for SharePoint Online, moving inactive content to low-cost storage while keeping it discoverable. This extends Data Lifecycle Management capabilities beyond keep/delete to include a cost-effective third option aligned with compliance requirements.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -63,9 +43,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561208"
     },
     {
-      "id": "purview-dlp-outlook-mac-policy-tips",
+      "id": "purview-dlp-outlook-mac-tips",
       "title": "Microsoft Purview: DLP Policy Tips Support in Outlook for Mac",
-      "summary": "DLP policy tips now extend to Outlook for Mac, providing real-time in-mail notifications when messages contain sensitive data that violates policies. Users can remove non-compliant recipients or request policy override directly from the mail tip.",
+      "summary": "DLP policy tips now appear in Outlook for Mac, alerting users in real time when email contains policy-violating sensitive information with options to remove recipients or override policies. This extends compliance notifications to Mac users, closing a platform gap in data loss prevention.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -73,9 +53,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=498491"
     },
     {
-      "id": "purview-dlp-outlook-mobile-policy-tips",
+      "id": "purview-dlp-outlook-mobile-tips",
       "title": "Microsoft Purview: DLP Policy Tips Support in Outlook Mobile",
-      "summary": "Outlook Mobile now includes real-time DLP policy tip alerts to help users avoid sending sensitive information that violates organizational policies. This extends compliance protection to mobile email scenarios.",
+      "summary": "DLP policy tips are now available on Outlook Mobile, delivering real-time alerts to help users avoid sharing sensitive data on mobile devices. This extends data loss prevention enforcement to mobile endpoints, a critical gap for organizations with remote workforces.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -83,9 +63,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=491016"
     },
     {
-      "id": "purview-dsi-endpoint-dlp-integration",
-      "title": "Microsoft Purview: Data Security Investigations – Endpoint DLP Alert Analysis",
-      "summary": "Data Security Investigations can now be launched directly from endpoint DLP alerts to automatically gather and analyze files that triggered alerts, filtering by time, user, and endpoint. This accelerates investigation and remediation of potential exfiltration incidents.",
+      "id": "purview-dlp-copilot-web-search",
+      "title": "Microsoft Purview: Data Loss Prevention – DLP for Copilot Web Search",
+      "summary": "DLP policies now prevent sensitive data from being used in external web searches by Microsoft 365 Copilot and Copilot Chat, addressing data leakage risks in AI-assisted workflows. This real-time control ensures that Copilot interactions respect organizational data protection boundaries.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870"
+    },
+    {
+      "id": "purview-dsi-endpoint-dlp",
+      "title": "Microsoft Purview: Data Security Investigations – Analyze Files from Endpoint DLP Alerts",
+      "summary": "Data Security Investigations can now be launched directly from endpoint DLP alerts, automatically gathering related files that triggered alerts for streamlined review and analysis. This integration accelerates investigation of potential exfiltration incidents by reducing manual data collection steps.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -95,7 +85,7 @@
     {
       "id": "purview-dlm-copilot-memory-retention",
       "title": "Microsoft Purview: Data Lifecycle Management – Retention for Copilot Memory",
-      "summary": "Administrators can now configure retention policies for Microsoft 365 Copilot memory items stored in Exchange mailboxes, preserving historical versions for security and compliance investigations. This provides governance over AI-generated interaction history.",
+      "summary": "Administrators can now configure retention policies for Microsoft 365 Copilot memory items stored in Exchange mailboxes, enabling oversight of memory versions for compliance and investigation. This capability extends data governance controls to AI-generated contextual data.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
@@ -103,29 +93,39 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569612"
     },
     {
-      "id": "purview-dlp-copilot-web-search-protection",
-      "title": "Microsoft Purview: DLP – Protect Sensitive Data from Copilot Web Search",
-      "summary": "DLP now prevents Microsoft 365 Copilot and Copilot Chat from sending sensitive data to external web search, controlling what information is exposed during AI-powered search interactions. This mitigates oversharing risks in generative AI scenarios.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565870"
-    },
-    {
-      "id": "purview-dlm-hard-delete-sharepoint-onedrive",
+      "id": "purview-dlm-hard-delete-onedrive-sharepoint",
       "title": "Microsoft Purview: Data Lifecycle Management – Hard Delete for OneDrive and SharePoint",
-      "summary": "Data Lifecycle Management now provides hard delete capability through secure priority cleanup workflows for OneDrive and SharePoint, allowing permanent removal of content beyond the standard 93-day recycle bin retention. This helps organizations meet strict data destruction compliance requirements while maintaining safeguards against misconfigured policies.",
+      "summary": "Administrators will gain the ability to perform hard deletions in OneDrive and SharePoint through secure priority cleanup workflows, bypassing the 93-day recycle bin retention period for strict compliance scenarios. This capability addresses regulatory requirements while maintaining safeguards against accidental data loss.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "August 2026",
-      "importance": "high",
+      "importance": "medium",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561034"
     },
     {
-      "id": "purview-dlp-non-microsoft-apps-preview",
-      "title": "Microsoft Purview: DLP Policies for Non-Microsoft Connected Apps",
-      "summary": "DLP policies now protect sensitive data at rest in non-Microsoft applications like Box and Google Workspace using existing Microsoft Defender for Cloud Apps connectors and classification engines. This extends data protection governance beyond the Microsoft 365 ecosystem.",
+      "id": "purview-compliance-manager-foundry-integration",
+      "title": "Microsoft Purview: Compliance Manager – AI Foundry Integration",
+      "summary": "Compliance Manager will integrate with Microsoft AI Foundry to automatically map Agents created in Foundry to compliance regulations and assessments, surfacing compliance status and improvement actions. This integration extends compliance governance into AI agent development workflows.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=536576"
+    },
+    {
+      "id": "purview-compliance-manager-ai-templates",
+      "title": "Microsoft Purview: Compliance Manager – AI-Powered Regulatory Templates",
+      "summary": "Compliance Manager will use AI to convert complex regulatory PDFs into actionable controls and actions in multi-cloud environments, allowing administrators to quickly build assessments and identify compliance gaps. This automation reduces manual effort in translating regulations into technical controls.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=523209"
+    },
+    {
+      "id": "purview-dlp-non-microsoft-apps",
+      "title": "Microsoft Purview: DLP for Non-Microsoft Connected Apps",
+      "summary": "Data Loss Prevention policies can now be applied to sensitive data at rest in non-Microsoft applications such as Box and Google Workspace using existing Defender for Cloud Apps connectors and the same classification engine. This extends DLP protection beyond Microsoft 365 to multi-cloud environments.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -133,9 +133,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-sensitivity-labels-simulation-mode",
+      "id": "purview-sensitivity-labels-simulation",
       "title": "Microsoft Purview: Sensitivity Labels – Auto-Labeling Simulation Mode",
-      "summary": "Auto-labeling policies can now run in simulation mode to preview which items would be labeled without applying changes, allowing admins to review match results and distribution before enforcement. This reduces risk of incorrect label application at scale.",
+      "summary": "Auto-labeling policies can now run in simulation mode to preview which items would be labeled without applying changes, letting administrators review match results and source distribution before enforcement. This safe testing capability reduces risk of misconfigured auto-labeling policies.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -143,9 +143,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-sensitivity-labels-insights-tab",
-      "title": "Microsoft Purview: Sensitivity Labels – Policy Insights Dashboard",
-      "summary": "Auto-labeling policy details now include an Insights tab showing at-a-glance performance metrics, with different views for simulation versus enforcement mode. This helps admins understand classification effectiveness and optimize policy configuration.",
+      "id": "purview-sensitivity-labels-insights",
+      "title": "Microsoft Purview: Sensitivity Labels – Policy Performance Insights",
+      "summary": "The Insights tab in auto-labeling policy details now provides at-a-glance visibility into policy performance in simulation or enforcement mode, helping administrators understand labeling effectiveness. This observability improvement aids in tuning and validating labeling policies.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -154,8 +154,8 @@
     },
     {
       "id": "purview-sensitivity-labels-non-microsoft-apps",
-      "title": "Microsoft Purview: Sensitivity Labels for Non-Microsoft Connected Apps",
-      "summary": "Auto-labeling policies can now classify and label sensitive data at rest in non-Microsoft apps including Box and Google Workspace using Microsoft Defender for Cloud Apps connectors. This unifies sensitivity label enforcement across hybrid environments.",
+      "title": "Microsoft Purview: Sensitivity Labels – Auto-Labeling for Non-Microsoft Apps",
+      "summary": "Auto-labeling policies can now protect sensitive data at rest in non-Microsoft connected applications like Box and Google Workspace using Microsoft Defender for Cloud Apps connectors. This extends Purview's labeling and classification capabilities across hybrid cloud environments.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
