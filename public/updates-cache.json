@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2026-09-02T10:04:06.031Z",
-  "fetchedAt": "2026-09-02T10:04:06.031Z",
+  "lastUpdated": "2026-09-03T10:14:17.184Z",
+  "fetchedAt": "2026-09-03T10:14:17.184Z",
   "updates": [
     {
-      "id": "entra-sam-account-name-sync",
-      "title": "Microsoft Entra Domain Services: Enhanced sAM Account Name Synchronization",
-      "summary": "Public Preview now available for enhanced Security Accounts Manager (sAMAccountName) synchronization with Microsoft Entra Domain Services, allowing the attribute to populate from on-premises values rather than relying on mailNickname generation. This improves compatibility with legacy applications and hybrid identity scenarios by maintaining consistent account naming across cloud and on-premises environments.",
+      "id": "rms-connector-certificate-auth",
+      "title": "Microsoft Purview: Rights Management Connector – Certificate-Based Authentication",
+      "summary": "The RMS connector is transitioning from shared-secret to certificate-based authentication, requiring admins to configure their own Entra app registration and certificate via new PowerShell cmdlets. This security improvement removes the need for automatic service principal provisioning and gives administrators direct control over authentication credentials.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569446"
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564617"
     },
     {
       "id": "entra-backup-recovery-30-day",
-      "title": "Microsoft Entra ID: 30-Day Backup and Recovery Capability",
-      "summary": "Extended backup and recovery for Entra objects is now available, enabling point-in-time restore to a rolling 30-day historical window via the Microsoft 365 Backup native app or M365 Backup Storage platform APIs. This complements the existing 7-day recovery included with P1 and P2 licenses, giving admins enhanced disaster recovery options for critical identity objects.",
+      "title": "Microsoft Entra ID: Extended Backup & Recovery (30-Day)",
+      "summary": "Entra ID now supports extended 30-day point-in-time backup and recovery for tenant objects via the Microsoft 365 Backup native app or APIs, allowing admins to restore to any historical state within the rolling 30-day window. This complements the existing 7-day recovery included with P1/P2 licenses and significantly improves disaster recovery and compliance capabilities.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -23,9 +23,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567885"
     },
     {
-      "id": "purview-dlp-default-controls-exchange",
-      "title": "Microsoft Purview DLP: Default Protection Controls for Exchange Online Classification Failures",
-      "summary": "Public Preview now available for fine-grained DLP policy controls in Exchange Online that respond to specific classification failure types such as timeout and throttling, rather than applying a blanket protection policy. This allows admins to tune protection actions based on the root cause of failures, improving both security posture and user experience.",
+      "id": "entra-sam-account-name-support",
+      "title": "Microsoft Entra Domain Services: Enhanced sAMAccountName Synchronization",
+      "summary": "Entra Domain Services now supports synchronizing the Security Accounts Manager account name (sAMAccountName) from the onPremisesSamAccountName attribute, with the feature enabled by default for new managed domains and available as opt-in for existing ones. This improves compatibility with on-premises applications and legacy directory-dependent systems.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569446"
+    },
+    {
+      "id": "dlp-default-protection-controls-exchange",
+      "title": "Microsoft Purview: DLP Default Protection Controls for Exchange Online Classification Failures",
+      "summary": "Administrators can now create granular DLP policies that respond to specific classification or text extraction failure types (such as timeouts and throttling) rather than applying one blanket policy for all failures. This public preview feature gives IT teams finer-grained control over how Exchange Online handles scanning errors.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -33,9 +43,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569477"
     },
     {
-      "id": "purview-dlp-user-aggregation",
-      "title": "Microsoft Purview DLP: User-Based Alert Aggregation",
-      "summary": "DLP alert consolidation by user entity is now generally available, reducing alert noise by merging related events from multiple matched rules into a single alert object. This streamlines investigation workflows and improves contextual understanding of violations for security teams managing high-volume DLP activity.",
+      "id": "dlp-user-based-alert-aggregation",
+      "title": "Microsoft Purview: DLP User-Based Alert Aggregation",
+      "summary": "DLP alerts can now be consolidated by user even when multiple rules match, reducing alert noise and simplifying investigation workflows by grouping related violations into single alert objects. This launched feature improves SIEM integration and incident response efficiency for security teams.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -43,9 +53,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564765"
     },
     {
-      "id": "purview-sensitivity-label-grouping",
+      "id": "dlp-sla-alert-reporting-dashboard",
+      "title": "Microsoft Purview: DLP SLA-Based Alert Reporting Dashboard",
+      "summary": "A new out-of-box dashboard displays MTTA/MTTD/MTTR metrics and trends for DLP alerts, with customizable SLA thresholds for high, medium, and low severity incidents. Security and compliance teams can now track operational performance against defined SLAs and identify which sensitive information types are most frequently exposed.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568372"
+    },
+    {
+      "id": "sensitivity-label-grouping-modernization",
       "title": "Microsoft Purview: Sensitivity Label Grouping Modernization",
-      "summary": "The sensitivity labeling scheme is being simplified to support only labels and modern label groupings, replacing the previous parent-label hierarchy. This modernization improves label usability and configuration, making it easier for admins to organize and categorize labels at scale.",
+      "summary": "The sensitivity labeling scheme is being simplified to use only labels and label groupings (replacing the previous parent-label model), making it easier for admins to organize and categorize their labels. This modernization improves label usability and reduces configuration complexity.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -53,89 +73,39 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=386901"
     },
     {
-      "id": "purview-irm-content-preview",
-      "title": "Microsoft Purview Insider Risk Management: Content Preview in Alerts",
-      "summary": "Users with appropriate permissions can now preview referenced files directly within Insider Risk Management alerts without creating a case. This capability streamlines the investigation process by providing immediate visibility into potentially risky content within the activity explorer.",
+      "id": "information-protection-scanner-data-export",
+      "title": "Microsoft Purview: Information Protection Scanner Data Export for Custom Reporting",
+      "summary": "Scanner labeling, classification, and protection actions are now stored in SQL tables, enabling admins to create custom reports on the state of scanned repositories. This capability allows organizations to build tailored compliance and data governance dashboards aligned with their specific reporting requirements.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=557189"
-    },
-    {
-      "id": "purview-dlp-adaptive-scopes-sharepoint",
-      "title": "Microsoft Purview DLP: Adaptive Scopes for SharePoint",
-      "summary": "Dynamic scoping for DLP policies on SharePoint is in development, allowing automatic targeting of policies based on site attributes like URL, name, or custom metadata without manual maintenance. This capability eliminates the 100-site static limit and enables scalable, automated policy deployment as SharePoint sites evolve.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=549288"
-    },
-    {
-      "id": "purview-compliance-manager-ai-templates",
-      "title": "Microsoft Purview Compliance Manager: AI-Powered Regulatory Templates",
-      "summary": "Compliance Manager will convert complex regulations from PDF documents into actionable controls and improvement actions for multi-cloud environments. Admins can use the AI-generated templates to create assessments, identify gaps, and improve organizational compliance posture more efficiently.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=523209"
-    },
-    {
-      "id": "purview-compliance-manager-foundry-integration",
-      "title": "Microsoft Purview Compliance Manager: AI Foundry Integration",
-      "summary": "Compliance Manager will integrate with Microsoft AI Foundry to automatically assess the compliance posture of AI agents and map them to relevant regulations and assessments. This enables organizations to maintain compliance visibility across AI workloads and identify improvement actions.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=536576"
-    },
-    {
-      "id": "purview-dlp-policy-sync-sla",
-      "title": "Microsoft Purview DLP: Accelerated Policy Sync to 30 Minutes",
-      "summary": "DLP policy update synchronization time is being reduced from up to 2 hours to 30 minutes, ensuring protections take effect more quickly across the organization. This faster deployment cycle improves the responsiveness of policy changes in enterprise environments.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
+      "date": "September 2026",
       "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562994"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=494839"
     },
     {
-      "id": "purview-dlm-sharepoint-archiving",
-      "title": "Microsoft Purview Data Lifecycle Management: SharePoint File Archiving",
-      "summary": "SharePoint Online file archiving is being added to Purview Data Lifecycle Management retention policies, allowing admins to move inactive content to low-cost storage as part of their data governance workflow. This enhances compliance capabilities while reducing storage costs and maintaining content discoverability.",
+      "id": "azure-pst-import",
+      "title": "Microsoft Purview: Data Lifecycle Management – Azure PST Import",
+      "summary": "PST files stored in Azure Blob Storage can now be imported directly into Exchange Online mailboxes using the Exchange Migration Service pattern with analysis and execution phases. This capability streamlines mailbox migrations for organizations managing large volumes of archived email data in cloud storage.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561208"
-    },
-    {
-      "id": "purview-dlp-outlook-mac-tips",
-      "title": "Microsoft Purview DLP: Policy Tips for Outlook on Mac",
-      "summary": "DLP policy tips are now available in Microsoft Outlook for Mac, notifying users in real-time when email contains sensitive information that violates organizational policies. Users can remove non-compliant recipients or request policy overrides directly from the mail tip UI, improving user-driven compliance.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "August 2026",
+      "date": "September 2026",
       "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=498491"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565865"
     },
     {
-      "id": "purview-dlp-non-microsoft-apps",
-      "title": "Microsoft Purview DLP: Support for Non-Microsoft Connected Applications",
-      "summary": "Data Loss Prevention policies are entering preview for protecting sensitive data at rest in non-Microsoft applications such as Box and Google Workspace using existing Microsoft Defender for Cloud Apps connectors. This extends Purview's classification engine to multi-cloud environments, enabling unified data protection policies.",
+      "id": "archive-expansion-beyond-1-5tb",
+      "title": "Microsoft Purview: Auto-Expanding Archive Beyond 1.5 TB Limit",
+      "summary": "Archive mailboxes can now automatically expand beyond the previous 1.5 TB limit for eligible E5 license holders, ensuring continuous retention and scalable archive growth without mailbox inoperability. This removes a significant capacity constraint for organizations managing large-scale compliance and retention requirements.",
       "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "August 2026",
-      "importance": "high",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560820"
     },
     {
-      "id": "purview-sensitivity-labels-simulation",
-      "title": "Microsoft Purview: Sensitivity Label Auto-Labeling Policy Simulation Mode",
-      "summary": "Auto-labeling policies can now run in simulation mode before enforcement, allowing admins to preview which items would be labeled without making changes and review match results and source distribution. This reduces risk of unintended labeling and helps admins validate policy behavior before production deployment.",
+      "id": "dlp-non-microsoft-connected-apps",
+      "title": "Microsoft Purview: DLP for Non-Microsoft Connected Apps (Box, Google Workspace)",
+      "summary": "Data Loss Prevention policies can now protect sensitive data at rest in non-Microsoft applications such as Box and Google Workspace by leveraging existing Microsoft Defender for Cloud Apps connectors and the standard Microsoft 365 classification engine. This extends DLP enforcement to multi-cloud environments and hybrid SaaS deployments.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -143,9 +113,19 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-sensitivity-labels-insights",
+      "id": "sensitivity-label-simulation-mode",
+      "title": "Microsoft Purview: Auto-Labeling Policy Simulation Mode",
+      "summary": "Before enforcing auto-labeling policies, admins can run them in simulation mode to preview which items would be labeled without making changes, review match results, and assess source distribution. This preview capability reduces the risk of unintended labeling at scale and helps teams validate policies before production deployment.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "sensitivity-label-policy-insights",
       "title": "Microsoft Purview: Auto-Labeling Policy Insights Dashboard",
-      "summary": "The Insights tab in sensitivity label policy details now provides at-a-glance performance metrics showing whether a policy is running in simulation or enforcement mode. This helps admins understand labeling effectiveness and make data-driven decisions about policy optimization.",
+      "summary": "A new Insights tab in auto-labeling policy details displays at-a-glance performance metrics that vary based on simulation or enforcement mode, helping admins understand labeling identification and coverage rates. This visibility enables data-driven tuning of labeling strategies and compliance effectiveness.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -153,13 +133,13 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-sensitivity-labels-non-microsoft",
-      "title": "Microsoft Purview: Auto-Labeling for Non-Microsoft Connected Applications",
-      "summary": "Sensitivity label auto-labeling policies are entering preview for non-Microsoft applications including Box and Google Workspace, leveraging existing Microsoft Defender for Cloud Apps connectors and the same classification engine used for Microsoft 365. This enables consistent sensitivity labeling governance across multi-cloud data sources.",
+      "id": "sensitivity-labeling-non-microsoft-apps",
+      "title": "Microsoft Purview: Auto-Labeling for Non-Microsoft Connected Apps",
+      "summary": "Auto-labeling policies can now protect sensitive data in non-Microsoft connected applications including Box and Google Workspace using existing Defender for Cloud Apps connectors and Microsoft 365 classification capabilities. This extends compliance automation to multi-cloud storage environments beyond Microsoft 365.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
-      "importance": "high",
+      "importance": "medium",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     }
   ]
