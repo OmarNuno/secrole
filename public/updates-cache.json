@@ -1,51 +1,81 @@
 {
-  "lastUpdated": "2026-09-08T10:11:53.316Z",
-  "fetchedAt": "2026-09-08T10:11:53.316Z",
+  "lastUpdated": "2026-09-09T10:14:47.950Z",
+  "fetchedAt": "2026-09-09T10:14:47.950Z",
   "updates": [
     {
-      "id": "azure-ad-b2c-authorization-bypass-cve-2026-83711",
-      "title": "CVE-2026-83711: Azure AD B2C Authorization Bypass Vulnerability",
-      "summary": "A critical authorization bypass vulnerability in Azure Active Directory B2C allows attackers to escalate privileges by manipulating user-controlled keys. Admins must apply patches immediately to prevent unauthorized privilege elevation in identity systems.",
+      "id": "cve-2026-62916-entra-id-elevation-privilege",
+      "title": "CVE-2026-62916: Microsoft Entra ID Elevation of Privilege Vulnerability",
+      "summary": "An authentication bypass vulnerability in Microsoft Entra ID allows unauthorized attackers to elevate privileges over a network. This critical flaw affects identity infrastructure and requires immediate patching to prevent unauthorized access and privilege escalation.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
       "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83711"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62916"
     },
     {
-      "id": "azure-ai-language-auth-bypass-cve-2026-70352",
-      "title": "CVE-2026-70352: Azure AI Language Authentication Bypass",
-      "summary": "Missing authentication controls in Azure AI Language enable unauthorized attackers to escalate privileges across the network without valid credentials. Organizations using Azure AI Language services should prioritize patching to secure their identity and access controls.",
+      "id": "cve-2026-83941-entra-id-elevation-privilege",
+      "title": "CVE-2026-83941: Entra ID Elevation of Privilege Vulnerability",
+      "summary": "A missing authorization flaw in Entra ID permits authorized attackers to escalate privileges across the network. Admins should apply available security updates to close this authorization gap in identity management.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
       "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-70352"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-83941"
     },
     {
-      "id": "microsoft-fabric-elevation-of-privilege-cve-2026-70178",
-      "title": "CVE-2026-70178: Microsoft Fabric Privilege Escalation Vulnerability",
-      "summary": "Missing authorization checks in Microsoft Fabric allow authenticated users to escalate their privileges within the service. Admins should review and patch Fabric deployments to ensure proper access controls are enforced.",
+      "id": "cve-2026-69524-ad-ds-remote-code-execution",
+      "title": "CVE-2026-69524: Active Directory Domain Services Remote Code Execution Vulnerability",
+      "summary": "A use-after-free vulnerability in Active Directory Domain Services enables unauthenticated attackers to execute arbitrary code remotely. This critical flaw in on-premises identity infrastructure requires urgent patching.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
       "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-70178"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69524"
     },
     {
-      "id": "entra-domain-services-sam-account-name-support",
-      "title": "Microsoft Entra Domain Services: Enhanced sAMAccountName Synchronization",
-      "summary": "Microsoft Entra Domain Services now supports synchronizing the Security Accounts Manager account name (sAMAccountName) from the onPremisesSamAccountName attribute, improving hybrid identity consistency. This feature is in public preview and automatically enabled for new managed domains, helping organizations maintain better compatibility with on-premises systems.",
+      "id": "cve-2026-69359-ad-ds-elevation-privilege",
+      "title": "CVE-2026-69359: Active Directory Domain Services Elevation of Privilege Vulnerability",
+      "summary": "A heap-based buffer overflow in Active Directory Domain Services allows authorized attackers to elevate privileges locally on domain controllers. Organizations should prioritize patching this flaw affecting on-premises identity infrastructure.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69359"
+    },
+    {
+      "id": "purview-dlp-entra-gsa-network-layer-filtering",
+      "title": "Microsoft Purview: DLP Integration with Entra Global Secure Access for Network-Layer File Filtering",
+      "summary": "Microsoft Purview Data Loss Prevention is expanding to filter sensitive files at the network layer through integration with Entra Global Secure Access Internet Access. This enhancement enables organizations to block sensitive data from being shared with untrusted cloud apps, generative AI platforms, and content-sharing services at the network perimeter.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569446"
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=522096"
     },
     {
-      "id": "purview-rms-connector-certificate-based-authentication",
-      "title": "Microsoft Purview: RMS Connector Certificate-Based Authentication",
-      "summary": "The Rights Management connector is transitioning from shared-secret to certificate-based authentication, enhancing security posture. Admins will configure their own Microsoft Entra app registrations and certificates via PowerShell, eliminating reliance on provisioned service principals.",
+      "id": "purview-dlp-priority-cleanup-workflow-security-role",
+      "title": "Microsoft Purview: Data Lifecycle Management - Priority Cleanup Workflow with New Security Role",
+      "summary": "A new security role and multi-approver workflow are being introduced to allow admins to create controlled exceptions for deleting items under retention policies and legal holds on Exchange. This feature provides enterprise-grade compliance auditing and approval controls for retention policy bypass scenarios.",
+      "category": "New Role",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=392838"
+    },
+    {
+      "id": "purview-dlp-cowork-expansion",
+      "title": "Microsoft Purview: Data Loss Prevention for Microsoft Cowork",
+      "summary": "DLP policies are expanding to Microsoft Cowork, enabling unified data protection across Microsoft 365 Copilot interactions and Cowork. Admins can now prevent labeled knowledge sources from being used in AI interactions and block sensitive information types from being sent to external services like Bing.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570845"
+    },
+    {
+      "id": "purview-rms-connector-certificate-based-auth",
+      "title": "Microsoft Purview: Rights Management Connector - Certificate-Based Authentication",
+      "summary": "The Microsoft Rights Management connector is transitioning from shared-secret to certificate-based authentication, improving security posture. Admins will configure their own Entra app registrations and certificates using new PowerShell cmdlets to handle certificate import, registry configuration, and validation.",
       "category": "Permission Change",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -53,29 +83,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564617"
     },
     {
-      "id": "purview-dlp-default-protection-controls-exchange",
-      "title": "Microsoft Purview DLP: Default Protection Controls for Exchange Online",
-      "summary": "Administrators can now create Data Loss Prevention policies with granular control over classification and text extraction failure scenarios—such as timeouts and throttling—rather than applying a blanket policy. This public preview feature enables more precise incident response and protection strategies.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569477"
-    },
-    {
-      "id": "purview-dlp-sla-based-alert-reporting",
-      "title": "Microsoft Purview DLP: SLA-Based Alert Reporting Dashboard",
-      "summary": "A new out-of-box dashboard lets admins track Mean Time to Acknowledge (MTTA), Mean Time to Detect (MTTD), and Mean Time to Resolve (MTTR) metrics for DLP alerts with custom SLA thresholds. Security teams can now monitor operational performance and identify trending sensitive information exposure patterns.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568372"
-    },
-    {
-      "id": "purview-edp-device-health-reporting-dashboard",
-      "title": "Microsoft Purview Endpoint DLP: Device Health Reporting Dashboard",
-      "summary": "A new dashboard provides visibility into device health across all endpoints to ensure readiness for policy updates and quickly identify systems unable to receive DLP policies. This helps admins maintain operational readiness and rapidly troubleshoot deployment issues.",
+      "id": "purview-dlp-endpoint-device-health-dashboard",
+      "title": "Microsoft Purview: Endpoint Data Loss Prevention - Device Health Reporting Dashboard",
+      "summary": "A new dashboard allows admins to monitor device health status across their estate to ensure readiness for policy updates and quickly identify devices unable to receive DLP policies. This operational visibility helps maintain consistent endpoint protection deployment.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -83,9 +93,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561033"
     },
     {
+      "id": "purview-dlp-sla-alert-reporting",
+      "title": "Microsoft Purview: Data Loss Prevention - SLA-Based Alert Reporting Dashboard",
+      "summary": "A new dashboard provides out-of-box SLA metrics (MTTA, MTTD, MTTR) for DLP alerts with customizable thresholds for severity levels. Admins gain visibility into operational performance trends and can identify the most frequently exposed sensitive information types.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568372"
+    },
+    {
       "id": "purview-auto-labeling-scalability-enhancements",
-      "title": "Microsoft Purview: Auto-Labeling Scalability and Policy Management Enhancements",
-      "summary": "Microsoft Purview is expanding auto-labeling capabilities to support larger SharePoint scopes and improving policy management flexibility with richer visibility into labeling activity. These improvements enable enterprises to scale information classification at higher volumes and better validate policy effectiveness.",
+      "title": "Microsoft Purview: Auto-Labeling Scalability, Policy Management, and Reporting Enhancements",
+      "summary": "Purview is improving auto-labeling capabilities to support larger SharePoint scopes and provide enhanced policy management flexibility. Richer reporting visibility into auto-labeling activity helps organizations validate and manage labeling policies at enterprise scale.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -93,9 +113,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570445"
     },
     {
-      "id": "purview-information-protection-macos-file-labeler",
-      "title": "Microsoft Purview Information Protection: File Labeler and Viewer for macOS",
-      "summary": "The Information Protection File Labeler and Viewer applications are now coming to macOS, providing parity with Windows capabilities except for advanced label-based protection features. This expansion enables macOS users to apply and view sensitivity labels consistently across the organization.",
+      "id": "purview-information-protection-macos-labeler-viewer",
+      "title": "Microsoft Purview: Information Protection - File Labeler and File Viewer for macOS",
+      "summary": "The Information Protection File Labeler and Viewer applications are expanding to macOS, bringing near-feature parity with Windows clients. Advanced label-based protection features will be available on macOS, improving compliance tooling across platforms.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -103,9 +123,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561327"
     },
     {
-      "id": "purview-data-lifecycle-azure-pst-import",
-      "title": "Microsoft Purview Data Lifecycle Management: Azure PST Import",
-      "summary": "Organizations can now import PST files directly from Azure Blob Storage into Exchange Online mailboxes using the Exchange Migration Service pattern with analysis and execution phases. This streamlines PST migration workflows and leverages cloud-native storage instead of requiring traditional file transfers.",
+      "id": "purview-dlm-azure-pst-import",
+      "title": "Microsoft Purview: Data Lifecycle Management - Azure PST Import",
+      "summary": "Azure PST Import enables administrators to import PST files stored in Azure Blob Storage directly into Exchange Online mailboxes using standard migration service patterns. This feature streamlines large-scale data migrations with analysis and validation phases before final import.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -113,9 +133,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565865"
     },
     {
-      "id": "purview-archive-expansion-beyond-1-5tb",
-      "title": "Microsoft Purview Data Lifecycle Management: Auto-Expanding Archive Beyond 1.5TB",
-      "summary": "Archive mailboxes can now automatically expand beyond the previous 1.5TB limit, enabling continuous archive growth without operational interruption. This capability is available to customers with eligible E5 licenses and ensures uninterrupted retention at scale.",
+      "id": "purview-dlm-archive-expansion-beyond-1.5tb",
+      "title": "Microsoft Purview: Data Lifecycle Management - Archive Expansion Beyond 1.5TB",
+      "summary": "Auto-expanding archive mailboxes can now grow beyond the previous 1.5TB limit, removing operational constraints for E5-licensed customers. This enhancement ensures uninterrupted retention and scalable archive growth as organizations manage growing data volumes.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -123,19 +143,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560820"
     },
     {
-      "id": "purview-scanner-data-export-custom-reporting",
-      "title": "Microsoft Purview: Information Protection Scanner Data Export for Custom Reporting",
-      "summary": "Admins can now export information protection scanner data stored in SQL tables to create custom reports on labeling, classification, and protection actions across scanned repositories. This enables organizations to build tailored compliance and monitoring dashboards aligned with their governance needs.",
+      "id": "purview-sensitivity-labels-non-microsoft-apps",
+      "title": "Microsoft Purview: Sensitivity Label Auto-Labeling for Non-Microsoft Connected Apps",
+      "summary": "Auto-labeling policies now extend to non-Microsoft connected applications like Box and Google Workspace, leveraging existing Microsoft Defender for Cloud Apps connectors. Organizations can now apply consistent classification and protection across hybrid cloud environments.",
       "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
+      "source": "Microsoft Purview What's New",
+      "date": "August 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=494839"
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-dlp-non-microsoft-apps-august-2026",
-      "title": "Microsoft Purview DLP: Data Loss Prevention for Non-Microsoft Connected Apps",
-      "summary": "Data Loss Prevention policies can now protect sensitive data at rest in non-Microsoft applications like Box and Google Workspace using existing Microsoft Defender for Cloud Apps connectors and the same classification engine as Microsoft 365 locations. This extends DLP governance beyond the Microsoft ecosystem to multicloud environments.",
+      "id": "purview-dlp-non-microsoft-apps",
+      "title": "Microsoft Purview: Data Loss Prevention for Non-Microsoft Connected Apps",
+      "summary": "DLP policies can now protect sensitive data at rest in non-Microsoft applications such as Box and Google Workspace through Defender for Cloud Apps connectors. This extension enables organizations to enforce consistent data protection policies across their entire cloud application portfolio.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -144,28 +164,8 @@
     },
     {
       "id": "purview-sensitivity-labels-simulation-mode",
-      "title": "Microsoft Purview Sensitivity Labels: Auto-Labeling Policy Simulation Mode",
-      "summary": "Admins can now run auto-labeling policies in simulation mode before enforcement to preview which items would be labeled without making actual changes. This preview capability allows administrators to validate policy accuracy and review match results before rolling out production enforcement.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-sensitivity-labels-insights-tab",
-      "title": "Microsoft Purview Sensitivity Labels: Policy Performance Insights Dashboard",
-      "summary": "A new Insights tab in auto-labeling policy details displays at-a-glance performance metrics that vary based on simulation or enforcement mode. This visibility helps admins understand how policies identify and label content, supporting data-driven policy optimization.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "August 2026",
-      "importance": "low",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-auto-labeling-non-microsoft-apps",
-      "title": "Microsoft Purview: Auto-Labeling Policies for Non-Microsoft Connected Apps",
-      "summary": "Sensitivity label policies now extend to non-Microsoft applications including Box and Google Workspace, leveraging existing Microsoft Defender for Cloud Apps connectors and the same classification engine as Microsoft 365 locations. This enables consistent information classification across hybrid and multicloud environments.",
+      "title": "Microsoft Purview: Sensitivity Labels - Auto-Labeling Simulation Mode",
+      "summary": "Before enforcement, admins can now run auto-labeling policies in simulation mode to review match results and source distribution without making actual label changes. A new Insights tab provides at-a-glance policy performance visibility, helping admins validate policies before production deployment.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
