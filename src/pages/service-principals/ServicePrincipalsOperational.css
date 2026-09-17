@@ -1,0 +1,377 @@
+/* Governance */
+.sp-governance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.sp-governance-grid article {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--bg-elevated);
+}
+
+.sp-governance-grid article > span {
+  color: var(--high);
+  font-size: 8.5px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sp-governance-grid h3 {
+  font-size: 14px;
+  margin: 7px 0 6px;
+}
+
+.sp-governance-grid p {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.sp-review-sequence {
+  margin-top: 15px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-subtle);
+}
+
+.sp-review-sequence h3 {
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.sp-review-sequence ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--border);
+}
+
+.sp-review-sequence li {
+  position: relative;
+  min-height: 112px;
+  padding: 14px;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.sp-review-sequence li span {
+  display: block;
+  color: var(--entra);
+  font-family: var(--sp-code);
+  font-size: 10px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* Troubleshooting FAQ */
+.sp-faq-list {
+  display: grid;
+  gap: 8px;
+}
+
+.sp-faq-list details {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+
+.sp-faq-list summary {
+  list-style: none;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 16px;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.sp-faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.sp-faq-list summary span {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  transition: transform 0.15s ease;
+}
+
+.sp-faq-list details[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.sp-faq-list details[open] summary span {
+  transform: rotate(45deg);
+  color: var(--entra);
+}
+
+.sp-faq-list details > div {
+  padding: 16px;
+}
+
+.sp-faq-list details p {
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.sp-faq-list aside {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  margin-top: 13px;
+  padding: 11px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+}
+
+.sp-faq-list aside strong {
+  color: var(--entra);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.sp-faq-list aside code {
+  color: var(--text-muted);
+  font-size: 10.5px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Command reference */
+.sp-command-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-subtle);
+}
+
+.sp-command-tabs button {
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 7px 11px;
+  color: var(--text-muted);
+  background: transparent;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.sp-command-tabs button.is-active {
+  color: var(--text);
+  border-color: var(--border);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-sm);
+}
+
+.sp-command-intro {
+  max-width: 740px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 13px 0 16px;
+}
+
+.sp-command-list {
+  display: grid;
+  gap: 10px;
+}
+
+.sp-code-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+}
+
+.sp-code-card > header {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.sp-code-card h3 {
+  font-size: 11.5px;
+  font-weight: 650;
+}
+
+.sp-code-card button {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 9.5px;
+  font-weight: 650;
+}
+
+.sp-code-card button:hover {
+  color: var(--entra);
+  border-color: var(--entra-border);
+}
+
+.sp-code-card pre {
+  margin: 0;
+  padding: 15px;
+  overflow-x: auto;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--bg) 78%, var(--bg-subtle));
+  font-family: var(--sp-code);
+  font-size: 10.5px;
+  line-height: 1.65;
+  tab-size: 4;
+}
+
+.sp-code-card code {
+  font-family: inherit;
+}
+
+/* Knowledge expansion */
+.sp-knowledge-map {
+  position: relative;
+}
+
+.sp-expansion-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.sp-expansion-grid article {
+  padding: 18px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 11px;
+  background: var(--bg-subtle);
+}
+
+.sp-expansion-grid span {
+  color: var(--entra);
+  font-size: 8.5px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sp-expansion-grid h3 {
+  font-size: 15px;
+  margin: 7px 0;
+}
+
+.sp-expansion-grid p {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.sp-expansion-grid code {
+  display: block;
+  margin-top: 12px;
+  color: var(--text-faint);
+  font-size: 9.5px;
+  overflow-wrap: anywhere;
+}
+
+/* Sources */
+.sp-source-list {
+  display: grid;
+  gap: 8px;
+}
+
+.sp-source-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 15px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.sp-source-list a:hover {
+  border-color: var(--entra-border);
+  transform: translateY(-1px);
+}
+
+.sp-source-list a > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sp-source-list strong {
+  font-size: 12.5px;
+}
+
+.sp-source-list span {
+  color: var(--text-muted);
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+.sp-source-list svg {
+  flex: 0 0 auto;
+  color: var(--text-faint);
+}
+
+.sp-reference-footer {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--bg-subtle);
+}
+
+.sp-reference-footer span {
+  display: block;
+  color: var(--text-faint);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sp-reference-footer strong {
+  display: block;
+  font-size: 12px;
+  margin: 4px 0 7px;
+}
+
+.sp-reference-footer p {
+  color: var(--text-muted);
+  font-size: 10.5px;
+  line-height: 1.55;
+}

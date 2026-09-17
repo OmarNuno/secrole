@@ -1,0 +1,20 @@
+# SecRole
+
+> Microsoft Entra ID and Microsoft Purview role, identity, permission, and least-privilege reference for IT administrators and security engineers.
+
+SecRole combines searchable role intelligence, comparison tools, official-source updates, and practical Microsoft Entra knowledge guides. Technical reference pages are grounded in Microsoft Learn and Microsoft Graph documentation and include a visible last-reviewed date.
+
+## Published pages
+
+- [Microsoft Entra & Purview Role Library](https://www.secrole.com/): Search Microsoft Entra ID and Microsoft Purview roles, compare risk, review permissions, and find least-privilege alternatives.
+- [Microsoft Role Overlap Analyzer](https://www.secrole.com/analyzer): Compare Microsoft Entra and Purview roles to identify overlapping permissions, excess privilege, and possible least-privilege alternatives.
+- [Microsoft Entra & Purview Role Advisor](https://www.secrole.com/advisor): Describe an access requirement and use SecRole's role intelligence to investigate relevant Microsoft Entra and Purview roles.
+- [Microsoft Entra Service Principals: Complete Reference](https://www.secrole.com/service-principals): Understand Microsoft Entra service principals, application objects, app IDs vs. object IDs, permissions, consent, authentication, and governance.
+- [Microsoft Entra & Purview Updates](https://www.secrole.com/updates): Track Microsoft Entra ID and Purview role, permission, security, and roadmap updates curated from official Microsoft sources.
+
+## Content principles
+
+- Prefer Microsoft primary documentation for platform facts and API behavior.
+- Distinguish requested permissions from tenant grants and configuration from runtime evidence.
+- Provide read-only investigation commands before change or remediation examples.
+- Treat Microsoft documentation as the source of truth when platform behavior changes.
