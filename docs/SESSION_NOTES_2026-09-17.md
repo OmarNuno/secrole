@@ -12,6 +12,17 @@ Turn the Service Principals reference into the first SecRole knowledge cluster b
 - This work started from the updated `main` branch on:
   - `feature/service-principal-guides`
 
+## Pull request and preview
+
+- Pull request: [#4 — Publish Service Principal identifier and permissions guides](https://github.com/OmarNuno/secrole/pull/4)
+- Branch: `feature/service-principal-guides`
+- First implementation commit: `586d5d6`
+- Vercel deployment status: **Ready / successful**
+- Preview root: https://secrole-git-feature-service-principal-guides-o-3026s-projects.vercel.app
+- Hub preview: https://secrole-git-feature-service-principal-guides-o-3026s-projects.vercel.app/service-principals
+- Identifier guide preview: https://secrole-git-feature-service-principal-guides-o-3026s-projects.vercel.app/service-principals/identifiers
+- Permissions guide preview: https://secrole-git-feature-service-principal-guides-o-3026s-projects.vercel.app/service-principals/permissions-and-consent
+
 ## What was completed in this branch
 
 ### 1. Service Principals hub guide map
@@ -163,27 +174,27 @@ Generated discovery files were refreshed:
 - `src/pages/service-principals/PermissionsRuntimeSections.jsx`
 - `docs/SESSION_NOTES_2026-09-17.md`
 
-## Validation checklist for this pull request
+## Validation status
 
-- [ ] Git tree and commit created on `feature/service-principal-guides`
-- [ ] Pull request opened against `main`
-- [ ] Vercel preview build successful
-- [ ] Direct load works for both new routes
-- [ ] Hub shows only the two published guide cards
-- [ ] Identifier guide reviewed on desktop and mobile
-- [ ] Permissions guide reviewed on desktop and mobile
-- [ ] Copy buttons tested
-- [ ] Sticky table of contents tested
-- [ ] Canonical URLs and page titles verified
-- [ ] Sitemap includes both new routes
-- [ ] Planned routes remain absent from sitemap and public grid
+- [x] Git tree and commit created on `feature/service-principal-guides`
+- [x] Pull request opened against `main`
+- [x] Vercel preview build successful
+- [ ] Direct-load both new routes in a browser
+- [ ] Confirm the hub shows only the two published guide cards
+- [ ] Review Identifier guide on desktop and mobile
+- [ ] Review Permissions guide on desktop and mobile
+- [ ] Test copy buttons
+- [ ] Test sticky table-of-contents behavior
+- [ ] Verify canonical URLs and page titles in the rendered document
+- [x] Sitemap includes both new routes in the committed generated file
+- [x] Planned routes remain absent from committed sitemap and public guide data
 
 ## Recommended continuation order
 
 1. Review the Vercel preview for the hub and both guide routes.
 2. Correct any visual, copy, command, or mobile issues found in preview.
-3. Merge the pull request only after both guides pass direct-load and responsive checks.
-4. Delete the feature branch after merge.
+3. Merge PR #4 only after both guides pass direct-load and responsive checks.
+4. Delete `feature/service-principal-guides` after merge.
 5. Build the next Service Principal guide in this order:
    - `/service-principals/troubleshooting`
    - `/service-principals/security-review`
@@ -202,10 +213,3 @@ Suggested rubric refinement:
 - High: tenant-wide content, communications, investigation evidence, sensitive identity data, or security data—even when read-only
 
 Also consider allowing newly drafted roles within the same run to reference one another as related roles after IDs are assigned.
-
-## Pull request and preview
-
-- Pull request: pending creation from `feature/service-principal-guides`
-- Vercel preview: pending pull-request deployment
-
-Update this section after the pull request and preview are available.
