@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import Nav from "./components/Nav";
+import RouteMeta from "./components/RouteMeta";
 import RoleLibrary from "./pages/RoleLibrary";
 import OverlapAnalyzer from "./pages/OverlapAnalyzer";
 import AIAdvisor from "./pages/AIAdvisor";
@@ -17,6 +18,7 @@ export default function App() {
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <RouteMeta />
       <Nav />
       <main>
         <Routes>
