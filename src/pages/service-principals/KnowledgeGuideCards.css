@@ -1,0 +1,130 @@
+.kg-answer-grid,
+.kg-card-grid,
+.kg-mistake-grid,
+.kg-related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.kg-answer-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.kg-card,
+.kg-answer-card,
+.kg-mistake-card {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
+.kg-answer-card { position: relative; overflow: hidden; }
+.kg-answer-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(90deg, var(--entra), transparent 82%); }
+.kg-answer-card span,
+.kg-card-label,
+.kg-mistake-card > span { color: var(--entra); font-size: 9px; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
+.kg-answer-card h3,
+.kg-card h3,
+.kg-mistake-card h3 { margin: 8px 0 7px; font-size: 15px; line-height: 1.3; }
+.kg-answer-card p,
+.kg-card p,
+.kg-mistake-card p { color: var(--text-muted); font-size: 12px; line-height: 1.65; }
+.kg-card code { display: inline-flex; margin-top: 12px; padding: 4px 7px; border: 1px solid var(--border); border-radius: 6px; color: var(--text-muted); background: var(--bg-subtle); font-size: 10px; }
+
+.kg-decision-banner {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--entra-border);
+  border-left-width: 3px;
+  border-radius: 11px;
+  background: var(--entra-bg);
+}
+.kg-decision-banner strong { font-size: 13px; }
+.kg-decision-banner p { color: var(--text-muted); font-size: 12.5px; line-height: 1.65; }
+
+.kg-callout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 18px;
+  margin: 20px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  border-radius: 10px;
+  background: var(--bg-subtle);
+}
+.kg-callout.info { border-left-color: var(--entra); }
+.kg-callout.warning { border-left-color: var(--high); }
+.kg-callout.success { border-left-color: var(--low); }
+.kg-callout strong { font-size: 12.5px; }
+.kg-callout div { color: var(--text-muted); font-size: 12.5px; line-height: 1.65; }
+.kg-callout code { color: var(--text); font-size: 11.5px; }
+
+.kg-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+.kg-table { width: 100%; min-width: 760px; border-collapse: collapse; }
+.kg-table th,
+.kg-table td { padding: 13px 15px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; font-size: 12px; line-height: 1.55; }
+.kg-table tr:last-child th,
+.kg-table tr:last-child td { border-bottom: 0; }
+.kg-table thead th { color: var(--text); background: var(--bg-subtle); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.kg-table tbody th { width: 190px; color: var(--text); font-weight: 650; }
+.kg-table td { color: var(--text-muted); }
+.kg-table code { color: var(--text); font-size: 10.5px; overflow-wrap: anywhere; }
+
+.kg-portal-grid,
+.kg-model-grid,
+.kg-record-grid,
+.kg-token-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.kg-portal-card,
+.kg-model-card,
+.kg-record-card,
+.kg-token-card {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+.kg-portal-card > span,
+.kg-model-card > span,
+.kg-record-card > span,
+.kg-token-card > span { color: var(--entra); font-size: 9px; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
+.kg-portal-card h3,
+.kg-model-card h3,
+.kg-record-card h3,
+.kg-token-card h3 { margin: 8px 0 7px; font-size: 15px; }
+.kg-portal-card p,
+.kg-model-card p,
+.kg-record-card p,
+.kg-token-card p { color: var(--text-muted); font-size: 12px; line-height: 1.62; }
+.kg-portal-card code,
+.kg-model-card code,
+.kg-record-card code,
+.kg-token-card code { display: block; margin-top: 12px; color: var(--text-faint); font-size: 10px; overflow-wrap: anywhere; }
+
+.kg-multitenant {
+  display: grid;
+  grid-template-columns: 1fr 54px 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+.kg-tenant-card { padding: 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-elevated); }
+.kg-tenant-card.home { border-color: var(--entra-border); }
+.kg-tenant-card.consumer { border-color: var(--purview-border); }
+.kg-tenant-card > span { color: var(--text-faint); font-size: 9px; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
+.kg-tenant-card h3 { margin: 7px 0 13px; font-size: 16px; }
+.kg-id-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); }
+.kg-id-row span { color: var(--text-faint); font-size: 10px; }
+.kg-id-row code { color: var(--text-muted); font-size: 10.5px; overflow-wrap: anywhere; }
+.kg-multi-arrow { display: grid; place-items: center; color: var(--entra); font-size: 22px; }
+

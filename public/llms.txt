@@ -11,6 +11,8 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 - [Microsoft Entra & Purview Role Advisor](https://www.secrole.com/advisor): Describe an access requirement and use SecRole's role intelligence to investigate relevant Microsoft Entra and Purview roles.
 - [Microsoft Entra Service Principals: Complete Reference](https://www.secrole.com/service-principals): Understand Microsoft Entra service principals, application objects, app IDs vs. object IDs, permissions, consent, authentication, and governance.
 - [Microsoft Entra & Purview Updates](https://www.secrole.com/updates): Track Microsoft Entra ID and Purview role, permission, security, and roadmap updates curated from official Microsoft sources.
+- [Application ID vs. Object ID vs. Tenant ID in Microsoft Entra](https://www.secrole.com/service-principals/identifiers): Choose the correct Microsoft Entra application, service principal, and tenant ID for OAuth, Microsoft Graph, Azure RBAC, and troubleshooting.
+- [Service Principal Permissions and Admin Consent](https://www.secrole.com/service-principals/permissions-and-consent): Reconcile configured API permissions, admin consent, app-role assignments, delegated grants, and access-token claims in Microsoft Entra.
 
 ## Content principles
 
