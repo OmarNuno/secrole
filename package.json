@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-seo-files.mjs",
     "build": "vite build",
+    "postbuild": "node scripts/generate-route-entrypoints.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
