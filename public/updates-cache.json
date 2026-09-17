@@ -1,11 +1,31 @@
 {
-  "lastUpdated": "2026-09-16T10:23:39.432Z",
-  "fetchedAt": "2026-09-16T10:23:39.432Z",
+  "lastUpdated": "2026-09-17T10:32:59.450Z",
+  "fetchedAt": "2026-09-17T10:32:59.450Z",
   "updates": [
     {
-      "id": "purview-dlp-entra-managed-apps-edge",
-      "title": "Microsoft Purview: DLP Upgraded Inline Protection for Entra-Managed Apps in Edge for Business",
-      "summary": "Microsoft Purview is enhancing inline data loss prevention for Entra-managed applications in Edge for Business by integrating with Conditional Access grant controls and expanding policy capabilities. Admins gain access to more granular conditions, multiple activities per rule, simulation mode, and improved visibility into rule matches through activity explorer.",
+      "id": "purview-dlp-entra-global-secure-access",
+      "title": "Purview Data Loss Prevention: Integration with Microsoft Entra Global Secure Access",
+      "summary": "Data Loss Prevention now integrates with Microsoft Entra Global Secure Access to enforce DLP policies at the network layer, protecting text, files, and AI interactions across browsers, apps, APIs, and cloud applications. This extends DLP enforcement beyond Microsoft 365 to detect risky activity and prevent sensitive data leakage to untrusted SaaS platforms, social media, and generative AI services.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-compliance-portal-diagnostics-access-expansion",
+      "title": "Purview Compliance Portal: Diagnostics Access Expanded to Multiple Admin Roles",
+      "summary": "Microsoft has expanded access to Purview Compliance Portal Diagnostics beyond Global Admin to include Compliance Administrator, Security Administrator, and Organization Management roles. This enables broader troubleshooting and operational visibility for role-scoped admins without requiring global privileges.",
+      "category": "Permission Change",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=500396"
+    },
+    {
+      "id": "purview-dlp-inline-protection-entra-managed-apps-edge",
+      "title": "Purview DLP: Upgraded Inline Protection for Entra-Managed Apps in Edge for Business",
+      "summary": "Purview is enhancing inline data protection for Microsoft Entra-managed apps in Edge for Business with tighter Conditional Access integration, expanded condition combinations, multiple activities per rule, simulation mode, and activity explorer visibility. This simplifies policy configuration while removing previous restrictions on policy flexibility.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -13,9 +33,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571397"
     },
     {
-      "id": "purview-dlp-unmanaged-apps-edge",
-      "title": "Microsoft Purview: DLP Expanded Inline Protection for Unmanaged Apps in Edge for Business",
-      "summary": "Purview DLP policies now extend browser-based inline protection to a significantly broader set of unmanaged generative AI applications in Edge for Business, allowing consistent data security enforcement across more destinations. Admins can detect and prevent sensitive data sharing through existing policy experiences without requiring separate configurations.",
+      "id": "purview-dlp-inline-protection-unmanaged-apps-edge",
+      "title": "Purview DLP: Expanded Inline Protection for Unmanaged AI Apps in Edge for Business",
+      "summary": "Purview's inline DLP protection for Edge for Business is expanding to support a much broader set of unmanaged generative AI apps, allowing admins to detect and protect sensitive data shared through browser activities. This extends consistent data security controls across more SaaS destinations without requiring new policy infrastructure.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -23,49 +43,59 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571396"
     },
     {
-      "id": "purview-endpoint-dlp-copilot-pc-recall",
-      "title": "Microsoft Purview: Endpoint DLP Support for Copilot + PC Recall Snapshots",
-      "summary": "Endpoint DLP now protects Copilot + PC devices by preventing capture of windows containing restricted sensitivity labels and sensitive information types through Recall snapshots via custom policies. Purview admins can author endpoint DLP policies that integrate with Intune-managed Recall configuration for comprehensive device-level protection.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560396"
-    },
-    {
-      "id": "purview-endpoint-dlp-excluded-folders",
-      "title": "Microsoft Purview: Endpoint DLP Protection in Excluded Windows Folders",
-      "summary": "Endpoint DLP is expanding coverage to protect sensitive files stored in commonly excluded Windows directories such as Temp and AppData folders. This enhancement improves overall data protection coverage by closing gaps where sensitive data might previously have been overlooked.",
+      "id": "purview-dlp-user-based-alert-aggregation",
+      "title": "Purview DLP: User-Based Aggregation of DLP Alerts",
+      "summary": "DLP alert aggregation is being enhanced to group alerts by common entities (users) even when multiple rules match, consolidating related violations into single alert objects. This reduces alert noise, simplifies investigation workflows, and improves context for security teams reviewing violations.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562992"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567010"
     },
     {
-      "id": "purview-endpoint-dlp-jit-audit-scoping",
-      "title": "Microsoft Purview: Endpoint DLP Just-In-Time Audit User and Group Scoping",
-      "summary": "Admins can now selectively include or exclude specific users and user groups from Just-In-Time (JIT) audit generation in Endpoint DLP. This granular scoping capability reduces audit noise and ensures compliance reviews focus on the most relevant personnel.",
+      "id": "purview-irm-data-security-investigations-integration",
+      "title": "Purview Insider Risk Management: Data Security Investigations Integration",
+      "summary": "Insider Risk Management is gaining the ability to launch pre-scoped Data Security Investigations directly from IRM cases, allowing data security admins to view content analysis for risky users and assess post-incident data impact. This tightens the feedback loop between insider risk detection and downstream forensic investigation.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562991"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=501781"
     },
     {
-      "id": "purview-endpoint-dlp-archive-behavior-change",
-      "title": "Microsoft Purview: Endpoint DLP Archive File Classification Behavior Change",
-      "summary": "Archive file classification behavior on Windows endpoints is being updated to align with cloud workload handling, improving consistency and reducing event reporting noise. This change enhances performance and provides a unified experience across deployment platforms.",
+      "id": "purview-irm-collection-policies-support",
+      "title": "Purview Insider Risk Management: Support for Collection Policies",
+      "summary": "Purview now integrates collection policies with Insider Risk Management, allowing admins to scope Sensitive Information Types and activities for specific users to ensure IRM policies detect the right behavior signals. This requires review of existing collection policies to align with IRM coverage needs.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=501582"
+    },
+    {
+      "id": "purview-information-protection-sensitivity-labels-engage",
+      "title": "Purview Information Protection: Sensitivity Label Support in Engage",
+      "summary": "Admins can now manually apply Information Protection sensitivity labels in Engage communities, enabling data classification and protection through privacy and external access controls. This extends label governance to the Engage platform alongside existing Microsoft 365 applications.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
       "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570965"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=491918"
+    },
+    {
+      "id": "purview-endpoint-dlp-full-path-display",
+      "title": "Purview Endpoint DLP: Full Path Display in Activity Explorer",
+      "summary": "Endpoint DLP Activity Explorer now displays the complete path of target domains instead of just domain names, improving visibility and investigation accuracy for DLP incidents. This enhancement helps security teams more precisely track data exfiltration destinations.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=480734"
     },
     {
       "id": "purview-dspm-copilot-readiness-data-explorer",
-      "title": "Microsoft Purview: DSPM Copilot Readiness and Data Explorer",
-      "summary": "Purview Data Security Posture Management introduces new readiness assessments for Copilot and an enhanced data explorer to help security teams evaluate data exposure, oversharing, and protection coverage. These insights enable organizations to assess and improve their security posture for Copilot adoption.",
+      "title": "Purview DSPM: Copilot Readiness and Data Explorer Capabilities",
+      "summary": "Purview Data Security Posture Management is introducing copilot readiness assessments and a data explorer to help security teams evaluate data readiness for Microsoft Copilot, identify sensitive data exposure and oversharing, and prioritize remediation efforts. These tools consolidate data risk visibility in one place.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -74,8 +104,8 @@
     },
     {
       "id": "purview-unified-classification-management",
-      "title": "Microsoft Purview: Unified Classification Management Experience",
-      "summary": "Purview now consolidates all classifiers—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers—into a single unified interface. This streamlines classifier discovery, creation, validation, and management for compliance and security teams.",
+      "title": "Purview: Unified Classification Management Experience",
+      "summary": "A new unified interface consolidates all Purview classifiers—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers—into one discovery, creation, validation, and management hub. This simplifies classifier management and governance across the compliance platform.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -83,39 +113,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570844"
     },
     {
-      "id": "purview-data-lifecycle-departed-users",
-      "title": "Microsoft Purview: Data Lifecycle Management for Departed Employees",
-      "summary": "Purview now enables admins to automatically delete both content and containers (OneDrives and mailboxes) for departed users at scale, reducing manual compliance overhead. This capability helps organizations maintain regulatory compliance and manage inactive user resources efficiently.",
+      "id": "purview-dlp-non-microsoft-connected-apps",
+      "title": "Purview DLP: Policies for Non-Microsoft Connected Apps",
+      "summary": "Data Loss Prevention now supports policies for non-Microsoft connected applications such as Box and Google Workspace, leveraging existing Microsoft Defender for Cloud Apps connectors and the same classification engine. This extends DLP enforcement to third-party SaaS platforms at rest.",
       "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566527"
-    },
-    {
-      "id": "purview-retention-last-accessed",
-      "title": "Microsoft Purview: Retention Based on Last Accessed in OneDrive and SharePoint",
-      "summary": "Admins can now apply retention labels and policies to OneDrive and SharePoint items based on when files were last accessed by users, enabling more intelligent data lifecycle management. This capability helps reduce storage costs and improve compliance by targeting inactive content.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
+      "source": "Microsoft Purview What's New",
+      "date": "August 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565866"
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-data-lifecycle-sensitive-data-insights",
-      "title": "Microsoft Purview: Data Lifecycle Management Sensitive Data Insights and Policy Recommendations",
-      "summary": "Purview now provides insights and retention policy recommendations based on sensitive data detected in OneDrive and SharePoint, helping admins make informed decisions about data governance. These recommendations improve compliance posture by highlighting where retention policies should be applied.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562343"
-    },
-    {
-      "id": "purview-dlp-non-microsoft-apps",
-      "title": "Microsoft Purview: DLP for Non-Microsoft Connected Apps (Box, Google Workspace)",
-      "summary": "Purview DLP now supports creating and enforcing data loss prevention policies for non-Microsoft connected applications such as Box and Google Workspace using existing Microsoft Defender for Cloud Apps connectors. This extends consistent classification and protection across multi-cloud environments.",
+      "id": "purview-endpoint-dlp-macos-permission-changes",
+      "title": "Purview Endpoint DLP: Preparing for macOS Permission Changes",
+      "summary": "Endpoint DLP admins must deploy client version 101.26072 or later to prepare for upcoming macOS permission model changes, including configuration of protection modes and Device Control permission status monitoring. Early deployment is critical to avoid disruptions to data protection enforcement on Apple devices.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
@@ -123,34 +133,34 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-endpoint-dlp-macos-27-permissions",
-      "title": "Microsoft Purview: Endpoint DLP macOS 27 Permission Changes Preparation",
-      "summary": "Endpoint DLP administrators should deploy client version 101.26072 or later and configure protection modes to prepare for upcoming permission changes in macOS 27. This proactive step ensures Device Control and Data Access permissions remain properly configured and users are notified of any required actions.",
+      "id": "purview-data-lifecycle-management-delay-holds",
+      "title": "Purview Data Lifecycle Management: Automatic Delay Hold for Inactive Mailboxes",
+      "summary": "When the last hold is removed from an inactive mailbox, Microsoft 365 now automatically applies a 30-day delay hold to preserve the inactive status during hold transition. Admins should review delay holds before recalculating mailbox hold status to avoid unintended mailbox reactivation.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "August 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-data-lifecycle-management-priority-cleanup",
+      "title": "Purview Data Lifecycle Management: Priority Cleanup for SharePoint and OneDrive",
+      "summary": "Priority Cleanup enables permanent deletion of SharePoint and OneDrive files after simulation, review, and approval, bypassing recycle bins and removing files from search discoverability. This provides admins more aggressive data retention enforcement options for compliance scenarios.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "August 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "microsoft-edge-chromium-authorization-vulnerabilities",
+      "title": "Microsoft Edge: 12 Authorization Vulnerabilities in Chromium Components Patched",
+      "summary": "Microsoft Edge has patched 12 authorization and access control vulnerabilities inherited from upstream Chromium, affecting CORS, FileSystem, DevTools, WebUI, Network, Loader, Updater, ControlledFrame, and FileAPI components. Admins should ensure Edge is updated to the latest version to close these potential bypass and privilege escalation risks.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "September 2026",
       "importance": "high",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-data-lifecycle-inactive-mailbox-delay-hold",
-      "title": "Microsoft Purview: Inactive Mailbox 30-Day Delay Hold Automatically Applied",
-      "summary": "When the last hold is removed from an inactive mailbox, Microsoft 365 now automatically applies a 30-day delay hold to protect against accidental deletion. Admins should review guidance on identifying and removing delay holds before recalculating mailbox hold status.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-data-lifecycle-sharepoint-onedrive-priority-cleanup",
-      "title": "Microsoft Purview: Priority Cleanup for Permanent File Deletion in SharePoint and OneDrive",
-      "summary": "Purview Data Lifecycle Management now offers Priority Cleanup to permanently delete selected SharePoint and OneDrive files, bypassing recycle bins and removing them from search. After simulation, review, and required approvals, this capability provides faster, more permanent cleanup of sensitive or unnecessary data.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-87485"
     }
   ]
 }
