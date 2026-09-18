@@ -16,6 +16,10 @@ function PublishedGuideMap() {
         <p>Use these focused guides when you need portal steps, Microsoft Graph examples, PowerShell, decision trees, or a repeatable security workflow.</p>
       </header>
 
+      <Link className="sp-guide-library-link" to="/knowledge">
+        Browse the full SecRole knowledge library <span aria-hidden="true">→</span>
+      </Link>
+
       <div className="sp-expansion-grid">
         {publishedGuides.map((item) => (
           <Link className="sp-guide-card" to={item.path} key={item.id}>

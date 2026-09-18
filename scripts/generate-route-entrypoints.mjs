@@ -21,7 +21,20 @@ function replaceRequired(html, pattern, replacement, label) {
   return html.replace(pattern, replacement);
 }
 
-function buildArticleSchema(page, canonicalUrl) {
+function buildPageSchema(page, canonicalUrl) {
+  if (page.kind === "knowledge-index") {
+    return {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: page.title,
+      description: page.description,
+      dateModified: page.lastModified,
+      inLanguage: "en-US",
+      url: canonicalUrl,
+      isPartOf: { "@type": "WebSite", name: SITE_NAME, url: `${SITE_URL}/` },
+    };
+  }
+
   return {
     "@context": "https://schema.org",
     "@type": "TechArticle",
@@ -39,6 +52,7 @@ function buildArticleSchema(page, canonicalUrl) {
 function buildRouteHtml(template, page) {
   const fullTitle = page.title.includes(SITE_NAME) ? page.title : `${page.title} | ${SITE_NAME}`;
   const canonicalUrl = `${SITE_URL}${page.path}`;
+  const openGraphType = page.kind === "knowledge-index" ? "website" : "article";
   let html = template;
 
   html = replaceRequired(html, /<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(fullTitle)}</title>`, "title");
@@ -46,12 +60,12 @@ function buildRouteHtml(template, page) {
   html = replaceRequired(html, /<link rel="canonical" href="[^"]*"\s*\/>/i, `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`, "canonical link");
   html = replaceRequired(html, /<meta property="og:title" content="[^"]*"\s*\/>/i, `<meta property="og:title" content="${escapeHtml(fullTitle)}" />`, "Open Graph title");
   html = replaceRequired(html, /<meta property="og:description" content="[^"]*"\s*\/>/i, `<meta property="og:description" content="${escapeHtml(page.description)}" />`, "Open Graph description");
-  html = replaceRequired(html, /<meta property="og:type" content="[^"]*"\s*\/>/i, '<meta property="og:type" content="article" />', "Open Graph type");
+  html = replaceRequired(html, /<meta property="og:type" content="[^"]*"\s*\/>/i, `<meta property="og:type" content="${openGraphType}" />`, "Open Graph type");
   html = replaceRequired(html, /<meta property="og:url" content="[^"]*"\s*\/>/i, `<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />`, "Open Graph URL");
   html = replaceRequired(html, /<meta name="twitter:title" content="[^"]*"\s*\/>/i, `<meta name="twitter:title" content="${escapeHtml(fullTitle)}" />`, "Twitter title");
   html = replaceRequired(html, /<meta name="twitter:description" content="[^"]*"\s*\/>/i, `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`, "Twitter description");
 
-  const schemaJson = JSON.stringify(buildArticleSchema(page, canonicalUrl)).replaceAll("<", "\\u003c");
+  const schemaJson = JSON.stringify(buildPageSchema(page, canonicalUrl)).replaceAll("<", "\\u003c");
   html = html.replace(
     "</head>",
     `    <script type="application/ld+json" data-secrole-schema="page">${schemaJson}</script>\n  </head>`,
@@ -61,10 +75,11 @@ function buildRouteHtml(template, page) {
 }
 
 const template = await readFile(path.join(DIST_DIR, "index.html"), "utf8");
-const routePages = publishedPages.filter((page) => page.kind === "knowledge-hub" || page.kind === "knowledge-guide");
+const knowledgeKinds = new Set(["knowledge-index", "knowledge-hub", "knowledge-guide"]);
+const routePages = publishedPages.filter((page) => knowledgeKinds.has(page.kind));
 
 for (const page of routePages) {
-  if (!page.lastModified) throw new Error(`Knowledge page ${page.id} requires lastModified for article metadata.`);
+  if (!page.lastModified) throw new Error(`Knowledge page ${page.id} requires lastModified for route metadata.`);
 
   const relativeFile = `${page.path.replace(/^\//, "")}.html`;
   const outputFile = path.join(DIST_DIR, relativeFile);

@@ -11,14 +11,14 @@ function normalizePath(pathname) {
 
 /**
  * Supplies basic metadata for tool and update routes that do not render their
- * own article-level PageMeta component. Knowledge pages own their richer
+ * own richer PageMeta component. Knowledge pages own their collection,
  * article, breadcrumb, and FAQ schema inside the page component.
  */
 export default function RouteMeta() {
   const { pathname } = useLocation();
   const page = publishedPages.find((item) => item.path === normalizePath(pathname));
 
-  if (!page || page.kind === "knowledge-hub" || page.kind === "knowledge-guide") {
+  if (!page || ["knowledge-index", "knowledge-hub", "knowledge-guide"].includes(page.kind)) {
     return null;
   }
 

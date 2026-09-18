@@ -17,11 +17,23 @@
     <loc>https://www.secrole.com/updates</loc>
   </url>
   <url>
+    <loc>https://www.secrole.com/knowledge</loc>
+    <lastmod>2026-09-18</lastmod>
+  </url>
+  <url>
     <loc>https://www.secrole.com/service-principals/identifiers</loc>
     <lastmod>2026-09-17</lastmod>
   </url>
   <url>
     <loc>https://www.secrole.com/service-principals/permissions-and-consent</loc>
+    <lastmod>2026-09-17</lastmod>
+  </url>
+  <url>
+    <loc>https://www.secrole.com/service-principals/managed-identities</loc>
+    <lastmod>2026-09-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.secrole.com/service-principals/mfa-service-account-migration</loc>
     <lastmod>2026-09-17</lastmod>
   </url>
   <url>
@@ -31,13 +43,5 @@
   <url>
     <loc>https://www.secrole.com/service-principals/security-review</loc>
     <lastmod>2026-09-17</lastmod>
-  </url>
-  <url>
-    <loc>https://www.secrole.com/service-principals/mfa-service-account-migration</loc>
-    <lastmod>2026-09-17</lastmod>
-  </url>
-  <url>
-    <loc>https://www.secrole.com/service-principals/managed-identities</loc>
-    <lastmod>2026-09-18</lastmod>
   </url>
 </urlset>

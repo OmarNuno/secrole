@@ -12,6 +12,24 @@
   display: block;
 }
 
+.sp-guide-library-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: -8px 0 20px;
+  color: var(--entra);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sp-guide-library-link span {
+  color: inherit;
+  font-size: 14px;
+  transition: transform .16s ease;
+}
+
+.sp-guide-library-link:hover span { transform: translateX(3px); }
+
 .sp-expansion-grid .sp-guide-card {
   min-height: 225px;
   display: flex;
@@ -166,6 +184,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .sp-guide-library-link span,
   .sp-expansion-grid .sp-guide-card,
   .sp-expansion-grid .sp-guide-card > strong span,
   .sp-mfa-migration-callout > a {
