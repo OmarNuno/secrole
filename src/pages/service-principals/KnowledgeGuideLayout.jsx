@@ -119,8 +119,9 @@ export default function KnowledgeGuideLayout({
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "SecRole", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Service principals", item: `${SITE_URL}/service-principals` },
-          { "@type": "ListItem", position: 3, name: page.title, item: canonicalUrl },
+          { "@type": "ListItem", position: 2, name: "Knowledge", item: `${SITE_URL}/knowledge` },
+          { "@type": "ListItem", position: 3, name: "Service principals", item: `${SITE_URL}/service-principals` },
+          { "@type": "ListItem", position: 4, name: page.title, item: canonicalUrl },
         ],
       },
     ];
@@ -146,7 +147,7 @@ export default function KnowledgeGuideLayout({
 
       <header className="kg-hero">
         <div className="kg-page-width">
-          <div className="kg-breadcrumb"><Link to="/">SecRole</Link><span>/</span><Link to="/service-principals">Service principals</Link><span>/</span><strong>{page.heading || page.title}</strong></div>
+          <div className="kg-breadcrumb"><Link to="/">SecRole</Link><span>/</span><Link to="/knowledge">Knowledge</Link><span>/</span><Link to="/service-principals">Service principals</Link><span>/</span><strong>{page.heading || page.title}</strong></div>
           <div className="kg-hero-copy">
             <div className="kg-eyebrow">{eyebrow}</div>
             <h1>{page.heading || page.title}</h1>

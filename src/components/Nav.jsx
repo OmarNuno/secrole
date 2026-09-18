@@ -18,11 +18,17 @@ export default function Nav() {
     { to: "/", label: "Role Library" },
     { to: "/analyzer", label: "Overlap Analyzer" },
     { to: "/advisor", label: "AI Advisor" },
-    { to: "/service-principals", label: "Service Principals" },
+    { to: "/knowledge", label: "Knowledge", badge: "NEW" },
     { to: "/updates", label: "Updates" },
   ];
 
   const closeMenu = () => setMenuOpen(false);
+  const isActive = (to) => {
+    if (to === "/knowledge") {
+      return pathname === "/knowledge" || pathname === "/service-principals" || pathname.startsWith("/service-principals/");
+    }
+    return pathname === to;
+  };
 
   return (
     <>
@@ -54,9 +60,7 @@ export default function Nav() {
           transform: translateX(100%);
           transition: transform 0.25s ease;
         }
-        .nav-drawer.open {
-          transform: translateX(0);
-        }
+        .nav-drawer.open { transform: translateX(0); }
         .nav-drawer-overlay {
           position: fixed;
           inset: 0;
@@ -77,10 +81,7 @@ export default function Nav() {
           border: 1px solid transparent;
           transition: all 0.15s;
         }
-        .drawer-link:hover {
-          background: var(--bg-muted);
-          color: var(--text);
-        }
+        .drawer-link:hover { background: var(--bg-muted); color: var(--text); }
         .drawer-link.active {
           background: var(--entra-bg);
           border-color: var(--entra-border);
@@ -89,7 +90,7 @@ export default function Nav() {
       `}</style>
 
       <header style={{
-        borderBottom: `1px solid var(--nav-border)`,
+        borderBottom: "1px solid var(--nav-border)",
         background: "var(--nav-bg)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
@@ -99,8 +100,6 @@ export default function Nav() {
           maxWidth: 1200, margin: "0 auto", padding: "0 20px",
           display: "flex", alignItems: "center", justifyContent: "space-between", height: 60,
         }}>
-
-          {/* Logo */}
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }}>
             <div style={{
               width: 32, height: 32, borderRadius: 8,
@@ -118,26 +117,21 @@ export default function Nav() {
             </div>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="nav-desktop" style={{ gap: 4 }}>
-            {links.map(({ to, label, badge }) => {
-              const active = pathname === to;
-              return (
-                <Link key={to} to={to} className={`nav-link ${active ? "active" : ""}`}>
-                  {badge && (
-                    <span style={{
-                      fontSize: 9, background: "#1a7f37", color: "white",
-                      borderRadius: 4, padding: "1px 5px", fontWeight: 700,
-                      letterSpacing: "0.05em",
-                    }}>{badge}</span>
-                  )}
-                  {label}
-                </Link>
-              );
-            })}
+          <nav className="nav-desktop" style={{ gap: 4 }} aria-label="Primary navigation">
+            {links.map(({ to, label, badge }) => (
+              <Link key={to} to={to} className={`nav-link ${isActive(to) ? "active" : ""}`}>
+                {badge && (
+                  <span style={{
+                    fontSize: 9, background: "#1a7f37", color: "white",
+                    borderRadius: 4, padding: "1px 5px", fontWeight: 700,
+                    letterSpacing: "0.05em",
+                  }}>{badge}</span>
+                )}
+                {label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Desktop right side */}
           <div className="nav-stats" style={{ alignItems: "center", gap: 16 }}>
             <div style={{ display: "flex", gap: 14, fontSize: 12, color: "var(--text-faint)" }}>
               <span><b style={{ color: "var(--entra)" }}>{entraCount}</b> Entra</span>
@@ -149,13 +143,13 @@ export default function Nav() {
             </button>
           </div>
 
-          {/* Mobile right side — theme toggle + hamburger */}
           <div className="nav-hamburger" style={{ alignItems: "center", gap: 8 }}>
-            <button className="theme-toggle" onClick={toggleTheme}>
+            <button className="theme-toggle" onClick={toggleTheme} title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
             <button
               onClick={() => setMenuOpen(true)}
+              aria-label="Open navigation menu"
               style={{
                 width: 36, height: 36, borderRadius: 8,
                 border: "1px solid var(--border)",
@@ -169,17 +163,12 @@ export default function Nav() {
         </div>
       </header>
 
-      {/* Mobile drawer overlay */}
-      {menuOpen && (
-        <div className="nav-drawer-overlay" onClick={closeMenu} />
-      )}
+      {menuOpen && <div className="nav-drawer-overlay" onClick={closeMenu} />}
 
-      {/* Mobile drawer */}
-      <div className={`nav-drawer ${menuOpen ? "open" : ""}`}>
-        {/* Drawer header */}
+      <div className={`nav-drawer ${menuOpen ? "open" : ""}`} aria-hidden={!menuOpen}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, paddingBottom: 16, borderBottom: "1px solid var(--border)" }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text)" }}>SecRole</div>
-          <button onClick={closeMenu} style={{
+          <button onClick={closeMenu} aria-label="Close navigation menu" style={{
             background: "var(--bg-muted)", border: "1px solid var(--border)",
             borderRadius: 8, width: 32, height: 32, cursor: "pointer",
             color: "var(--text-muted)", fontSize: 16,
@@ -187,23 +176,18 @@ export default function Nav() {
           }}>✕</button>
         </div>
 
-        {/* Drawer links */}
-        {links.map(({ to, label, badge }) => {
-          const active = pathname === to;
-          return (
-            <Link key={to} to={to} className={`drawer-link ${active ? "active" : ""}`} onClick={closeMenu}>
-              {badge && (
-                <span style={{
-                  fontSize: 9, background: "#1a7f37", color: "white",
-                  borderRadius: 4, padding: "2px 6px", fontWeight: 700,
-                }}>NEW</span>
-              )}
-              {label}
-            </Link>
-          );
-        })}
+        {links.map(({ to, label, badge }) => (
+          <Link key={to} to={to} className={`drawer-link ${isActive(to) ? "active" : ""}`} onClick={closeMenu}>
+            {badge && (
+              <span style={{
+                fontSize: 9, background: "#1a7f37", color: "white",
+                borderRadius: 4, padding: "2px 6px", fontWeight: 700,
+              }}>{badge}</span>
+            )}
+            {label}
+          </Link>
+        ))}
 
-        {/* Stats at bottom */}
         <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--border)", display: "flex", gap: 16, fontSize: 13, color: "var(--text-faint)" }}>
           <span><b style={{ color: "var(--entra)" }}>{entraCount}</b> Entra</span>
           <span><b style={{ color: "var(--purview)" }}>{purviewCount}</b> Purview</span>
