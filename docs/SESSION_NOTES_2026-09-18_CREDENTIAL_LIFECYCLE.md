@@ -9,6 +9,16 @@ Date: September 18, 2026
 - New branch:
   - `feature/service-principal-credential-lifecycle`
 
+## Pull request and preview
+
+- Pull request: [#10 — Publish Service Principal credential lifecycle guide](https://github.com/OmarNuno/secrole/pull/10)
+- First implementation commit: `45e3145`
+- Vercel deployment status: **Ready / successful**
+- Preview root: https://secrole-git-feature-service-principal-c-7a6e8d-o-3026s-projects.vercel.app
+- Knowledge preview: https://secrole-git-feature-service-principal-c-7a6e8d-o-3026s-projects.vercel.app/knowledge
+- Service Principals hub preview: https://secrole-git-feature-service-principal-c-7a6e8d-o-3026s-projects.vercel.app/service-principals
+- Credential Lifecycle guide preview: https://secrole-git-feature-service-principal-c-7a6e8d-o-3026s-projects.vercel.app/service-principals/credential-lifecycle
+
 ## Objective
 
 Publish the seventh focused Service Principal child guide:
@@ -93,6 +103,9 @@ The Service Principals hub should automatically display seven published guide ca
 - `src/pages/service-principals/CredentialLifecycleRotationSections.jsx`
 - `src/pages/service-principals/CredentialLifecycleOperationsSections.jsx`
 - `src/pages/service-principals/credentialLifecycleGuideData.js`
+- `src/pages/service-principals/credentialLifecycleInventoryCode.js`
+- `src/pages/service-principals/credentialLifecycleRotationCode.js`
+- `src/pages/service-principals/credentialLifecycleOperationsCode.js`
 - `src/pages/service-principals/CredentialLifecycleGuide.css`
 - `docs/SESSION_NOTES_2026-09-18_CREDENTIAL_LIFECYCLE.md`
 
@@ -119,21 +132,22 @@ The Service Principals hub should automatically display seven published guide ca
 - The Operate & govern track displays Troubleshooting, Security Review, and Credential Lifecycle.
 - Planned or incomplete pages remain absent from public cards and discovery files.
 
-## Validation checklist
+## Validation status
 
 - [x] Branch created from the current `main`
-- [ ] JavaScript and JSX syntax parsing
-- [ ] CSS parsing
-- [ ] Published route duplicate-path check
-- [ ] Sitemap contains `/service-principals/credential-lifecycle`
-- [ ] Implementation commit pushed
-- [ ] Pull request #10 opened
-- [ ] Vercel preview deployment successful
-- [ ] Direct-load the new route
+- [x] JavaScript and JSX syntax parsing
+- [x] CSS parsing
+- [x] Published route duplicate-path check
+- [x] Sitemap contains `/service-principals/credential-lifecycle`
+- [x] Implementation commit pushed
+- [x] Pull request #10 opened
+- [x] Vercel preview deployment successful
+- [x] Branch has no merge-base drift from `main`
+- [ ] Direct-load the new route in a browser
 - [ ] Confirm seven hub cards and seven focused knowledge guides
 - [ ] Test every copy button and horizontal code scrolling
 - [ ] Review inventory, risk, rotation, incident, and policy layouts on mobile
-- [ ] Verify title, canonical URL, TechArticle, BreadcrumbList, FAQPage, sitemap, llms, and official sources
+- [ ] Verify title, canonical URL, TechArticle, BreadcrumbList, FAQPage, sitemap, llms, and official sources in the rendered preview
 
 ## Recommended continuation after merge
 
