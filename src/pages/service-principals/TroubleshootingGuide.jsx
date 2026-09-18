@@ -16,6 +16,7 @@ export default function TroubleshootingGuide() {
       faq={faq}
       sources={sources}
       relatedPageIds={[
+        "service-principal-credential-lifecycle",
         "service-principal-identifiers",
         "service-principal-permissions",
         "service-principal-security-review",

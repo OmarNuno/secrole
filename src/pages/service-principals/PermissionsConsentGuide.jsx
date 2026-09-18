@@ -16,6 +16,7 @@ export default function PermissionsConsentGuide() {
       sources={sources}
       relatedPageIds={[
         "service-principal-identifiers",
+        "service-principal-credential-lifecycle",
         "service-principal-troubleshooting",
         "service-principal-security-review",
         "service-principal-mfa-migration",

@@ -16,6 +16,7 @@ export default function IdentifiersGuide() {
       sources={sources}
       relatedPageIds={[
         "service-principal-permissions",
+        "service-principal-credential-lifecycle",
         "service-principal-troubleshooting",
         "service-principal-security-review",
         "service-principal-mfa-migration",
