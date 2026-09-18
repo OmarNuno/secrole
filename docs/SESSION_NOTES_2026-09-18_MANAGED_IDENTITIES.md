@@ -103,12 +103,12 @@ Credential Lifecycle remains planned and must not appear in the public guide gri
 
 ## Pull request and preview
 
-- Pull request: _add after PR creation_
-- First implementation commit: _add after commit_
-- Vercel deployment status: _add after deployment_
-- Preview root: _add after deployment_
-- Hub preview: _add after deployment_
-- Managed Identities guide preview: _add after deployment_
+- Pull request: [#8 — Publish Managed Identities and Workload Identity Federation guide](https://github.com/OmarNuno/secrole/pull/8)
+- First implementation commit: `da08004`
+- Vercel deployment status: **Ready / successful**
+- Preview root: https://secrole-git-feature-managed-identities-3e5985-o-3026s-projects.vercel.app
+- Hub preview: https://secrole-git-feature-managed-identities-3e5985-o-3026s-projects.vercel.app/service-principals
+- Managed Identities guide preview: https://secrole-git-feature-managed-identities-3e5985-o-3026s-projects.vercel.app/service-principals/managed-identities
 
 ## Validation checklist
 
@@ -117,8 +117,8 @@ Credential Lifecycle remains planned and must not appear in the public guide gri
 - [x] Route registry duplicate-path check
 - [x] Sitemap includes `/service-principals/managed-identities`
 - [x] `/knowledge` and Credential Lifecycle remain absent from discovery files
-- [ ] Branch has no merge-base drift from `main`
-- [ ] Vercel preview deployment successful
+- [x] Branch has no merge-base drift from `main`
+- [x] Vercel preview deployment successful
 - [ ] Direct-load the new route
 - [ ] Confirm the hub displays exactly six published guide cards
 - [ ] Review system-vs-user table on mobile
