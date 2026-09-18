@@ -1,0 +1,436 @@
+.mfa-answer-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr) 44px minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.mfa-answer-flow > article {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
+.mfa-answer-flow > div {
+  display: grid;
+  place-items: center;
+  color: var(--entra);
+  font-size: 22px;
+}
+
+.mfa-answer-flow article > span,
+.mfa-phase-grid article > span,
+.mfa-app-grid article > span,
+.mfa-discovery-grid article > span,
+.mfa-decision-grid article > span,
+.mfa-before-after article > span,
+.mfa-validation-grid article > span,
+.mfa-federation-note > span {
+  color: var(--entra);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.mfa-answer-flow h3,
+.mfa-phase-grid h3,
+.mfa-app-grid h3,
+.mfa-discovery-grid h3,
+.mfa-decision-grid h3,
+.mfa-before-after h3,
+.mfa-validation-grid h3,
+.mfa-federation-note h3 {
+  margin: 8px 0 7px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.mfa-answer-flow p,
+.mfa-phase-grid p,
+.mfa-app-grid p,
+.mfa-discovery-grid p,
+.mfa-decision-grid p,
+.mfa-before-after li,
+.mfa-validation-grid p,
+.mfa-federation-note p {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.mfa-answer-flow code {
+  display: inline-flex;
+  margin-top: 12px;
+  padding: 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  font-size: 10px;
+}
+
+.mfa-object-rule,
+.mfa-decision-rule,
+.mfa-hybrid-outcome {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--entra-border);
+  border-left-width: 3px;
+  border-radius: 11px;
+  background: var(--entra-bg);
+}
+
+.mfa-object-rule strong,
+.mfa-decision-rule strong,
+.mfa-hybrid-outcome strong {
+  font-size: 13px;
+}
+
+.mfa-object-rule p,
+.mfa-decision-rule p,
+.mfa-hybrid-outcome p {
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+.mfa-phase-grid,
+.mfa-app-grid,
+.mfa-discovery-grid,
+.mfa-decision-grid,
+.mfa-validation-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.mfa-phase-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.mfa-app-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.mfa-discovery-grid,
+.mfa-decision-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.mfa-validation-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mfa-phase-grid article,
+.mfa-app-grid article,
+.mfa-discovery-grid article,
+.mfa-decision-grid article,
+.mfa-validation-grid article {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
+.mfa-app-grid code {
+  display: block;
+  margin: 10px 0 8px;
+  color: var(--purview);
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.mfa-scope-table tbody th {
+  width: 250px;
+}
+
+.mfa-access-table tbody th {
+  width: 200px;
+}
+
+.mfa-decision-grid article.preferred {
+  border-color: var(--low-border);
+  background: color-mix(in srgb, var(--bg-elevated) 94%, var(--low-bg));
+}
+
+.mfa-decision-grid article.temporary {
+  border-color: var(--high-border);
+  background: color-mix(in srgb, var(--bg-elevated) 94%, var(--high-bg));
+}
+
+.mfa-decision-grid strong {
+  display: block;
+  margin-top: 12px;
+  color: var(--text);
+  font-size: 11px;
+}
+
+.mfa-inventory-fields {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-subtle);
+}
+
+.mfa-inventory-fields h3 {
+  margin-bottom: 13px;
+  font-size: 14px;
+}
+
+.mfa-inventory-fields > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mfa-inventory-fields span {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  padding: 10px 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  font-size: 11.5px;
+}
+
+.mfa-inventory-fields b {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--entra-border);
+  border-radius: 50%;
+  color: var(--entra);
+  background: var(--entra-bg);
+  font-size: 9px;
+}
+
+.mfa-hybrid-diagram {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) 50px minmax(0, 1.4fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.mfa-hybrid-diagram > article,
+.mfa-hybrid-destinations article {
+  padding: 19px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
+.mfa-hybrid-diagram .host {
+  border-color: var(--high-border);
+}
+
+.mfa-hybrid-diagram .split {
+  display: grid;
+  place-items: center;
+  color: var(--entra);
+  font-size: 22px;
+}
+
+.mfa-hybrid-destinations {
+  display: grid;
+  gap: 10px;
+}
+
+.mfa-hybrid-destinations article:last-child {
+  border-color: var(--low-border);
+}
+
+.mfa-hybrid-diagram span,
+.mfa-hybrid-destinations span {
+  color: var(--text-faint);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.mfa-hybrid-diagram h3,
+.mfa-hybrid-destinations h3 {
+  margin: 7px 0;
+  font-size: 15px;
+}
+
+.mfa-hybrid-diagram p,
+.mfa-hybrid-destinations p {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.mfa-before-after {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.mfa-before-after article {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
+.mfa-before-after .before {
+  border-color: var(--critical-border);
+}
+
+.mfa-before-after .before > span {
+  color: var(--critical);
+}
+
+.mfa-before-after .after {
+  border-color: var(--low-border);
+}
+
+.mfa-before-after .after > span {
+  color: var(--low);
+}
+
+.mfa-before-after ul {
+  margin: 10px 0 0 18px;
+}
+
+.mfa-before-after li {
+  margin: 6px 0;
+}
+
+.mfa-federation-note {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--purview-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-elevated) 94%, var(--purview-bg));
+}
+
+.mfa-federation-note > span {
+  color: var(--purview);
+}
+
+.mfa-runbook {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.mfa-runbook li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+}
+
+.mfa-runbook li > span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--entra-border);
+  border-radius: 50%;
+  color: var(--entra);
+  background: var(--entra-bg);
+  font-family: var(--kg-code);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.mfa-runbook strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12.5px;
+}
+
+.mfa-runbook p {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  line-height: 1.58;
+}
+
+.mfa-rollback {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--high-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-elevated) 94%, var(--high-bg));
+}
+
+.mfa-rollback h3 {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.mfa-rollback ul {
+  margin-left: 18px;
+}
+
+.mfa-rollback li {
+  margin: 7px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .mfa-answer-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .mfa-answer-flow > div {
+    min-height: 28px;
+    transform: rotate(90deg);
+  }
+
+  .mfa-phase-grid,
+  .mfa-validation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mfa-hybrid-diagram {
+    grid-template-columns: 1fr;
+  }
+
+  .mfa-hybrid-diagram .split {
+    min-height: 28px;
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .mfa-phase-grid,
+  .mfa-app-grid,
+  .mfa-discovery-grid,
+  .mfa-decision-grid,
+  .mfa-validation-grid,
+  .mfa-inventory-fields > div,
+  .mfa-before-after,
+  .mfa-runbook {
+    grid-template-columns: 1fr;
+  }
+
+  .mfa-object-rule,
+  .mfa-decision-rule,
+  .mfa-hybrid-outcome {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+}

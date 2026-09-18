@@ -41,10 +41,24 @@ Do not add unfinished routes to the sitemap or link users to placeholder pages.
 | `/service-principals/permissions-and-consent` | Published guide | Reconcile requested permissions, admin consent, app-role assignments, OAuth grants, token claims, and resource authorization |
 | `/service-principals/troubleshooting` | Published guide | Diagnose object lookup, authentication, consent, authorization, assignment, Conditional Access, logging, and recovery failures |
 | `/service-principals/security-review` | Published guide | Perform a repeatable ownership, provenance, privilege, credential, activity, risk, and control review |
-| `/service-principals/managed-identities` | Planned guide | Choose managed identity, federation, certificate, or secret authentication |
+| `/service-principals/mfa-service-account-migration` | Published guide | Discover user-based Azure automation affected by mandatory MFA and migrate it to a workload identity |
+| `/service-principals/managed-identities` | Planned guide | Choose and implement managed identity, federation, certificate, or secret authentication |
 | `/service-principals/credential-lifecycle` | Planned guide | Inventory, alert, rotate, and retire secrets and certificates safely |
 
-The public guide grid must display only the four published child guides. Planned Managed Identities and Credential Lifecycle routes remain internal until their pages are complete and reviewed.
+The public guide grid must display only published child guides. Planned Managed Identities and Credential Lifecycle routes remain internal until their pages are complete and reviewed.
+
+## Cross-entry-point rule for high-impact changes
+
+A major platform change can have one authoritative guide plus smaller entry points elsewhere in SecRole.
+
+For mandatory Azure MFA and user-based automation:
+
+- The authoritative page is `/service-principals/mfa-service-account-migration`.
+- The Service Principals hub contains a migration warning under Authentication methods.
+- The Troubleshooting guide links MFA and claims-challenge failures to the migration page.
+- The Updates page contains a high-impact migration card that links to the permanent guide.
+
+The smaller entry points summarize and route. They do not duplicate the complete runbook.
 
 ## Page contract
 
@@ -92,12 +106,15 @@ Every published knowledge page should include:
 - Sitemaps support discovery but do not guarantee indexing or ranking.
 - JavaScript pages must remain publicly accessible and should be tested with rendered HTML in Search Console.
 
-## Next content sequence
+## Revised content sequence
 
-1. Publish `/service-principals/managed-identities`.
-2. Publish `/service-principals/credential-lifecycle`.
-3. Add `/knowledge` as a landing page after the cluster reaches approximately five or six complete guides.
-4. Use the landing page to group future Entra, Purview, workload identity, permissions, governance, and troubleshooting content without overcrowding the top navigation.
+1. Publish `/service-principals/mfa-service-account-migration`.
+2. Publish `/service-principals/managed-identities`.
+3. Add `/knowledge` after the cluster contains six complete child guides.
+4. Publish `/service-principals/credential-lifecycle`.
+5. Continue expanding Entra, Purview, workload-identity, permission, governance, and troubleshooting clusters without overcrowding the top navigation.
+
+The MFA migration guide answers **what will break and how to migrate safely**. The Managed Identities guide answers **which workload identity model to choose and how each model works**. These are separate search intents and should remain separate canonical pages.
 
 ## Future platform decision
 

@@ -18,6 +18,7 @@ export default function PermissionsConsentGuide() {
         "service-principal-identifiers",
         "service-principal-troubleshooting",
         "service-principal-security-review",
+        "service-principal-mfa-migration",
       ]}
     >
       <PermissionsModelSections />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const CATEGORY_CONFIG = {
   "New Role":          { color: "#7c3aed", bg: "#f5f3ff", border: "#ddd6fe", icon: "✦" },
@@ -81,6 +82,57 @@ function UpdateCard({ update }) {
         </span>
       </div>
     </div>
+  );
+}
+
+function MandatoryMfaAlert() {
+  return (
+    <Link
+      to="/service-principals/mfa-service-account-migration"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "minmax(0, 1fr) auto",
+        gap: 18,
+        alignItems: "center",
+        marginBottom: 28,
+        padding: "20px 22px",
+        border: "1px solid var(--high-border)",
+        borderLeft: "3px solid var(--high)",
+        borderRadius: 12,
+        background: "color-mix(in srgb, var(--bg-elevated) 92%, var(--high-bg))",
+        boxShadow: "var(--shadow-sm)",
+      }}
+    >
+      <div>
+        <span style={{
+          display: "block",
+          color: "var(--high)",
+          fontSize: 10,
+          fontWeight: 750,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          marginBottom: 6,
+        }}>
+          High-impact migration
+        </span>
+        <h2 style={{ fontSize: 17, lineHeight: 1.35, marginBottom: 6, color: "var(--text)" }}>
+          Mandatory Azure MFA can break user-based automation
+        </h2>
+        <p style={{ fontSize: 13, lineHeight: 1.65, color: "var(--text-muted)" }}>
+          Synchronized AD service accounts used as Microsoft Entra user identities cannot complete unattended MFA challenges. Discover those jobs and move cloud authentication to managed identities, federation, or service principals.
+        </p>
+      </div>
+      <strong style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 7,
+        color: "var(--high)",
+        fontSize: 12,
+        whiteSpace: "nowrap",
+      }}>
+        Open migration guide <span aria-hidden="true">→</span>
+      </strong>
+    </Link>
   );
 }
 
@@ -183,6 +235,8 @@ export default function Updates() {
           </p>
         )}
       </div>
+
+      <MandatoryMfaAlert />
 
       {/* Category filters */}
       {updates.length > 0 && (
