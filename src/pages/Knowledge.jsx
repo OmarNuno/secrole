@@ -24,7 +24,7 @@ const TRACKS = [
     id: "operate",
     eyebrow: "Operate & govern",
     title: "Troubleshoot, review, and control durable access",
-    description: "Investigate failures, collect defensible evidence, review privilege and ownership, and make safe retain, reduce, contain, or retire decisions.",
+    description: "Investigate failures, collect defensible evidence, review privilege and ownership, and make safe retain, reduce, contain, rotate, or retire decisions.",
   },
 ];
 
@@ -154,12 +154,12 @@ export default function Knowledge() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search IDs, permissions, MFA, managed identity, troubleshooting…"
+                placeholder="Search IDs, permissions, MFA, managed identity, credential rotation…"
                 autoComplete="off"
               />
               {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}
             </div>
-            <small>{normalizedQuery ? `${resultCount} matching ${resultCount === 1 ? "page" : "pages"}` : "Search across the published reference hub and six focused guides."}</small>
+            <small>{normalizedQuery ? `${resultCount} matching ${resultCount === 1 ? "page" : "pages"}` : `Search across the published reference hub and ${guides.length} focused guides.`}</small>
           </form>
 
           <div className="knowledge-stats" aria-label="Knowledge library status">
@@ -218,7 +218,7 @@ export default function Knowledge() {
           <section className="knowledge-empty" aria-live="polite">
             <span>⌕</span>
             <h2>No published guide matches “{query}”</h2>
-            <p>Try a broader term such as service principal, permission, MFA, managed identity, consent, security review, or troubleshooting.</p>
+            <p>Try a broader term such as service principal, permission, MFA, managed identity, credential rotation, consent, security review, or troubleshooting.</p>
             <button type="button" onClick={() => setQuery("")}>Show all knowledge</button>
           </section>
         )}

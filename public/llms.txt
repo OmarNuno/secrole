@@ -11,13 +11,14 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 - [Microsoft Entra & Purview Role Advisor](https://www.secrole.com/advisor): Describe an access requirement and use SecRole's role intelligence to investigate relevant Microsoft Entra and Purview roles.
 - [Microsoft Entra Service Principals: Complete Reference](https://www.secrole.com/service-principals): Understand Microsoft Entra service principals, application objects, app IDs vs. object IDs, permissions, consent, authentication, and governance.
 - [Microsoft Entra & Purview Updates](https://www.secrole.com/updates): Track Microsoft Entra ID and Purview role, permission, security, and roadmap updates curated from official Microsoft sources.
-- [SecRole Microsoft Identity Knowledge Library](https://www.secrole.com/knowledge): Browse practical Microsoft Entra, Purview, workload identity, permission, governance, migration, and troubleshooting guides from SecRole.
+- [SecRole Microsoft Identity Knowledge Library](https://www.secrole.com/knowledge): Browse practical Microsoft Entra, Purview, workload identity, permission, governance, migration, credential, and troubleshooting guides from SecRole.
 - [Application ID vs. Object ID vs. Tenant ID in Microsoft Entra](https://www.secrole.com/service-principals/identifiers): Choose the correct Microsoft Entra application, service principal, and tenant ID for OAuth, Microsoft Graph, Azure RBAC, and troubleshooting.
 - [Service Principal Permissions and Admin Consent](https://www.secrole.com/service-principals/permissions-and-consent): Reconcile configured API permissions, admin consent, app-role assignments, delegated grants, and access-token claims in Microsoft Entra.
 - [Managed Identities and Workload Identity Federation](https://www.secrole.com/service-principals/managed-identities): Choose and implement system-assigned or user-assigned managed identities and federated workload authentication without long-lived secrets.
 - [Microsoft Mandatory MFA: Migrate Service Accounts to Workload Identities](https://www.secrole.com/service-principals/mfa-service-account-migration): Find Microsoft Entra user accounts used for Azure automation and migrate scripts to managed identities, workload identity federation, or service principals.
 - [Microsoft Entra Service Principal Troubleshooting Guide](https://www.secrole.com/service-principals/troubleshooting): Troubleshoot Microsoft Entra service principal object lookup, credentials, consent, token claims, assignments, Conditional Access, logs, and recovery.
 - [How to Review a Service Principal for Security Risk](https://www.secrole.com/service-principals/security-review): Audit Microsoft Entra service principal ownership, provenance, permissions, credentials, activity, risk detections, Conditional Access, and lifecycle controls.
+- [Service Principal Credential Expiration and Rotation](https://www.secrole.com/service-principals/credential-lifecycle): Inventory, prioritize, rotate, contain, and retire Microsoft Entra application secrets and certificates without causing an outage.
 
 ## Content principles
 

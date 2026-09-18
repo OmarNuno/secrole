@@ -48,7 +48,7 @@ The public library is:
 It currently contains:
 
 - One complete reference hub
-- Six focused Service Principal and workload identity guides
+- Seven focused Service Principal and workload identity guides
 - Search across published knowledge titles, descriptions, search intent, keywords, and guide tags
 - Three task tracks:
   - Understand the identity and permission model
@@ -69,9 +69,29 @@ The top navigation uses **Knowledge** as the broader destination. The Knowledge 
 | `/service-principals/mfa-service-account-migration` | Published guide | Build & migrate | Discover user-based Azure automation affected by mandatory MFA and migrate it to a workload identity |
 | `/service-principals/troubleshooting` | Published guide | Operate & govern | Diagnose object lookup, authentication, consent, authorization, assignment, Conditional Access, logging, and recovery failures |
 | `/service-principals/security-review` | Published guide | Operate & govern | Perform a repeatable ownership, provenance, privilege, credential, activity, risk, and control review |
-| `/service-principals/credential-lifecycle` | Planned guide | Future | Inventory, alert, rotate, and retire secrets and certificates safely |
+| `/service-principals/credential-lifecycle` | Published guide | Operate & govern | Inventory, prioritize, rotate, contain, and retire application secrets and certificates safely |
 
-The public hub and library must display only published content. Credential Lifecycle remains internal until complete and reviewed.
+The public hub and library display only published content.
+
+## Credential-lifecycle content contract
+
+Credential-lifecycle guidance must preserve these distinctions:
+
+- Application-object credentials vs. service-principal-object credentials
+- Directory credential metadata vs. the external secret value or private key
+- Client-authentication certificates vs. SAML token-signing certificates
+- Planned overlap rotation vs. compromise containment
+- Credential expiration vs. access-token expiration
+- Credential removal vs. authorization removal
+- Tenant-default app-management policy vs. object-specific policy
+- Read-only inventory vs. state-changing rotation examples
+
+The preferred hierarchy remains:
+
+1. Managed identity where supported
+2. Workload identity federation for trusted OIDC workloads
+3. Certificate-backed service principal when a reusable credential is required
+4. Short-lived client secret only as a compatibility bridge
 
 ## Cross-entry-point rule for high-impact changes
 
@@ -137,11 +157,11 @@ Every published knowledge page should include:
 
 ## Next content sequence
 
-1. Publish `/knowledge` as the SecRole knowledge-library landing page.
-2. Publish `/service-principals/credential-lifecycle`.
-3. Begin a second knowledge cluster, likely Microsoft Entra role governance or Microsoft Purview administration.
+1. Review the complete Service Principal and workload-identity cluster as one library.
+2. Decide the second knowledge cluster from actual administrator demand, likely Microsoft Entra role governance or Microsoft Purview administration.
+3. Revisit role-drift risk classification so sensitive tenant-wide read access is not automatically rated Low.
 4. Continue expanding workload identity, permission, governance, migration, and troubleshooting content without overcrowding the top navigation.
-5. Revisit role-drift risk classification so sensitive tenant-wide read access is not automatically rated Low.
+5. Evaluate full static generation or server rendering as the library grows.
 
 ## Future platform decision
 

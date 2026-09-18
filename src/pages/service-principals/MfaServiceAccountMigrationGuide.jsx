@@ -18,6 +18,7 @@ export default function MfaServiceAccountMigrationGuide() {
       sources={sources}
       relatedPageIds={[
         "service-principal-managed-identities",
+        "service-principal-credential-lifecycle",
         "service-principal-troubleshooting",
         "service-principal-security-review",
         "service-principal-identifiers",
