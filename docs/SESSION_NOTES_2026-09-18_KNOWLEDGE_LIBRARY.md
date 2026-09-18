@@ -9,6 +9,15 @@ Date: September 18, 2026
 - New branch:
   - `feature/knowledge-library`
 
+## Pull request and preview
+
+- Pull request: [#9 — Publish SecRole knowledge library landing page](https://github.com/OmarNuno/secrole/pull/9)
+- First implementation commit: `dc4329b`
+- Vercel deployment status: **Ready / successful**
+- Preview root: https://secrole-git-feature-knowledge-library-o-3026s-projects.vercel.app
+- Knowledge preview: https://secrole-git-feature-knowledge-library-o-3026s-projects.vercel.app/knowledge
+- Service Principals hub preview: https://secrole-git-feature-knowledge-library-o-3026s-projects.vercel.app/service-principals
+
 ## Objective
 
 Publish the broader SecRole knowledge-library landing page now that the first Service Principal and workload identity cluster contains:
@@ -120,25 +129,24 @@ The hub should still show all six guide cards and now include:
 
 Each guide should visibly link back to both Knowledge and the Service Principals hub.
 
-## Validation checklist
+## Validation status
 
 - [x] Feature branch created from the current `main`
-- [x] New Knowledge page and styling prepared
+- [x] New Knowledge page and styling committed
 - [x] Route registry publishes `/knowledge`
 - [x] Static route entrypoint generator includes knowledge indexes
 - [x] Sitemap and llms discovery files include `/knowledge`
-- [ ] JavaScript and JSX syntax parsing
-- [ ] CSS parsing
-- [ ] Commit and push branch
-- [ ] Open PR #9
-- [ ] Confirm Vercel preview deployment
-- [ ] Direct-load `/knowledge`
-- [ ] Test search and clear behavior
+- [x] Branch has no merge-base drift from `main`
+- [x] Pull request #9 opened
+- [x] Vercel preview deployment successful
+- [x] PR is mergeable
+- [ ] Direct-load `/knowledge` in a browser
+- [ ] Test search, clear, and no-results behavior
 - [ ] Confirm exactly six focused guides plus one hub
 - [ ] Confirm all guide and tool links
 - [ ] Review desktop and mobile in light and dark themes
 - [ ] Confirm Knowledge nav active state across child routes
-- [ ] Confirm CollectionPage, ItemList, BreadcrumbList, title, canonical URL, sitemap, and source discovery
+- [ ] Confirm CollectionPage, ItemList, BreadcrumbList, title, canonical URL, sitemap, and llms discovery
 
 ## Continuation order after merge
 
