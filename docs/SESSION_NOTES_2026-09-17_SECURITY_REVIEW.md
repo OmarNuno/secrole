@@ -9,6 +9,15 @@ Date: September 17, 2026
 - New branch:
   - `feature/service-principal-security-review`
 
+## Pull request and preview
+
+- Pull request: [#6 — Publish Service Principal security review guide](https://github.com/OmarNuno/secrole/pull/6)
+- First implementation commit: `cd640c1`
+- Vercel deployment status: **Ready / successful**
+- Preview root: https://secrole-git-feature-service-principal-s-94e7a6-o-3026s-projects.vercel.app
+- Hub preview: https://secrole-git-feature-service-principal-s-94e7a6-o-3026s-projects.vercel.app/service-principals
+- Security Review guide preview: https://secrole-git-feature-service-principal-s-94e7a6-o-3026s-projects.vercel.app/service-principals/security-review
+
 ## Objective
 
 Publish the fourth focused Service Principal child guide:
@@ -122,6 +131,18 @@ The bottom of `/service-principals` should automatically show four published gui
 4. How to Review a Service Principal for Security Risk
 
 Managed Identities and Credential Lifecycle remain planned and must not appear in the public guide grid or sitemap.
+
+## Validation status
+
+- [x] Feature branch created from the current `main`
+- [x] Implementation committed and pushed
+- [x] Pull request #6 opened
+- [x] Vercel preview deployment successful
+- [x] Branch has no merge-base drift from `main`
+- [x] Changed JavaScript and JSX files passed syntax parsing
+- [x] Published route registry contains no duplicate paths
+- [x] Sitemap includes `/service-principals/security-review`
+- [x] Planned routes remain absent from discovery files
 
 ## Preview QA checklist
 
