@@ -9,6 +9,15 @@ Date: September 17, 2026
 - New branch:
   - `feature/service-principal-troubleshooting`
 
+## Pull request and preview
+
+- Pull request: [#5 — Publish Service Principal troubleshooting guide](https://github.com/OmarNuno/secrole/pull/5)
+- First implementation commit: `d172727`
+- Vercel deployment status: **Ready / successful**
+- Preview root: https://secrole-git-feature-service-principal-t-982f2e-o-3026s-projects.vercel.app
+- Hub preview: https://secrole-git-feature-service-principal-t-982f2e-o-3026s-projects.vercel.app/service-principals
+- Troubleshooting guide preview: https://secrole-git-feature-service-principal-t-982f2e-o-3026s-projects.vercel.app/service-principals/troubleshooting
+
 ## Objective
 
 Publish the third focused Service Principal child guide:
@@ -89,9 +98,18 @@ The bottom of `/service-principals` should automatically show three published gu
 
 Planned Security Review, Managed Identities, and Credential Lifecycle pages remain absent from the public guide grid and sitemap.
 
-## Preview QA checklist
+## Validation status
 
-- [ ] Direct-load `/service-principals/troubleshooting`
+- [x] Feature branch created from the current `main`
+- [x] Implementation committed and pushed
+- [x] Pull request #5 opened
+- [x] Vercel preview deployment successful
+- [x] Branch has no merge-base drift from `main`
+- [x] Changed JavaScript and JSX files passed syntax parsing
+- [x] Published route registry contains no duplicate paths
+- [x] Sitemap includes `/service-principals/troubleshooting`
+- [x] Planned routes remain absent from discovery files
+- [ ] Direct-load `/service-principals/troubleshooting` in a browser
 - [ ] Confirm the hub displays exactly three published guide cards
 - [ ] Confirm the right-side table of contents tracks the active section
 - [ ] Review desktop layout
@@ -99,10 +117,8 @@ Planned Security Review, Managed Identities, and Credential Lifecycle pages rema
 - [ ] Test every copy button
 - [ ] Confirm code blocks scroll horizontally on small screens
 - [ ] Check the AADSTS error table on mobile
-- [ ] Verify page title and canonical URL
+- [ ] Verify page title and canonical URL in the rendered document
 - [ ] Verify TechArticle, BreadcrumbList, and FAQPage JSON-LD
-- [ ] Confirm `/service-principals/troubleshooting` appears in `sitemap.xml`
-- [ ] Confirm planned routes remain absent from discovery files
 
 ## Continuation order after merge
 
