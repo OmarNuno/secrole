@@ -1,6 +1,6 @@
 # SecRole Knowledge Architecture
 
-Last updated: September 17, 2026
+Last updated: September 18, 2026
 
 ## Purpose
 
@@ -42,10 +42,19 @@ Do not add unfinished routes to the sitemap or link users to placeholder pages.
 | `/service-principals/troubleshooting` | Published guide | Diagnose object lookup, authentication, consent, authorization, assignment, Conditional Access, logging, and recovery failures |
 | `/service-principals/security-review` | Published guide | Perform a repeatable ownership, provenance, privilege, credential, activity, risk, and control review |
 | `/service-principals/mfa-service-account-migration` | Published guide | Discover user-based Azure automation affected by mandatory MFA and migrate it to a workload identity |
-| `/service-principals/managed-identities` | Planned guide | Choose and implement managed identity, federation, certificate, or secret authentication |
+| `/service-principals/managed-identities` | Published guide | Choose, implement, authorize, inventory, and operate managed identities and federated workload identities |
 | `/service-principals/credential-lifecycle` | Planned guide | Inventory, alert, rotate, and retire secrets and certificates safely |
 
-The public guide grid must display only published child guides. Planned Managed Identities and Credential Lifecycle routes remain internal until their pages are complete and reviewed.
+The public Service Principals guide grid now contains six focused child guides. This is the planned threshold for publishing `/knowledge` as the broader SecRole knowledge-library landing page.
+
+## Relationship between migration and identity-design pages
+
+The mandatory-MFA migration guide and Managed Identities guide remain separate canonical pages because they answer different administrator tasks:
+
+- `/service-principals/mfa-service-account-migration` explains **what will break, how to discover impacted user-based automation, and how to cut over safely**.
+- `/service-principals/managed-identities` explains **which managed or federated identity model to choose, how token acquisition works, and how to operate the identity securely**.
+
+The pages link to one another, but neither should duplicate the other's full workflow.
 
 ## Cross-entry-point rule for high-impact changes
 
@@ -108,13 +117,10 @@ Every published knowledge page should include:
 
 ## Revised content sequence
 
-1. Publish `/service-principals/mfa-service-account-migration`.
-2. Publish `/service-principals/managed-identities`.
-3. Add `/knowledge` after the cluster contains six complete child guides.
-4. Publish `/service-principals/credential-lifecycle`.
-5. Continue expanding Entra, Purview, workload-identity, permission, governance, and troubleshooting clusters without overcrowding the top navigation.
-
-The MFA migration guide answers **what will break and how to migrate safely**. The Managed Identities guide answers **which workload identity model to choose and how each model works**. These are separate search intents and should remain separate canonical pages.
+1. Publish `/service-principals/managed-identities`.
+2. Publish `/knowledge` as the SecRole knowledge-library landing page.
+3. Publish `/service-principals/credential-lifecycle`.
+4. Continue expanding Entra, Purview, workload-identity, permission, governance, migration, and troubleshooting clusters without overcrowding the top navigation.
 
 ## Future platform decision
 

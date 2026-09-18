@@ -1,0 +1,453 @@
+.mi-decision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mi-decision-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--bg-elevated);
+}
+
+.mi-decision-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, var(--entra), transparent 82%);
+}
+
+.mi-decision-card.preferred {
+  border-color: var(--entra-border);
+  background: color-mix(in srgb, var(--bg-elevated) 92%, var(--entra-bg));
+}
+
+.mi-decision-card.fallback::before {
+  background: linear-gradient(90deg, var(--high), transparent 82%);
+}
+
+.mi-decision-card > span,
+.mi-trust-grid article > span,
+.mi-scenario-grid article > span,
+.mi-pattern-grid article > span,
+.mi-evidence-grid article > span,
+.mi-ops-grid article > span,
+.mi-prerequisite-grid article > span,
+.mi-auth-surface-grid article > span,
+.mi-latency-panel span {
+  color: var(--entra);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.mi-decision-card h3 {
+  margin: 10px 0 8px;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.mi-decision-card p {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.68;
+}
+
+.mi-decision-card strong {
+  margin-top: 16px;
+  color: var(--text);
+  font-size: 11px;
+}
+
+.mi-decision-path {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 34px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.mi-decision-path.external {
+  margin-top: 8px;
+}
+
+.mi-decision-path > div {
+  min-height: 86px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-subtle);
+}
+
+.mi-decision-path span {
+  color: var(--text-faint);
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.mi-decision-path strong {
+  margin-top: 5px;
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.mi-decision-path > b {
+  color: var(--entra);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.mi-identity-table tbody th {
+  min-width: 155px;
+}
+
+.mi-boundary-grid {
+  margin-top: 18px;
+}
+
+.mi-token-flow,
+.mi-federation-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr) 32px minmax(0, 1fr) 32px minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.mi-token-flow article,
+.mi-federation-flow article {
+  min-width: 0;
+  min-height: 210px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
+.mi-token-flow article > span {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 13px;
+  border: 1px solid var(--entra-border);
+  border-radius: 50%;
+  color: var(--entra);
+  background: var(--entra-bg);
+  font-family: var(--kg-code);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mi-token-flow small,
+.mi-federation-flow small {
+  display: block;
+  color: var(--text-faint);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.mi-token-flow h3,
+.mi-federation-flow h3 {
+  margin: 8px 0 8px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.mi-token-flow p,
+.mi-federation-flow p {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  line-height: 1.62;
+}
+
+.mi-token-flow > b,
+.mi-federation-flow > b {
+  display: grid;
+  place-items: center;
+  color: var(--entra);
+  font-size: 18px;
+}
+
+.mi-prerequisite-grid,
+.mi-auth-surface-grid,
+.mi-trust-grid,
+.mi-scenario-grid,
+.mi-pattern-grid,
+.mi-evidence-grid,
+.mi-ops-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.mi-auth-surface-grid,
+.mi-scenario-grid,
+.mi-evidence-grid,
+.mi-ops-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mi-prerequisite-grid article,
+.mi-auth-surface-grid article,
+.mi-trust-grid article,
+.mi-scenario-grid article,
+.mi-pattern-grid article,
+.mi-evidence-grid article,
+.mi-ops-grid article {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+}
+
+.mi-prerequisite-grid strong {
+  display: block;
+  margin: 6px 0 7px;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.mi-prerequisite-grid p,
+.mi-auth-surface-grid p,
+.mi-trust-grid p,
+.mi-scenario-grid p,
+.mi-pattern-grid p,
+.mi-evidence-grid p,
+.mi-ops-grid p {
+  color: var(--text-muted);
+  font-size: 11.8px;
+  line-height: 1.63;
+}
+
+.mi-auth-surface-grid h3,
+.mi-trust-grid h3,
+.mi-scenario-grid h3,
+.mi-pattern-grid h3,
+.mi-evidence-grid h3,
+.mi-ops-grid h3 {
+  margin: 8px 0 7px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.mi-auth-surface-grid code,
+.mi-ops-grid code {
+  display: block;
+  margin-top: 12px;
+  color: var(--text-faint);
+  font-size: 9.5px;
+  overflow-wrap: anywhere;
+}
+
+.mi-latency-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--border);
+}
+
+.mi-latency-panel > div {
+  padding: 19px;
+  background: var(--bg-subtle);
+}
+
+.mi-latency-panel h3 {
+  margin: 8px 0 7px;
+  font-size: 15px;
+}
+
+.mi-latency-panel p {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.mi-sdk-examples {
+  margin-top: 20px;
+}
+
+.mi-federation-flow {
+  margin-bottom: 18px;
+}
+
+.mi-federation-flow article {
+  min-height: 190px;
+}
+
+.mi-federation-table tbody th {
+  min-width: 180px;
+}
+
+.mi-runbook {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.mi-runbook li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--bg-elevated);
+}
+
+.mi-runbook li > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--entra-border);
+  border-radius: 50%;
+  color: var(--entra);
+  background: var(--entra-bg);
+  font-family: var(--kg-code);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mi-runbook strong {
+  display: block;
+  font-size: 13.5px;
+  margin-bottom: 4px;
+}
+
+.mi-runbook p {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.62;
+}
+
+.mi-operating-checklist {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-subtle);
+}
+
+.mi-operating-checklist > h3 {
+  margin-bottom: 13px;
+  font-size: 14px;
+}
+
+.mi-operating-checklist ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mi-operating-checklist li {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr);
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-elevated);
+}
+
+.mi-operating-checklist li > span {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--entra);
+  background: var(--entra-bg);
+  font-size: 9.5px;
+  font-weight: 800;
+}
+
+.mi-operating-checklist p {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.mi-operating-checklist strong {
+  color: var(--text);
+}
+
+@media (max-width: 1040px) {
+  .mi-token-flow,
+  .mi-federation-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mi-token-flow > b,
+  .mi-federation-flow > b {
+    display: none;
+  }
+
+  .mi-auth-surface-grid,
+  .mi-scenario-grid,
+  .mi-evidence-grid,
+  .mi-ops-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .mi-decision-grid,
+  .mi-prerequisite-grid,
+  .mi-auth-surface-grid,
+  .mi-trust-grid,
+  .mi-scenario-grid,
+  .mi-pattern-grid,
+  .mi-evidence-grid,
+  .mi-ops-grid,
+  .mi-latency-panel,
+  .mi-operating-checklist ul,
+  .mi-token-flow,
+  .mi-federation-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .mi-decision-card,
+  .mi-token-flow article,
+  .mi-federation-flow article {
+    min-height: 0;
+  }
+
+  .mi-decision-path {
+    grid-template-columns: 1fr;
+  }
+
+  .mi-decision-path > b {
+    min-height: 24px;
+  }
+
+  .mi-decision-path > b:not(:last-of-type) {
+    transform: rotate(90deg);
+  }
+
+  .mi-runbook li {
+    grid-template-columns: 28px minmax(0, 1fr);
+    padding: 13px;
+  }
+}

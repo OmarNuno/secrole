@@ -19,6 +19,7 @@ export default function IdentifiersGuide() {
         "service-principal-troubleshooting",
         "service-principal-security-review",
         "service-principal-mfa-migration",
+        "service-principal-managed-identities",
       ]}
     >
       <IdentifierOverviewSections />

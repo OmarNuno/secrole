@@ -12,6 +12,7 @@ import PermissionsConsentGuide from "./pages/service-principals/PermissionsConse
 import TroubleshootingGuide from "./pages/service-principals/TroubleshootingGuide";
 import SecurityReviewGuide from "./pages/service-principals/SecurityReviewGuide";
 import MfaServiceAccountMigrationGuide from "./pages/service-principals/MfaServiceAccountMigrationGuide";
+import ManagedIdentitiesGuide from "./pages/service-principals/ManagedIdentitiesGuide";
 
 export default function App() {
   // Initialize theme on first load
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/service-principals/troubleshooting" element={<TroubleshootingGuide />} />
           <Route path="/service-principals/security-review" element={<SecurityReviewGuide />} />
           <Route path="/service-principals/mfa-service-account-migration" element={<MfaServiceAccountMigrationGuide />} />
+          <Route path="/service-principals/managed-identities" element={<ManagedIdentitiesGuide />} />
         </Routes>
       </main>
     </div>

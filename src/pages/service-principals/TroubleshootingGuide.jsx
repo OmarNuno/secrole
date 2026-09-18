@@ -20,6 +20,7 @@ export default function TroubleshootingGuide() {
         "service-principal-permissions",
         "service-principal-security-review",
         "service-principal-mfa-migration",
+        "service-principal-managed-identities",
       ]}
     >
       <TroubleshootingEvidenceSections />
