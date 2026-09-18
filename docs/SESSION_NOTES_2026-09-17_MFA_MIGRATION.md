@@ -9,6 +9,17 @@ Date: September 17, 2026
 - New branch:
   - `feature/mfa-service-account-migration`
 
+## Pull request and preview
+
+- Pull request: [#7 — Publish mandatory MFA service-account migration guide](https://github.com/OmarNuno/secrole/pull/7)
+- First implementation commit: `578baf7`
+- Vercel deployment status: **Ready / successful**
+- Preview root: https://secrole-git-feature-mfa-service-account-e303ef-o-3026s-projects.vercel.app
+- Hub preview: https://secrole-git-feature-mfa-service-account-e303ef-o-3026s-projects.vercel.app/service-principals
+- Migration guide preview: https://secrole-git-feature-mfa-service-account-e303ef-o-3026s-projects.vercel.app/service-principals/mfa-service-account-migration
+- Troubleshooting preview: https://secrole-git-feature-mfa-service-account-e303ef-o-3026s-projects.vercel.app/service-principals/troubleshooting
+- Updates preview: https://secrole-git-feature-mfa-service-account-e303ef-o-3026s-projects.vercel.app/updates
+
 ## Why the roadmap changed
 
 Microsoft mandatory MFA enforcement makes user-based Azure automation an urgent migration problem. An on-premises Active Directory account that synchronizes to Microsoft Entra ID remains a `user` object. When that identity performs covered Azure management operations, Microsoft applies user authentication requirements even when the account is named or treated operationally as a service account.
@@ -140,9 +151,9 @@ The dedicated guide is the authoritative page. Additional entry points are inclu
 - [x] Route registry contains no duplicate published paths
 - [x] New route appears in the sitemap
 - [x] Planned routes remain absent from the sitemap
-- [ ] Git tree and commit created
-- [ ] Pull request opened
-- [ ] Vercel preview successful
+- [x] Git tree and commit created
+- [x] Pull request opened
+- [x] Vercel preview successful
 - [ ] Direct-load migration guide
 - [ ] Confirm Service Principals hub displays five published cards
 - [ ] Confirm hub Authentication section displays the MFA migration callout
