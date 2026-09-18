@@ -35,22 +35,40 @@ function PublishedGuideMap() {
   );
 }
 
+function MandatoryMfaMigrationCallout() {
+  return (
+    <aside className="sp-mfa-migration-callout">
+      <div>
+        <span>Mandatory MFA migration</span>
+        <h3>User-based Azure automation needs a workload identity</h3>
+        <p>A synchronized Active Directory service account is still a Microsoft Entra user identity. Unattended scripts that depend on username/password Azure sign-in should move to managed identity, federation, or a service principal.</p>
+      </div>
+      <Link to="/service-principals/mfa-service-account-migration">
+        Open migration guide <span aria-hidden="true">→</span>
+      </Link>
+    </aside>
+  );
+}
+
 /**
- * Keeps the established reference hub intact while replacing only its final
- * knowledge-map contents with the published-guide grid. This route wrapper can
- * be folded into ServicePrincipals.jsx during a future hub refactor.
+ * Keeps the established reference hub intact while enhancing only selected
+ * sections through portals. This wrapper can be folded into ServicePrincipals.jsx
+ * during a future hub refactor.
  */
 export default function ServicePrincipalsRoute() {
-  const [target, setTarget] = useState(null);
+  const [guideTarget, setGuideTarget] = useState(null);
+  const [authenticationTarget, setAuthenticationTarget] = useState(null);
 
   useEffect(() => {
-    setTarget(document.getElementById("related-guides"));
+    setGuideTarget(document.getElementById("related-guides"));
+    setAuthenticationTarget(document.getElementById("authentication"));
   }, []);
 
   return (
     <>
       <ServicePrincipals />
-      {target ? createPortal(<PublishedGuideMap />, target) : null}
+      {guideTarget ? createPortal(<PublishedGuideMap />, guideTarget) : null}
+      {authenticationTarget ? createPortal(<MandatoryMfaMigrationCallout />, authenticationTarget) : null}
     </>
   );
 }

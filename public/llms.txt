@@ -15,6 +15,7 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 - [Service Principal Permissions and Admin Consent](https://www.secrole.com/service-principals/permissions-and-consent): Reconcile configured API permissions, admin consent, app-role assignments, delegated grants, and access-token claims in Microsoft Entra.
 - [Microsoft Entra Service Principal Troubleshooting Guide](https://www.secrole.com/service-principals/troubleshooting): Troubleshoot Microsoft Entra service principal object lookup, credentials, consent, token claims, assignments, Conditional Access, logs, and recovery.
 - [How to Review a Service Principal for Security Risk](https://www.secrole.com/service-principals/security-review): Audit Microsoft Entra service principal ownership, provenance, permissions, credentials, activity, risk detections, Conditional Access, and lifecycle controls.
+- [Microsoft Mandatory MFA: Migrate Service Accounts to Workload Identities](https://www.secrole.com/service-principals/mfa-service-account-migration): Find Microsoft Entra user accounts used for Azure automation and migrate scripts to managed identities, workload identity federation, or service principals.
 
 ## Content principles
 

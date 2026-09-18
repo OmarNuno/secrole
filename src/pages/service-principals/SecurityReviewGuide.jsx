@@ -20,6 +20,7 @@ export default function SecurityReviewGuide() {
         "service-principal-permissions",
         "service-principal-troubleshooting",
         "service-principal-identifiers",
+        "service-principal-mfa-migration",
       ]}
     >
       <SecurityReviewFoundationSections />

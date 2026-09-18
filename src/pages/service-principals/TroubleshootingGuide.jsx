@@ -1,4 +1,5 @@
 import KnowledgeGuideLayout, { GuideFaq, GuideSection } from "./KnowledgeGuideLayout";
+import MfaTroubleshootingCallout from "./MfaTroubleshootingCallout";
 import TroubleshootingEvidenceSections from "./TroubleshootingEvidenceSections";
 import TroubleshootingFailureSections from "./TroubleshootingFailureSections";
 import TroubleshootingRecoverySections from "./TroubleshootingRecoverySections";
@@ -18,9 +19,11 @@ export default function TroubleshootingGuide() {
         "service-principal-identifiers",
         "service-principal-permissions",
         "service-principal-security-review",
+        "service-principal-mfa-migration",
       ]}
     >
       <TroubleshootingEvidenceSections />
+      <MfaTroubleshootingCallout />
       <TroubleshootingFailureSections />
       <TroubleshootingRecoverySections />
 
