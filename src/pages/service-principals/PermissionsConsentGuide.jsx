@@ -14,7 +14,10 @@ export default function PermissionsConsentGuide() {
       toc={toc}
       faq={faq}
       sources={sources}
-      relatedPageIds={["service-principal-identifiers"]}
+      relatedPageIds={[
+        "service-principal-identifiers",
+        "service-principal-troubleshooting",
+      ]}
     >
       <PermissionsModelSections />
       <PermissionsDirectoryConsentSections />

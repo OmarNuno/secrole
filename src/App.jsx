@@ -9,6 +9,7 @@ import Updates from "./pages/Updates";
 import ServicePrincipalsRoute from "./pages/service-principals/ServicePrincipalsRoute";
 import IdentifiersGuide from "./pages/service-principals/IdentifiersGuide";
 import PermissionsConsentGuide from "./pages/service-principals/PermissionsConsentGuide";
+import TroubleshootingGuide from "./pages/service-principals/TroubleshootingGuide";
 
 export default function App() {
   // Initialize theme on first load
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/service-principals" element={<ServicePrincipalsRoute />} />
           <Route path="/service-principals/identifiers" element={<IdentifiersGuide />} />
           <Route path="/service-principals/permissions-and-consent" element={<PermissionsConsentGuide />} />
+          <Route path="/service-principals/troubleshooting" element={<TroubleshootingGuide />} />
         </Routes>
       </main>
     </div>
