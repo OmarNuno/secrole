@@ -39,10 +39,10 @@ Do not add unfinished routes to the sitemap or link users to placeholder pages.
 | `/service-principals` | Published hub | Understand the complete object, ID, consent, authentication, governance, and troubleshooting model |
 | `/service-principals/identifiers` | Published guide | Know whether a field needs appId, application Object ID, service principal Object ID, tenant ID, app-role ID, or credential ID |
 | `/service-principals/permissions-and-consent` | Published guide | Reconcile requested permissions, admin consent, app-role assignments, OAuth grants, token claims, and resource authorization |
-| `/service-principals/managed-identities` | Planned guide | Choose managed identity, federation, certificate, or secret authentication |
+| `/service-principals/troubleshooting` | Published guide | Diagnose object lookup, credentials, consent, token claims, assignments, policy, sign-in logs, and recovery failures |
 | `/service-principals/security-review` | Planned guide | Perform a repeatable service principal risk and governance review |
+| `/service-principals/managed-identities` | Planned guide | Choose managed identity, federation, certificate, or secret authentication |
 | `/service-principals/credential-lifecycle` | Planned guide | Inventory, alert, rotate, and retire secrets and certificates safely |
-| `/service-principals/troubleshooting` | Planned guide | Diagnose object lookup, consent, assignment, authentication, and recovery failures |
 
 ## Page contract
 
@@ -89,6 +89,10 @@ Every published knowledge page should include:
 - Keep `lastModified` truthful; do not refresh dates when content did not materially change.
 - Sitemaps support discovery but do not guarantee indexing or ranking.
 - JavaScript pages must remain publicly accessible and should be tested with rendered HTML in Search Console.
+
+## Knowledge landing-page milestone
+
+Create `/knowledge` after the Service Principals cluster contains roughly four to six complete guides. The landing page should group content by administrator task, expose published pages only, and preserve the stable URLs and route registry established here.
 
 ## Future platform decision
 

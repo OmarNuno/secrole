@@ -14,7 +14,10 @@ export default function IdentifiersGuide() {
       toc={toc}
       faq={faq}
       sources={sources}
-      relatedPageIds={["service-principal-permissions"]}
+      relatedPageIds={[
+        "service-principal-permissions",
+        "service-principal-troubleshooting",
+      ]}
     >
       <IdentifierOverviewSections />
       <IdentifierPortalFieldSections />
