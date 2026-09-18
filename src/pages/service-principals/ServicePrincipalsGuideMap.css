@@ -1,0 +1,107 @@
+/* Replace the original roadmap-style block with published, crawlable guides. */
+.sp-knowledge-map > .sp-section-heading,
+.sp-knowledge-map > .sp-expansion-grid {
+  display: none;
+}
+
+.sp-published-guide-map {
+  display: block;
+}
+
+.sp-published-guide-map .sp-section-heading {
+  display: block;
+}
+
+.sp-expansion-grid .sp-guide-card {
+  min-height: 225px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-sm);
+  transition: transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+
+.sp-expansion-grid .sp-guide-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--entra-border);
+  background: color-mix(in srgb, var(--bg-elevated) 92%, var(--entra-bg));
+  box-shadow: var(--shadow);
+}
+
+.sp-expansion-grid .sp-guide-card:focus-visible {
+  outline: 2px solid var(--entra);
+  outline-offset: 3px;
+}
+
+.sp-expansion-grid .sp-guide-card > span:first-child {
+  color: var(--entra);
+  font-size: 8.5px;
+  font-weight: 760;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.sp-expansion-grid .sp-guide-card h3 {
+  margin: 9px 0 8px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.sp-expansion-grid .sp-guide-card > p {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.sp-guide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 15px;
+}
+
+.sp-guide-tags small {
+  padding: 4px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.sp-expansion-grid .sp-guide-card > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 17px;
+  color: var(--entra);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sp-expansion-grid .sp-guide-card > strong span {
+  color: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: transform .16s ease;
+}
+
+.sp-expansion-grid .sp-guide-card:hover > strong span {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-expansion-grid .sp-guide-card,
+  .sp-expansion-grid .sp-guide-card > strong span {
+    transition-duration: .01ms !important;
+  }
+}

@@ -53,7 +53,7 @@ export const sitePages = [
       "Microsoft Graph app permissions",
       "service principal PowerShell",
     ],
-    lastModified: "2026-09-16",
+    lastModified: "2026-09-17",
     changeFrequency: "monthly",
     priority: 0.95,
   },
@@ -71,21 +71,48 @@ export const sitePages = [
     id: "service-principal-identifiers",
     parentId: "service-principals",
     path: "/service-principals/identifiers",
-    status: "planned",
+    status: "published",
     kind: "knowledge-guide",
-    title: "Application ID vs. Object ID vs. Tenant ID",
-    description: "A dedicated identifier guide with portal screenshots, Microsoft Graph examples, and common service-principal configuration mistakes.",
+    title: "Application ID vs. Object ID vs. Tenant ID in Microsoft Entra",
+    heading: "Application ID vs. Object ID vs. Tenant ID",
+    description: "Choose the correct Microsoft Entra application, service principal, and tenant ID for OAuth, Microsoft Graph, Azure RBAC, and troubleshooting.",
+    keywords: [
+      "application ID vs object ID",
+      "client ID vs object ID",
+      "service principal object ID",
+      "Microsoft Entra tenant ID",
+      "appId Microsoft Graph",
+      "Azure principalId service principal",
+    ],
     searchIntent: "Understand which Microsoft Entra application or service principal ID a portal, API, script, or configuration field requires.",
+    guideTags: ["Portal map", "Graph examples", "PowerShell"],
+    lastModified: "2026-09-17",
+    changeFrequency: "monthly",
+    priority: 0.9,
   },
   {
     id: "service-principal-permissions",
     parentId: "service-principals",
     path: "/service-principals/permissions-and-consent",
-    status: "planned",
+    status: "published",
     kind: "knowledge-guide",
     title: "Service Principal Permissions and Admin Consent",
-    description: "Deep coverage of requiredResourceAccess, app-role assignments, delegated grants, consent records, token claims, and permission troubleshooting.",
+    heading: "Service principal permissions and admin consent",
+    description: "Reconcile configured API permissions, admin consent, app-role assignments, delegated grants, and access-token claims in Microsoft Entra.",
+    keywords: [
+      "service principal permissions",
+      "Microsoft Entra admin consent",
+      "requiredResourceAccess",
+      "appRoleAssignments",
+      "oauth2PermissionGrants",
+      "application permissions vs delegated permissions",
+      "access token roles scp claims",
+    ],
     searchIntent: "Determine what an application requested, what a tenant granted, and why an access token does or does not contain the required permissions.",
+    guideTags: ["Grant model", "Token claims", "Troubleshooting"],
+    lastModified: "2026-09-17",
+    changeFrequency: "monthly",
+    priority: 0.9,
   },
   {
     id: "service-principal-managed-identities",
@@ -113,8 +140,8 @@ export const sitePages = [
     path: "/service-principals/credential-lifecycle",
     status: "planned",
     kind: "knowledge-guide",
-    title: "Service Principal Secrets and Certificate Lifecycle",
-    description: "Inventory, alerting, rotation, overlap, outage prevention, and incident-response guidance for app credentials.",
+    title: "Service Principal Credential Expiration and Rotation",
+    description: "Inventory, alerting, rotation, overlap, outage prevention, and incident-response guidance for application secrets and certificates.",
     searchIntent: "Find, monitor, rotate, and retire Microsoft Entra application secrets and certificates without causing an outage.",
   },
   {
@@ -140,4 +167,8 @@ export function getSitePage(id) {
 
 export function getChildPages(parentId) {
   return sitePages.filter((page) => page.parentId === parentId);
+}
+
+export function getPublishedChildPages(parentId) {
+  return sitePages.filter((page) => page.parentId === parentId && page.status === "published");
 }
