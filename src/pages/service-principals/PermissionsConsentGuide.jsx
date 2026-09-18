@@ -17,6 +17,7 @@ export default function PermissionsConsentGuide() {
       relatedPageIds={[
         "service-principal-identifiers",
         "service-principal-troubleshooting",
+        "service-principal-security-review",
       ]}
     >
       <PermissionsModelSections />

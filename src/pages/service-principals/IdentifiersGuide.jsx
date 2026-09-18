@@ -17,6 +17,7 @@ export default function IdentifiersGuide() {
       relatedPageIds={[
         "service-principal-permissions",
         "service-principal-troubleshooting",
+        "service-principal-security-review",
       ]}
     >
       <IdentifierOverviewSections />
