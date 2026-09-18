@@ -21,6 +21,7 @@ export default function SecurityReviewGuide() {
         "service-principal-troubleshooting",
         "service-principal-identifiers",
         "service-principal-mfa-migration",
+        "service-principal-managed-identities",
       ]}
     >
       <SecurityReviewFoundationSections />
