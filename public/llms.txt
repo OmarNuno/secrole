@@ -14,6 +14,7 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 - [Application ID vs. Object ID vs. Tenant ID in Microsoft Entra](https://www.secrole.com/service-principals/identifiers): Choose the correct Microsoft Entra application, service principal, and tenant ID for OAuth, Microsoft Graph, Azure RBAC, and troubleshooting.
 - [Service Principal Permissions and Admin Consent](https://www.secrole.com/service-principals/permissions-and-consent): Reconcile configured API permissions, admin consent, app-role assignments, delegated grants, and access-token claims in Microsoft Entra.
 - [Microsoft Entra Service Principal Troubleshooting Guide](https://www.secrole.com/service-principals/troubleshooting): Troubleshoot Microsoft Entra service principal object lookup, credentials, consent, token claims, assignments, Conditional Access, logs, and recovery.
+- [How to Review a Service Principal for Security Risk](https://www.secrole.com/service-principals/security-review): Audit Microsoft Entra service principal ownership, provenance, permissions, credentials, activity, risk detections, Conditional Access, and lifecycle controls.
 
 ## Content principles
 

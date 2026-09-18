@@ -17,6 +17,7 @@ export default function TroubleshootingGuide() {
       relatedPageIds={[
         "service-principal-identifiers",
         "service-principal-permissions",
+        "service-principal-security-review",
       ]}
     >
       <TroubleshootingEvidenceSections />

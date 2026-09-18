@@ -39,10 +39,12 @@ Do not add unfinished routes to the sitemap or link users to placeholder pages.
 | `/service-principals` | Published hub | Understand the complete object, ID, consent, authentication, governance, and troubleshooting model |
 | `/service-principals/identifiers` | Published guide | Know whether a field needs appId, application Object ID, service principal Object ID, tenant ID, app-role ID, or credential ID |
 | `/service-principals/permissions-and-consent` | Published guide | Reconcile requested permissions, admin consent, app-role assignments, OAuth grants, token claims, and resource authorization |
-| `/service-principals/troubleshooting` | Published guide | Diagnose object lookup, credentials, consent, token claims, assignments, policy, sign-in logs, and recovery failures |
-| `/service-principals/security-review` | Planned guide | Perform a repeatable service principal risk and governance review |
+| `/service-principals/troubleshooting` | Published guide | Diagnose object lookup, authentication, consent, authorization, assignment, Conditional Access, logging, and recovery failures |
+| `/service-principals/security-review` | Published guide | Perform a repeatable ownership, provenance, privilege, credential, activity, risk, and control review |
 | `/service-principals/managed-identities` | Planned guide | Choose managed identity, federation, certificate, or secret authentication |
 | `/service-principals/credential-lifecycle` | Planned guide | Inventory, alert, rotate, and retire secrets and certificates safely |
+
+The public guide grid must display only the four published child guides. Planned Managed Identities and Credential Lifecycle routes remain internal until their pages are complete and reviewed.
 
 ## Page contract
 
@@ -55,7 +57,7 @@ Every published knowledge page should include:
 5. Standard crawlable links back to its parent hub and to relevant sibling guides.
 6. Primary-source references, normally Microsoft Learn or Microsoft Graph documentation.
 7. Read-only investigation commands before any destructive or state-changing example.
-8. Explicit distinctions between object types, tenant context, requested configuration, granted access, and runtime evidence.
+8. Explicit distinctions between object types, tenant context, requested configuration, granted access, runtime evidence, and resource-side authorization.
 9. Responsive tables or cards that remain usable on mobile.
 10. No quiz, filler, or thin content added only to target a keyword.
 
@@ -90,10 +92,13 @@ Every published knowledge page should include:
 - Sitemaps support discovery but do not guarantee indexing or ranking.
 - JavaScript pages must remain publicly accessible and should be tested with rendered HTML in Search Console.
 
-## Knowledge landing-page milestone
+## Next content sequence
 
-Create `/knowledge` after the Service Principals cluster contains roughly four to six complete guides. The landing page should group content by administrator task, expose published pages only, and preserve the stable URLs and route registry established here.
+1. Publish `/service-principals/managed-identities`.
+2. Publish `/service-principals/credential-lifecycle`.
+3. Add `/knowledge` as a landing page after the cluster reaches approximately five or six complete guides.
+4. Use the landing page to group future Entra, Purview, workload identity, permissions, governance, and troubleshooting content without overcrowding the top navigation.
 
 ## Future platform decision
 
-Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the article body. As the knowledge library grows, evaluate full static generation or server rendering so complete article content is also present before JavaScript executes. Preserve the route registry and URL structure defined here during that migration.
+Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the complete article body. As the knowledge library grows, evaluate full static generation or server rendering so complete article content is also present before JavaScript executes. Preserve the route registry and URL structure defined here during that migration.
