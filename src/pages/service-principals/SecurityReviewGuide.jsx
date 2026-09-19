@@ -17,6 +17,7 @@ export default function SecurityReviewGuide() {
       faq={faq}
       sources={sources}
       relatedPageIds={[
+        "service-principal-credential-lifecycle",
         "service-principal-permissions",
         "service-principal-troubleshooting",
         "service-principal-identifiers",
