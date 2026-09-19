@@ -22,6 +22,12 @@ jobs:
         with:
           node-version: 22
 
+      - name: Validate current role catalog
+        run: npm run validate:roles
+
+      - name: Test role-drift safeguards
+        run: npm run test:role-drift
+
       - name: Skip if a drift PR is already open awaiting review
         id: guard
         env:
@@ -35,14 +41,18 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Check for role drift (drafts entries if found)
+      - name: Check for role drift and draft review entries
         if: steps.guard.outputs.skip == 'false'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           DRIFT_PR_BODY: ${{ runner.temp }}/drift-pr-body.md
         run: node scripts/check-role-drift.js
 
-      - name: Open PR with drafted roles (if roles.js changed)
+      - name: Validate drafted catalog
+        if: steps.guard.outputs.skip == 'false'
+        run: npm run validate:roles
+
+      - name: Open PR with drafted roles or issue with retirement flags
         if: steps.guard.outputs.skip == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,7 +72,6 @@ jobs:
               --base main --head "$branch"
             echo "✅ PR opened for review."
           elif [ -f "${{ runner.temp }}/drift-pr-body.md" ]; then
-            # Drift report exists but no file changes → retirement/rename flags only.
             existing=$(gh issue list --state open --search "Role drift: possible retired roles in:title" --json number --jq 'length')
             if [ "$existing" -eq 0 ]; then
               gh issue create \
