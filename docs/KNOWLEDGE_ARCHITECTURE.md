@@ -1,6 +1,6 @@
 # SecRole Knowledge Architecture
 
-Last updated: September 18, 2026
+Last updated: September 19, 2026
 
 ## Purpose
 
@@ -10,24 +10,25 @@ SecRole knowledge content uses a **library → hub → focused guide** model.
 - A hub explains the complete mental model for one domain.
 - Focused child guides expand procedures, decision trees, screenshots, commands, migrations, governance workflows, and troubleshooting scenarios.
 
-The first domain hub is:
+Published domain hubs:
 
-- `/service-principals` — the complete application object and service principal reference
+- `/service-principals` — application objects, service principals, workload identities, authentication, permissions, and lifecycle
+- `/role-governance` — Microsoft Entra role definitions, assignments, PIM, groups, scope, emergency access, and recurring governance
 
-The hub must remain useful on its own. Child guides expand a task rather than remove essential explanation from the hub.
+A hub must remain useful on its own. Child guides deepen one task rather than remove essential explanation from the hub.
 
 ## Route registry
 
 `src/data/sitePages.js` is the source of truth for published and planned routes.
 
 - `status: "published"` includes a route in generated discovery files and public indexes.
-- `status: "planned"` reserves a content idea but keeps it out of the sitemap, knowledge library, and hub guide grid.
+- `status: "planned"` reserves a content idea but keeps it out of the sitemap, knowledge library, and public guide grids.
 - `parentId` creates the hub-and-spoke relationship.
 - `searchIntent` documents the question the page is meant to answer.
-- `guideTags` supplies short task labels for guide cards.
-- `knowledgeTrack` groups published guides on `/knowledge`.
-- `knowledgeOrder` provides stable display ordering.
-- `knowledgeLabel` supplies a visitor-facing card type such as Identifier guide or Governance guide.
+- `guideTags` supplies short task labels for cards.
+- `knowledgeTrack` groups published focused guides on `/knowledge`.
+- `knowledgeOrder` provides stable display ordering for hubs and guides.
+- `knowledgeLabel` supplies a visitor-facing card type such as Reference hub or Governance guide.
 
 The build runs `scripts/generate-seo-files.mjs`, which validates published routes and creates:
 
@@ -47,18 +48,18 @@ The public library is:
 
 It currently contains:
 
-- One complete reference hub
-- Seven focused Service Principal and workload identity guides
-- Search across published knowledge titles, descriptions, search intent, keywords, and guide tags
-- Three task tracks:
+- Two complete reference hubs
+- Seven focused Service Principal and workload-identity guides
+- Search across published titles, descriptions, search intent, keywords, and tags
+- Three task tracks for focused guides:
   - Understand the identity and permission model
   - Build and migrate workload identities
   - Operate and govern durable access
 - Links to the Role Library, Overlap Analyzer, AI Advisor, and Updates pages
 
-The top navigation uses **Knowledge** as the broader destination. The Knowledge item remains active while the visitor is on `/knowledge`, `/service-principals`, or any Service Principal child guide.
+The top navigation uses **Knowledge** as the broader destination. It remains active while the visitor is on `/knowledge`, either published hub, or any child guide beneath those hubs.
 
-## Service principal content cluster
+## Service Principal content cluster
 
 | Route | Status | Track | Primary intent |
 |---|---|---|---|
@@ -71,7 +72,33 @@ The top navigation uses **Knowledge** as the broader destination. The Knowledge 
 | `/service-principals/security-review` | Published guide | Operate & govern | Perform a repeatable ownership, provenance, privilege, credential, activity, risk, and control review |
 | `/service-principals/credential-lifecycle` | Published guide | Operate & govern | Inventory, prioritize, rotate, contain, and retire application secrets and certificates safely |
 
-The public hub and library display only published content.
+## Microsoft Entra Role Governance cluster
+
+| Route | Status | Primary intent |
+|---|---|---|
+| `/role-governance` | Published hub | Understand effective Microsoft Entra administrator access across definitions, principals, direct and group assignments, PIM schedules, scope, controls, emergency access, and evidence |
+| `/role-governance/privileged-identity-management` | Planned guide | Configure eligible assignments, activation controls, approvers, notifications, reviews, and audit evidence |
+| `/role-governance/role-assignable-groups` | Planned guide | Govern role-assignable group ownership, membership, PIM for Groups, and delegated administration |
+| `/role-governance/custom-roles-and-scope` | Planned guide | Design custom role definitions and assign them at tenant, Administrative Unit, or supported directory-resource scope |
+
+The initial hub is intentionally complete before the child guides are published. Planned child routes remain hidden and unlinked.
+
+## Role-governance content contract
+
+Role-governance content must preserve these distinctions:
+
+- Microsoft Entra roles vs. Azure RBAC roles vs. Microsoft Purview role groups
+- Security principal vs. role definition vs. assignment
+- Direct vs. group-based vs. inherited access
+- Active vs. eligible vs. activated state
+- Permanent vs. time-bound duration
+- Tenant vs. Administrative Unit vs. resource vs. app-specific scope
+- Assignment record vs. schedule vs. effective schedule instance
+- Role-assignable group membership vs. ordinary group membership
+- Standing privileged access vs. emergency-access exceptions
+- Built-in role selection vs. custom role design
+
+A review should explain the **principal, role, scope, state, duration, controls, inheritance path, and evidence** together.
 
 ## Credential-lifecycle content contract
 
@@ -86,7 +113,7 @@ Credential-lifecycle guidance must preserve these distinctions:
 - Tenant-default app-management policy vs. object-specific policy
 - Read-only inventory vs. state-changing rotation examples
 
-The preferred hierarchy remains:
+The preferred authentication hierarchy remains:
 
 1. Managed identity where supported
 2. Workload identity federation for trusted OIDC workloads
@@ -114,55 +141,55 @@ Every published knowledge page should include:
 1. One clear H1 that matches the reader's problem.
 2. A concise answer near the top before deeper detail.
 3. A visible last-reviewed date.
-4. A route-specific title, description, canonical URL, Open Graph metadata, and structured data through `PageMeta`.
-5. Standard crawlable links back to `/knowledge`, its parent hub, and relevant sibling guides.
+4. Route-specific title, description, canonical URL, social metadata, and structured data through `PageMeta`.
+5. Standard crawlable links back to `/knowledge`, its parent hub, and relevant sibling guides or tools.
 6. Primary-source references, normally Microsoft Learn, Microsoft Graph, Azure, or product documentation.
 7. Read-only investigation commands before destructive or state-changing examples.
-8. Explicit distinctions between object types, tenant context, requested configuration, granted access, runtime evidence, and resource-side authorization.
+8. Explicit distinctions between authorization systems, objects, principals, scopes, requested configuration, granted access, effective state, runtime evidence, and resource-side authorization.
 9. Responsive tables, cards, diagrams, and code blocks that remain usable on mobile.
 10. No quiz, filler, or thin content added only to target a keyword.
 
 ## Internal-linking rules
 
-- `/knowledge` links to every published hub and guide.
-- The hub displays only published child guides in its related-guides block and links back to the full library.
-- Every child guide links to `/knowledge` through its breadcrumb, back to the hub, and to relevant sibling guides.
-- Child guides link to siblings only when the destination helps complete the administrator's task.
-- Link text should describe the destination; avoid generic text such as “click here.”
-- Planned routes remain in the registry but are not rendered as disabled cards, raw paths, or dead links.
+- `/knowledge` links to every published hub and focused guide.
+- Hubs link back to the library and to relevant SecRole tools.
+- A hub displays only published child guides; planned routes remain hidden.
+- Every child guide links to `/knowledge`, its parent hub, and relevant siblings.
+- Link text describes the destination; avoid generic text such as “click here.”
 
 ## Publishing a new guide
 
 1. Add or update the page in `src/data/sitePages.js` with a unique path and `status: "planned"` while drafting.
-2. Assign a future `knowledgeTrack`, `knowledgeOrder`, `knowledgeLabel`, and `guideTags` before publication.
-3. Build the React page under `src/pages/` and add its route to `src/App.jsx`.
-4. Add visible links from its parent hub and relevant sibling guides.
-5. Reuse `PageMeta` or `KnowledgeGuideLayout` for route-specific metadata and JSON-LD.
-6. Verify the page returns HTTP 200 on direct load and renders meaningful content without authentication.
-7. Change the registry status to `published` and add accurate `lastModified`, `priority`, and display metadata.
-8. Run `npm run build`; the generators validate routes and refresh sitemap, robots, llms, and static route entrypoints.
+2. Assign future `knowledgeTrack`, `knowledgeOrder`, `knowledgeLabel`, and `guideTags` values before publication.
+3. Build the React page and route.
+4. Add useful links from its parent hub and relevant sibling pages.
+5. Reuse `PageMeta` or `KnowledgeGuideLayout` for route metadata and JSON-LD.
+6. Verify direct HTTP loading and meaningful public content.
+7. Change status to `published` and add truthful `lastModified`, priority, and display metadata.
+8. Run the full build so route validation, sitemap, robots, llms, and static entrypoints refresh.
 9. Test mobile layout, keyboard navigation, search discovery, copy controls, canonical URL, structured data, and source links.
-10. After deployment, inspect the canonical URL in Google Search Console and submit the sitemap when needed.
+10. Inspect the deployed route in Google Search Console and submit the sitemap when needed.
 
 ## SEO principles
 
 - Write for the administrator's task first; search visibility follows useful, complete content.
 - Use one canonical URL for each distinct topic.
-- Keep page titles and descriptions unique and descriptive.
+- Keep titles and descriptions unique and descriptive.
 - Use logical, stable, human-readable paths.
 - Publish only pages that add information beyond the hub.
-- Keep `lastModified` truthful; do not refresh dates when content did not materially change.
+- Keep `lastModified` truthful.
 - Sitemaps support discovery but do not guarantee indexing or ranking.
 - JavaScript pages must remain publicly accessible and should be tested with rendered HTML in Search Console.
 
 ## Next content sequence
 
-1. Review the complete Service Principal and workload-identity cluster as one library.
-2. Decide the second knowledge cluster from actual administrator demand, likely Microsoft Entra role governance or Microsoft Purview administration.
-3. Revisit role-drift risk classification so sensitive tenant-wide read access is not automatically rated Low.
-4. Continue expanding workload identity, permission, governance, migration, and troubleshooting content without overcrowding the top navigation.
-5. Evaluate full static generation or server rendering as the library grows.
+1. Publish the Microsoft Entra Role Governance reference hub.
+2. Publish the PIM and eligible-assignment guide.
+3. Publish the role-assignable groups and delegated-administration guide.
+4. Publish the custom roles, scope, and Administrative Units guide.
+5. Decide whether the next major cluster is Microsoft Purview administration or another high-demand Entra governance area.
+6. Continue improving role-drift quality and evaluate full static generation or server rendering as the library grows.
 
 ## Future platform decision
 
-Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the complete page body. As the knowledge library grows, evaluate full static generation or server rendering so complete article and index content is present before JavaScript executes. Preserve the route registry and URL structure during that migration.
+Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the complete page body. As the library grows, evaluate full static generation or server rendering so complete article and index content is present before JavaScript executes. Preserve the route registry and URL structure during that migration.

@@ -41,6 +41,25 @@ function normalizedSearchText(item) {
   ].filter(Boolean).join(" ").toLowerCase();
 }
 
+function HubCard({ item }) {
+  return (
+    <Link className="knowledge-hub-card" to={item.path}>
+      <div className="knowledge-card-topline">
+        <span>{item.knowledgeLabel || "Reference hub"}</span>
+        <span aria-hidden="true">→</span>
+      </div>
+      <h3>{item.heading || item.title}</h3>
+      <p>{item.description}</p>
+      {item.guideTags?.length > 0 && (
+        <div className="knowledge-card-tags" aria-label="Reference topics">
+          {item.guideTags.map((tag) => <small key={tag}>{tag}</small>)}
+        </div>
+      )}
+      <strong>Open the complete reference <span aria-hidden="true">→</span></strong>
+    </Link>
+  );
+}
+
 function GuideCard({ item }) {
   return (
     <Link className="knowledge-guide-card" to={item.path}>
@@ -79,7 +98,12 @@ function ToolCard({ item }) {
 
 export default function Knowledge() {
   const [query, setQuery] = useState("");
-  const hub = getSitePage("service-principals");
+  const hubs = useMemo(
+    () => publishedPages
+      .filter((item) => item.kind === "knowledge-hub")
+      .sort((a, b) => (a.knowledgeOrder || 99) - (b.knowledgeOrder || 99)),
+    [],
+  );
   const guides = useMemo(
     () => publishedPages
       .filter((item) => item.kind === "knowledge-guide")
@@ -88,14 +112,16 @@ export default function Knowledge() {
   );
   const tools = useMemo(() => TOOL_IDS.map((id) => getSitePage(id)), []);
   const normalizedQuery = query.trim().toLowerCase();
+  const matchingHubs = normalizedQuery
+    ? hubs.filter((item) => normalizedSearchText(item).includes(normalizedQuery))
+    : hubs;
   const matchingGuides = normalizedQuery
     ? guides.filter((item) => normalizedSearchText(item).includes(normalizedQuery))
     : guides;
-  const hubMatches = !normalizedQuery || normalizedSearchText(hub).includes(normalizedQuery);
-  const resultCount = matchingGuides.length + (hubMatches ? 1 : 0);
+  const resultCount = matchingHubs.length + matchingGuides.length;
 
   const schemas = useMemo(() => {
-    const items = [hub, ...guides];
+    const items = [...hubs, ...guides];
     return [
       {
         "@context": "https://schema.org",
@@ -125,7 +151,7 @@ export default function Knowledge() {
         ],
       },
     ];
-  }, [guides, hub]);
+  }, [guides, hubs]);
 
   return (
     <div className="knowledge-page">
@@ -143,7 +169,7 @@ export default function Knowledge() {
           <div className="knowledge-breadcrumb"><Link to="/">SecRole</Link><span>/</span><strong>Knowledge</strong></div>
           <div className="knowledge-eyebrow">SecRole knowledge library</div>
           <h1>{page.heading}</h1>
-          <p>Use focused, operational guidance for Microsoft Entra identities, permissions, workload authentication, troubleshooting, governance, and migration. Start with the reference hub or search for the task in front of you.</p>
+          <p>Use focused, operational guidance for Microsoft Entra identities, role governance, permissions, workload authentication, troubleshooting, and migration. Start with a complete reference hub or search for the task in front of you.</p>
 
           <form className="knowledge-search" role="search" onSubmit={(event) => event.preventDefault()}>
             <label htmlFor="knowledge-search-input">Search SecRole knowledge</label>
@@ -154,16 +180,18 @@ export default function Knowledge() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search IDs, permissions, MFA, managed identity, credential rotation…"
+                placeholder="Search roles, PIM, scope, permissions, MFA, managed identity, rotation…"
                 autoComplete="off"
               />
               {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}
             </div>
-            <small>{normalizedQuery ? `${resultCount} matching ${resultCount === 1 ? "page" : "pages"}` : `Search across the published reference hub and ${guides.length} focused guides.`}</small>
+            <small>{normalizedQuery
+              ? `${resultCount} matching ${resultCount === 1 ? "page" : "pages"}`
+              : `Search across ${hubs.length} reference hubs and ${guides.length} focused guides.`}</small>
           </form>
 
           <div className="knowledge-stats" aria-label="Knowledge library status">
-            <div><strong>1</strong><span>complete reference hub</span></div>
+            <div><strong>{hubs.length}</strong><span>complete reference hubs</span></div>
             <div><strong>{guides.length}</strong><span>focused operational guides</span></div>
             <div><strong>Read-only first</strong><span>investigate before changing state</span></div>
             <div><strong>Primary sources</strong><span>Microsoft documentation linked</span></div>
@@ -172,24 +200,19 @@ export default function Knowledge() {
       </header>
 
       <div className="knowledge-width knowledge-body">
-        {hubMatches && (
+        {matchingHubs.length > 0 && (
           <section className="knowledge-section knowledge-foundation" aria-labelledby="knowledge-foundation-heading">
-            <header className="knowledge-section-heading">
-              <span>Start here</span>
-              <h2 id="knowledge-foundation-heading">The complete Service Principals reference</h2>
-              <p>Use the hub when you need the full object, identifier, permission, authentication, governance, troubleshooting, and command model in one place.</p>
-            </header>
-            <Link className="knowledge-foundation-card" to={hub.path}>
+            <header className="knowledge-section-heading with-count">
               <div>
-                <span>Reference hub</span>
-                <h3>{hub.heading}</h3>
-                <p>{hub.description}</p>
-                <div className="knowledge-card-tags">
-                  {(hub.guideTags || []).map((tag) => <small key={tag}>{tag}</small>)}
-                </div>
+                <span>Start with the model</span>
+                <h2 id="knowledge-foundation-heading">Complete reference hubs</h2>
+                <p>Use a hub when you need the full mental model, operational evidence, commands, controls, and troubleshooting path for one identity domain.</p>
               </div>
-              <strong>Open the complete reference <span aria-hidden="true">→</span></strong>
-            </Link>
+              <strong>{matchingHubs.length} {matchingHubs.length === 1 ? "hub" : "hubs"}</strong>
+            </header>
+            <div className="knowledge-hub-grid">
+              {matchingHubs.map((item) => <HubCard item={item} key={item.id} />)}
+            </div>
           </section>
         )}
 
@@ -217,8 +240,8 @@ export default function Knowledge() {
         {resultCount === 0 && (
           <section className="knowledge-empty" aria-live="polite">
             <span>⌕</span>
-            <h2>No published guide matches “{query}”</h2>
-            <p>Try a broader term such as service principal, permission, MFA, managed identity, credential rotation, consent, security review, or troubleshooting.</p>
+            <h2>No published knowledge matches “{query}”</h2>
+            <p>Try a broader term such as role assignment, PIM, scope, service principal, permission, MFA, managed identity, credential rotation, security review, or troubleshooting.</p>
             <button type="button" onClick={() => setQuery("")}>Show all knowledge</button>
           </section>
         )}
@@ -242,9 +265,9 @@ export default function Knowledge() {
                 <h2 id="knowledge-principles-heading">Evidence before action</h2>
               </div>
               <ul>
-                <li><strong>Separate objects and tenants.</strong><span>Identify the exact directory object, tenant, and resource before drawing conclusions.</span></li>
-                <li><strong>Separate requests from grants.</strong><span>Configured permissions are not proof of consent, token claims, or resource authorization.</span></li>
-                <li><strong>Investigate read-only first.</strong><span>Collect evidence before changing credentials, permissions, assignments, or account state.</span></li>
+                <li><strong>Separate systems and scopes.</strong><span>Identify the authorization plane, principal, role definition, tenant, and scope before drawing conclusions.</span></li>
+                <li><strong>Separate requests from grants.</strong><span>Configured permissions are not proof of consent, role assignment, token claims, or resource authorization.</span></li>
+                <li><strong>Investigate read-only first.</strong><span>Collect evidence before changing credentials, permissions, assignments, eligibility, or account state.</span></li>
                 <li><strong>Prefer primary sources.</strong><span>Platform behavior is grounded in current Microsoft Learn, Graph, Azure, and product documentation.</span></li>
               </ul>
             </section>
@@ -253,8 +276,8 @@ export default function Knowledge() {
 
         <footer className="knowledge-footer">
           <span>SecRole knowledge library</span>
-          <strong>Last reviewed: September 18, 2026</strong>
-          <p>The library expands as complete, useful guides are published. Planned pages remain private until they are ready for administrators to use.</p>
+          <strong>Last reviewed: September 19, 2026</strong>
+          <p>The library expands as complete, useful references and guides are published. Planned pages remain private until they are ready for administrators to use.</p>
         </footer>
       </div>
     </div>
