@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-09-22T10:27:24.633Z",
-  "fetchedAt": "2026-09-22T10:27:24.633Z",
+  "lastUpdated": "2026-09-23T10:22:45.799Z",
+  "fetchedAt": "2026-09-23T10:22:45.799Z",
   "updates": [
     {
       "id": "purview-dlp-entra-global-secure-access-ga",
-      "title": "Microsoft Purview Data Loss Prevention: Entra Global Secure Access Integration Now Generally Available",
-      "summary": "Purview DLP now integrates with Microsoft Entra Global Secure Access to protect data at the network layer, enforcing restrictive actions and detecting risky user activity across browsers, apps, APIs, and generative AI platforms. This enables admins to prevent sensitive data from reaching untrusted cloud applications through a unified network and policy enforcement point.",
+      "title": "Microsoft Purview Data Loss Prevention: Integration with Microsoft Entra Global Secure Access (General Availability)",
+      "summary": "Microsoft Purview DLP now integrates with Microsoft Entra Global Secure Access to enforce data protection policies at the network layer across browsers, apps, APIs, and AI platforms. Admins can now detect risky user activity and prevent sensitive data sharing with untrusted cloud applications using a single policy framework.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
@@ -13,39 +13,29 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-dlp-non-microsoft-apps-preview",
-      "title": "Microsoft Purview Data Loss Prevention: Non-Microsoft Connected Apps Support in Preview",
-      "summary": "Admins can now create DLP policies that protect sensitive data at rest in non-Microsoft applications like Box and Google Workspace, leveraging existing Microsoft Defender for Cloud Apps connectors and Purview's classification engine. This extends consistent data loss prevention controls beyond the Microsoft 365 ecosystem.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "August 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-dlp-inline-protection-entra-edge",
-      "title": "Microsoft Purview Data Loss Prevention: Upgraded Inline Protection for Entra-Managed Apps in Edge for Business",
-      "summary": "Purview DLP inline protection for Microsoft Entra-managed apps in Edge for Business now integrates with Conditional Access grant controls and supports expanded conditions, multiple activities per rule, simulation mode, and configurable alerts. This simplifies policy configuration while increasing flexibility for protecting sensitive data in managed browser environments.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571397"
-    },
-    {
       "id": "purview-dlp-unmanaged-apps-edge-business",
       "title": "Microsoft Purview Data Loss Prevention: Expanded Inline Protection for Unmanaged Apps in Edge for Business",
-      "summary": "Purview DLP policies will soon support inline protection in Edge for Business for a broader set of unmanaged generative AI and cloud applications, allowing admins to detect and protect sensitive data shared through these services using existing policy experiences. This extends consistent security controls across more SaaS destinations without requiring separate integrations.",
+      "summary": "Admins can now use existing Purview DLP policies to protect sensitive data shared through a significantly broader set of unmanaged generative AI and third-party apps in Edge for Business via browser inline protection. This extends consistent data security controls to more destinations without requiring separate policy frameworks.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
-      "importance": "medium",
+      "importance": "high",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571396"
     },
     {
+      "id": "purview-dlp-entra-managed-apps-edge-business",
+      "title": "Microsoft Purview Data Loss Prevention: Upgraded Inline Protection for Microsoft Entra-Managed Apps in Edge for Business",
+      "summary": "Microsoft Purview inline data protection for Entra-managed apps in Edge for Business now integrates with Conditional Access grant controls, enabling admins to use expanded conditions, multiple activities per rule, simulation mode, and configurable alerts. This simplification removes previous policy restrictions while maintaining audit visibility.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571397"
+    },
+    {
       "id": "purview-dlp-user-aggregation-alerts",
-      "title": "Microsoft Purview Data Loss Prevention: User-Based Alert Aggregation",
-      "summary": "Upcoming DLP alert aggregation will consolidate multiple rule-match events for the same user into a single alert, reducing noise and simplifying investigation workflows. This enhancement helps security teams focus on meaningful violations rather than processing redundant alerts.",
+      "title": "Microsoft Purview Data Loss Prevention: User-Based Aggregation of DLP Alerts",
+      "summary": "DLP alerts can now be aggregated by user entity even when multiple rules are matched, consolidating related alert events into a single alert object. This reduces alert noise, simplifies investigation workflows, and improves contextual understanding of violations for admins managing high-volume alert environments.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -53,79 +43,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567010"
     },
     {
-      "id": "purview-dlm-inactive-onedrive-mailbox-deletion",
-      "title": "Microsoft Purview Data Lifecycle Management: Automated Deletion of Inactive OneDrives and Mailboxes",
-      "summary": "Purview will enable admins to automatically delete both content and containers for departed users at scale, maintaining tenant compliance without manual intervention. This streamlines offboarding workflows and reduces storage costs associated with inactive user accounts.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566527"
-    },
-    {
-      "id": "purview-dlm-sensitive-data-insights",
-      "title": "Microsoft Purview Data Lifecycle Management: Insights and Recommendations for Sensitive Data",
-      "summary": "Purview will provide insights on sensitive data in OneDrive and SharePoint along with automated retention policy recommendations to improve data governance and compliance posture. This helps admins identify and govern high-risk data more effectively.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562343"
-    },
-    {
-      "id": "purview-dlm-sharepoint-file-archiving",
-      "title": "Microsoft Purview Data Lifecycle Management: Archive SharePoint Files Under Retention Policies",
-      "summary": "Admins will soon be able to include file archiving actions within retention policies, moving inactive content to low-cost storage while keeping data discoverable and compliant. This extends data lifecycle management capabilities beyond deletion and retention.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562345"
-    },
-    {
-      "id": "purview-dlm-teams-retention-copilot-change",
-      "title": "Microsoft Purview Data Lifecycle Management: Legacy Teams Retention Policies Scope Change for Copilot",
-      "summary": "Existing Teams retention policies that currently apply to both Teams and Microsoft 365 Copilot interactions will be converted to Teams-only policies, no longer implicitly governing Copilot workloads. Admins should audit their retention policies to ensure Copilot data is governed by separate policies if needed.",
-      "category": "Permission Change",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571306"
-    },
-    {
-      "id": "purview-ediscovery-diagnostics",
-      "title": "Microsoft Purview eDiscovery: In-Product Self-Service Diagnostics",
-      "summary": "eDiscovery will introduce self-service diagnostics that identify common issues with case permissions, security filters, and policy status, highlighting misconfigurations and providing remediation guidance. This reduces the need for support escalations and helps admins troubleshoot problems independently.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565222"
-    },
-    {
-      "id": "purview-unified-classification-management",
-      "title": "Microsoft Purview: Unified Classification Management Experience",
-      "summary": "Purview will consolidate all classifiers—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers—into a single unified interface for discovery, creation, validation, and management. This simplifies classifier lifecycle management and improves consistency across Purview policies.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570844"
-    },
-    {
-      "id": "purview-endpoint-dlp-file-extensions",
-      "title": "Microsoft Purview Endpoint DLP: Pre-Curated File Extension Support",
-      "summary": "Endpoint DLP now provides a pre-curated list of supported file extensions for the file extension condition, replacing free-form text entry to prevent unsupported extensions and reduce endpoint processing overhead. This improves policy reliability and reduces false positives.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562993"
-    },
-    {
       "id": "purview-dlp-island-browser-integration",
-      "title": "Microsoft Purview Data Loss Prevention: Island Enterprise Browser Integration",
-      "summary": "Purview network data security will integrate with Island Enterprise Browser to extend DLP and data protection policies to browser-based workflows, detecting and protecting data shared with unmanaged cloud apps through Island's browser, extension, and add-ins. This closes visibility and protection gaps in browser-based user activity.",
+      "title": "Microsoft Purview Data Loss Prevention: Unmanaged Cloud App Discovery with Island Enterprise Browser",
+      "summary": "Microsoft Purview DLP now integrates with Island Enterprise Browser to detect and protect data shared with unmanaged cloud apps through browser workflows using existing Purview classifiers and sensitivity labels. This extends protection to HTTP/HTTPS traffic across Island's browser add-ins and extensions.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "September 2026",
@@ -133,9 +53,79 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558437"
     },
     {
-      "id": "cve-2026-77903-dataverse-eop",
-      "title": "CVE-2026-77903: Microsoft Dataverse Elevation of Privilege Vulnerability",
-      "summary": "An authentication bypass vulnerability in Microsoft Dataverse allows unauthorized attackers to elevate privileges over the network through spoofing attacks. Organizations should apply available patches promptly to prevent unauthorized privilege escalation in their Dataverse environments.",
+      "id": "endpoint-dlp-file-extension-precuration",
+      "title": "Endpoint Data Loss Prevention: Pre-Curated File Extension List for Policy Conditions",
+      "summary": "Endpoint DLP now provides a pre-curated list of supported file extensions for policy conditions, eliminating free-form text entry and preventing unsupported extensions from being used. This improves policy reliability, reduces endpoint processing overhead, and closes protection gaps caused by invalid file type specifications.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562993"
+    },
+    {
+      "id": "purview-dlm-sharepoint-archiving",
+      "title": "Microsoft Purview Data Lifecycle Management: Archive SharePoint Files Under Retention Policies",
+      "summary": "Admins can now configure retention policies in Microsoft Purview to archive (not just retain or delete) inactive SharePoint files to low-cost storage while keeping content discoverable. This extends lifecycle management capabilities and reduces storage costs without compromising compliance or AI-driven search results.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562345"
+    },
+    {
+      "id": "purview-dlm-departed-user-cleanup",
+      "title": "Microsoft Purview Data Lifecycle Management: Automated Cleanup of Departed Users' OneDrives and Mailboxes",
+      "summary": "Admins can now configure data lifecycle policies to automatically delete both content and containers for departed employees at scale, ensuring regulatory compliance without manual intervention. This reduces the administrative burden of managing inactive user resources while maintaining audit trails.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566527"
+    },
+    {
+      "id": "purview-ediscovery-inproduct-diagnostics",
+      "title": "Microsoft Purview eDiscovery: In-Product Diagnostics for Troubleshooting",
+      "summary": "eDiscovery now includes self-service in-product diagnostics to identify common configuration issues with case permissions, security filters, and policy status, along with guidance to resolve them. This helps eDiscovery admins independently troubleshoot problems and reduces dependency on support escalations.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565222"
+    },
+    {
+      "id": "purview-classification-unified-management",
+      "title": "Microsoft Purview: Unified Classification Management Experience",
+      "summary": "Admins now have a single interface to discover, create, validate, and manage all classifiers in Purview—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers. This consolidation simplifies policy configuration and reduces the complexity of managing multiple classification frameworks.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570844"
+    },
+    {
+      "id": "purview-dlm-sensitive-data-insights",
+      "title": "Microsoft Purview Data Lifecycle Management: Insights and Recommendations on Sensitive M365 Data",
+      "summary": "Purview now provides admins with insights on sensitive data in OneDrive and SharePoint, along with policy recommendations for governing retention and lifecycle management of that data. These actionable recommendations help admins improve their security and compliance posture based on actual tenant data patterns.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562343"
+    },
+    {
+      "id": "purview-dlm-teams-copilot-policy-change",
+      "title": "Microsoft Purview Data Lifecycle Management: Legacy Teams Retention Policies No Longer Apply to Copilot",
+      "summary": "Existing retention policies scoped to Microsoft Teams will be converted to Teams-only policies and will no longer implicitly govern Microsoft 365 Copilot interactions. Admins must create separate policies if they want to govern Copilot workload retention, preventing unintended data governance scope creep.",
+      "category": "Permission Change",
+      "source": "Microsoft 365 Roadmap",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571306"
+    },
+    {
+      "id": "cve-2026-77903-dataverse-auth-bypass",
+      "title": "CVE-2026-77903: Microsoft Dataverse Authentication Bypass Vulnerability",
+      "summary": "An authentication bypass vulnerability via spoofing in Microsoft Dataverse allows unauthorized attackers to elevate privileges over a network. Admins should apply the security update immediately to prevent potential unauthorized access to Dataverse resources.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
@@ -143,9 +133,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-77903"
     },
     {
-      "id": "cve-2026-85889-azure-ai-foundry-eop",
-      "title": "CVE-2026-85889: Azure AI Foundry Elevation of Privilege Vulnerability",
-      "summary": "Missing authentication for a critical function in Azure AI Foundry enables unauthorized attackers to escalate privileges over the network. Admins managing Azure AI Foundry deployments should prioritize patching this vulnerability to secure their AI infrastructure.",
+      "id": "cve-2026-85889-azure-ai-foundry-auth",
+      "title": "CVE-2026-85889: Azure AI Foundry Missing Authentication Vulnerability",
+      "summary": "Missing authentication for a critical function in Azure AI Foundry enables unauthorized attackers to elevate privileges over a network. This authentication bypass poses a significant risk to organizations using Azure AI Foundry and requires immediate patching.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
@@ -153,9 +143,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-85889"
     },
     {
-      "id": "cve-2026-69843-fabric-eop",
-      "title": "CVE-2026-69843: Microsoft Fabric Elevation of Privilege Vulnerability",
-      "summary": "An authentication bypass vulnerability in Microsoft Fabric allows unauthorized attackers to escalate privileges through spoofing attacks over the network. This affects identity and access controls within Fabric and requires immediate patching.",
+      "id": "cve-2026-69843-fabric-auth-bypass",
+      "title": "CVE-2026-69843: Microsoft Fabric Authentication Bypass Vulnerability",
+      "summary": "An authentication bypass via spoofing in Microsoft Fabric allows unauthorized attackers to elevate privileges over a network. Admins should prioritize patching this vulnerability to protect Fabric environments from unauthorized access.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
@@ -163,9 +153,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69843"
     },
     {
-      "id": "cve-2026-69865-container-registry-eop",
+      "id": "cve-2026-69865-container-registry-elop",
       "title": "CVE-2026-69865: Microsoft Container Registry Elevation of Privilege Vulnerability",
-      "summary": "An authorization bypass vulnerability in Microsoft Container Registry through user-controlled keys allows unauthorized attackers to escalate privileges over the network. This affects identity-based access controls and container image security.",
+      "summary": "An authorization bypass in Microsoft Container Registry through user-controlled keys allows unauthorized attackers to elevate privileges over a network. Admins using Container Registry should apply updates to prevent unauthorized access to container resources.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
@@ -173,23 +163,23 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-69865"
     },
     {
-      "id": "cve-2026-68791-azure-ml-info-disclosure",
+      "id": "cve-2026-68791-aml-info-disclosure",
       "title": "CVE-2026-68791: Azure Machine Learning Information Disclosure Vulnerability",
-      "summary": "Incorrect authorization in Azure Machine Learning allows unauthorized attackers to disclose sensitive information over the network. Admins should review access controls and apply patches to prevent unauthorized data exposure.",
+      "summary": "Incorrect authorization in Azure Machine Learning allows unauthorized attackers to disclose sensitive information over a network. Admins should review access controls and apply security updates to prevent unintended data exposure.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
-      "importance": "medium",
+      "importance": "high",
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-68791"
     },
     {
-      "id": "cve-2026-85878-azure-postgresql-eop",
-      "title": "CVE-2026-85878: Azure Database for PostgreSQL Elevation of Privilege Vulnerability",
-      "summary": "An improper authorization vulnerability in Azure Database for PostgreSQL allows authorized attackers to escalate privileges over the network. Admins should review database role assignments and apply patches to prevent lateral privilege escalation.",
+      "id": "cve-2026-85878-postgres-authz-elop",
+      "title": "CVE-2026-85878: Azure Database for PostgreSQL Privilege Escalation Vulnerability",
+      "summary": "Improper authorization in Azure Database for PostgreSQL allows authorized attackers to escalate privileges over a network. Admins should review role assignments and access policies, then apply the security patch to prevent unauthorized privilege escalation.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "September 2026",
-      "importance": "medium",
+      "importance": "high",
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-85878"
     }
   ]
