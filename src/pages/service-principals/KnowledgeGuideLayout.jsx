@@ -31,7 +31,9 @@ function useActiveSection(sectionIds) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible[0]?.target?.id) setActive(visible[0].target.id);
       },
       { rootMargin: "-18% 0px -68% 0px", threshold: [0, 0.08, 0.3] },
@@ -44,7 +46,7 @@ function useActiveSection(sectionIds) {
   return active;
 }
 
-function GuideToc({ items, reviewedDate }) {
+function GuideToc({ items, reviewedDate, statusLabel }) {
   const ids = useMemo(() => items.map((item) => item.id), [items]);
   const active = useActiveSection(ids);
 
@@ -53,10 +55,14 @@ function GuideToc({ items, reviewedDate }) {
       <div className="kg-toc-inner">
         <p>On this page</p>
         <nav>
-          {items.map((item) => <a className={active === item.id ? "is-active" : ""} href={`#${item.id}`} key={item.id}>{item.label}</a>)}
+          {items.map((item) => (
+            <a className={active === item.id ? "is-active" : ""} href={`#${item.id}`} key={item.id}>
+              {item.label}
+            </a>
+          ))}
         </nav>
         <div className="kg-toc-status">
-          <span>Guide status</span>
+          <span>{statusLabel}</span>
           <strong>Reviewed {reviewedDate}</strong>
           <small>Grounded in current Microsoft Learn and Microsoft Graph documentation.</small>
         </div>
@@ -65,19 +71,50 @@ function GuideToc({ items, reviewedDate }) {
   );
 }
 
-function RelatedGuides({ pageIds }) {
+function getAncestorPages(page) {
+  const ancestors = [];
+  let current = page;
+  const visited = new Set();
+
+  while (current.parentId && !visited.has(current.parentId)) {
+    visited.add(current.parentId);
+    const parent = getSitePage(current.parentId);
+    ancestors.unshift(parent);
+    current = parent;
+  }
+
+  return ancestors;
+}
+
+function pageLabel(page) {
+  if (page.knowledgeLabel) return page.knowledgeLabel;
+  if (page.kind === "knowledge-hub") return "Reference hub";
+  if (page.kind === "tool") return "SecRole tool";
+  if (page.kind === "updates") return "Microsoft updates";
+  return "Related guide";
+}
+
+function RelatedPages({ pageIds, parentPage }) {
   const pages = pageIds.map((id) => getSitePage(id));
 
   return (
     <div className="kg-related-grid">
       {pages.map((page) => (
         <Link to={page.path} key={page.id}>
-          <span>Related guide</span><h3>{page.title}</h3><p>{page.description}</p><strong>Read guide <span aria-hidden="true">→</span></strong>
+          <span>{pageLabel(page)}</span>
+          <h3>{page.heading || page.title}</h3>
+          <p>{page.description}</p>
+          <strong>Open <span aria-hidden="true">→</span></strong>
         </Link>
       ))}
-      <Link to="/service-principals" className="hub">
-        <span>Reference hub</span><h3>Application objects &amp; service principals</h3><p>Return to the complete object, identity, authentication, governance, and troubleshooting reference.</p><strong>Open the hub <span aria-hidden="true">→</span></strong>
-      </Link>
+      {parentPage && !pageIds.includes(parentPage.id) && (
+        <Link to={parentPage.path} className="hub">
+          <span>Reference hub</span>
+          <h3>{parentPage.heading || parentPage.title}</h3>
+          <p>{parentPage.description}</p>
+          <strong>Open the hub <span aria-hidden="true">→</span></strong>
+        </Link>
+      )}
     </div>
   );
 }
@@ -91,12 +128,31 @@ export default function KnowledgeGuideLayout({
   faq = [],
   sources,
   relatedPageIds = [],
+  relatedTitle,
+  relatedIntro,
+  changePosture = "Read-only investigation first",
   children,
 }) {
   const page = getSitePage(pageId);
+  const ancestors = useMemo(() => getAncestorPages(page), [page]);
+  const parentPage = ancestors.at(-1) || null;
   const reviewedDate = formatReviewedDate(page.lastModified);
   const canonicalUrl = `${SITE_URL}${page.path}`;
   const firstSection = toc[0]?.id || "";
+  const isHub = page.kind === "knowledge-hub";
+  const backPath = parentPage?.path || "/knowledge";
+  const backLabel = parentPage ? "Back to reference hub" : "Back to knowledge library";
+  const shouldShowRelated = relatedPageIds.length > 0 || parentPage;
+
+  const breadcrumbPages = useMemo(() => [
+    { name: "SecRole", path: "/" },
+    { name: "Knowledge", path: "/knowledge" },
+    ...ancestors.map((ancestor) => ({
+      name: ancestor.heading || ancestor.title,
+      path: ancestor.path,
+    })),
+    { name: page.heading || page.title, path: page.path },
+  ], [ancestors, page.heading, page.path, page.title]);
 
   const schemas = useMemo(() => {
     const schema = [
@@ -117,12 +173,12 @@ export default function KnowledgeGuideLayout({
       {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "SecRole", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Knowledge", item: `${SITE_URL}/knowledge` },
-          { "@type": "ListItem", position: 3, name: "Service principals", item: `${SITE_URL}/service-principals` },
-          { "@type": "ListItem", position: 4, name: page.title, item: canonicalUrl },
-        ],
+        itemListElement: breadcrumbPages.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          item: `${SITE_URL}${item.path === "/" ? "/" : item.path}`,
+        })),
       },
     ];
 
@@ -139,28 +195,44 @@ export default function KnowledgeGuideLayout({
     }
 
     return schema;
-  }, [canonicalUrl, faq, page.description, page.keywords, page.lastModified, page.title]);
+  }, [breadcrumbPages, canonicalUrl, faq, page.description, page.keywords, page.lastModified, page.title]);
 
   return (
     <div className="kg-reference">
-      <PageMeta title={page.title} description={page.description} path={page.path} type="article" keywords={page.keywords} schema={schemas} />
+      <PageMeta
+        title={page.title}
+        description={page.description}
+        path={page.path}
+        type="article"
+        keywords={page.keywords}
+        schema={schemas}
+      />
 
       <header className="kg-hero">
         <div className="kg-page-width">
-          <div className="kg-breadcrumb"><Link to="/">SecRole</Link><span>/</span><Link to="/knowledge">Knowledge</Link><span>/</span><Link to="/service-principals">Service principals</Link><span>/</span><strong>{page.heading || page.title}</strong></div>
+          <div className="kg-breadcrumb">
+            {breadcrumbPages.map((item, index) => (
+              <span className="kg-breadcrumb-part" key={item.path}>
+                {index < breadcrumbPages.length - 1
+                  ? <Link to={item.path}>{item.name}</Link>
+                  : <strong>{item.name}</strong>}
+                {index < breadcrumbPages.length - 1 && <span aria-hidden="true">/</span>}
+              </span>
+            ))}
+          </div>
           <div className="kg-hero-copy">
             <div className="kg-eyebrow">{eyebrow}</div>
             <h1>{page.heading || page.title}</h1>
             <p>{lede}</p>
             <div className="kg-hero-actions">
               {firstSection && <a className="kg-button primary" href={`#${firstSection}`}>Start with the answer</a>}
-              <Link className="kg-button secondary" to="/service-principals">Back to reference hub</Link>
+              <Link className="kg-button secondary" to={backPath}>{backLabel}</Link>
             </div>
           </div>
           <div className="kg-summary-strip">
             <div><span>Purpose</span><strong>{summary}</strong></div>
             <div><span>Last reviewed</span><strong>{reviewedDate}</strong></div>
-            <div><span>Change posture</span><strong>Read-only investigation first</strong></div>
+            <div><span>Change posture</span><strong>{changePosture}</strong></div>
           </div>
         </div>
       </header>
@@ -169,20 +241,40 @@ export default function KnowledgeGuideLayout({
         <main className="kg-content">
           {children}
 
-          <GuideSection id="official-sources" eyebrow="Primary references" title="Official Microsoft documentation used for this guide" intro="SecRole translates the platform model into an operational workflow. Microsoft documentation remains the source of truth when the service changes.">
+          <GuideSection
+            id="official-sources"
+            eyebrow="Primary references"
+            title="Official Microsoft documentation used for this reference"
+            intro="SecRole translates the platform model into an operational workflow. Microsoft documentation remains the source of truth when the service changes."
+          >
             <GuideSourceList sources={sources} />
           </GuideSection>
 
-          <GuideSection id="related-guides" eyebrow="Continue the investigation" title="Related SecRole guides" intro="Use the hub for the complete mental model, then move between focused guides as the task becomes more specific.">
-            <RelatedGuides pageIds={relatedPageIds} />
-          </GuideSection>
+          {shouldShowRelated && (
+            <GuideSection
+              id="related-guides"
+              eyebrow="Continue the investigation"
+              title={relatedTitle || (isHub ? "Related SecRole tools and references" : "Related SecRole guides")}
+              intro={relatedIntro || (isHub
+                ? "Move from the governance model into role discovery, overlap analysis, or requirement-based investigation."
+                : "Use the hub for the complete mental model, then move between focused guides as the task becomes more specific.")}
+            >
+              <RelatedPages pageIds={relatedPageIds} parentPage={parentPage} />
+            </GuideSection>
+          )}
 
           <footer className="kg-footer">
-            <span>SecRole knowledge guide</span><strong>Last reviewed: {reviewedDate}</strong><p>Verify tenant configuration, licensing, sovereign-cloud behavior, and current Microsoft documentation before making production changes.</p>
+            <span>{isHub ? "SecRole knowledge reference" : "SecRole knowledge guide"}</span>
+            <strong>Last reviewed: {reviewedDate}</strong>
+            <p>Verify tenant configuration, licensing, sovereign-cloud behavior, and current Microsoft documentation before making production changes.</p>
           </footer>
         </main>
 
-        <GuideToc items={toc} reviewedDate={reviewedDate} />
+        <GuideToc
+          items={toc}
+          reviewedDate={reviewedDate}
+          statusLabel={isHub ? "Reference status" : "Guide status"}
+        />
       </div>
     </div>
   );
