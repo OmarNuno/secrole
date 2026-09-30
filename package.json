@@ -5,11 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-seo-files.mjs",
+    "prebuild": "node scripts/validate-role-data.js && node scripts/generate-seo-files.mjs",
     "build": "vite build",
     "postbuild": "node scripts/generate-route-entrypoints.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:roles": "node scripts/validate-role-data.js",
+    "test:role-drift": "node --test scripts/role-data-validation.test.js scripts/check-role-drift.test.js",
+    "role-drift:validate": "node scripts/check-role-drift.js --validate-only",
+    "role-drift:dry-run": "node scripts/check-role-drift.js --dry-run"
   },
   "dependencies": {
     "react": "^19.2.5",

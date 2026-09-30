@@ -1,30 +1,20 @@
 /**
- * SecRole — check-role-drift.js  (v1)
- * Runs weekly via GitHub Actions. Zero npm dependencies (Node 20+ native fetch).
+ * SecRole — check-role-drift.js (v2)
  *
- * Purpose: keep src/data/roles.js in sync with Microsoft's official role lists.
+ * Keeps src/data/roles.js aligned with Microsoft's official Entra and Purview
+ * role lists. New entries are drafted from current Microsoft documentation,
+ * validated structurally, reviewed against deterministic risk guardrails, and
+ * proposed through a human-reviewed pull request.
  *
- * Pipeline:
- *   1. Fetch the canonical role lists from public MicrosoftDocs repos:
- *      - Entra built-in roles: permissions-reference.md (entra-docs repo, raw markdown)
- *      - Purview role groups: scc-permissions.md (defender-docs repo, raw markdown)
- *   2. Diff official role names against roles.js (fuzzy: plural/Admin-variant tolerant),
- *      minus anything listed in scripts/role-drift-ignore.json.
- *   3. If drift is found, fetch each new role's official permission details and have
- *      Claude (Haiku) draft complete roles.js entries in SecRole's house style.
- *   4. Patch src/data/roles.js (validated by re-importing it) and write a PR body to
- *      $DRIFT_PR_BODY — the workflow turns the working-tree change into a pull request.
- *
- * Claude NEVER invents role facts — drafts are grounded in the fetched Microsoft docs,
- * names must match the official list exactly, and relatedRoles are validated against
- * IDs that actually exist in roles.js. Nothing ships without a human merging the PR.
- *
- * Exit codes: 0 = in sync OR drift drafted successfully; 1 = hard failure.
+ * Local modes:
+ *   node scripts/check-role-drift.js --validate-only
+ *   node scripts/check-role-drift.js --dry-run
  */
 
-import { writeFileSync, readFileSync, existsSync } from "fs";
-import { fileURLToPath, pathToFileURL } from "url";
-import { dirname, join } from "path";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { formatValidationReport, validateRolesFile } from "./role-data-validation.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROLES_PATH = join(__dirname, "..", "src", "data", "roles.js");
@@ -33,11 +23,10 @@ const PR_BODY_PATH = process.env.DRIFT_PR_BODY || "/tmp/drift-pr-body.md";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = "claude-haiku-4-5-20251001";
-const DRAFT_CAP = Number(process.env.DRIFT_DRAFT_CAP || 15); // max entries drafted per run — keeps PRs reviewable
-
-// ---------------------------------------------------------------------------
-// Sources — public raw markdown, same fetch pattern as fetch-updates.js
-// ---------------------------------------------------------------------------
+const DRAFT_CAP = Number(process.env.DRIFT_DRAFT_CAP || 15);
+const CLI_ARGS = new Set(process.argv.slice(2));
+const VALIDATE_ONLY = CLI_ARGS.has("--validate-only");
+const DRY_RUN = CLI_ARGS.has("--dry-run");
 
 const ENTRA_ROLES_RAW =
   "https://raw.githubusercontent.com/MicrosoftDocs/entra-docs/main/docs/identity/role-based-access-control/permissions-reference.md";
@@ -45,9 +34,6 @@ const ENTRA_ROLE_INCLUDE = (slug) =>
   `https://raw.githubusercontent.com/MicrosoftDocs/entra-docs/main/docs/identity/role-based-access-control/includes/${slug}.md`;
 const ENTRA_ROLES_PAGE =
   "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference";
-
-// defender-docs is public (unlike the Purview docs repo) and hosts the canonical
-// "Roles and role groups in … Microsoft Purview" doc. main + public branch fallback.
 const PURVIEW_ROLES_RAW_URLS = [
   "https://raw.githubusercontent.com/MicrosoftDocs/defender-docs/main/defender-office-365/scc-permissions.md",
   "https://raw.githubusercontent.com/MicrosoftDocs/defender-docs/public/defender-office-365/scc-permissions.md",
@@ -56,91 +42,95 @@ const PURVIEW_ROLES_PAGE =
   "https://learn.microsoft.com/en-us/defender-office-365/scc-permissions";
 
 const FETCH_HEADERS = {
-  "User-Agent": "SecRole-RoleDriftBot/1.0 (+https://secrole.com)",
-  "Accept": "text/markdown, text/plain, */*",
+  "User-Agent": "SecRole-RoleDriftBot/2.0 (+https://www.secrole.com)",
+  Accept: "text/markdown, text/plain, */*",
 };
+
+const RISK_RANK = { Low: 0, Medium: 1, High: 2, Critical: 3 };
 
 async function fetchWithTimeout(url, ms = 30000) {
   const controller = new AbortController();
-  const t = setTimeout(() => controller.abort(), ms);
+  const timer = setTimeout(() => controller.abort(), ms);
   try {
-    const res = await fetch(url, { headers: FETCH_HEADERS, signal: controller.signal, redirect: "follow" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res;
+    const response = await fetch(url, {
+      headers: FETCH_HEADERS,
+      signal: controller.signal,
+      redirect: "follow",
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response;
   } finally {
-    clearTimeout(t);
+    clearTimeout(timer);
   }
 }
 
-// ---------------------------------------------------------------------------
-// Name matching — tolerant of Microsoft's plural / "Admin(s)" naming drift
-// ---------------------------------------------------------------------------
-
-function normName(s) {
-  return s
+function normName(value) {
+  return String(value || "")
     .toLowerCase()
     .replace(/[^a-z0-9 ]/gi, " ")
     .split(/\s+/)
     .filter(Boolean)
-    .map((t) => {
-      if (["administrators", "administrator", "admins", "admin"].includes(t)) return "admin";
-      return t.length > 3 && t.endsWith("s") ? t.slice(0, -1) : t;
+    .map((token) => {
+      if (["administrators", "administrator", "admins", "admin"].includes(token)) return "admin";
+      return token.length > 3 && token.endsWith("s") ? token.slice(0, -1) : token;
     })
     .join("");
 }
 
-// ---------------------------------------------------------------------------
-// Parse roles.js — entries, ids, categories (regex on the known house format)
-// ---------------------------------------------------------------------------
-
-function parseRolesJs(src) {
-  const entries = [...src.matchAll(
-    /\{\s*id:\s*"([ep][\w]*)",\s*name:\s*"((?:[^"\\]|\\.)*)",\s*product:\s*"(Entra|Purview)",\s*category:\s*"([^"]+)",\s*risk:\s*"([^"]+)"/g
-  )].map((m) => ({ id: m[1], name: m[2].replace(/\\"/g, '"'), product: m[3], category: m[4], risk: m[5] }));
+function parseRolesJs(source) {
+  const entries = [...source.matchAll(
+    /\{\s*id:\s*"([ep][\w]*)",\s*name:\s*"((?:[^"\\]|\\.)*)",\s*product:\s*"(Entra|Purview)",\s*category:\s*"([^"]+)",\s*risk:\s*"([^"]+)"/g,
+  )].map((match) => ({
+    id: match[1],
+    name: match[2].replace(/\\"/g, '"'),
+    product: match[3],
+    category: match[4],
+    risk: match[5],
+  }));
 
   const nextId = (prefix) => {
-    const nums = entries
-      .filter((e) => e.id.startsWith(prefix))
-      .map((e) => parseInt(e.id.slice(1), 10))
-      .filter((n) => !isNaN(n));
-    return Math.max(...nums) + 1;
+    const numbers = entries
+      .filter((entry) => entry.id.startsWith(prefix))
+      .map((entry) => Number.parseInt(entry.id.slice(1), 10))
+      .filter(Number.isFinite);
+    return Math.max(0, ...numbers) + 1;
   };
 
   const categories = (product) =>
-    [...new Set(entries.filter((e) => e.product === product).map((e) => e.category))].sort();
+    [...new Set(entries.filter((entry) => entry.product === product).map((entry) => entry.category))].sort();
 
-  return { entries, nextEntraId: nextId("e"), nextPurviewId: nextId("p"), categories };
+  return {
+    entries,
+    nextEntraId: nextId("e"),
+    nextPurviewId: nextId("p"),
+    categories,
+  };
 }
 
-// ---------------------------------------------------------------------------
-// Parse Microsoft docs
-// ---------------------------------------------------------------------------
-
-function parseEntraDoc(md) {
-  // "All roles" table rows: > | [Name](#anchor) | Description | Template ID |
-  return [...md.matchAll(
-    /^> \| \[([^\]]+)\]\(#([^)]+)\)\s*\|\s*([\s\S]*?)\s*\|\s*([0-9a-f-]{36})\s*\|$/gm
-  )].map((m) => ({
-    name: m[1].trim(),
-    slug: m[2].trim(),
-    description: m[3].replace(/<br\/?>[\s\S]*$/, "").trim(),
-    templateId: m[4],
-    privileged: m[3].includes("privileged-label"),
+function parseEntraDoc(markdown) {
+  return [...markdown.matchAll(
+    /^> \| \[([^\]]+)\]\(#([^)]+)\)\s*\|\s*([\s\S]*?)\s*\|\s*([0-9a-f-]{36})\s*\|$/gm,
+  )].map((match) => ({
+    name: match[1].trim(),
+    slug: match[2].trim(),
+    description: match[3].replace(/<br\/?>[\s\S]*$/, "").trim(),
+    templateId: match[4],
+    privileged: match[3].includes("privileged-label"),
   }));
 }
 
-function parsePurviewDoc(md) {
+function parsePurviewDoc(markdown) {
   const parseTable = (section, kind) =>
-    [...section.matchAll(/^\|\*\*([^*]+)\*\*[^|]*\|([^|]+)\|([^|]*)\|$/gm)].map((m) => ({
-      name: m[1].trim(),
-      description: m[2].trim(),
-      defaultRoles: m[3].replace(/<br\s*\/?><br\s*\/?>/g, ", ").trim(),
+    [...section.matchAll(/^\|\*\*([^*]+)\*\*[^|]*\|([^|]+)\|([^|]*)\|$/gm)].map((match) => ({
+      name: match[1].trim(),
+      description: match[2].trim(),
+      defaultRoles: match[3].replace(/<br\s*\/?><br\s*\/?>/g, ", ").trim(),
       kind,
     }));
 
-  const groupsSection = (md.split(/^## Role groups in Microsoft Defender/m)[1] || "")
+  const groupsSection = (markdown.split(/^## Role groups in Microsoft Defender/m)[1] || "")
     .split(/^## Roles in Microsoft Defender/m)[0];
-  const rolesSection = md.split(/^## Roles in Microsoft Defender/m)[1] || "";
+  const rolesSection = markdown.split(/^## Roles in Microsoft Defender/m)[1] || "";
 
   return {
     roleGroups: parseTable(groupsSection, "role group"),
@@ -148,91 +138,158 @@ function parsePurviewDoc(md) {
   };
 }
 
-// ---------------------------------------------------------------------------
-// Diff
-// ---------------------------------------------------------------------------
-
 function loadIgnoreList() {
   if (!existsSync(IGNORE_PATH)) return { entra: [], purview: [] };
   try {
     const parsed = JSON.parse(readFileSync(IGNORE_PATH, "utf8"));
     return { entra: parsed.entra || [], purview: parsed.purview || [] };
   } catch {
-    console.error(`⚠️  ${IGNORE_PATH} is not valid JSON — treating as empty.`);
+    console.error(`⚠️  ${IGNORE_PATH} is not valid JSON — treating it as empty.`);
     return { entra: [], purview: [] };
   }
 }
 
 function computeDrift({ myRoles, entraOfficial, purview, entraDocText, purviewDocText, ignore }) {
-  const mineEntra = new Set(myRoles.filter((r) => r.product === "Entra").map((r) => normName(r.name)));
-  const minePurview = new Set(myRoles.filter((r) => r.product === "Purview").map((r) => normName(r.name)));
+  const mineEntra = new Set(myRoles.filter((role) => role.product === "Entra").map((role) => normName(role.name)));
+  const minePurview = new Set(myRoles.filter((role) => role.product === "Purview").map((role) => normName(role.name)));
   const ignoreEntra = new Set(ignore.entra.map(normName));
   const ignorePurview = new Set(ignore.purview.map(normName));
-
-  const isDeprecated = (desc) => /^don'?t use/i.test(desc || "");
+  const isDeprecated = (description) => /^don'?t use/i.test(description || "");
 
   const missingEntra = entraOfficial.filter(
-    (r) => !mineEntra.has(normName(r.name)) && !ignoreEntra.has(normName(r.name))
+    (role) => !mineEntra.has(normName(role.name)) && !ignoreEntra.has(normName(role.name)),
   );
-  // Purview: only role GROUPS drive additions (SecRole's Purview catalog is role groups
-  // plus a few curated individual roles); the roles table + full doc text guard retirement.
   const purviewCandidates = purview.roleGroups.filter(
-    (r) => !minePurview.has(normName(r.name)) && !ignorePurview.has(normName(r.name))
+    (role) => !minePurview.has(normName(role.name)) && !ignorePurview.has(normName(role.name)),
   );
-  const missingPurview = purviewCandidates.filter((r) => !isDeprecated(r.description));
-  const skippedDeprecated = purviewCandidates.filter((r) => isDeprecated(r.description));
+  const missingPurview = purviewCandidates.filter((role) => !isDeprecated(role.description));
+  const skippedDeprecated = purviewCandidates.filter((role) => isDeprecated(role.description));
 
-  // Retired: not in the official lists (fuzzy) AND the literal name appears nowhere in
-  // the fetched docs (Microsoft nests many role names inside descriptions/columns).
-  const officialEntraSet = new Set(entraOfficial.map((r) => normName(r.name)));
-  const officialPurviewSet = new Set([...purview.roleGroups, ...purview.roles].map((r) => normName(r.name)));
-  const retired = myRoles.filter((r) => {
-    const inList = r.product === "Entra" ? officialEntraSet.has(normName(r.name)) : officialPurviewSet.has(normName(r.name));
+  const officialEntraSet = new Set(entraOfficial.map((role) => normName(role.name)));
+  const officialPurviewSet = new Set([...purview.roleGroups, ...purview.roles].map((role) => normName(role.name)));
+  const retired = myRoles.filter((role) => {
+    const inList = role.product === "Entra"
+      ? officialEntraSet.has(normName(role.name))
+      : officialPurviewSet.has(normName(role.name));
     if (inList) return false;
-    const doc = r.product === "Entra" ? entraDocText : purviewDocText;
-    return !doc.toLowerCase().includes(r.name.toLowerCase());
+    const document = role.product === "Entra" ? entraDocText : purviewDocText;
+    return !document.toLowerCase().includes(role.name.toLowerCase());
   });
 
   return { missingEntra, missingPurview, skippedDeprecated, retired };
 }
 
-// ---------------------------------------------------------------------------
-// Claude — draft roles.js entries grounded in the fetched Microsoft docs
-// ---------------------------------------------------------------------------
-
-function sampleEntries(rolesSrc, product, n = 3) {
-  // Pull a few full entry lines verbatim so Haiku matches the house style exactly.
-  const prefix = product === "Entra" ? "e" : "p";
-  const lines = rolesSrc.split("\n").filter((l) => new RegExp(`^\\s*\\{ id:"${prefix}[\\w]*",`).test(l));
-  const picks = [lines[0], lines[Math.floor(lines.length / 2)], lines[lines.length - 1]].filter(Boolean);
-  return picks.slice(0, n).join("\n");
+function riskBelow(actual, minimum) {
+  return (RISK_RANK[actual] ?? -1) < (RISK_RANK[minimum] ?? 99);
 }
 
-async function draftWithClaude({ toDraft, myRoles, rolesSrc, categories }) {
-  const validIds = myRoles.map((r) => `${r.id}=${r.name}`).join("; ");
+export function evaluateRiskGuardrails(draft) {
+  const capabilityText = [
+    draft.name,
+    draft.description,
+    draft.permissions,
+    draft.officialDocumentation,
+  ].filter(Boolean).join(" ").toLowerCase();
+  const flags = [];
 
-  const prompt = `You are the content author for SecRole (secrole.com), a Microsoft Entra ID and Microsoft Purview RBAC role reference for IT admins, security engineers, and compliance officers.
+  const add = (code, minimum, message) => {
+    if (!flags.some((flag) => flag.code === code)) {
+      flags.push({ code, suggestedMinimumRisk: minimum, message });
+    }
+  };
 
-Below are NEW official Microsoft roles that are missing from SecRole's database, each with its OFFICIAL Microsoft documentation text (fetched today — this is your only source of truth). Draft one SecRole entry per role.
+  if (draft.privileged && riskBelow(draft.risk, "High")) {
+    add("privileged-role-understated", "High", "Microsoft marks this role privileged, but the proposed risk is below High.");
+  }
 
-HOUSE STYLE — match these real entries from the database exactly in tone, length, and field usage:
-${sampleEntries(rolesSrc, "Entra")}
-${sampleEntries(rolesSrc, "Purview")}
+  if (
+    /(assign|grant|remove|manage|elevat)[^.]{0,45}(directory |entra |privileged )?roles?|role assignments?|global administrator|privileged identity management/.test(capabilityText)
+    && riskBelow(draft.risk, "High")
+  ) {
+    add("privilege-management-understated", "High", "The official capability appears to manage or escalate privileged role access.");
+  }
+
+  if (
+    /(conditional access|authentication methods?|password reset|credentials?|client secrets?|certificates?|federation|domains?|oauth consent|admin consent|identity protection|security policies?|security configuration)/.test(capabilityText)
+    && /(manage|create|update|modify|delete|reset|configure|approve|grant|write)/.test(capabilityText)
+    && riskBelow(draft.risk, "High")
+  ) {
+    add("identity-security-write-understated", "High", "The role appears to modify identity, authentication, credential, consent, or security-critical configuration.");
+  }
+
+  const broadScope = /(tenant-wide|organization-wide|all users|all mailboxes|all sites|all microsoft 365|sharepoint|onedrive|exchange|teams)/.test(capabilityText);
+  const sensitiveContent = /(email|mailbox|messages?|chats?|documents?|files?|content|communications?|evidence|investigation data|personal data|user activity)/.test(capabilityText);
+  const readCapability = /(read|view|access|search|export|discover|inspect)/.test(capabilityText);
+  if (broadScope && sensitiveContent && readCapability && riskBelow(draft.risk, "High")) {
+    add("sensitive-content-access-understated", "High", "Broad read access to tenant content, communications, evidence, or personal data can have High confidentiality impact.");
+  }
+
+  if (
+    /(sensitive metadata|identity data|audit logs?|sign-in logs?|security alerts?|risk detections?|configuration visibility)/.test(capabilityText)
+    && riskBelow(draft.risk, "Medium")
+  ) {
+    add("sensitive-metadata-understated", "Medium", "Broad sensitive metadata or security evidence should not be treated as narrow low-impact visibility.");
+  }
+
+  if (
+    draft.risk === "Low"
+    && /(create|update|modify|delete|manage|configure|approve|release|restore|purge|write|assign|reset)/.test(capabilityText)
+  ) {
+    add("write-capability-rated-low", "Medium", "The draft contains a meaningful write or approval capability but is rated Low.");
+  }
+
+  if (String(draft.riskRationale || "").trim().length < 30) {
+    add("weak-risk-rationale", draft.risk || "Medium", "Risk rationale is too short to support efficient human review.");
+  }
+
+  return flags;
+}
+
+function sampleEntries(rolesSource, product, count = 3) {
+  const prefix = product === "Entra" ? "e" : "p";
+  const lines = rolesSource
+    .split("\n")
+    .filter((line) => new RegExp(`^\\s*\\{ id:\"${prefix}[\\w]*\",`).test(line));
+  const picks = [lines[0], lines[Math.floor(lines.length / 2)], lines[lines.length - 1]].filter(Boolean);
+  return picks.slice(0, count).join("\n");
+}
+
+async function draftWithClaude({ toDraft, myRoles, rolesSource, categories }) {
+  const roleOptions = [
+    ...myRoles.map((role) => `${role.id}=${role.name}`),
+    ...toDraft.map((role) => `${role.proposedId}=${role.name} [new in this same batch]`),
+  ].join("; ");
+
+  const prompt = `You are the content author for SecRole (secrole.com), a Microsoft Entra ID and Microsoft Purview RBAC role reference for IT administrators, security engineers, and compliance officers.
+
+Below are NEW official Microsoft roles missing from SecRole. Every draft must be grounded only in the official Microsoft text supplied for that role.
+
+HOUSE STYLE — match these existing entries in tone, length, and field usage:
+${sampleEntries(rolesSource, "Entra")}
+${sampleEntries(rolesSource, "Purview")}
 
 RULES:
-1. "name" must EXACTLY match the official name given for each role. Never rename.
-2. "description": 1-2 plain-English sentences of what the role is, written in your own words FROM the provided official text. "permissions": one sentence summarizing what it can actually do, derived ONLY from the provided official text — never from memory.
-3. "leastPrivilege": practical assignment guidance in SecRole's opinionated voice (who should get it, PIM/scoping advice, warnings). If the official text says the role is privileged, deprecated, or "not intended for general use", say so plainly here.
-4. "risk" rubric: "Critical" = can take over the tenant or grant/escalate roles; "High" = broad write access to security-, identity-, or data-protection-critical config, or marked PRIVILEGED with write powers; "Medium" = meaningful but scoped write access; "Low" = read-only or narrow low-impact scope.
-5. "category" must be one of the existing categories for that product: Entra: [${categories("Entra").join(", ")}]. Purview: [${categories("Purview").join(", ")}]. Pick the best fit — do not invent new categories.
-6. "tags": 3-4 lowercase kebab-case search keywords.
-7. "relatedRoles": 1-3 ids chosen ONLY from this list of existing ids (format id=name): ${validIds}
-8. Respond with ONLY a valid JSON array (no markdown fences, no preamble), one object per input role, in the same order, each: {"officialName": "...", "product": "Entra|Purview", "name": "...", "category": "...", "risk": "...", "description": "...", "permissions": "...", "leastPrivilege": "...", "tags": [...], "relatedRoles": [...]}
+1. "name" must EXACTLY match the official name. Never rename it.
+2. "description": 1-2 plain-English sentences based only on the supplied official text.
+3. "permissions": one specific sentence describing what the role can actually do, based only on the supplied official text.
+4. "leastPrivilege": practical assignment guidance. State plainly when Microsoft marks a role privileged, deprecated, restricted, or not intended for general use.
+5. "risk" rubric:
+   - Critical: tenant takeover, role escalation, control of privileged authentication/credentials, or equivalent persistent control.
+   - High: broad write access to identity, security, compliance, or data-protection controls; OR tenant-wide access to sensitive content, communications, investigation evidence, or identity data even when read-only.
+   - Medium: meaningful scoped write access, broad configuration visibility, or access to sensitive metadata.
+   - Low: narrow operational visibility, aggregate reporting, or low-impact metadata with limited blast radius.
+6. "riskRationale": one concise sentence explaining the chosen risk from the official capability and data sensitivity. This is required for human review.
+7. "category" must be one existing category for the product. Entra: [${categories("Entra").join(", ")}]. Purview: [${categories("Purview").join(", ")}].
+8. "tags": 3-4 lowercase kebab-case search keywords.
+9. "relatedRoles": 1-3 IDs chosen only from this list: ${roleOptions}
+   Same-batch IDs are allowed. Do not reference the role's own proposed ID. Prefer roles from the same product and real functional families.
+10. Respond with ONLY a valid JSON array, one object per input role and in the same order:
+{"officialName":"...","product":"Entra|Purview","name":"...","category":"...","risk":"Critical|High|Medium|Low","riskRationale":"...","description":"...","permissions":"...","leastPrivilege":"...","tags":[...],"relatedRoles":[...]}
 
 NEW ROLES TO DRAFT:
 ${JSON.stringify(toDraft, null, 1)}`;
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -241,260 +298,377 @@ ${JSON.stringify(toDraft, null, 1)}`;
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 8000,
+      max_tokens: 10000,
       messages: [{ role: "user", content: prompt }],
     }),
   });
 
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Anthropic API ${res.status}: ${body.slice(0, 300)}`);
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Anthropic API ${response.status}: ${body.slice(0, 300)}`);
   }
 
-  const data = await res.json();
+  const data = await response.json();
   const text = (data.content || [])
-    .filter((b) => b.type === "text")
-    .map((b) => b.text)
+    .filter((block) => block.type === "text")
+    .map((block) => block.text)
     .join("\n")
     .replace(/```json|```/g, "")
     .trim();
-
   const parsed = JSON.parse(text);
   if (!Array.isArray(parsed)) throw new Error("Claude did not return a JSON array.");
   return parsed;
 }
 
 function validateDrafts(drafts, toDraft, myRoles, categories) {
-  const validIds = new Set(myRoles.map((r) => r.id));
+  const existingById = new Map(myRoles.map((role) => [role.id, role]));
+  const plannedById = new Map(toDraft.map((role) => [role.proposedId, role]));
+  const expectedByName = new Map(toDraft.map((role) => [normName(role.name), role]));
   const validRisk = new Set(["Critical", "High", "Medium", "Low"]);
-  const expectedNames = new Map(toDraft.map((r) => [normName(r.name), r]));
-  const out = [];
+  const seenNames = new Set();
+  const output = [];
 
-  for (const d of drafts) {
-    const source = expectedNames.get(normName(d.name || ""));
-    if (!source) { console.error(`   ⚠️  Dropping draft with unexpected name: "${d.name}"`); continue; }
-    if (!validRisk.has(d.risk)) { console.error(`   ⚠️  Dropping "${d.name}" — invalid risk "${d.risk}"`); continue; }
-    if (!categories(source.product).includes(d.category)) {
-      console.error(`   ⚠️  Dropping "${d.name}" — invalid category "${d.category}"`); continue;
+  for (const draft of drafts) {
+    const source = expectedByName.get(normName(draft.name || ""));
+    if (!source) {
+      console.error(`   ⚠️  Dropping draft with unexpected name: "${draft.name}"`);
+      continue;
     }
-    if (!d.description || !d.permissions || !d.leastPrivilege) {
-      console.error(`   ⚠️  Dropping "${d.name}" — missing required text field`); continue;
+    if (seenNames.has(normName(source.name))) {
+      console.error(`   ⚠️  Dropping duplicate draft for "${source.name}".`);
+      continue;
     }
+    seenNames.add(normName(source.name));
+
+    if (!validRisk.has(draft.risk)) {
+      console.error(`   ⚠️  Dropping "${source.name}" — invalid risk "${draft.risk}".`);
+      continue;
+    }
+    if (!categories(source.product).includes(draft.category)) {
+      console.error(`   ⚠️  Dropping "${source.name}" — invalid category "${draft.category}".`);
+      continue;
+    }
+    if (!draft.description || !draft.permissions || !draft.leastPrivilege || !draft.riskRationale) {
+      console.error(`   ⚠️  Dropping "${source.name}" — missing description, permissions, leastPrivilege, or riskRationale.`);
+      continue;
+    }
+
     const productPrefix = source.product === "Entra" ? "e" : "p";
-    out.push({
-      ...d,
-      name: source.name, // enforce the exact official name
+    const relatedRoles = [...new Set(draft.relatedRoles || [])]
+      .filter((id) => {
+        if (id === source.proposedId) return false;
+        const related = existingById.get(id) || plannedById.get(id);
+        return related && related.product === source.product && String(id).startsWith(productPrefix);
+      })
+      .slice(0, 3);
+
+    const normalizedTags = [...new Set((draft.tags || [])
+      .map((tag) => String(tag).trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-"))
+      .filter(Boolean))]
+      .slice(0, 4);
+
+    const validated = {
+      ...draft,
+      id: source.proposedId,
+      name: source.name,
       product: source.product,
-      tags: (d.tags || []).slice(0, 4).map((t) => String(t).toLowerCase()),
-      relatedRoles: (d.relatedRoles || [])
-        .filter((id) => validIds.has(id) && String(id).startsWith(productPrefix))
-        .slice(0, 3),
+      tags: normalizedTags,
+      relatedRoles,
       sourceUrl: source.url,
       privileged: source.privileged || false,
-    });
+      officialDocumentation: source.officialDocumentation,
+    };
+    validated.reviewFlags = evaluateRiskGuardrails(validated);
+    output.push(validated);
   }
-  return out;
+
+  const survivingIds = new Set([...existingById.keys(), ...output.map((draft) => draft.id)]);
+  for (const draft of output) {
+    draft.relatedRoles = draft.relatedRoles.filter((id) => survivingIds.has(id));
+    for (const flag of draft.reviewFlags) {
+      console.error(`   ⚠️  ${draft.id} ${draft.name}: ${flag.message}`);
+    }
+  }
+
+  return output;
 }
 
-// ---------------------------------------------------------------------------
-// Patch roles.js — append drafted entries in the house single-line format
-// ---------------------------------------------------------------------------
-
-function formatEntry(id, d) {
-  const q = (s) => JSON.stringify(String(s));
-  const arr = (a) => `[${a.map((x) => JSON.stringify(String(x))).join(",")}]`;
-  return `  { id:${q(id)}, name:${q(d.name)}, product:${q(d.product)}, category:${q(d.category)}, risk:${q(d.risk)}, description:${q(d.description)}, permissions:${q(d.permissions)}, leastPrivilege:${q(d.leastPrivilege)}, tags:${arr(d.tags)}, relatedRoles:${arr(d.relatedRoles)} },`;
+function formatEntry(id, draft) {
+  const quote = (value) => JSON.stringify(String(value));
+  const array = (values) => `[${values.map((value) => JSON.stringify(String(value))).join(",")}]`;
+  return `  { id:${quote(id)}, name:${quote(draft.name)}, product:${quote(draft.product)}, category:${quote(draft.category)}, risk:${quote(draft.risk)}, description:${quote(draft.description)}, permissions:${quote(draft.permissions)}, leastPrivilege:${quote(draft.leastPrivilege)}, tags:${array(draft.tags)}, relatedRoles:${array(draft.relatedRoles)} },`;
 }
 
-function insertIntoArray(src, arrayName, lines) {
-  if (lines.length === 0) return src;
-  // Find the closing "];" of `export const <arrayName> = [ … ];`
-  const start = src.indexOf(`export const ${arrayName}`);
-  if (start === -1) throw new Error(`Could not find ${arrayName} in roles.js`);
-  const close = src.indexOf("\n];", start);
-  if (close === -1) throw new Error(`Could not find the end of ${arrayName} in roles.js`);
-  return src.slice(0, close) + "\n" + lines.join("\n") + src.slice(close);
+function insertIntoArray(source, arrayName, lines) {
+  if (!lines.length) return source;
+  const start = source.indexOf(`export const ${arrayName}`);
+  if (start === -1) throw new Error(`Could not find ${arrayName} in roles.js.`);
+  const close = source.indexOf("\n];", start);
+  if (close === -1) throw new Error(`Could not find the end of ${arrayName} in roles.js.`);
+  return source.slice(0, close) + "\n" + lines.join("\n") + source.slice(close);
 }
 
 async function validateRolesJs(path) {
-  const mod = await import(pathToFileURL(path).href + `?t=${Date.now()}`);
-  if (!Array.isArray(mod.ENTRA_ROLES) || !Array.isArray(mod.PURVIEW_ROLES)) {
-    throw new Error("roles.js no longer exports ENTRA_ROLES / PURVIEW_ROLES arrays");
+  const result = await validateRolesFile(path);
+  console.log(formatValidationReport(result));
+  if (result.errors.length) {
+    throw new Error(`roles.js failed validation with ${result.errors.length} error(s).`);
   }
-  return { entra: mod.ENTRA_ROLES.length, purview: mod.PURVIEW_ROLES.length };
+  return result.counts;
 }
 
-// ---------------------------------------------------------------------------
-// PR body
-// ---------------------------------------------------------------------------
+function markdownCell(value) {
+  return String(value ?? "—")
+    .replace(/\|/g, "\\|")
+    .replace(/\r?\n/g, "<br>");
+}
 
 function buildPrBody({ added, deferred, skippedDeprecated, retired, counts }) {
   const riskIcon = { Critical: "🔴", High: "🟠", Medium: "🟡", Low: "🟢" };
   const lines = [];
-  lines.push("## 🤖 Role drift detected — new official Microsoft roles drafted for review");
+  lines.push("## 🤖 Role drift detected — official Microsoft roles drafted for human review");
   lines.push("");
-  lines.push("Drafts below were written by Claude Haiku **from the official Microsoft docs fetched today** — please review each risk rating and least-privilege guidance before merging. Merging updates the Role Library, nav counts, and Critical count automatically.");
+  lines.push("Drafts were produced from Microsoft documentation fetched during this run. The automation validates structure and highlights suspicious risk combinations, but a human reviewer must still confirm every role before merge.");
   lines.push("");
-  lines.push(`**Sources:** [Entra built-in roles](${ENTRA_ROLES_PAGE}) · [Purview roles & role groups](${PURVIEW_ROLES_PAGE})`);
-  lines.push("");
-  lines.push("### Added in this PR");
-  lines.push("");
-  lines.push("| ID | Role | Product | Proposed risk | Category |");
-  lines.push("|---|---|---|---|---|");
-  for (const a of added) {
-    lines.push(`| \`${a.id}\` | ${a.name}${a.privileged ? " 🔒" : ""} | ${a.product} | ${riskIcon[a.risk] || ""} ${a.risk} | ${a.category} |`);
+  lines.push(`**Sources:** [Entra built-in roles](${ENTRA_ROLES_PAGE}) · [Purview roles and role groups](${PURVIEW_ROLES_PAGE})`);
+
+  if (added.length) {
+    lines.push("");
+    lines.push("### Added in this PR");
+    lines.push("");
+    lines.push("| ID | Role | Product | Proposed risk | Risk rationale | Automated review flags | Privileged | Category | Source |");
+    lines.push("|---|---|---|---|---|---|---|---|---|");
+    for (const role of added) {
+      const flags = role.reviewFlags.length
+        ? role.reviewFlags.map((flag) => `⚠️ ${flag.message} Suggested minimum: **${flag.suggestedMinimumRisk}**.`).join("<br>")
+        : "—";
+      lines.push(`| \`${role.id}\` | ${markdownCell(role.name)} | ${role.product} | ${riskIcon[role.risk] || ""} ${role.risk} | ${markdownCell(role.riskRationale)} | ${markdownCell(flags)} | ${role.privileged ? "Yes 🔒" : "No"} | ${markdownCell(role.category)} | [Microsoft](${role.sourceUrl}) |`);
+    }
+  } else {
+    lines.push("");
+    lines.push("No role additions were drafted in this run.");
   }
+
   lines.push("");
-  lines.push("🔒 = marked PRIVILEGED by Microsoft");
-  if (deferred.length > 0) {
-    lines.push("");
-    lines.push(`### Deferred to next runs (draft cap is ${DRAFT_CAP}/run)`);
-    lines.push("");
-    for (const d of deferred) lines.push(`- ${d.name} (${d.product})`);
-  }
-  if (skippedDeprecated.length > 0) {
-    lines.push("");
-    lines.push("### Skipped — Microsoft marks these \"Don't use\"");
-    lines.push("");
-    for (const s of skippedDeprecated) lines.push(`- ${s.name} (Purview)`);
-    lines.push("");
-    lines.push(`_To silence these permanently, add them to \`scripts/role-drift-ignore.json\`._`);
-  }
-  if (retired.length > 0) {
-    lines.push("");
-    lines.push("### ⚠️ Possibly retired/renamed — in SecRole but no longer found in the Microsoft docs");
-    lines.push("");
-    for (const r of retired) lines.push(`- \`${r.id}\` ${r.name} (${r.product}) — verify manually; nothing was deleted`);
-  }
+  lines.push("### Reviewer checklist");
   lines.push("");
-  lines.push(`_After merge: **${counts.entra}** Entra + **${counts.purview}** Purview roles._`);
+  lines.push("- [ ] Official role name and product match the cited Microsoft source.");
+  lines.push("- [ ] Description and permissions are specific and supported by the source text.");
+  lines.push("- [ ] Risk reflects both administrative capability **and data sensitivity**; read-only does not automatically mean Low.");
+  lines.push("- [ ] Privileged status was verified against Microsoft documentation.");
+  lines.push("- [ ] Least-privilege guidance is practical and calls out PIM, scope, or restrictions where relevant.");
+  lines.push("- [ ] Related roles are accurate, including any newly drafted roles in this same batch.");
+  lines.push("- [ ] Deprecated, reserved, or not-for-general-use roles are identified clearly.");
+
+  if (deferred.length) {
+    lines.push("");
+    lines.push(`### Deferred to later runs (draft cap: ${DRAFT_CAP})`);
+    lines.push("");
+    for (const role of deferred) lines.push(`- ${role.name} (${role.product})`);
+  }
+  if (skippedDeprecated.length) {
+    lines.push("");
+    lines.push("### Skipped — Microsoft marks these roles \"Don't use\"");
+    lines.push("");
+    for (const role of skippedDeprecated) lines.push(`- ${role.name} (Purview)`);
+    lines.push("");
+    lines.push("Add an intentionally excluded name to `scripts/role-drift-ignore.json` to stop future alerts.");
+  }
+  if (retired.length) {
+    lines.push("");
+    lines.push("### ⚠️ Possibly retired or renamed");
+    lines.push("");
+    for (const role of retired) lines.push(`- \`${role.id}\` ${role.name} (${role.product}) — verify manually; the automation never deletes roles.`);
+  }
+
+  lines.push("");
+  lines.push(`_Catalog after this draft: **${counts.entra}** Entra + **${counts.purview}** Purview roles._`);
   lines.push("");
   lines.push("---");
-  lines.push("_Don't want a role in the library? Close this PR and add its name to `scripts/role-drift-ignore.json` — it will never be flagged again._");
+  lines.push("_Nothing is published until a human merges this pull request._");
   return lines.join("\n");
 }
 
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
+function buildDryRunReport({ missingEntra, missingPurview, skippedDeprecated, retired }) {
+  const lines = [];
+  lines.push("# SecRole role-drift dry run");
+  lines.push("");
+  lines.push(`Missing Entra roles: ${missingEntra.length}`);
+  lines.push(`Missing Purview role groups: ${missingPurview.length}`);
+  lines.push(`Deprecated Purview groups skipped: ${skippedDeprecated.length}`);
+  lines.push(`Possibly retired or renamed SecRole entries: ${retired.length}`);
 
-async function main() {
-  if (!ANTHROPIC_API_KEY) {
-    console.error("❌ ANTHROPIC_API_KEY is not set. Add it in GitHub → Settings → Secrets → Actions.");
-    process.exit(1);
+  if (missingEntra.length || missingPurview.length) {
+    lines.push("");
+    lines.push("## Missing official roles");
+    lines.push("");
+    lines.push("| Role | Product | Privileged | Source |");
+    lines.push("|---|---|---|---|");
+    for (const role of missingEntra) {
+      lines.push(`| ${markdownCell(role.name)} | Entra | ${role.privileged ? "Yes" : "No"} | [Microsoft](${ENTRA_ROLES_PAGE}#${role.slug}) |`);
+    }
+    for (const role of missingPurview) {
+      lines.push(`| ${markdownCell(role.name)} | Purview | Not indicated | [Microsoft](${PURVIEW_ROLES_PAGE}) |`);
+    }
   }
 
+  if (retired.length) {
+    lines.push("");
+    lines.push("## Possibly retired or renamed");
+    lines.push("");
+    for (const role of retired) lines.push(`- ${role.id} ${role.name} (${role.product})`);
+  }
+
+  lines.push("");
+  lines.push("Dry run only: roles.js was not modified and no AI drafting call was made.");
+  return lines.join("\n");
+}
+
+async function fetchOfficialDocuments() {
   console.log("📡 Fetching official Microsoft role lists…");
   const entraDocText = await (await fetchWithTimeout(ENTRA_ROLES_RAW)).text();
-
   let purviewDocText = "";
   for (const url of PURVIEW_ROLES_RAW_URLS) {
     try {
       purviewDocText = await (await fetchWithTimeout(url)).text();
       break;
-    } catch (e) {
-      console.error(`⚠️  Purview doc failed at ${url}: ${e.message} — trying next URL.`);
+    } catch (error) {
+      console.error(`⚠️  Purview doc failed at ${url}: ${error.message} — trying the next URL.`);
     }
   }
-  if (!purviewDocText) {
-    console.error("❌ Could not fetch the Purview roles doc from any URL.");
-    process.exit(1);
+  if (!purviewDocText) throw new Error("Could not fetch the Purview roles document from any configured URL.");
+  return { entraDocText, purviewDocText };
+}
+
+async function main() {
+  if (VALIDATE_ONLY) {
+    const result = await validateRolesFile(ROLES_PATH);
+    console.log(formatValidationReport(result));
+    if (result.errors.length) process.exitCode = 1;
+    return;
   }
 
+  const { entraDocText, purviewDocText } = await fetchOfficialDocuments();
   const entraOfficial = parseEntraDoc(entraDocText);
   const purview = parsePurviewDoc(purviewDocText);
   if (entraOfficial.length < 50 || purview.roleGroups.length < 20) {
-    // Doc format changed under us — fail loudly instead of "detecting" mass retirement.
-    console.error(`❌ Parsed suspiciously few official roles (Entra: ${entraOfficial.length}, Purview groups: ${purview.roleGroups.length}). The doc format may have changed — aborting without touching anything.`);
-    process.exit(1);
+    throw new Error(`Parsed suspiciously few official roles (Entra: ${entraOfficial.length}, Purview groups: ${purview.roleGroups.length}). The Microsoft document format may have changed.`);
   }
 
-  const rolesSrc = readFileSync(ROLES_PATH, "utf8");
-  const { entries: myRoles, nextEntraId, nextPurviewId, categories } = parseRolesJs(rolesSrc);
+  const rolesSource = readFileSync(ROLES_PATH, "utf8");
+  const { entries: myRoles, nextEntraId, nextPurviewId, categories } = parseRolesJs(rolesSource);
   const ignore = loadIgnoreList();
-
-  console.log(`   Official: ${entraOfficial.length} Entra roles | ${purview.roleGroups.length} Purview role groups (+${purview.roles.length} roles)`);
-  console.log(`   SecRole:  ${myRoles.filter((r) => r.product === "Entra").length} Entra | ${myRoles.filter((r) => r.product === "Purview").length} Purview | ignore list: ${ignore.entra.length + ignore.purview.length}`);
-
-  const { missingEntra, missingPurview, skippedDeprecated, retired } = computeDrift({
-    myRoles, entraOfficial, purview, entraDocText, purviewDocText, ignore,
+  const drift = computeDrift({
+    myRoles,
+    entraOfficial,
+    purview,
+    entraDocText,
+    purviewDocText,
+    ignore,
   });
 
-  console.log(`🔍 Drift: +${missingEntra.length} Entra, +${missingPurview.length} Purview` +
-    (skippedDeprecated.length ? ` (${skippedDeprecated.length} deprecated skipped)` : "") +
-    (retired.length ? ` | ${retired.length} possibly retired` : ""));
+  console.log(`   Official: ${entraOfficial.length} Entra roles | ${purview.roleGroups.length} Purview role groups (+${purview.roles.length} individual roles)`);
+  console.log(`   SecRole:  ${myRoles.filter((role) => role.product === "Entra").length} Entra | ${myRoles.filter((role) => role.product === "Purview").length} Purview`);
+  console.log(`🔍 Drift: +${drift.missingEntra.length} Entra, +${drift.missingPurview.length} Purview${drift.retired.length ? ` | ${drift.retired.length} possibly retired` : ""}`);
 
-  if (missingEntra.length === 0 && missingPurview.length === 0 && retired.length === 0) {
+  if (DRY_RUN) {
+    const report = buildDryRunReport(drift);
+    console.log(report);
+    if (process.env.DRIFT_PR_BODY) writeFileSync(PR_BODY_PATH, report);
+    return;
+  }
+
+  if (!drift.missingEntra.length && !drift.missingPurview.length && !drift.retired.length) {
     console.log("✓ roles.js is in sync with the official Microsoft role lists.");
     return;
   }
 
-  // Build the draft batch (Entra first — completeness there is the core promise),
-  // enriched with official permission details so Haiku has real source text.
   const allMissing = [
-    ...missingEntra.map((r) => ({ ...r, product: "Entra" })),
-    ...missingPurview.map((r) => ({ ...r, product: "Purview" })),
+    ...drift.missingEntra.map((role) => ({ ...role, product: "Entra" })),
+    ...drift.missingPurview.map((role) => ({ ...role, product: "Purview" })),
   ];
-  const batch = allMissing.slice(0, DRAFT_CAP);
+  const rawBatch = allMissing.slice(0, DRAFT_CAP);
   const deferred = allMissing.slice(DRAFT_CAP);
+  let nextE = nextEntraId;
+  let nextP = nextPurviewId;
+  const batch = rawBatch.map((role) => ({
+    ...role,
+    proposedId: role.product === "Entra" ? `e${nextE++}` : `p${nextP++}`,
+  }));
 
   let added = [];
-  if (batch.length > 0) {
+  if (batch.length) {
+    if (!ANTHROPIC_API_KEY) {
+      throw new Error("ANTHROPIC_API_KEY is required to draft new roles. Use --dry-run for discovery without AI.");
+    }
+
     console.log(`📄 Fetching official permission details for ${batch.length} role(s)…`);
     const toDraft = [];
-    for (const r of batch) {
-      if (r.product === "Entra") {
-        let officialText = r.description;
+    for (const role of batch) {
+      if (role.product === "Entra") {
+        let officialDocumentation = role.description;
         try {
-          const inc = await (await fetchWithTimeout(ENTRA_ROLE_INCLUDE(r.slug))).text();
-          officialText = inc.replace(/^---[\s\S]*?---/, "").trim().slice(0, 3500);
-        } catch (e) {
-          console.error(`   ⚠️  Include for "${r.name}" unavailable (${e.message}) — using table description only.`);
+          const includeText = await (await fetchWithTimeout(ENTRA_ROLE_INCLUDE(role.slug))).text();
+          officialDocumentation = includeText.replace(/^---[\s\S]*?---/, "").trim().slice(0, 4500);
+        } catch (error) {
+          console.error(`   ⚠️  Include for "${role.name}" unavailable (${error.message}); using the official table description.`);
         }
         toDraft.push({
-          product: "Entra", name: r.name, privileged: r.privileged,
-          url: `${ENTRA_ROLES_PAGE}#${r.slug}`,
-          officialDocumentation: officialText,
+          proposedId: role.proposedId,
+          product: "Entra",
+          name: role.name,
+          privileged: role.privileged,
+          url: `${ENTRA_ROLES_PAGE}#${role.slug}`,
+          officialDocumentation,
         });
       } else {
         toDraft.push({
-          product: "Purview", name: r.name, privileged: false,
+          proposedId: role.proposedId,
+          product: "Purview",
+          name: role.name,
+          privileged: false,
           url: PURVIEW_ROLES_PAGE,
-          officialDocumentation: `${r.description}\n\nDefault roles assigned to this role group: ${r.defaultRoles}`.slice(0, 3500),
+          officialDocumentation: `${role.description}\n\nDefault roles assigned to this role group: ${role.defaultRoles}`.slice(0, 4500),
         });
       }
     }
 
     console.log(`🤖 Drafting ${toDraft.length} entries with ${MODEL}…`);
-    const drafts = validateDrafts(await draftWithClaude({ toDraft, myRoles, rolesSrc, categories }), toDraft, myRoles, categories);
-    if (drafts.length === 0) {
-      console.error("❌ No drafts survived validation — nothing to patch.");
-      process.exit(1);
+    const rawDrafts = await draftWithClaude({ toDraft, myRoles, rolesSource, categories });
+    const drafts = validateDrafts(rawDrafts, toDraft, myRoles, categories);
+    if (!drafts.length) throw new Error("No drafts survived validation; roles.js was not modified.");
+
+    const entraLines = [];
+    const purviewLines = [];
+    for (const draft of drafts) {
+      const line = formatEntry(draft.id, draft);
+      (draft.product === "Entra" ? entraLines : purviewLines).push(line);
+      added.push(draft);
     }
 
-    // Assign sequential ids and patch roles.js
-    let eId = nextEntraId, pId = nextPurviewId;
-    const entraLines = [], purviewLines = [];
-    for (const d of drafts) {
-      const id = d.product === "Entra" ? `e${eId++}` : `p${pId++}`;
-      (d.product === "Entra" ? entraLines : purviewLines).push(formatEntry(id, d));
-      added.push({ id, ...d });
-    }
-    let patched = insertIntoArray(rolesSrc, "ENTRA_ROLES", entraLines);
+    let patched = insertIntoArray(rolesSource, "ENTRA_ROLES", entraLines);
     patched = insertIntoArray(patched, "PURVIEW_ROLES", purviewLines);
     writeFileSync(ROLES_PATH, patched);
   }
 
-  // Safety gate: the patched file must still be valid ESM with the expected exports.
   const counts = await validateRolesJs(ROLES_PATH);
-  console.log(`✅ roles.js patched and validated: ${counts.entra} Entra + ${counts.purview} Purview roles.`);
-
-  writeFileSync(PR_BODY_PATH, buildPrBody({ added, deferred, skippedDeprecated, retired, counts }));
-  console.log(`📝 PR body written to ${PR_BODY_PATH}`);
-  console.log(`   Added: ${added.map((a) => `${a.id} ${a.name}`).join(", ") || "none"}`);
+  writeFileSync(PR_BODY_PATH, buildPrBody({
+    added,
+    deferred,
+    skippedDeprecated: drift.skippedDeprecated,
+    retired: drift.retired,
+    counts,
+  }));
+  console.log(`📝 Review report written to ${PR_BODY_PATH}`);
+  console.log(`   Added: ${added.map((role) => `${role.id} ${role.name}`).join(", ") || "none"}`);
 }
 
-main().catch((e) => {
-  console.error(`❌ ${e.message}`);
-  process.exit(1);
-});
+const invokedDirectly = process.argv[1]
+  && pathToFileURL(resolve(process.argv[1])).href === import.meta.url;
+
+if (invokedDirectly) {
+  main().catch((error) => {
+    console.error(`❌ ${error.message}`);
+    process.exit(1);
+  });
+}
