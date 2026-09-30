@@ -2,7 +2,7 @@
 
 > Microsoft Entra ID and Microsoft Purview role, identity, permission, and least-privilege reference for IT administrators and security engineers.
 
-SecRole combines searchable role intelligence, comparison tools, official-source updates, and practical Microsoft Entra knowledge references. Technical pages are grounded in Microsoft Learn and Microsoft Graph documentation and include a visible last-reviewed date.
+SecRole combines searchable role intelligence, comparison tools, official-source updates, and practical Microsoft Entra knowledge guides. Technical reference pages are grounded in Microsoft Learn and Microsoft Graph documentation and include a visible last-reviewed date.
 
 ## Published pages
 
@@ -12,7 +12,7 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 - [Microsoft Entra Service Principals: Complete Reference](https://www.secrole.com/service-principals): Understand Microsoft Entra service principals, application objects, app IDs vs. object IDs, permissions, consent, authentication, and governance.
 - [Microsoft Entra Role Governance: Complete Reference](https://www.secrole.com/role-governance): Govern Microsoft Entra role definitions, direct and group assignments, PIM eligibility and activation, scope, emergency access, custom roles, and recurring reviews.
 - [Microsoft Entra & Purview Updates](https://www.secrole.com/updates): Track Microsoft Entra ID and Purview role, permission, security, and roadmap updates curated from official Microsoft sources.
-- [SecRole Microsoft Identity Knowledge Library](https://www.secrole.com/knowledge): Browse practical Microsoft Entra, Purview, workload identity, permission, role-governance, migration, credential, and troubleshooting references from SecRole.
+- [SecRole Microsoft Identity Knowledge Library](https://www.secrole.com/knowledge): Browse practical Microsoft Entra, Purview, workload identity, permission, PIM, role-governance, migration, and troubleshooting guides from SecRole.
 - [Application ID vs. Object ID vs. Tenant ID in Microsoft Entra](https://www.secrole.com/service-principals/identifiers): Choose the correct Microsoft Entra application, service principal, and tenant ID for OAuth, Microsoft Graph, Azure RBAC, and troubleshooting.
 - [Service Principal Permissions and Admin Consent](https://www.secrole.com/service-principals/permissions-and-consent): Reconcile configured API permissions, admin consent, app-role assignments, delegated grants, and access-token claims in Microsoft Entra.
 - [Managed Identities and Workload Identity Federation](https://www.secrole.com/service-principals/managed-identities): Choose and implement system-assigned or user-assigned managed identities and federated workload authentication without long-lived secrets.
@@ -20,11 +20,11 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 - [Microsoft Entra Service Principal Troubleshooting Guide](https://www.secrole.com/service-principals/troubleshooting): Troubleshoot Microsoft Entra service principal object lookup, credentials, consent, token claims, assignments, Conditional Access, logs, and recovery.
 - [How to Review a Service Principal for Security Risk](https://www.secrole.com/service-principals/security-review): Audit Microsoft Entra service principal ownership, provenance, permissions, credentials, activity, risk detections, Conditional Access, and lifecycle controls.
 - [Service Principal Credential Expiration and Rotation](https://www.secrole.com/service-principals/credential-lifecycle): Inventory, prioritize, rotate, contain, and retire Microsoft Entra application secrets and certificates without causing an outage.
+- [Microsoft Entra PIM Role Settings and Eligible Assignments](https://www.secrole.com/role-governance/privileged-identity-management): Design and review eligible assignments, activation duration, MFA, authentication context, approvals, notifications, evidence, and standing-access migration.
 
 ## Content principles
 
 - Prefer Microsoft primary documentation for platform facts and API behavior.
-- Distinguish role systems, principals, definitions, scopes, assignment states, and effective access.
 - Distinguish requested permissions from tenant grants and configuration from runtime evidence.
 - Provide read-only investigation commands before change or remediation examples.
 - Treat Microsoft documentation as the source of truth when platform behavior changes.

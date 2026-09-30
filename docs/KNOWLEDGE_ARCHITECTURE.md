@@ -1,6 +1,6 @@
 # SecRole Knowledge Architecture
 
-Last updated: September 19, 2026
+Last updated: September 29, 2026
 
 ## Purpose
 
@@ -28,7 +28,7 @@ A hub must remain useful on its own. Child guides deepen one task rather than re
 - `guideTags` supplies short task labels for cards.
 - `knowledgeTrack` groups published focused guides on `/knowledge`.
 - `knowledgeOrder` provides stable display ordering for hubs and guides.
-- `knowledgeLabel` supplies a visitor-facing card type such as Reference hub or Governance guide.
+- `knowledgeLabel` supplies a visitor-facing card type such as Reference hub, PIM guide, or Governance guide.
 
 The build runs `scripts/generate-seo-files.mjs`, which validates published routes and creates:
 
@@ -49,12 +49,13 @@ The public library is:
 It currently contains:
 
 - Two complete reference hubs
-- Seven focused Service Principal and workload-identity guides
+- Eight focused guides
 - Search across published titles, descriptions, search intent, keywords, and tags
-- Three task tracks for focused guides:
+- Four task tracks for focused guides:
   - Understand the identity and permission model
   - Build and migrate workload identities
   - Operate and govern durable access
+  - Govern privileged access
 - Links to the Role Library, Overlap Analyzer, AI Advisor, and Updates pages
 
 The top navigation uses **Knowledge** as the broader destination. It remains active while the visitor is on `/knowledge`, either published hub, or any child guide beneath those hubs.
@@ -74,14 +75,14 @@ The top navigation uses **Knowledge** as the broader destination. It remains act
 
 ## Microsoft Entra Role Governance cluster
 
-| Route | Status | Primary intent |
-|---|---|---|
-| `/role-governance` | Published hub | Understand effective Microsoft Entra administrator access across definitions, principals, direct and group assignments, PIM schedules, scope, controls, emergency access, and evidence |
-| `/role-governance/privileged-identity-management` | Planned guide | Configure eligible assignments, activation controls, approvers, notifications, reviews, and audit evidence |
-| `/role-governance/role-assignable-groups` | Planned guide | Govern role-assignable group ownership, membership, PIM for Groups, and delegated administration |
-| `/role-governance/custom-roles-and-scope` | Planned guide | Design custom role definitions and assign them at tenant, Administrative Unit, or supported directory-resource scope |
+| Route | Status | Track | Primary intent |
+|---|---|---|---|
+| `/role-governance` | Published hub | Start here | Understand effective Microsoft Entra administrator access across definitions, principals, direct and group assignments, PIM schedules, scope, controls, emergency access, and evidence |
+| `/role-governance/privileged-identity-management` | Published guide | Govern privileged access | Configure, inventory, review, troubleshoot, and migrate privileged role access to governed eligibility and activation |
+| `/role-governance/role-assignable-groups` | Planned guide | Future | Govern role-assignable group ownership, membership, PIM for Groups, and delegated administration |
+| `/role-governance/custom-roles-and-scope` | Planned guide | Future | Design custom role definitions and assign them at tenant, Administrative Unit, or supported directory-resource scope |
 
-The initial hub is intentionally complete before the child guides are published. Planned child routes remain hidden and unlinked.
+Planned child routes remain hidden and unlinked until complete.
 
 ## Role-governance content contract
 
@@ -99,6 +100,32 @@ Role-governance content must preserve these distinctions:
 - Built-in role selection vs. custom role design
 
 A review should explain the **principal, role, scope, state, duration, controls, inheritance path, and evidence** together.
+
+## PIM content contract
+
+PIM guidance must preserve these distinctions:
+
+- Permanent active vs. time-bound active vs. permanent eligible vs. time-bound eligible vs. activated access
+- Role-management policy vs. policy assignment vs. role assignment
+- Configuration schedules and requests vs. effective schedule instances
+- MFA claim reuse vs. explicit reauthentication through authentication context
+- Authentication-context controls for activation vs. Conditional Access controls for role use after activation
+- Approval requirement vs. approver availability and escalation design
+- Ticket metadata vs. actual ticket-system validation
+- Eligible access vs. a current active role assignment
+- Planned standing-access migration vs. emergency-access exceptions
+- CorrelationId vs. roleAssignmentRequestId for asynchronous audit correlation
+
+The PIM guide follows this migration order:
+
+1. Inventory all effective access paths.
+2. Reduce role and scope before changing state.
+3. Create eligibility while the current active path remains available.
+4. Configure activation and assignment policy.
+5. Test requester, approver, authentication, notification, and target task.
+6. Prove expiration and audit evidence.
+7. Remove the old standing assignment.
+8. Monitor early production use and schedule recurring review.
 
 ## Credential-lifecycle content contract
 
@@ -132,6 +159,13 @@ For mandatory Azure MFA and user-based automation:
 - The Updates page contains a high-impact migration card that links to the permanent guide.
 - The Knowledge library includes the migration guide in the Build & migrate track.
 
+For Microsoft Entra PIM:
+
+- The authoritative focused page is `/role-governance/privileged-identity-management`.
+- The Role Governance hub contains the complete assignment model and links to the focused PIM guide.
+- The Knowledge library includes the guide in the Govern privileged access track.
+- Future Role-Assignable Groups and Custom Roles guides will link back to the PIM guide when activation or eligibility is part of the task.
+
 The smaller entry points summarize and route. They do not duplicate the complete runbook.
 
 ## Page contract
@@ -153,8 +187,8 @@ Every published knowledge page should include:
 
 - `/knowledge` links to every published hub and focused guide.
 - Hubs link back to the library and to relevant SecRole tools.
-- A hub displays only published child guides; planned routes remain hidden.
-- Every child guide links to `/knowledge`, its parent hub, and relevant siblings.
+- A hub displays or links only published child guides; planned routes remain hidden.
+- Every child guide links to `/knowledge`, its parent hub, and relevant siblings or tools.
 - Link text describes the destination; avoid generic text such as “click here.”
 
 ## Publishing a new guide
@@ -183,13 +217,13 @@ Every published knowledge page should include:
 
 ## Next content sequence
 
-1. Publish the Microsoft Entra Role Governance reference hub.
-2. Publish the PIM and eligible-assignment guide.
-3. Publish the role-assignable groups and delegated-administration guide.
-4. Publish the custom roles, scope, and Administrative Units guide.
+1. Publish the PIM role-settings and eligible-assignment guide.
+2. Publish the role-assignable groups and delegated-administration guide.
+3. Publish the custom roles, scope, and Administrative Units guide.
+4. Review the completed Role Governance cluster for cross-linking and mobile consistency.
 5. Decide whether the next major cluster is Microsoft Purview administration or another high-demand Entra governance area.
 6. Continue improving role-drift quality and evaluate full static generation or server rendering as the library grows.
 
 ## Future platform decision
 
-Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the complete page body. As the library grows, evaluate full static generation or server rendering so complete article and index content is present before JavaScript executes. Preserve the route registry and URL structure during that migration.
+Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the complete article and index body. As the library grows, evaluate full static generation or server rendering so complete content is present before JavaScript executes. Preserve the route registry and URL structure during that migration.
