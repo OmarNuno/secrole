@@ -10,6 +10,7 @@ import Knowledge from "./pages/Knowledge";
 import "./pages/KnowledgeHubs.css";
 import "./pages/service-principals/KnowledgeGuideBreadcrumbs.css";
 import RoleGovernance from "./pages/role-governance/RoleGovernance";
+import PimRoleSettingsGuide from "./pages/role-governance/PimRoleSettingsGuide";
 import ServicePrincipalsRoute from "./pages/service-principals/ServicePrincipalsRoute";
 import IdentifiersGuide from "./pages/service-principals/IdentifiersGuide";
 import PermissionsConsentGuide from "./pages/service-principals/PermissionsConsentGuide";
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/updates" element={<Updates />} />
           <Route path="/knowledge" element={<Knowledge />} />
           <Route path="/role-governance" element={<RoleGovernance />} />
+          <Route path="/role-governance/privileged-identity-management" element={<PimRoleSettingsGuide />} />
           <Route path="/service-principals" element={<ServicePrincipalsRoute />} />
           <Route path="/service-principals/identifiers" element={<IdentifiersGuide />} />
           <Route path="/service-principals/permissions-and-consent" element={<PermissionsConsentGuide />} />

@@ -26,6 +26,12 @@ const TRACKS = [
     title: "Troubleshoot, review, and control durable access",
     description: "Investigate failures, collect defensible evidence, review privilege and ownership, and make safe retain, reduce, contain, rotate, or retire decisions.",
   },
+  {
+    id: "privileged-access",
+    eyebrow: "Govern privileged access",
+    title: "Make administrator access eligible, controlled, and provable",
+    description: "Design PIM role settings, eligible assignments, activation controls, approvers, evidence, and recurring reviews before removing standing access.",
+  },
 ];
 
 const TOOL_IDS = ["role-library", "role-overlap-analyzer", "ai-role-advisor", "updates"];
@@ -180,7 +186,7 @@ export default function Knowledge() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search roles, PIM, scope, permissions, MFA, managed identity, rotation…"
+                placeholder="Search PIM, eligible roles, approvers, scope, permissions, MFA, managed identity…"
                 autoComplete="off"
               />
               {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}
@@ -241,7 +247,7 @@ export default function Knowledge() {
           <section className="knowledge-empty" aria-live="polite">
             <span>⌕</span>
             <h2>No published knowledge matches “{query}”</h2>
-            <p>Try a broader term such as role assignment, PIM, scope, service principal, permission, MFA, managed identity, credential rotation, security review, or troubleshooting.</p>
+            <p>Try a broader term such as PIM, eligible role, approval, role assignment, scope, service principal, permission, MFA, managed identity, credential rotation, security review, or troubleshooting.</p>
             <button type="button" onClick={() => setQuery("")}>Show all knowledge</button>
           </section>
         )}
@@ -276,7 +282,7 @@ export default function Knowledge() {
 
         <footer className="knowledge-footer">
           <span>SecRole knowledge library</span>
-          <strong>Last reviewed: September 19, 2026</strong>
+          <strong>Last reviewed: September 29, 2026</strong>
           <p>The library expands as complete, useful references and guides are published. Planned pages remain private until they are ready for administrators to use.</p>
         </footer>
       </div>
