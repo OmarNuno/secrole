@@ -1,0 +1,27 @@
+.kg-breadcrumb {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.kg-breadcrumb-part {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kg-breadcrumb-part a,
+.kg-breadcrumb-part strong {
+  overflow-wrap: anywhere;
+}
+
+.kg-breadcrumb-part > span[aria-hidden="true"] {
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+@media (max-width: 640px) {
+  .kg-breadcrumb-part {
+    gap: 6px;
+  }
+}

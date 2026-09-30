@@ -25,7 +25,11 @@ export default function Nav() {
   const closeMenu = () => setMenuOpen(false);
   const isActive = (to) => {
     if (to === "/knowledge") {
-      return pathname === "/knowledge" || pathname === "/service-principals" || pathname.startsWith("/service-principals/");
+      return pathname === "/knowledge"
+        || pathname === "/service-principals"
+        || pathname.startsWith("/service-principals/")
+        || pathname === "/role-governance"
+        || pathname.startsWith("/role-governance/");
     }
     return pathname === to;
   };
