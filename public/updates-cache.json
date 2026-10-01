@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-09-30T11:28:28.820Z",
-  "fetchedAt": "2026-09-30T11:28:28.820Z",
+  "lastUpdated": "2026-10-01T11:56:26.410Z",
+  "fetchedAt": "2026-10-01T11:56:26.410Z",
   "updates": [
     {
-      "id": "purview-dlp-network-data-security-ga",
-      "title": "Microsoft Purview Data Loss Prevention: Network Data Security General Availability",
-      "summary": "Data Loss Prevention now integrates with Microsoft Entra Global Secure Access to enforce DLP policies at the network layer, protecting data across browsers, apps, APIs, and AI platforms. This enables admins to prevent sensitive data exfiltration to untrusted cloud applications while monitoring risky user activity through Insider Risk Management.",
+      "id": "purview-network-data-security-ga",
+      "title": "Purview Network Data Security: DLP Integration with Entra Global Secure Access Now GA",
+      "summary": "Microsoft Purview's Data Loss Prevention now integrates with Microsoft Entra Global Secure Access to enforce DLP policies at the network layer, protecting sensitive data across browsers, apps, APIs, and AI platforms. This capability enables admins to detect risky user activity and block unauthorized sharing of sensitive data with untrusted cloud applications in real time.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
@@ -13,104 +13,14 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-dlp-non-microsoft-apps",
-      "title": "Microsoft Purview Data Loss Prevention: Support for Non-Microsoft Connected Apps",
-      "summary": "DLP and auto-labeling now extend to non-Microsoft SaaS platforms including Google Workspace, Box, Dropbox, Salesforce, ServiceNow, AWS, and Cisco Webex. Admins can now enforce consistent data protection policies across their entire multi-cloud environment.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
+      "id": "chromium-authorization-vulnerabilities-edge",
+      "title": "14 Authorization Vulnerabilities Patched in Microsoft Edge (Chromium)",
+      "summary": "Microsoft Edge has patched 14 Chromium-based authorization vulnerabilities spanning multiple components including WakeLock, WebView, Navigation, Scroll, NFC, Safebrowsing, Core, Contextual Tasks, Network, BrowserTag, DevTools, and Extensions. Admins should update Edge immediately to mitigate potential privilege escalation and unauthorized access risks.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
       "date": "September 2026",
       "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
-    },
-    {
-      "id": "purview-permissions-audit-log-improvements",
-      "title": "Microsoft Purview: Permissions Audit Log Improvements",
-      "summary": "Enhanced audit logs now provide clearer visibility into role and scoped-role access decisions within the Purview portal, helping administrators troubleshoot access issues and monitor authorization outcomes more effectively. This improves compliance monitoring and troubleshooting of identity-based access control.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569363"
-    },
-    {
-      "id": "purview-auto-labeling-scale-increase",
-      "title": "Microsoft Purview: Auto-Labeling Scale Increase for SharePoint and OneDrive",
-      "summary": "Maximum auto-labeling capacity is increasing from 100,000 to 500,000 files per tenant per day, enabling faster data protection and labeling gap closure across organizations. This supports better data readiness for Microsoft 365 Copilot with greater confidence in protection coverage.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571309"
-    },
-    {
-      "id": "purview-auto-labeling-coverage-report",
-      "title": "Microsoft Purview: Information Protection Auto-Labeling Per-Policy Coverage Report",
-      "summary": "Admins can now view per-policy coverage reports showing which files have been labeled, which remain unlabeled, and whether they were included in simulation snapshots, helping track enforcement progress against actual data state. This enables better gap analysis and policy optimization.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568935"
-    },
-    {
-      "id": "purview-insider-risk-policy-recommendation",
-      "title": "Microsoft Purview: Insider Risk Management Policy Recommendation Panel",
-      "summary": "IRM now provides guidance on missing policy protections and configurations that deliver incremental value, helping admins identify coverage gaps and optimize policy settings. This enables more comprehensive insider risk mitigation with visibility into where protections can be expanded.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560600"
-    },
-    {
-      "id": "purview-scan-existing-files-sensitive-info",
-      "title": "Microsoft Purview: Scan Existing Files in SharePoint and OneDrive for Sensitive Information",
-      "summary": "Admins can now scan files at rest in SharePoint and OneDrive for sensitive data, enabling discovery and classification of existing content. This helps close visibility gaps in data protection maturity.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=499076"
-    },
-    {
-      "id": "purview-sensitivity-label-grouping-modernization",
-      "title": "Microsoft Purview: Sensitivity Label Grouping Modernization",
-      "summary": "Label grouping is being simplified to improve usability and configuration; the new scheme replaces parent labels with modern grouping constructs, allowing admins to better organize and categorize sensitivity labels. This streamlines label management and reduces configuration complexity.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=386901"
-    },
-    {
-      "id": "purview-dspm-copilot-readiness",
-      "title": "Microsoft Purview: DSPM Copilot Readiness and Data Explorer",
-      "summary": "New readiness assessment and data explorer experiences in Data Security Posture Management provide visibility into sensitive data exposure, oversharing, and protection coverage, while helping organizations assess data readiness for Microsoft Copilot. This enables better risk prioritization and remediation planning.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571157"
-    },
-    {
-      "id": "purview-adaptive-protection-data-lifecycle",
-      "title": "Microsoft Purview: Adaptive Protection Integration with Data Lifecycle Management",
-      "summary": "Adaptive Protection now integrates with Data Lifecycle Management to automatically apply retention labels based on users' dynamic insider risk levels, moving users in and out of policies as their risk changes. This enables risk-driven data preservation and compliance automation.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566324"
-    },
-    {
-      "id": "purview-data-security-investigations-endpoint-dlp",
-      "title": "Microsoft Purview: Data Security Investigations Analysis from Endpoint DLP Alerts",
-      "summary": "Admins can now launch Data Security Investigations directly from endpoint DLP alerts to quickly analyze exfiltrated content, with automatic gathering of related files triggered by alerts. This accelerates incident response and investigation workflows for data loss events.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558547"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-95278"
     }
   ]
 }
