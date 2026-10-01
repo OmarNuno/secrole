@@ -1,6 +1,6 @@
 # SecRole Knowledge Architecture
 
-Last updated: September 29, 2026
+Last updated: September 30, 2026
 
 ## Purpose
 
@@ -8,7 +8,7 @@ SecRole knowledge content uses a **library → hub → focused guide** model.
 
 - `/knowledge` is the public library index. It organizes complete content by administrator task and links to SecRole tools.
 - A hub explains the complete mental model for one domain.
-- Focused child guides expand procedures, decision trees, screenshots, commands, migrations, governance workflows, and troubleshooting scenarios.
+- Focused child guides expand procedures, decision trees, commands, migrations, governance workflows, and troubleshooting scenarios.
 
 Published domain hubs:
 
@@ -28,7 +28,7 @@ A hub must remain useful on its own. Child guides deepen one task rather than re
 - `guideTags` supplies short task labels for cards.
 - `knowledgeTrack` groups published focused guides on `/knowledge`.
 - `knowledgeOrder` provides stable display ordering for hubs and guides.
-- `knowledgeLabel` supplies a visitor-facing card type such as Reference hub, PIM guide, or Governance guide.
+- `knowledgeLabel` supplies a visitor-facing card type such as Reference hub, PIM guide, or Group governance guide.
 
 The build runs `scripts/generate-seo-files.mjs`, which validates published routes and creates:
 
@@ -49,7 +49,7 @@ The public library is:
 It currently contains:
 
 - Two complete reference hubs
-- Eight focused guides
+- Nine focused guides
 - Search across published titles, descriptions, search intent, keywords, and tags
 - Four task tracks for focused guides:
   - Understand the identity and permission model
@@ -79,7 +79,7 @@ The top navigation uses **Knowledge** as the broader destination. It remains act
 |---|---|---|---|
 | `/role-governance` | Published hub | Start here | Understand effective Microsoft Entra administrator access across definitions, principals, direct and group assignments, PIM schedules, scope, controls, emergency access, and evidence |
 | `/role-governance/privileged-identity-management` | Published guide | Govern privileged access | Configure, inventory, review, troubleshoot, and migrate privileged role access to governed eligibility and activation |
-| `/role-governance/role-assignable-groups` | Planned guide | Future | Govern role-assignable group ownership, membership, PIM for Groups, and delegated administration |
+| `/role-governance/role-assignable-groups` | Published guide | Govern privileged access | Create, inventory, govern, troubleshoot, and retire role-assignable groups, ownership, membership, PIM for Groups, and delegated control paths |
 | `/role-governance/custom-roles-and-scope` | Planned guide | Future | Design custom role definitions and assign them at tenant, Administrative Unit, or supported directory-resource scope |
 
 Planned child routes remain hidden and unlinked until complete.
@@ -127,6 +127,33 @@ The PIM guide follows this migration order:
 7. Remove the old standing assignment.
 8. Monitor early production use and schedule recurring review.
 
+## Role-assignable group content contract
+
+Role-assignable group guidance must preserve these distinctions:
+
+- Role-assignable group vs. ordinary security or Microsoft 365 group
+- `isAssignableToRole` creation property vs. PIM for Groups management
+- Direct role assignment vs. role inherited through a group
+- Active membership vs. eligible membership
+- Active ownership vs. eligible ownership
+- PIM for Microsoft Entra roles vs. PIM for Groups
+- Group role state vs. member or owner state
+- Role assignment scope vs. group membership scope
+- Directory relationship activation vs. target-service authorization readiness
+- `Group.ReadWrite.All` vs. `RoleManagement.ReadWrite.Directory`
+- Eligible ownership vs. an active recovery-owner path
+- One privileged trust boundary vs. a convenience group that combines unrelated roles or teams
+
+A privileged-group review must identify:
+
+1. The group object and immutable creation properties.
+2. Every active and eligible role assignment and scope.
+3. Every active and eligible member and owner.
+4. Who can change membership, ownership, role assignment, and PIM policy.
+5. Which approvers and recovery paths remain usable.
+6. Evidence from directory audit, PIM, sign-in, provisioning, and target-resource logs.
+7. The final disposition and proof that the change produced the expected effective access.
+
 ## Credential-lifecycle content contract
 
 Credential-lifecycle guidance must preserve these distinctions:
@@ -159,12 +186,13 @@ For mandatory Azure MFA and user-based automation:
 - The Updates page contains a high-impact migration card that links to the permanent guide.
 - The Knowledge library includes the migration guide in the Build & migrate track.
 
-For Microsoft Entra PIM:
+For Microsoft Entra privileged access:
 
-- The authoritative focused page is `/role-governance/privileged-identity-management`.
-- The Role Governance hub contains the complete assignment model and links to the focused PIM guide.
-- The Knowledge library includes the guide in the Govern privileged access track.
-- Future Role-Assignable Groups and Custom Roles guides will link back to the PIM guide when activation or eligibility is part of the task.
+- `/role-governance` is the complete reference hub.
+- `/role-governance/privileged-identity-management` is the focused authority for eligible role access and activation policy.
+- `/role-governance/role-assignable-groups` is the focused authority for indirect group-based access, ownership, membership, and PIM for Groups.
+- The Knowledge library groups both pages under Govern privileged access.
+- Each focused guide links to the hub, the sibling guide, and role-selection tools.
 
 The smaller entry points summarize and route. They do not duplicate the complete runbook.
 
@@ -179,7 +207,7 @@ Every published knowledge page should include:
 5. Standard crawlable links back to `/knowledge`, its parent hub, and relevant sibling guides or tools.
 6. Primary-source references, normally Microsoft Learn, Microsoft Graph, Azure, or product documentation.
 7. Read-only investigation commands before destructive or state-changing examples.
-8. Explicit distinctions between authorization systems, objects, principals, scopes, requested configuration, granted access, effective state, runtime evidence, and resource-side authorization.
+8. Explicit distinctions between authorization systems, objects, principals, scopes, assignment state, direct and inherited access, runtime evidence, and resource-side authorization.
 9. Responsive tables, cards, diagrams, and code blocks that remain usable on mobile.
 10. No quiz, filler, or thin content added only to target a keyword.
 
@@ -217,12 +245,11 @@ Every published knowledge page should include:
 
 ## Next content sequence
 
-1. Publish the PIM role-settings and eligible-assignment guide.
-2. Publish the role-assignable groups and delegated-administration guide.
-3. Publish the custom roles, scope, and Administrative Units guide.
-4. Review the completed Role Governance cluster for cross-linking and mobile consistency.
-5. Decide whether the next major cluster is Microsoft Purview administration or another high-demand Entra governance area.
-6. Continue improving role-drift quality and evaluate full static generation or server rendering as the library grows.
+1. Publish the custom roles, scope, and Administrative Units guide.
+2. Review the completed Role Governance cluster for cross-linking, command consistency, and mobile behavior.
+3. Decide whether Microsoft Purview administration becomes the third major knowledge hub.
+4. Continue monitoring and improving role-drift quality as Microsoft adds or changes roles.
+5. Evaluate full static generation or server rendering as the library grows.
 
 ## Future platform decision
 

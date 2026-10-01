@@ -17,12 +17,13 @@ export default function PimRoleSettingsGuide() {
       faq={faq}
       sources={sources}
       relatedPageIds={[
+        "role-governance-groups",
         "role-library",
         "role-overlap-analyzer",
         "ai-role-advisor",
       ]}
-      relatedTitle="Continue role selection and governance work"
-      relatedIntro="Return to the Role Governance hub for the complete assignment model, then use SecRole's tools to inspect capability, overlap, and least-privilege alternatives."
+      relatedTitle="Continue privileged-access governance"
+      relatedIntro="Use the role-assignable group guide to resolve indirect access, ownership, and PIM for Groups, then use SecRole's tools to inspect capability, overlap, and least-privilege alternatives."
       changePosture="Create and prove eligibility before removing standing access"
     >
       <PimFoundationSections />

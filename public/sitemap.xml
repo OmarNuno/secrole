@@ -15,14 +15,14 @@
   </url>
   <url>
     <loc>https://www.secrole.com/role-governance</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-09-30</lastmod>
   </url>
   <url>
     <loc>https://www.secrole.com/updates</loc>
   </url>
   <url>
     <loc>https://www.secrole.com/knowledge</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-09-30</lastmod>
   </url>
   <url>
     <loc>https://www.secrole.com/service-principals/identifiers</loc>
@@ -55,5 +55,9 @@
   <url>
     <loc>https://www.secrole.com/role-governance/privileged-identity-management</loc>
     <lastmod>2026-09-29</lastmod>
+  </url>
+  <url>
+    <loc>https://www.secrole.com/role-governance/role-assignable-groups</loc>
+    <lastmod>2026-09-30</lastmod>
   </url>
 </urlset>
