@@ -1,26 +1,56 @@
 {
-  "lastUpdated": "2026-10-01T11:56:26.410Z",
-  "fetchedAt": "2026-10-01T11:56:26.410Z",
+  "lastUpdated": "2026-10-02T11:28:09.748Z",
+  "fetchedAt": "2026-10-02T11:28:09.748Z",
   "updates": [
     {
-      "id": "purview-network-data-security-ga",
-      "title": "Purview Network Data Security: DLP Integration with Entra Global Secure Access Now GA",
-      "summary": "Microsoft Purview's Data Loss Prevention now integrates with Microsoft Entra Global Secure Access to enforce DLP policies at the network layer, protecting sensitive data across browsers, apps, APIs, and AI platforms. This capability enables admins to detect risky user activity and block unauthorized sharing of sensitive data with untrusted cloud applications in real time.",
+      "id": "purview-admin-assignment-time-limit",
+      "title": "Microsoft Purview: Admin Assignment Time Limit",
+      "summary": "Purview now allows administrators to set expiration dates (in days) when assigning users and security groups to role groups, enabling temporary admin access without manual removal. This is essential for enforcing least-privilege access and reducing standing administrative permissions.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566865"
+    },
+    {
+      "id": "purview-view-only-role-management",
+      "title": "Microsoft Purview: View-Only Role Management Enhancements",
+      "summary": "A new view-only role management capability has been added to Purview, allowing admins to see all member assignments across Purview and Defender without modification rights. This read-only permission is being integrated into the Global Reader and Security Reader roles in both Purview and Entra.",
+      "category": "Permission Change",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566529"
+    },
+    {
+      "id": "entra-passkey-support-b2b-users",
+      "title": "Microsoft Entra ID: Passkey Support for B2B Users",
+      "summary": "B2B users, including external guests, can now register and use passkeys to satisfy resource tenant MFA requirements, extending passwordless authentication beyond member users. This streamlines security for external collaboration scenarios by enabling passkey registration from the My Security Info page or during sign-in.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569432"
+    },
+    {
+      "id": "purview-data-lifecycle-management-departed-users",
+      "title": "Microsoft Purview: Data Lifecycle Management for Departed Employees",
+      "summary": "Purview now enables automated deletion of both content and containers (OneDrives and mailboxes) for departed users at scale, eliminating manual cleanup efforts and ensuring regulatory compliance. This reduces security and compliance risk by preventing orphaned user data from remaining accessible.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569721"
+    },
+    {
+      "id": "purview-network-data-security-general-availability",
+      "title": "Microsoft Purview: Network Data Security – General Availability",
+      "summary": "Purview now integrates Microsoft Entra Global Secure Access with DLP policies to protect sensitive data at the network layer, preventing exfiltration through browsers, apps, APIs, and AI platforms. Admins can enforce restrictive actions on risky user activity detected through Insider Risk Management across untrusted cloud applications.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
       "importance": "high",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "chromium-authorization-vulnerabilities-edge",
-      "title": "14 Authorization Vulnerabilities Patched in Microsoft Edge (Chromium)",
-      "summary": "Microsoft Edge has patched 14 Chromium-based authorization vulnerabilities spanning multiple components including WakeLock, WebView, Navigation, Scroll, NFC, Safebrowsing, Core, Contextual Tasks, Network, BrowserTag, DevTools, and Extensions. Admins should update Edge immediately to mitigate potential privilege escalation and unauthorized access risks.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "September 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-95278"
     }
   ]
 }
