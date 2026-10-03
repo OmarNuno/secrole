@@ -1,0 +1,96 @@
+@media (max-width: 1180px) {
+  .crs-equation { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crs-equation-part { grid-template-columns: minmax(0, 1fr); }
+  .crs-equation-part > b { display: none; }
+  .crs-equation-part:last-child { grid-column: 1 / -1; }
+  .crs-decision-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .crs-system-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crs-finding-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crs-change-gates,
+  .crs-cadence-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .crs-troubleshooting-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 960px) {
+  .crs-anatomy-model,
+  .crs-same-role-model,
+  .crs-group-trap,
+  .crs-read-model,
+  .crs-app-boundary,
+  .crs-restricted-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .crs-anatomy-model > b,
+  .crs-same-role-model > b,
+  .crs-group-trap > b,
+  .crs-read-model > b,
+  .crs-app-boundary > b,
+  .crs-restricted-flow > b { display: none; }
+
+  .crs-same-role-model > div { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .crs-scope-grid,
+  .crs-au-fact-grid,
+  .crs-restricted-risk-grid,
+  .crs-app-grid,
+  .crs-app-test-grid,
+  .crs-disposition-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crs-postchange-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crs-change-gates { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+  .crs-equation,
+  .crs-decision-flow,
+  .crs-system-grid,
+  .crs-limit-grid,
+  .crs-scope-grid,
+  .crs-same-role-model > div,
+  .crs-au-fact-grid,
+  .crs-au-examples,
+  .crs-restricted-risk-grid,
+  .crs-app-grid,
+  .crs-app-test-grid,
+  .crs-output-grid,
+  .crs-finding-grid,
+  .crs-workflow-grid,
+  .crs-disposition-grid,
+  .crs-change-gates,
+  .crs-postchange-grid,
+  .crs-troubleshooting-grid,
+  .crs-cadence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crs-equation-part:last-child { grid-column: auto; }
+  .crs-equation article,
+  .crs-decision-flow article,
+  .crs-system-grid article,
+  .crs-scope-grid article,
+  .crs-au-fact-grid article,
+  .crs-restricted-risk-grid article,
+  .crs-app-grid article,
+  .crs-app-test-grid article,
+  .crs-finding-grid article,
+  .crs-disposition-grid article,
+  .crs-change-gates article,
+  .crs-postchange-grid article,
+  .crs-troubleshooting-grid article,
+  .crs-cadence-grid article {
+    min-height: auto;
+  }
+
+  .crs-workflow-grid article { grid-template-columns: 34px minmax(0, 1fr); }
+  .crs-troubleshooting-order > span { flex-basis: 155px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crs-equation *,
+  .crs-decision-flow *,
+  .crs-system-grid *,
+  .crs-scope-grid *,
+  .crs-workflow-grid * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
