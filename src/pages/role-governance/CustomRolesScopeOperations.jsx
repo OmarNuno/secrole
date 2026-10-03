@@ -186,21 +186,25 @@ export default function CustomRolesScopeOperations() {
         </GuideCallout>
 
         <GuideCodeBlock
+          label="State-changing PowerShell"
           title="STATE-CHANGING — Create one Microsoft Entra custom role definition"
           code={createCustomRolePowerShell}
         />
 
         <GuideCodeBlock
+          label="State-changing PowerShell"
           title="STATE-CHANGING — Assign the custom role at one approved scope"
           code={assignCustomRolePowerShell}
         />
 
         <GuideCodeBlock
+          label="State-changing PowerShell"
           title="STATE-CHANGING — Create a regular or Restricted Management Administrative Unit"
           code={createAdministrativeUnitPowerShell}
         />
 
         <GuideCodeBlock
+          label="State-changing HTTP"
           title="STATE-CHANGING — Define an Enterprise App assignment operator role"
           code={applicationAssignmentRoleHttp}
           language="Microsoft Graph HTTP"

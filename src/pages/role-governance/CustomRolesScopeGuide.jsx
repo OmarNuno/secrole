@@ -3,6 +3,7 @@ import CustomRolesScopeAdminUnitsSections from "./CustomRolesScopeAdminUnitsSect
 import CustomRolesScopeEvidenceSections from "./CustomRolesScopeEvidenceSections";
 import CustomRolesScopeFoundationSections from "./CustomRolesScopeFoundationSections";
 import CustomRolesScopeOperations from "./CustomRolesScopeOperations";
+import RoleGovernanceJourney from "./RoleGovernanceJourney";
 import { faq, sources, toc } from "./customRolesScopeData";
 import "./CustomRolesScope.css";
 import "./CustomRolesScopeResponsive.css";
@@ -18,15 +19,15 @@ export default function CustomRolesScopeGuide() {
       faq={faq}
       sources={sources}
       relatedPageIds={[
-        "role-governance-pim",
-        "role-governance-groups",
         "role-library",
+        "role-overlap-analyzer",
         "service-principal-permissions",
       ]}
-      relatedTitle="Continue least-privilege design"
-      relatedIntro="Use PIM to control when the role becomes active, role-assignable groups to govern indirect assignment paths, the Role Library to compare built-in alternatives, and the permissions guide to separate administrative delegation from application runtime access."
+      relatedTitle="Continue role selection and application-permission investigation"
+      relatedIntro="The Role Governance journey above connects action and scope design to PIM and group inheritance. Use the role tools to compare built-in alternatives, and use the permissions guide when the task involves application runtime access rather than administrator delegation."
       changePosture="Reduce actions, narrow scope, test allowed and denied operations"
     >
+      <RoleGovernanceJourney currentPageId="role-governance-custom-scope" />
       <CustomRolesScopeFoundationSections />
       <CustomRolesScopeAdminUnitsSections />
       <CustomRolesScopeEvidenceSections />

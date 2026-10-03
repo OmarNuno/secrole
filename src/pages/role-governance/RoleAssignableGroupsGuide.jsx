@@ -3,6 +3,7 @@ import RoleAssignableGroupsEvidenceSections from "./RoleAssignableGroupsEvidence
 import RoleAssignableGroupsFoundationSections from "./RoleAssignableGroupsFoundationSections";
 import RoleAssignableGroupsOperationsSections from "./RoleAssignableGroupsOperationsSections";
 import RoleAssignableGroupsPimSections from "./RoleAssignableGroupsPimSections";
+import RoleGovernanceJourney from "./RoleGovernanceJourney";
 import { faq, sources, toc } from "./roleAssignableGroupsData";
 import "./RoleAssignableGroups.css";
 import "./RoleAssignableGroupsResponsive.css";
@@ -18,15 +19,15 @@ export default function RoleAssignableGroupsGuide() {
       faq={faq}
       sources={sources}
       relatedPageIds={[
-        "role-governance-pim",
-        "role-governance-custom-scope",
         "role-library",
         "role-overlap-analyzer",
+        "ai-role-advisor",
       ]}
-      relatedTitle="Continue privileged-access governance"
-      relatedIntro="Use the PIM guide to design activation controls, the custom roles and scope guide to reduce what the group grants and where it applies, and SecRole's tools to compare least-privilege alternatives."
+      relatedTitle="Use SecRole tools to validate what the group grants"
+      relatedIntro="The Role Governance journey above connects group inheritance to PIM and scope design. Use these tools to verify the assigned role's capability and compare less-privileged alternatives before changing membership or ownership."
       changePosture="Prove the complete group control path before changing access"
     >
+      <RoleGovernanceJourney currentPageId="role-governance-groups" />
       <RoleAssignableGroupsFoundationSections />
       <RoleAssignableGroupsPimSections />
       <RoleAssignableGroupsEvidenceSections />

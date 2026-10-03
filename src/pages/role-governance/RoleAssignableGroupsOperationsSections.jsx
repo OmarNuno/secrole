@@ -60,8 +60,8 @@ export default function RoleAssignableGroupsOperationsSections() {
           Creating a role-assignable group cannot be undone by toggling a property. Membership and ownership changes can grant or remove administrator access. Test in a nonproduction tenant where possible and preserve the returned group Object ID, change ticket, approver, and verification evidence.
         </GuideCallout>
 
-        <GuideCodeBlock title="Create a security role-assignable group" code={createRoleAssignableGroupPowerShell} />
-        <GuideCodeBlock title="Add an owner and member through Microsoft Graph" code={addMemberOwnerHttp} language="HTTP" />
+        <GuideCodeBlock label="State-changing PowerShell" title="Create a security role-assignable group" code={createRoleAssignableGroupPowerShell} />
+        <GuideCodeBlock label="State-changing HTTP" title="Add an owner and member through Microsoft Graph" code={addMemberOwnerHttp} language="HTTP" />
 
         <div className="rag-change-gates">
           {[

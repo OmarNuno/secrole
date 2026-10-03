@@ -72,11 +72,11 @@ export default function RoleAssignableGroupsEvidenceSections() {
           ))}
         </div>
 
-        <GuideCodeBlock title="Pagination-safe Microsoft Graph collection helper" code={graphCollectionHelper} />
-        <GuideCodeBlock title="Inventory all role-assignable groups" code={roleAssignableGroupInventoryPowerShell} />
-        <GuideCodeBlock title="Resolve active and eligible roles assigned to each group" code={groupRolePathsPowerShell} />
-        <GuideCodeBlock title="Resolve active and eligible members, owners, and PIM policy evidence" code={groupRelationshipsPowerShell} />
-        <GuideCodeBlock title="Generate prioritized control-path findings" code={controlPathFindingsPowerShell} />
+        <GuideCodeBlock label="PowerShell helper" title="Pagination-safe Microsoft Graph collection helper" code={graphCollectionHelper} />
+        <GuideCodeBlock label="Group inventory" title="Inventory all role-assignable groups" code={roleAssignableGroupInventoryPowerShell} />
+        <GuideCodeBlock label="Role-path inventory" title="Resolve active and eligible roles assigned to each group" code={groupRolePathsPowerShell} />
+        <GuideCodeBlock label="Relationship inventory" title="Resolve active and eligible members, owners, and PIM policy evidence" code={groupRelationshipsPowerShell} />
+        <GuideCodeBlock label="Control findings" title="Generate prioritized control-path findings" code={controlPathFindingsPowerShell} />
 
         <GuideCallout tone="info" title="Large-tenant note">
           The relationship pass makes several Graph requests per role-assignable group. Start with the group and role-path inventories, then scope owner and membership enrichment to the groups that grant high-impact roles, have standing access, or lack accountable ownership when tenant size makes a full pass operationally expensive.

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import PageMeta from "../components/PageMeta";
+import { getPageCardTitle } from "../data/pageDisplay";
 import { getSitePage, publishedPages } from "../data/sitePages";
 import "./Knowledge.css";
 
@@ -29,8 +30,8 @@ const TRACKS = [
   {
     id: "privileged-access",
     eyebrow: "Govern privileged access",
-    title: "Control eligible, inherited, custom, and scoped administrator access",
-    description: "Design PIM settings, role-assignable groups, custom role actions, Administrative Unit scope, ownership, activation controls, evidence, and recurring reviews without hidden access paths.",
+    title: "Control when, how, what, and where administrator access applies",
+    description: "Connect PIM activation, role-assignable group inheritance, custom role actions, assignment scope, ownership, evidence, and recurring review as one effective-access model.",
   },
 ];
 
@@ -54,7 +55,7 @@ function HubCard({ item }) {
         <span>{item.knowledgeLabel || "Reference hub"}</span>
         <span aria-hidden="true">→</span>
       </div>
-      <h3>{item.heading || item.title}</h3>
+      <h3>{getPageCardTitle(item)}</h3>
       <p>{item.description}</p>
       {item.guideTags?.length > 0 && (
         <div className="knowledge-card-tags" aria-label="Reference topics">
@@ -73,7 +74,7 @@ function GuideCard({ item }) {
         <span>{item.knowledgeLabel || "Knowledge guide"}</span>
         <span aria-hidden="true">→</span>
       </div>
-      <h3>{item.heading || item.title}</h3>
+      <h3>{getPageCardTitle(item)}</h3>
       <p>{item.description}</p>
       {item.guideTags?.length > 0 && (
         <div className="knowledge-card-tags" aria-label="Guide features">
@@ -175,7 +176,7 @@ export default function Knowledge() {
           <div className="knowledge-breadcrumb"><Link to="/">SecRole</Link><span>/</span><strong>Knowledge</strong></div>
           <div className="knowledge-eyebrow">SecRole knowledge library</div>
           <h1>{page.heading}</h1>
-          <p>Use focused, operational guidance for Microsoft Entra identities, role governance, permissions, workload authentication, troubleshooting, and migration. Start with a complete reference hub or search for the task in front of you.</p>
+          <p>Use focused, operational guidance for Microsoft Entra identities, privileged access, role governance, workload authentication, permissions, troubleshooting, and migration. Start with a complete reference hub or search for the task in front of you.</p>
 
           <form className="knowledge-search" role="search" onSubmit={(event) => event.preventDefault()}>
             <label htmlFor="knowledge-search-input">Search SecRole knowledge</label>
@@ -186,7 +187,7 @@ export default function Knowledge() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search PIM, role groups, custom roles, Administrative Units, scope, MFA…"
+                placeholder="Search PIM, role-assignable groups, custom roles, Administrative Units, scope…"
                 autoComplete="off"
               />
               {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}

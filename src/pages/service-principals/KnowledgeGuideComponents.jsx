@@ -12,8 +12,9 @@ function fallbackCopy(text) {
   textarea.remove();
 }
 
-export function GuideCodeBlock({ title, code, language = "PowerShell" }) {
+export function GuideCodeBlock({ title, code, language = "PowerShell", label = "" }) {
   const [copied, setCopied] = useState(false);
+  const displayLabel = label || language;
 
   const copyCode = async () => {
     try {
@@ -33,10 +34,17 @@ export function GuideCodeBlock({ title, code, language = "PowerShell" }) {
   return (
     <article className="kg-code-card">
       <header>
-        <div><span>{language}</span><h3>{title}</h3></div>
-        <button type="button" onClick={copyCode}>{copied ? "Copied" : "Copy"}</button>
+        <div><span>{displayLabel}</span><h3>{title}</h3></div>
+        <button
+          type="button"
+          onClick={copyCode}
+          aria-label={`Copy ${title}`}
+          aria-live="polite"
+        >
+          {copied ? "Copied" : "Copy"}
+        </button>
       </header>
-      <pre><code>{code}</code></pre>
+      <pre tabIndex="0"><code>{code}</code></pre>
     </article>
   );
 }
