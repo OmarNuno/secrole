@@ -1,6 +1,6 @@
 # SecRole Knowledge Architecture
 
-Last updated: September 30, 2026
+Last updated: October 2, 2026
 
 ## Purpose
 
@@ -13,7 +13,7 @@ SecRole knowledge content uses a **library → hub → focused guide** model.
 Published domain hubs:
 
 - `/service-principals` — application objects, service principals, workload identities, authentication, permissions, and lifecycle
-- `/role-governance` — Microsoft Entra role definitions, assignments, PIM, groups, scope, emergency access, and recurring governance
+- `/role-governance` — Microsoft Entra role definitions, assignments, PIM, groups, custom roles, scope, emergency access, and recurring governance
 
 A hub must remain useful on its own. Child guides deepen one task rather than remove essential explanation from the hub.
 
@@ -28,7 +28,7 @@ A hub must remain useful on its own. Child guides deepen one task rather than re
 - `guideTags` supplies short task labels for cards.
 - `knowledgeTrack` groups published focused guides on `/knowledge`.
 - `knowledgeOrder` provides stable display ordering for hubs and guides.
-- `knowledgeLabel` supplies a visitor-facing card type such as Reference hub, PIM guide, or Group governance guide.
+- `knowledgeLabel` supplies a visitor-facing card type such as Reference hub, PIM guide, Group governance guide, or Scope design guide.
 
 The build runs `scripts/generate-seo-files.mjs`, which validates published routes and creates:
 
@@ -49,7 +49,7 @@ The public library is:
 It currently contains:
 
 - Two complete reference hubs
-- Nine focused guides
+- Ten focused guides
 - Search across published titles, descriptions, search intent, keywords, and tags
 - Four task tracks for focused guides:
   - Understand the identity and permission model
@@ -77,18 +77,18 @@ The top navigation uses **Knowledge** as the broader destination. It remains act
 
 | Route | Status | Track | Primary intent |
 |---|---|---|---|
-| `/role-governance` | Published hub | Start here | Understand effective Microsoft Entra administrator access across definitions, principals, direct and group assignments, PIM schedules, scope, controls, emergency access, and evidence |
+| `/role-governance` | Published hub | Start here | Understand effective Microsoft Entra administrator access across definitions, principals, direct and group assignments, PIM schedules, custom roles, scope, controls, emergency access, and evidence |
 | `/role-governance/privileged-identity-management` | Published guide | Govern privileged access | Configure, inventory, review, troubleshoot, and migrate privileged role access to governed eligibility and activation |
 | `/role-governance/role-assignable-groups` | Published guide | Govern privileged access | Create, inventory, govern, troubleshoot, and retire role-assignable groups, ownership, membership, PIM for Groups, and delegated control paths |
-| `/role-governance/custom-roles-and-scope` | Planned guide | Future | Design custom role definitions and assign them at tenant, Administrative Unit, or supported directory-resource scope |
+| `/role-governance/custom-roles-and-scope` | Published guide | Govern privileged access | Design, inventory, scope, test, troubleshoot, and retire custom roles, Administrative Units, restricted boundaries, and application-specific delegation |
 
-Planned child routes remain hidden and unlinked until complete.
+The Role Governance cluster is now complete as one hub plus three focused guides. Future pages should extend a distinct administrator task rather than duplicate these models.
 
 ## Role-governance content contract
 
 Role-governance content must preserve these distinctions:
 
-- Microsoft Entra roles vs. Azure RBAC roles vs. Microsoft Purview role groups
+- Microsoft Entra roles vs. Azure RBAC roles vs. application app roles vs. Microsoft Purview role groups
 - Security principal vs. role definition vs. assignment
 - Direct vs. group-based vs. inherited access
 - Active vs. eligible vs. activated state
@@ -154,6 +154,36 @@ A privileged-group review must identify:
 6. Evidence from directory audit, PIM, sign-in, provisioning, and target-resource logs.
 7. The final disposition and proof that the change produced the expected effective access.
 
+## Custom roles and scoped administration content contract
+
+Custom-role and scope guidance must preserve these distinctions:
+
+- Microsoft Entra custom directory role vs. Azure custom RBAC role vs. application app role vs. Purview role group
+- Role definition Object ID vs. template ID
+- `allowedResourceActions` in the definition vs. `directoryScopeId` in the assignment
+- Built-in-role selection vs. custom-role creation
+- Permission-set reduction vs. assignment-scope reduction
+- Tenant container scope vs. Administrative Unit container scope vs. one-resource scope
+- Administrative Unit group membership vs. membership of the users or devices inside that group
+- Administrative Unit management scope vs. general directory visibility
+- Regular Administrative Unit vs. Restricted Management Administrative Unit
+- Scoped management permission vs. tenant-scoped directory-read capability for service principals and guests
+- Administrative delegation over an application object vs. runtime app roles, consent, and API authorization
+- Required positive operation vs. prohibited and out-of-scope negative tests
+
+The custom-role design order is:
+
+1. Document the exact business task and target object.
+2. Confirm the correct authorization system.
+3. Select the least-privileged built-in role when possible.
+4. Test whether narrower scope solves the requirement.
+5. Identify only the required supported custom actions.
+6. Create and independently review the definition.
+7. Assign it at the narrowest workable scope.
+8. Govern the principal through PIM and role-assignable groups where appropriate.
+9. Test required, prohibited, and out-of-scope operations.
+10. Monitor first use, review regularly, and retire stale definitions and assignments.
+
 ## Credential-lifecycle content contract
 
 Credential-lifecycle guidance must preserve these distinctions:
@@ -191,8 +221,9 @@ For Microsoft Entra privileged access:
 - `/role-governance` is the complete reference hub.
 - `/role-governance/privileged-identity-management` is the focused authority for eligible role access and activation policy.
 - `/role-governance/role-assignable-groups` is the focused authority for indirect group-based access, ownership, membership, and PIM for Groups.
-- The Knowledge library groups both pages under Govern privileged access.
-- Each focused guide links to the hub, the sibling guide, and role-selection tools.
+- `/role-governance/custom-roles-and-scope` is the focused authority for permission-set design, Administrative Units, resource scope, and restricted management boundaries.
+- The Knowledge library groups all three pages under Govern privileged access.
+- Each focused guide links to the hub, relevant sibling guides, and role-selection tools.
 
 The smaller entry points summarize and route. They do not duplicate the complete runbook.
 
@@ -245,12 +276,12 @@ Every published knowledge page should include:
 
 ## Next content sequence
 
-1. Publish the custom roles, scope, and Administrative Units guide.
-2. Review the completed Role Governance cluster for cross-linking, command consistency, and mobile behavior.
+1. Review the complete Role Governance cluster as one user journey.
+2. Normalize cross-linking, command titles, export names, source presentation, and mobile behavior across the hub and three child guides.
 3. Decide whether Microsoft Purview administration becomes the third major knowledge hub.
 4. Continue monitoring and improving role-drift quality as Microsoft adds or changes roles.
 5. Evaluate full static generation or server rendering as the library grows.
 
 ## Future platform decision
 
-Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the complete article and index body. As the library grows, evaluate full static generation or server rendering so complete content is present before JavaScript executes. Preserve the route registry and URL structure during that migration.
+Route-specific static entrypoints provide final metadata in the initial HTML response today, while React renders the complete article and index body. As the knowledge library grows, evaluate full static generation or server rendering so complete content is present before JavaScript executes. Preserve the route registry and URL structure during that migration.

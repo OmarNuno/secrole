@@ -19,12 +19,12 @@ export default function RoleAssignableGroupsGuide() {
       sources={sources}
       relatedPageIds={[
         "role-governance-pim",
+        "role-governance-custom-scope",
         "role-library",
         "role-overlap-analyzer",
-        "ai-role-advisor",
       ]}
       relatedTitle="Continue privileged-access governance"
-      relatedIntro="Use the PIM guide to design activation controls, return to the Role Governance hub for the complete assignment model, and use SecRole's tools to reduce role capability before granting it through a group."
+      relatedIntro="Use the PIM guide to design activation controls, the custom roles and scope guide to reduce what the group grants and where it applies, and SecRole's tools to compare least-privilege alternatives."
       changePosture="Prove the complete group control path before changing access"
     >
       <RoleAssignableGroupsFoundationSections />
