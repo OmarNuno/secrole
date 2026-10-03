@@ -18,12 +18,13 @@ export default function RoleGovernance() {
       sources={sources}
       relatedPageIds={[
         "role-governance-pim",
+        "role-governance-groups",
         "role-library",
         "role-overlap-analyzer",
         "ai-role-advisor",
       ]}
-      relatedTitle="Continue with PIM and role investigation"
-      relatedIntro="Use the focused PIM guide to design eligible access and activation controls, then use SecRole's tools to inspect role capabilities, compare overlap, and investigate the least-privileged role for a requirement."
+      relatedTitle="Continue with privileged access and role investigation"
+      relatedIntro="Use the focused PIM and role-assignable group guides to govern activation and indirect access paths, then use SecRole's tools to inspect capabilities, compare overlap, and investigate the least-privileged role for a requirement."
       changePosture="Evidence, least privilege, then controlled change"
     >
       <RoleGovernanceFoundationSections />

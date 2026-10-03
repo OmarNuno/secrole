@@ -29,8 +29,8 @@ const TRACKS = [
   {
     id: "privileged-access",
     eyebrow: "Govern privileged access",
-    title: "Make administrator access eligible, controlled, and provable",
-    description: "Design PIM role settings, eligible assignments, activation controls, approvers, evidence, and recurring reviews before removing standing access.",
+    title: "Control eligible, group-based, and delegated administrator access",
+    description: "Design PIM role settings, role-assignable groups, ownership, membership, activation controls, delegated administration, evidence, and recurring reviews without hidden access paths.",
   },
 ];
 
@@ -186,7 +186,7 @@ export default function Knowledge() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search PIM, eligible roles, approvers, scope, permissions, MFA, managed identity…"
+                placeholder="Search PIM, role-assignable groups, owners, delegated access, scope, MFA…"
                 autoComplete="off"
               />
               {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}
@@ -247,7 +247,7 @@ export default function Knowledge() {
           <section className="knowledge-empty" aria-live="polite">
             <span>⌕</span>
             <h2>No published knowledge matches “{query}”</h2>
-            <p>Try a broader term such as PIM, eligible role, approval, role assignment, scope, service principal, permission, MFA, managed identity, credential rotation, security review, or troubleshooting.</p>
+            <p>Try a broader term such as PIM, role-assignable group, group owner, eligible role, approval, scope, service principal, permission, MFA, security review, or troubleshooting.</p>
             <button type="button" onClick={() => setQuery("")}>Show all knowledge</button>
           </section>
         )}
@@ -272,8 +272,8 @@ export default function Knowledge() {
               </div>
               <ul>
                 <li><strong>Separate systems and scopes.</strong><span>Identify the authorization plane, principal, role definition, tenant, and scope before drawing conclusions.</span></li>
-                <li><strong>Separate requests from grants.</strong><span>Configured permissions are not proof of consent, role assignment, token claims, or resource authorization.</span></li>
-                <li><strong>Investigate read-only first.</strong><span>Collect evidence before changing credentials, permissions, assignments, eligibility, or account state.</span></li>
+                <li><strong>Separate direct from inherited access.</strong><span>Resolve group membership, ownership, PIM, assignment state, and every alternate path to effective privilege.</span></li>
+                <li><strong>Investigate read-only first.</strong><span>Collect evidence before changing credentials, permissions, assignments, eligibility, membership, ownership, or account state.</span></li>
                 <li><strong>Prefer primary sources.</strong><span>Platform behavior is grounded in current Microsoft Learn, Graph, Azure, and product documentation.</span></li>
               </ul>
             </section>
@@ -282,7 +282,7 @@ export default function Knowledge() {
 
         <footer className="knowledge-footer">
           <span>SecRole knowledge library</span>
-          <strong>Last reviewed: September 29, 2026</strong>
+          <strong>Last reviewed: September 30, 2026</strong>
           <p>The library expands as complete, useful references and guides are published. Planned pages remain private until they are ready for administrators to use.</p>
         </footer>
       </div>
