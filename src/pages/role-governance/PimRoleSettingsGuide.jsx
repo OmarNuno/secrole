@@ -3,6 +3,7 @@ import PimControlSections from "./PimControlSections";
 import PimFoundationSections from "./PimFoundationSections";
 import PimMigrationSections from "./PimMigrationSections";
 import PimOperationsSections from "./PimOperationsSections";
+import RoleGovernanceJourney from "./RoleGovernanceJourney";
 import { faq, sources, toc } from "./pimRoleSettingsData";
 import "./PimRoleSettings.css";
 
@@ -17,15 +18,15 @@ export default function PimRoleSettingsGuide() {
       faq={faq}
       sources={sources}
       relatedPageIds={[
-        "role-governance-groups",
-        "role-governance-custom-scope",
         "role-library",
         "role-overlap-analyzer",
+        "ai-role-advisor",
       ]}
-      relatedTitle="Continue privileged-access governance"
-      relatedIntro="Use the role-assignable group guide to resolve indirect access and ownership, the custom roles and scope guide to reduce capability and blast radius, then use SecRole's tools to compare least-privilege alternatives."
+      relatedTitle="Use SecRole tools to reduce the role before governing activation"
+      relatedIntro="The Role Governance journey above connects PIM to group inheritance and scope design. Use these tools to confirm that the role itself is the least-privileged definition for the approved task."
       changePosture="Create and prove eligibility before removing standing access"
     >
+      <RoleGovernanceJourney currentPageId="role-governance-pim" />
       <PimFoundationSections />
       <PimControlSections />
       <PimMigrationSections />

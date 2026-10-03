@@ -97,26 +97,31 @@ export default function CustomRolesScopeEvidenceSections() {
       </GuideCallout>
 
       <GuideCodeBlock
+        label="PowerShell helper"
         title="Pagination-safe Microsoft Graph collection helper"
         code={graphCollectionHelper}
       />
 
       <GuideCodeBlock
+        label="Definition inventory"
         title="Export all Microsoft Entra custom role definitions"
         code={customRoleDefinitionInventory}
       />
 
       <GuideCodeBlock
+        label="Assignment inventory"
         title="Export active and eligible custom-role assignments"
         code={customRoleAssignmentInventory}
       />
 
       <GuideCodeBlock
+        label="Scope inventory"
         title="Export Administrative Units and scoped role counts"
         code={administrativeUnitInventory}
       />
 
       <GuideCodeBlock
+        label="Control findings"
         title="Create a prioritized custom-role and scope findings report"
         code={customRoleFindings}
       />

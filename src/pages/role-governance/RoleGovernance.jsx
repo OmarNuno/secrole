@@ -2,6 +2,7 @@ import KnowledgeGuideLayout, { GuideFaq, GuideSection } from "../service-princip
 import RoleGovernanceAssignmentSections from "./RoleGovernanceAssignmentSections";
 import RoleGovernanceControlSections from "./RoleGovernanceControlSections";
 import RoleGovernanceFoundationSections from "./RoleGovernanceFoundationSections";
+import RoleGovernanceJourney from "./RoleGovernanceJourney";
 import RoleGovernanceOperationsSections from "./RoleGovernanceOperationsSections";
 import { faq, sources, toc } from "./roleGovernanceData";
 import "./RoleGovernance.css";
@@ -17,17 +18,15 @@ export default function RoleGovernance() {
       faq={faq}
       sources={sources}
       relatedPageIds={[
-        "role-governance-pim",
-        "role-governance-groups",
-        "role-governance-custom-scope",
         "role-library",
         "role-overlap-analyzer",
         "ai-role-advisor",
       ]}
-      relatedTitle="Continue with privileged-access design and role investigation"
-      relatedIntro="Use the focused PIM, role-assignable group, and custom-role scope guides to control activation, inheritance, permissions, and blast radius, then use SecRole's tools to compare capabilities and find the least-privileged role for a requirement."
+      relatedTitle="Move from the governance model into role investigation"
+      relatedIntro="The journey above connects the complete Role Governance cluster. Use SecRole's tools here to inspect role capability, compare overlap, and investigate the least-privileged role for a documented administrative task."
       changePosture="Evidence, least privilege, then controlled change"
     >
+      <RoleGovernanceJourney currentPageId="role-governance" />
       <RoleGovernanceFoundationSections />
       <RoleGovernanceAssignmentSections />
       <RoleGovernanceControlSections />

@@ -95,22 +95,27 @@ export default function PimOperationsSections() {
 
         <div className="pim-command-stack">
           <GuideCodeBlock
+            label="PowerShell helper"
             title="Pagination-safe Microsoft Graph collection helper"
             code={graphCollectionHelper}
           />
           <GuideCodeBlock
+            label="Assignment inventory"
             title="Export all active and eligible Microsoft Entra role instances"
             code={pimAssignmentInventoryPowerShell}
           />
           <GuideCodeBlock
+            label="Policy inventory"
             title="Export PIM role settings and policy rules"
             code={pimPolicyInventoryPowerShell}
           />
           <GuideCodeBlock
+            label="Request history"
             title="Export assignment and eligibility request history"
             code={pimRequestHistoryPowerShell}
           />
           <GuideCodeBlock
+            label="Approval queue"
             title="List activation requests pending your approval"
             code={pendingApprovalPowerShell}
           />
@@ -127,6 +132,7 @@ export default function PimOperationsSections() {
           <p>The request below creates temporary active access from an eligible assignment. Use it only after validating the principal, role definition, scope, duration, policy requirements, and business authorization.</p>
         </GuideCallout>
         <GuideCodeBlock
+          label="State-changing HTTP"
           title="Self-activate an eligible role for two hours"
           code={selfActivateHttp}
           language="HTTP"
@@ -175,6 +181,7 @@ export default function PimOperationsSections() {
           <p>PIM activation can involve asynchronous request, approval, scheduled activation, assignment, and deactivation operations with different correlation IDs. Microsoft documents <code>roleAssignmentRequestId</code> as the more reliable value for reconstructing the full lifecycle.</p>
         </GuideCallout>
         <GuideCodeBlock
+          label="KQL evidence"
           title="Correlate PIM activation and deactivation in Log Analytics"
           code={auditCorrelationKql}
           language="KQL"

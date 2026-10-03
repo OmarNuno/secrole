@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import PageMeta from "../../components/PageMeta";
+import { getPageBreadcrumbLabel, getPageCardTitle } from "../../data/pageDisplay";
 import { getSitePage } from "../../data/sitePages";
 import { GuideSection, GuideSourceList } from "./KnowledgeGuideComponents";
 import "./KnowledgeGuide.css";
@@ -102,7 +103,7 @@ function RelatedPages({ pageIds, parentPage }) {
       {pages.map((page) => (
         <Link to={page.path} key={page.id}>
           <span>{pageLabel(page)}</span>
-          <h3>{page.heading || page.title}</h3>
+          <h3>{getPageCardTitle(page)}</h3>
           <p>{page.description}</p>
           <strong>Open <span aria-hidden="true">→</span></strong>
         </Link>
@@ -110,7 +111,7 @@ function RelatedPages({ pageIds, parentPage }) {
       {parentPage && !pageIds.includes(parentPage.id) && (
         <Link to={parentPage.path} className="hub">
           <span>Reference hub</span>
-          <h3>{parentPage.heading || parentPage.title}</h3>
+          <h3>{getPageCardTitle(parentPage)}</h3>
           <p>{parentPage.description}</p>
           <strong>Open the hub <span aria-hidden="true">→</span></strong>
         </Link>
@@ -148,11 +149,11 @@ export default function KnowledgeGuideLayout({
     { name: "SecRole", path: "/" },
     { name: "Knowledge", path: "/knowledge" },
     ...ancestors.map((ancestor) => ({
-      name: ancestor.heading || ancestor.title,
+      name: getPageBreadcrumbLabel(ancestor),
       path: ancestor.path,
     })),
-    { name: page.heading || page.title, path: page.path },
-  ], [ancestors, page.heading, page.path, page.title]);
+    { name: getPageBreadcrumbLabel(page), path: page.path },
+  ], [ancestors, page]);
 
   const schemas = useMemo(() => {
     const schema = [
