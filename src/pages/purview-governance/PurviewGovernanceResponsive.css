@@ -1,0 +1,108 @@
+.pg-role-model,
+.pg-ediscovery-flow {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 1180px) {
+  .pg-equation {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .pg-plane-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pg-role-model,
+  .pg-ediscovery-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pg-role-model > span,
+  .pg-ediscovery-flow > span {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pg-role-model b,
+  .pg-ediscovery-flow b {
+    display: none;
+  }
+
+  .pg-change-gates,
+  .pg-cadence-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .pg-answer-grid,
+  .pg-role-group-grid,
+  .pg-ediscovery-grid,
+  .pg-governance-notes,
+  .pg-disposition-grid,
+  .pg-finding-grid,
+  .pg-plane-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pg-precedence,
+  .pg-content-model {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-precedence > b,
+  .pg-content-model > b {
+    display: none;
+  }
+
+  .pg-change-gates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .pg-equation,
+  .pg-answer-grid,
+  .pg-plane-grid,
+  .pg-role-group-grid,
+  .pg-time-grid,
+  .pg-scope-grid,
+  .pg-ediscovery-grid,
+  .pg-governance-grid,
+  .pg-governance-notes,
+  .pg-output-grid,
+  .pg-finding-grid,
+  .pg-workflow-grid,
+  .pg-disposition-grid,
+  .pg-change-gates,
+  .pg-troubleshooting-grid,
+  .pg-cadence-grid,
+  .pg-role-model,
+  .pg-ediscovery-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-equation article,
+  .pg-plane-grid article,
+  .pg-time-grid article,
+  .pg-scope-grid article,
+  .pg-content-model article,
+  .pg-governance-grid article,
+  .pg-output-grid article,
+  .pg-finding-grid article,
+  .pg-change-gates article,
+  .pg-troubleshooting-grid article,
+  .pg-cadence-grid article,
+  .pg-role-model article,
+  .pg-ediscovery-flow article {
+    min-height: auto;
+  }
+
+  .pg-workflow-grid article {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+
+  .pg-governance-flow > span,
+  .pg-troubleshooting-order > span {
+    flex-basis: 155px;
+  }
+}

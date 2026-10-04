@@ -9,6 +9,7 @@ import Updates from "./pages/Updates";
 import Knowledge from "./pages/Knowledge";
 import "./pages/KnowledgeHubs.css";
 import "./pages/service-principals/KnowledgeGuideBreadcrumbs.css";
+import PurviewGovernance from "./pages/purview-governance/PurviewGovernance";
 import RoleGovernance from "./pages/role-governance/RoleGovernance";
 import PimRoleSettingsGuide from "./pages/role-governance/PimRoleSettingsGuide";
 import RoleAssignableGroupsGuide from "./pages/role-governance/RoleAssignableGroupsGuide";
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/advisor" element={<AIAdvisor />} />
           <Route path="/updates" element={<Updates />} />
           <Route path="/knowledge" element={<Knowledge />} />
+          <Route path="/purview-governance" element={<PurviewGovernance />} />
           <Route path="/role-governance" element={<RoleGovernance />} />
           <Route path="/role-governance/privileged-identity-management" element={<PimRoleSettingsGuide />} />
           <Route path="/role-governance/role-assignable-groups" element={<RoleAssignableGroupsGuide />} />

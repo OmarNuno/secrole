@@ -2,7 +2,7 @@
 
 > Microsoft Entra ID and Microsoft Purview role, identity, permission, and least-privilege reference for IT administrators and security engineers.
 
-SecRole combines searchable role intelligence, comparison tools, official-source updates, and practical Microsoft Entra knowledge references. Technical pages are grounded in Microsoft Learn and Microsoft Graph documentation and include a visible last-reviewed date.
+SecRole combines searchable role intelligence, comparison tools, official-source updates, and practical Microsoft Entra and Microsoft Purview knowledge references. Technical pages are grounded in Microsoft Learn, Microsoft Graph, Exchange Online, Azure, and product documentation and include a visible last-reviewed date.
 
 ## Published pages
 
@@ -11,8 +11,9 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 - [Microsoft Entra & Purview Role Advisor](https://www.secrole.com/advisor): Describe an access requirement and use SecRole's role intelligence to investigate relevant Microsoft Entra and Purview roles.
 - [Microsoft Entra Service Principals: Complete Reference](https://www.secrole.com/service-principals): Understand Microsoft Entra service principals, application objects, app IDs vs. object IDs, permissions, consent, authentication, and governance.
 - [Microsoft Entra Role Governance: Complete Reference](https://www.secrole.com/role-governance): Govern Microsoft Entra role definitions, direct and group assignments, PIM eligibility and activation, custom roles, Administrative Unit scope, emergency access, and recurring reviews.
+- [Microsoft Purview Administration and Role Governance: Complete Reference](https://www.secrole.com/purview-governance): Govern Microsoft Purview role groups, mapped Entra roles, Administrative Units, temporary access, eDiscovery cases, compliance boundaries, sensitive-content roles, Data Map, and Unified Catalog permissions.
 - [Microsoft Entra & Purview Updates](https://www.secrole.com/updates): Track Microsoft Entra ID and Purview role, permission, security, and roadmap updates curated from official Microsoft sources.
-- [SecRole Microsoft Identity Knowledge Library](https://www.secrole.com/knowledge): Browse practical Microsoft Entra, Purview, workload identity, permission, PIM, privileged-group, custom-role, scoped-administration, migration, credential, and troubleshooting references from SecRole.
+- [SecRole Microsoft Identity Knowledge Library](https://www.secrole.com/knowledge): Browse practical Microsoft Entra, Microsoft Purview, workload identity, permission, PIM, role-group, eDiscovery, data-governance, migration, credential, and troubleshooting references from SecRole.
 - [Application ID vs. Object ID vs. Tenant ID in Microsoft Entra](https://www.secrole.com/service-principals/identifiers): Choose the correct Microsoft Entra application, service principal, and tenant ID for OAuth, Microsoft Graph, Azure RBAC, and troubleshooting.
 - [Service Principal Permissions and Admin Consent](https://www.secrole.com/service-principals/permissions-and-consent): Reconcile configured API permissions, admin consent, app-role assignments, delegated grants, and access-token claims in Microsoft Entra.
 - [Managed Identities and Workload Identity Federation](https://www.secrole.com/service-principals/managed-identities): Choose and implement system-assigned or user-assigned managed identities and federated workload authentication without long-lived secrets.
@@ -27,8 +28,9 @@ SecRole combines searchable role intelligence, comparison tools, official-source
 ## Content principles
 
 - Prefer Microsoft primary documentation for platform facts and API behavior.
-- Distinguish role systems, principals, definitions, scopes, assignment states, direct access, and inherited group paths.
-- Reduce the permission set and the assignment scope before relying on PIM or monitoring controls.
-- Distinguish requested permissions from tenant grants and configuration from runtime evidence.
+- Distinguish Microsoft Entra roles, Azure RBAC, application roles, Microsoft Purview role groups, case access, content roles, catalog roles, Data Map roles, and source-resource permissions.
+- Distinguish principals, role definitions, role groups, member sources, assignment states, direct access, inherited access, temporary access, case membership, and searchable-content boundaries.
+- Reduce the permission set, sensitive-content capability, and assignment scope before relying on PIM or monitoring controls.
+- Distinguish requested permissions from tenant grants and configuration from runtime or target-solution evidence.
 - Provide read-only investigation commands before change or remediation examples.
 - Treat Microsoft documentation as the source of truth when platform behavior changes.
