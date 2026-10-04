@@ -176,7 +176,7 @@ export default function Knowledge() {
           <div className="knowledge-breadcrumb"><Link to="/">SecRole</Link><span>/</span><strong>Knowledge</strong></div>
           <div className="knowledge-eyebrow">SecRole knowledge library</div>
           <h1>{page.heading}</h1>
-          <p>Use focused, operational guidance for Microsoft Entra identities, privileged access, role governance, workload authentication, permissions, troubleshooting, and migration. Start with a complete reference hub or search for the task in front of you.</p>
+          <p>Use focused, operational guidance for Microsoft Entra identities, privileged access, Microsoft Purview compliance and data governance, workload authentication, permissions, investigations, troubleshooting, and migration. Start with a complete reference hub or search for the task in front of you.</p>
 
           <form className="knowledge-search" role="search" onSubmit={(event) => event.preventDefault()}>
             <label htmlFor="knowledge-search-input">Search SecRole knowledge</label>
@@ -187,7 +187,7 @@ export default function Knowledge() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search PIM, role-assignable groups, custom roles, Administrative Units, scope…"
+                placeholder="Search Purview, eDiscovery, PIM, role groups, custom roles, service principals…"
                 autoComplete="off"
               />
               {query && <button type="button" onClick={() => setQuery("")}>Clear</button>}
@@ -213,7 +213,7 @@ export default function Knowledge() {
               <div>
                 <span>Start with the model</span>
                 <h2 id="knowledge-foundation-heading">Complete reference hubs</h2>
-                <p>Use a hub when you need the full mental model, operational evidence, commands, controls, and troubleshooting path for one identity domain.</p>
+                <p>Use a hub when you need the full mental model, operational evidence, commands, controls, and troubleshooting path for one identity, privileged-access, or data-governance domain.</p>
               </div>
               <strong>{matchingHubs.length} {matchingHubs.length === 1 ? "hub" : "hubs"}</strong>
             </header>
@@ -248,7 +248,7 @@ export default function Knowledge() {
           <section className="knowledge-empty" aria-live="polite">
             <span>⌕</span>
             <h2>No published knowledge matches “{query}”</h2>
-            <p>Try a broader term such as PIM, custom role, Administrative Unit, restricted management, role-assignable group, scope, service principal, permission, MFA, or troubleshooting.</p>
+            <p>Try a broader term such as Purview, eDiscovery, role group, Content Explorer, Data Map, PIM, custom role, Administrative Unit, service principal, permission, MFA, or troubleshooting.</p>
             <button type="button" onClick={() => setQuery("")}>Show all knowledge</button>
           </section>
         )}
@@ -272,10 +272,10 @@ export default function Knowledge() {
                 <h2 id="knowledge-principles-heading">Evidence before action</h2>
               </div>
               <ul>
-                <li><strong>Separate systems and scopes.</strong><span>Identify the authorization plane, principal, role definition, tenant, and scope before drawing conclusions.</span></li>
-                <li><strong>Separate direct from inherited access.</strong><span>Resolve group membership, ownership, PIM, assignment state, and every alternate path to effective privilege.</span></li>
-                <li><strong>Investigate read-only first.</strong><span>Collect evidence before changing credentials, permissions, assignments, eligibility, membership, ownership, scope, or account state.</span></li>
-                <li><strong>Prefer primary sources.</strong><span>Platform behavior is grounded in current Microsoft Learn, Graph, Azure, and product documentation.</span></li>
+                <li><strong>Separate permission systems and scopes.</strong><span>Identify the authorization plane, principal, role or role group, target data, and scope before drawing conclusions.</span></li>
+                <li><strong>Separate direct from inherited access.</strong><span>Resolve group membership, ownership, PIM, assignment state, mapped roles, cases, and every alternate path to effective privilege or sensitive data.</span></li>
+                <li><strong>Investigate read-only first.</strong><span>Collect evidence before changing credentials, permissions, role groups, cases, assignments, eligibility, membership, ownership, scope, or account state.</span></li>
+                <li><strong>Prefer primary sources.</strong><span>Platform behavior is grounded in current Microsoft Learn, Graph, Exchange Online, Azure, and product documentation.</span></li>
               </ul>
             </section>
           </>
@@ -283,7 +283,7 @@ export default function Knowledge() {
 
         <footer className="knowledge-footer">
           <span>SecRole knowledge library</span>
-          <strong>Last reviewed: October 2, 2026</strong>
+          <strong>Last reviewed: October 3, 2026</strong>
           <p>The library expands as complete, useful references and guides are published. Planned pages remain private until they are ready for administrators to use.</p>
         </footer>
       </div>

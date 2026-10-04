@@ -29,7 +29,9 @@ export default function Nav() {
         || pathname === "/service-principals"
         || pathname.startsWith("/service-principals/")
         || pathname === "/role-governance"
-        || pathname.startsWith("/role-governance/");
+        || pathname.startsWith("/role-governance/")
+        || pathname === "/purview-governance"
+        || pathname.startsWith("/purview-governance/");
     }
     return pathname === to;
   };

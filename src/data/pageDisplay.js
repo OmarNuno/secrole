@@ -15,6 +15,10 @@ const pageDisplayOverrides = {
     cardTitle: "Custom Roles, Scope & Administrative Units",
     breadcrumbLabel: "Custom Roles & Scope",
   },
+  "purview-governance": {
+    cardTitle: "Microsoft Purview Administration & Role Governance",
+    breadcrumbLabel: "Purview Governance",
+  },
 };
 
 export function getPageCardTitle(page) {
