@@ -1,6 +1,23 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { validateRoleCollections } from "./role-data-validation.js";
+import { ENTRA_ROLES, PURVIEW_ROLES } from "../src/data/roles.js";
+
+test("the published role catalog passes structural validation", () => {
+  const result = validateRoleCollections({ entraRoles: ENTRA_ROLES, purviewRoles: PURVIEW_ROLES });
+  assert.deepEqual(result.errors, []);
+});
+
+test("Compliance Administrator retains its intended related-role family", () => {
+  const roleById = new Map(PURVIEW_ROLES.map((entry) => [entry.id, entry]));
+  const administrator = PURVIEW_ROLES.find((entry) => entry.name === "Compliance Administrator");
+  assert.ok(administrator);
+  assert.deepEqual(administrator.relatedRoles.map((id) => roleById.get(id)?.name), [
+    "Compliance Data Administrator",
+    "DLP Compliance Management",
+    "Information Protection Admin",
+  ]);
+});
 
 function role(overrides = {}) {
   return {

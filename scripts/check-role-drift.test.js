@@ -1,6 +1,44 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { evaluateRiskGuardrails } from "./check-role-drift.js";
+import { evaluateRiskGuardrails, parsePurviewDoc } from "./check-role-drift.js";
+
+test("parses the legacy raw Purview tables", () => {
+  const result = parsePurviewDoc([
+    "## Role groups in Microsoft Defender for Office 365 and Microsoft Purview",
+    "|Role group|Description|Default roles|",
+    "|---|---|---|",
+    "|**Audit Reader**|Search, view, and export audit logs.|View-Only Audit Logs<br/><br/>Audit Logs|",
+    "## Roles in Microsoft Defender for Office 365 and Microsoft Purview",
+    "|Role|Description|Default role groups|",
+    "|---|---|---|",
+    "|**View-Only Audit Logs**|View audit logs.|Audit Reader|",
+  ].join("\n"));
+  assert.deepEqual(result, {
+    roleGroups: [{ name: "Audit Reader", description: "Search, view, and export audit logs.", defaultRoles: "View-Only Audit Logs, Audit Logs", kind: "role group" }],
+    roles: [{ name: "View-Only Audit Logs", description: "View audit logs.", defaultRoles: "Audit Reader", kind: "role" }],
+  });
+});
+
+test("parses Microsoft Learn Markdown spacing, footnotes, and CRLF lines", () => {
+  const result = parsePurviewDoc([
+    "## Role groups in Microsoft Defender for Office 365 and Microsoft Purview",
+    "| Role group | Description | Default roles |",
+    "| --- | --- | --- |",
+    "| **Compliance Administrator**¹ | Manage compliance settings. | DLP Compliance Management  Information Protection Admin |",
+    "## Roles in Microsoft Defender for Office 365 and Microsoft Purview",
+    "| Role | Description | Default role groups |",
+    "| --- | --- | --- |",
+    "| ^\\*^**Information Protection Admin** | Manage labels and DLP policies. | Compliance Administrator  Compliance Data Administrator |",
+    "| **View-Only Audit Logs** | View audit logs. | Audit Reader |",
+  ].join("\r\n"));
+  assert.deepEqual(result, {
+    roleGroups: [{ name: "Compliance Administrator", description: "Manage compliance settings.", defaultRoles: "DLP Compliance Management, Information Protection Admin", kind: "role group" }],
+    roles: [
+      { name: "Information Protection Admin", description: "Manage labels and DLP policies.", defaultRoles: "Compliance Administrator, Compliance Data Administrator", kind: "role" },
+      { name: "View-Only Audit Logs", description: "View audit logs.", defaultRoles: "Audit Reader", kind: "role" },
+    ],
+  });
+});
 
 function draft(overrides = {}) {
   return {
