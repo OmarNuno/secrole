@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { ALL_ROLES } from "../data/roles";
 
 const SUGGESTIONS = [
   "Who should manage DLP policies with least privilege?",
@@ -12,6 +11,11 @@ const SUGGESTIONS = [
 
 const formatMessage = (text) => {
   return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/\n\n/g, '<br/><br/>')
@@ -23,6 +27,12 @@ export default function AIAdvisor() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const chatRef = useRef(null);
+  const requestRef = useRef(null);
+
+  useEffect(() => () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+  }, []);
 
   useEffect(() => {
     if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -30,27 +40,23 @@ export default function AIAdvisor() {
 
   const ask = async (question) => {
     const q = (question || input).trim();
-    if (!q || loading) return;
+    if (!q || q.length > 4000 || loading || requestRef.current) return;
+    const controller = new AbortController();
+    requestRef.current = controller;
     setInput("");
     setMessages(m => [...m, { role: "user", text: q }]);
     setLoading(true);
 
-    const rolesSummary = ALL_ROLES.map(r =>
-      `${r.name} (${r.product}, ${r.risk} risk, ${r.category}): ${r.description}`
-    ).join("\n");
-
-    const system = `You are a senior Microsoft identity and security architect specializing in Entra ID and Microsoft Purview RBAC. You help IT admins and security teams understand which roles to assign following the principle of least privilege.
-
-Complete role reference:
-${rolesSummary}
-
-Guidelines for responses:
-- Always lead with the specific role recommendation
-- Explain WHY it's the right role (what it does that matches the need)
-- Call out if the request implies a higher-risk role than necessary
-- Warn explicitly if a suggested role is High or Critical risk
-- Keep responses under 150 words — be direct and practical
-- Use role names exactly as they appear in the reference above`;
+    const conversation = [
+      ...messages.filter(message => !message.error).map(message => ({ role: message.role, content: message.text.slice(0, message.role === "user" ? 4000 : 8000) })),
+      { role: "user", content: q },
+    ].slice(-19);
+    while (conversation.length > 1 && (
+      conversation.reduce((total, message) => total + message.content.length, 0) > 20000 ||
+      new TextEncoder().encode(JSON.stringify(conversation)).length > 24000
+    )) {
+      conversation.shift();
+    }
 
     try {
       const res = await fetch("/api/chat", {
@@ -58,23 +64,28 @@ Guidelines for responses:
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          model: "claude-haiku-4-5-20251001",
-          max_tokens: 1000,
-          system,
-          messages: [
-            ...messages.map(m => ({ role: m.role === "user" ? "user" : "assistant", content: m.text })),
-            { role: "user", content: q }
-          ],
-        }),
+        signal: controller.signal,
+        body: JSON.stringify({ feature: "ai-advisor", messages: conversation }),
       });
       const data = await res.json();
-      const reply = data.content?.map(b => b.text).join("") || "Unable to respond.";
-      setMessages(m => [...m, { role: "assistant", text: reply }]);
+      if (requestRef.current !== controller) return;
+      if (!res.ok) {
+        setMessages(m => [...m, { role: "assistant", error: true, text: typeof data.message === "string" ? data.message : "AI is temporarily unavailable. Please try again shortly." }]);
+      } else if (typeof data.text === "string" && data.text.trim()) {
+        setMessages(m => [...m, { role: "assistant", text: data.text }]);
+      } else {
+        setMessages(m => [...m, { role: "assistant", error: true, text: "AI returned an empty response. Please try again." }]);
+      }
     } catch {
-      setMessages(m => [...m, { role: "assistant", text: "Connection error. Please try again." }]);
+      if (requestRef.current === controller && !controller.signal.aborted) {
+        setMessages(m => [...m, { role: "assistant", error: true, text: "Connection error. Please try again." }]);
+      }
+    } finally {
+      if (requestRef.current === controller) {
+        requestRef.current = null;
+        setLoading(false);
+      }
     }
-    setLoading(false);
   };
 
   return (
@@ -85,6 +96,7 @@ Guidelines for responses:
         <h1 style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", letterSpacing: "-0.03em", marginBottom: 8 }}>
           AI Role Advisor
         </h1>
+        <div style={{ fontSize: 11, color: "var(--text-faint)", marginBottom: 8 }}>Powered by OpenAI</div>
         <p style={{ fontSize: 15, color: "var(--text-muted)" }}>
           Describe your scenario and get least-privilege role recommendations for Entra ID and Purview — instantly.
         </p>
@@ -139,7 +151,7 @@ Guidelines for responses:
               {m.role === "user" ? (
                 m.text
               ) : (
-                <div dangerouslySetInnerHTML={{ __html: formatMessage(m.text) }} />
+                <div role={m.error ? "alert" : undefined} dangerouslySetInnerHTML={{ __html: formatMessage(m.text) }} />
               )}
             </div>
           ))}
@@ -170,6 +182,7 @@ Guidelines for responses:
         }}>
           <input
             value={input}
+            maxLength={4000}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && ask()}
             placeholder="e.g. What role should I assign for managing DLP policies?"

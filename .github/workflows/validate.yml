@@ -1,0 +1,30 @@
+name: Validate SecRole
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Unit and provider-safety tests (mocked; no API use)
+        run: npm test
+      - name: Validate role catalog
+        run: npm run validate:roles
+      - name: Lint migration code
+        run: npm run lint:ai
+      - name: Production build
+        run: npm run build

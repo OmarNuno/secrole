@@ -13,7 +13,13 @@
     "validate:roles": "node scripts/validate-role-data.js",
     "test:role-drift": "node --test scripts/role-data-validation.test.js scripts/check-role-drift.test.js",
     "role-drift:validate": "node scripts/check-role-drift.js --validate-only",
-    "role-drift:dry-run": "node scripts/check-role-drift.js --dry-run"
+    "role-drift:dry-run": "node scripts/check-role-drift.js --dry-run",
+    "test": "node --test scripts/*.test.js",
+    "test:ai": "node --test scripts/openai.test.js scripts/chat-api.test.js scripts/ai-pipelines.test.js",
+    "lint:ai": "eslint --global process --global Buffer lib/openai.js api/chat.js scripts/openai.test.js scripts/chat-api.test.js scripts/ai-pipelines.test.js scripts/check-role-drift.js scripts/fetch-updates.js src/pages/AIAdvisor.jsx src/pages/OverlapAnalyzer.jsx",
+    "role-drift:draft": "node scripts/check-role-drift.js --draft",
+    "updates:dry-run": "node scripts/fetch-updates.js --dry-run",
+    "updates:generate": "node scripts/fetch-updates.js --generate"
   },
   "dependencies": {
     "react": "^19.2.5",

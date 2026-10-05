@@ -4,6 +4,11 @@ import { RiskBadge, ProductBadge } from "../components/Badges";
 
 const formatMessage = (text) => {
   return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
     .replace(/^### (.+)$/gm, '<h3 style="font-size:14px;font-weight:700;color:var(--text);margin:16px 0 6px;">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 style="font-size:15px;font-weight:700;color:var(--text);margin:20px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);">$1</h2>')
     .replace(/^# (.+)$/gm, '<h1 style="font-size:16px;font-weight:700;color:var(--text);margin:0 0 16px;">$1</h1>')
@@ -151,7 +156,7 @@ function AnalysisResult({ roles, result, loading }) {
         }}>
           <span style={{ fontSize: 16 }}>🤖</span>
           <span style={{ fontSize: 13, fontWeight: 600, color: "var(--entra)" }}>AI Overlap Analysis</span>
-          <span style={{ fontSize: 11, color: "var(--text-faint)", marginLeft: "auto" }}>Powered by Claude</span>
+          <span style={{ fontSize: 11, color: "var(--text-faint)", marginLeft: "auto" }}>Powered by OpenAI</span>
         </div>
         <div style={{ padding: "24px 28px" }}>
           <div
@@ -168,60 +173,64 @@ export default function OverlapAnalyzer() {
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const requestRef = useRef(null);
 
-  const addRole = (role) => setSelectedRoles(prev => [...prev, role]);
-  const removeRole = (id) => { setSelectedRoles(prev => prev.filter(r => r.id !== id)); setResult(null); };
+  useEffect(() => () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+  }, []);
+
+  const clearAnalysis = () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+    setLoading(false);
+    setResult(null);
+    setError(null);
+  };
+  const addRole = (role) => {
+    clearAnalysis();
+    setSelectedRoles(prev => prev.length >= 6 || prev.some(item => item.id === role.id) ? prev : [...prev, role]);
+  };
+  const removeRole = (id) => {
+    clearAnalysis();
+    setSelectedRoles(prev => prev.filter(role => role.id !== id));
+  };
 
   const analyze = async () => {
-    if (selectedRoles.length < 2) return;
+    if (selectedRoles.length < 2 || loading || requestRef.current) return;
+    const controller = new AbortController();
+    requestRef.current = controller;
     setLoading(true);
     setResult(null);
-
-    const roleDetails = selectedRoles.map(r =>
-      `**${r.name}** (${r.product}, ${r.risk} Risk)\n- Category: ${r.category}\n- Permissions: ${r.permissions}\n- Tags: ${r.tags.join(", ")}`
-    ).join("\n\n");
-
-    const prompt = `An IT admin has received a request to add a user to these ${selectedRoles.length} Microsoft roles simultaneously:
-
-${roleDetails}
-
-Please provide a structured analysis covering:
-
-## 1. OVERLAP ANALYSIS
-Which permissions overlap between these roles? Which roles include capabilities already covered by another role in this list?
-
-## 2. REDUNDANT ROLES
-Are any of these roles completely unnecessary given the others? Explain why.
-
-## 3. RISK ASSESSMENT
-What is the combined risk of assigning all these roles together? Flag any dangerous combinations.
-
-## 4. RECOMMENDATION
-What is the minimum set of roles that would satisfy legitimate needs? What single role or smaller combination would work?
-
-## 5. PUSHBACK TEMPLATE
-Provide a 2-3 sentence response the admin can send back to the requester explaining why some roles are not needed.
-
-Be direct and specific. Reference actual permission names where relevant.`;
+    setError(null);
 
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-haiku-4-5-20251001",
-          max_tokens: 2000,
-          system: "You are a Microsoft identity and security expert specializing in least-privilege access control for Entra ID and Microsoft Purview. You help IT administrators push back on over-privileged access requests with clear, evidence-based analysis. Be concise, structured, and practical.",
-          messages: [{ role: "user", content: prompt }],
-        }),
+        signal: controller.signal,
+        body: JSON.stringify({ feature: "overlap-analyzer", roleIds: selectedRoles.map(role => role.id) }),
       });
       const data = await res.json();
-      const text = data.content?.map(b => b.text).join("") || "Analysis unavailable.";
-      setResult(text);
+      if (requestRef.current !== controller) return;
+      if (!res.ok) {
+        setError(typeof data.message === "string" ? data.message : "AI is temporarily unavailable. Please try again shortly.");
+      } else if (typeof data.text === "string" && data.text.trim()) {
+        setResult(data.text);
+      } else {
+        setError("AI returned an empty response. Please try again.");
+      }
     } catch {
-      setResult("Error connecting to AI. Please try again.");
+      if (requestRef.current === controller && !controller.signal.aborted) {
+        setError("Error connecting to AI. Please try again.");
+      }
+    } finally {
+      if (requestRef.current === controller) {
+        requestRef.current = null;
+        setLoading(false);
+      }
     }
-    setLoading(false);
   };
 
   return (
@@ -287,6 +296,12 @@ Be direct and specific. Reference actual permission names where relevant.`;
       {selectedRoles.length === 1 && (
         <div style={{ fontSize: 13, color: "var(--text-faint)", marginBottom: 28 }}>
           Add at least one more role to run the analysis.
+        </div>
+      )}
+
+      {error && (
+        <div role="alert" style={{ padding: "16px 20px", marginBottom: 20, background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 8, color: "var(--text)", fontSize: 14 }}>
+          {error}
         </div>
       )}
 

@@ -2,30 +2,60 @@ name: Fetch Entra & Purview Updates
 
 on:
   schedule:
-    - cron: "0 6 * * *"   # Daily at 6:00 AM UTC
-  workflow_dispatch:        # Allows manual "Run workflow" button for testing
+    - cron: "0 6 * * *" # Daily 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      generate_updates:
+        description: "Generate with OpenAI and refresh cache (paid; also requires OPENAI_AUTOMATION_ENABLED=true)"
+        type: boolean
+        default: false
 
 permissions:
-  contents: write           # Required so the workflow can commit the cache file
+  contents: read
+
+concurrency:
+  group: fetch-updates-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  fetch-updates:
+  discover:
+    if: vars.OPENAI_AUTOMATION_ENABLED != 'true' || (github.event_name == 'workflow_dispatch' && !inputs.generate_updates)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v5
-
-      - name: Setup Node
-        uses: actions/setup-node@v5
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
+      - name: Discover Microsoft source items without AI or cache changes
+        run: node scripts/fetch-updates.js --dry-run | tee "${{ runner.temp }}/updates-discovery.txt"
+      - name: Save source discovery report
+        uses: actions/upload-artifact@v4
+        with:
+          name: updates-discovery
+          path: ${{ runner.temp }}/updates-discovery.txt
+      - name: Explain paused cache refresh
+        run: echo 'Discovery only. The published cache remains unchanged until owner-approved OpenAI setup and OPENAI_AUTOMATION_ENABLED=true. Manual generation also needs generate_updates=true.' >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Fetch and categorize updates
+  generate:
+    if: vars.OPENAI_AUTOMATION_ENABLED == 'true' && (github.event_name == 'schedule' || inputs.generate_updates)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Test OpenAI safeguards (mocked; no API use)
+        run: npm test
+      - name: Generate source-backed update summaries with OpenAI
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: node scripts/fetch-updates.js
-
-      - name: Commit updated cache (triggers Vercel deploy)
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+        run: node scripts/fetch-updates.js --generate
+      - name: Commit updated cache (triggers existing Vercel deployment)
         run: |
           git config user.name "secrole-bot"
           git config user.email "actions@github.com"
@@ -33,6 +63,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "chore: refresh updates cache [skip ci]"
+            git commit -m "chore: refresh updates cache with OpenAI [skip ci]"
             git push
           fi

@@ -2,85 +2,108 @@ name: Check Role Drift
 
 on:
   schedule:
-    - cron: "0 7 * * 1"   # Weekly, Mondays 7:00 AM UTC (after the 6 AM updates run)
-  workflow_dispatch:        # Manual "Run workflow" button — use repeatedly to work through the initial backlog
+    - cron: "0 7 * * 1" # Mondays 07:00 UTC
+  workflow_dispatch:
+    inputs:
+      draft_roles:
+        description: "Draft with OpenAI (paid; also requires OPENAI_AUTOMATION_ENABLED=true)"
+        type: boolean
+        default: false
 
 permissions:
-  contents: write           # Push the drift branch
-  pull-requests: write      # Open the review PR
-  issues: write             # Open an issue for retired-only drift
+  contents: read
+
+concurrency:
+  group: role-drift-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  check-role-drift:
+  discover:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v5
-
-      - name: Setup Node
-        uses: actions/setup-node@v5
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
-
       - name: Validate current role catalog
         run: npm run validate:roles
+      - name: Test role-drift and OpenAI safeguards (mocked; no API use)
+        run: npm test
+      - name: Discover role drift without AI or repository writes
+        env:
+          DRIFT_PR_BODY: ${{ runner.temp }}/role-drift-discovery.md
+        run: |
+          node scripts/check-role-drift.js --dry-run
+          cat "$DRIFT_PR_BODY" >> "$GITHUB_STEP_SUMMARY"
+      - name: Save discovery report
+        uses: actions/upload-artifact@v4
+        with:
+          name: role-drift-discovery
+          path: ${{ runner.temp }}/role-drift-discovery.md
+      - name: Explain generation opt-in
+        if: vars.OPENAI_AUTOMATION_ENABLED != 'true' || (github.event_name == 'workflow_dispatch' && !inputs.draft_roles)
+        run: echo 'Discovery only. OpenAI generation needs owner-approved setup, OPENAI_AUTOMATION_ENABLED=true, and draft_roles=true for manual runs.' >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Test role-drift safeguards
-        run: npm run test:role-drift
-
-      - name: Skip if a drift PR is already open awaiting review
+  draft:
+    needs: discover
+    if: vars.OPENAI_AUTOMATION_ENABLED == 'true' && (github.event_name == 'schedule' || inputs.draft_roles)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Skip if a drift PR is already awaiting review
         id: guard
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           open=$(gh pr list --state open --json headRefName --jq '[.[] | select(.headRefName | startswith("role-drift/"))] | length')
           if [ "$open" -gt 0 ]; then
-            echo "An open role-drift PR already exists — review/merge it first. Skipping this run."
+            echo "An open role-drift PR exists. Skipping paid generation."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Check for role drift and draft review entries
+      - name: Draft source-backed role entries with OpenAI
         if: steps.guard.outputs.skip == 'false'
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
           DRIFT_PR_BODY: ${{ runner.temp }}/drift-pr-body.md
-        run: node scripts/check-role-drift.js
-
+        run: node scripts/check-role-drift.js --draft
       - name: Validate drafted catalog
         if: steps.guard.outputs.skip == 'false'
         run: npm run validate:roles
-
-      - name: Open PR with drafted roles or issue with retirement flags
+      - name: Open draft review PR or retirement issue
         if: steps.guard.outputs.skip == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRIFT_PR_BODY: ${{ runner.temp }}/drift-pr-body.md
         run: |
           git config user.name "secrole-bot"
           git config user.email "actions@github.com"
-
           if ! git diff --quiet src/data/roles.js; then
-            branch="role-drift/$(date -u +%Y-%m-%d-%H%M)"
+            branch="role-drift/$(date -u +%Y-%m-%d-%H%M)-${GITHUB_RUN_ID}"
             git checkout -b "$branch"
             git add src/data/roles.js
-            git commit -m "feat: add new Microsoft roles detected by drift checker"
+            git commit -m "feat: propose Microsoft roles drafted with OpenAI"
             git push -u origin "$branch"
-            gh pr create \
-              --title "🤖 New Microsoft roles detected — review drafted entries" \
-              --body-file "${{ runner.temp }}/drift-pr-body.md" \
+            gh pr create --draft \
+              --title "New Microsoft roles detected: review OpenAI drafts" \
+              --body-file "$DRIFT_PR_BODY" \
               --base main --head "$branch"
-            echo "✅ PR opened for review."
-          elif [ -f "${{ runner.temp }}/drift-pr-body.md" ]; then
+          elif [ -f "$DRIFT_PR_BODY" ]; then
             existing=$(gh issue list --state open --search "Role drift: possible retired roles in:title" --json number --jq 'length')
             if [ "$existing" -eq 0 ]; then
-              gh issue create \
-                --title "Role drift: possible retired roles" \
-                --body-file "${{ runner.temp }}/drift-pr-body.md"
-              echo "⚠️ Issue opened for retirement flags."
-            else
-              echo "Retirement-flag issue already open — not duplicating."
+              gh issue create --title "Role drift: possible retired roles" --body-file "$DRIFT_PR_BODY"
             fi
           else
-            echo "✓ In sync — nothing to do."
+            echo "In sync; no proposal needed."
           fi
