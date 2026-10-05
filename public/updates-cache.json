@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-04T11:25:29.653Z",
-  "fetchedAt": "2026-10-04T11:25:29.653Z",
+  "lastUpdated": "2026-10-05T12:50:45.827Z",
+  "fetchedAt": "2026-10-05T12:50:45.827Z",
   "updates": [
     {
       "id": "exchange-server-elevation-of-privilege-cve-2026-96940",
-      "title": "CVE-2026-96940: Microsoft Exchange Server Elevation of Privilege Vulnerability",
-      "summary": "A weak authorization flaw in Microsoft Exchange Server allows authenticated attackers to escalate privileges over a network. Admins should prioritize patching to prevent unauthorized privilege elevation in their on-premises or hybrid Exchange deployments.",
+      "title": "CVE-2026-96940: Exchange Server Elevation of Privilege Vulnerability",
+      "summary": "A weak authorization flaw in Microsoft Exchange Server allows authenticated attackers to escalate privileges over the network. Admins should apply patches immediately to prevent unauthorized privilege escalation in their messaging infrastructure.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
@@ -13,19 +13,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-96940"
     },
     {
-      "id": "purview-admin-assignment-time-limit",
-      "title": "Microsoft Purview Compliance Portal: Admin Assignment Time Limit",
-      "summary": "Purview now allows administrators to set an expiration date when assigning users and security groups to role groups, enabling temporary admin access grants with automatic revocation. This enhances security posture by reducing standing privilege grants and supporting zero-trust principles.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566865"
-    },
-    {
       "id": "purview-view-only-role-management-enhancements",
       "title": "Microsoft Purview: View-Only Role Management Enhancements",
-      "summary": "A new view-only role has been introduced in Purview that grants read-only visibility into member assignments across Purview and Defender, and this capability is now also available to Global Reader and Security Reader roles. This allows compliance and security teams to audit role assignments without holding elevated permissions.",
+      "summary": "A new view-only role is being added to Purview and Entra to let admins see all role member assignments across Purview and Defender portals without granting modification rights. This permission is being integrated into Global Reader and Security Reader roles for better auditing and compliance visibility.",
       "category": "Permission Change",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -33,9 +23,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566529"
     },
     {
+      "id": "purview-admin-assignment-time-limit",
+      "title": "Microsoft Purview: Admin Assignment Time Limit",
+      "summary": "Purview now allows admins to set expiration dates when assigning users and security groups to role groups, enabling temporary privilege delegation with automatic revocation. This feature strengthens just-in-time access controls for compliance and security governance.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566865"
+    },
+    {
       "id": "entra-passkey-support-b2b-users",
       "title": "Microsoft Entra ID: Passkey Support for B2B Users",
-      "summary": "B2B users, including internal guests and external users, can now register and use passkeys issued by the resource tenant to satisfy MFA requirements without password fallback. This extends passwordless authentication capabilities to guest users and improves their sign-in experience while maintaining security.",
+      "summary": "B2B users can now register and use passkeys issued by a resource tenant to satisfy MFA requirements, extending passwordless authentication beyond member users. This enables stronger, more convenient authentication for external and guest users collaborating in your tenant.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -43,9 +43,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569432"
     },
     {
-      "id": "purview-data-lifecycle-management-departing-employees",
-      "title": "Microsoft Purview: Data Lifecycle Management for Departing Employees",
-      "summary": "Purview is adding automated data lifecycle capabilities to delete both content and containers for departed users at scale, streamlining offboarding and reducing manual compliance work. This helps organizations maintain regulatory compliance without requiring manual intervention for each departing employee's mailbox and OneDrive.",
+      "id": "purview-data-lifecycle-management-inactive-accounts",
+      "title": "Microsoft Purview: Data Lifecycle Management for Inactive Accounts",
+      "summary": "Purview is automating the deletion of content and containers for departed employees' inactive OneDrives and mailboxes at scale, eliminating manual cleanup and reducing compliance risk. This helps organizations maintain regulatory compliance without ongoing administrative overhead.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -53,9 +53,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569721"
     },
     {
-      "id": "purview-cloud-attachments-preservation-on-hold",
+      "id": "purview-cloud-attachments-preservation-legal-hold",
       "title": "Microsoft Purview: Cloud Attachments Preservation for Users on Hold",
-      "summary": "Purview now preserves cloud attachment file versions for users placed on infinite hold across OneDrive and SharePoint sites, extending legal hold capabilities beyond traditional content. This ensures organizations can maintain compliance and audit trails for shared cloud files in modern collaboration scenarios.",
+      "summary": "Purview now preserves file versions shared as cloud attachments for users placed on infinite legal hold, ensuring compliance across OneDrive and SharePoint sites. This extends eDiscovery and compliance protections to modern cloud-native sharing patterns.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -63,23 +63,23 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=493752"
     },
     {
-      "id": "purview-information-barriers-policy-compliance-report",
-      "title": "Microsoft Purview: Information Barriers Policy Compliance Report",
-      "summary": "A new compliance report for Information Barriers policies identifies SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that no longer comply after policy changes. This helps administrators quickly detect and remediate non-compliant resources following policy updates.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
       "id": "purview-dlp-global-secure-access-integration",
-      "title": "Microsoft Purview: Data Loss Prevention with Global Secure Access Integration",
-      "summary": "Purview Data Loss Prevention now integrates with Microsoft Entra Global Secure Access to enforce restrictive DLP actions at the network layer and detect risky activity through Insider Risk Management. This enables comprehensive data protection across browsers, apps, APIs, and AI platforms by inspecting traffic before it reaches untrusted destinations.",
+      "title": "Microsoft Purview DLP: Global Secure Access Integration",
+      "summary": "Purview Data Loss Prevention now integrates with Microsoft Entra Global Secure Access to protect sensitive data at the network layer, blocking risky cloud applications and enforcing DLP policies across browsers, apps, and AI platforms. This prevents data exfiltration through less-controlled channels and provides Insider Risk Management visibility.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
       "importance": "high",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-information-barriers-compliance-reporting",
+      "title": "Microsoft Purview: Information Barriers Compliance Report",
+      "summary": "Admins can now generate compliance reports in Information Barriers to identify SharePoint sites, OneDrive accounts, and embedded containers that violate policy after changes. This simplifies remediation and audit workflows for information barrier governance.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "September 2026",
+      "importance": "medium",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     }
   ]
