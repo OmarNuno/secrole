@@ -34,12 +34,13 @@ const ENTRA_ROLE_INCLUDE = (slug) =>
   `https://raw.githubusercontent.com/MicrosoftDocs/entra-docs/main/docs/identity/role-based-access-control/includes/${slug}.md`;
 const ENTRA_ROLES_PAGE =
   "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference";
+const PURVIEW_ROLES_PAGE =
+  "https://learn.microsoft.com/en-us/defender-office-365/scc-permissions";
 const PURVIEW_ROLES_RAW_URLS = [
+  `${PURVIEW_ROLES_PAGE}?accept=text/markdown`,
   "https://raw.githubusercontent.com/MicrosoftDocs/defender-docs/main/defender-office-365/scc-permissions.md",
   "https://raw.githubusercontent.com/MicrosoftDocs/defender-docs/public/defender-office-365/scc-permissions.md",
 ];
-const PURVIEW_ROLES_PAGE =
-  "https://learn.microsoft.com/en-us/defender-office-365/scc-permissions";
 
 const FETCH_HEADERS = {
   "User-Agent": "SecRole-RoleDriftBot/2.0 (+https://www.secrole.com)",
@@ -119,12 +120,13 @@ function parseEntraDoc(markdown) {
   }));
 }
 
-function parsePurviewDoc(markdown) {
+export function parsePurviewDoc(markdown) {
+  // Learn Markdown adds table padding and escaped footnote markers before some names.
   const parseTable = (section, kind) =>
-    [...section.matchAll(/^\|\*\*([^*]+)\*\*[^|]*\|([^|]+)\|([^|]*)\|$/gm)].map((match) => ({
+    [...section.matchAll(/^\|\s*(?:\^\\\*\^)?\*\*([^*]+)\*\*[^|]*\|([^|]+)\|([^|]*)\|\s*$/gm)].map((match) => ({
       name: match[1].trim(),
       description: match[2].trim(),
-      defaultRoles: match[3].replace(/<br\s*\/?><br\s*\/?>/g, ", ").trim(),
+      defaultRoles: match[3].trim().replace(/<br\s*\/?><br\s*\/?>| {2,}/g, ", "),
       kind,
     }));
 
