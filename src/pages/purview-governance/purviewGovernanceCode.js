@@ -230,34 +230,34 @@ function Add-PurviewFinding {
 
 foreach ($group in $summaryRows) {
     if ($group.MemberCount -eq 0) {
-        Add-PurviewFinding "Review" "ROLE_GROUP_WITH_NO_MEMBERS" $group.RoleGroupName `
-            "The role group currently has no resolved members." `
+        Add-PurviewFinding "Review" "ROLE_GROUP_WITH_NO_MEMBERS" $group.RoleGroupName \`
+            "The role group currently has no resolved members." \`
             "Confirm whether it is staged, filter-only, obsolete, or ready for retirement."
     }
 
     if ($group.RoleCount -eq 0) {
-        Add-PurviewFinding "High" "ROLE_GROUP_WITH_NO_ROLES" $group.RoleGroupName `
-            "No role assignment was resolved for the role group." `
+        Add-PurviewFinding "High" "ROLE_GROUP_WITH_NO_ROLES" $group.RoleGroupName \`
+            "No role assignment was resolved for the role group." \`
             "Confirm design intent. Search-permissions filters require a role group with at least one role."
     }
 
     if ($group.Roles -match '(Role Management|Data Classification Content Viewer|Compliance Search|Export|Insider Risk Management Investigation|Communication Compliance Investigation)') {
-        Add-PurviewFinding "High" "SENSITIVE_OR_DELEGATING_ROLE" $group.RoleGroupName `
-            $group.Roles `
+        Add-PurviewFinding "High" "SENSITIVE_OR_DELEGATING_ROLE" $group.RoleGroupName \`
+            $group.Roles \`
             "Validate membership, scope, time controls, case access, content exposure, ownership, and recent use."
     }
 
     if ($group.MemberCount -gt 25) {
-        Add-PurviewFinding "Review" "LARGE_ROLE_GROUP_MEMBERSHIP" $group.RoleGroupName `
-            ("Resolved members: " + $group.MemberCount) `
+        Add-PurviewFinding "Review" "LARGE_ROLE_GROUP_MEMBERSHIP" $group.RoleGroupName \`
+            ("Resolved members: " + $group.MemberCount) \`
             "Confirm the group is a job-function boundary rather than a convenience assignment."
     }
 }
 
 foreach ($filter in $report) {
     if ([string]::IsNullOrWhiteSpace([string]$filter.Users)) {
-        Add-PurviewFinding "High" "FILTER_WITHOUT_ASSIGNEES" $filter.FilterName `
-            $filter.Filters `
+        Add-PurviewFinding "High" "FILTER_WITHOUT_ASSIGNEES" $filter.FilterName \`
+            $filter.Filters \`
             "Confirm the compliance boundary is still effective and assigned to the intended role group."
     }
 }
