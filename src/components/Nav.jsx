@@ -107,12 +107,14 @@ export default function Nav() {
           display: "flex", alignItems: "center", justifyContent: "space-between", height: 60,
         }}>
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: 8,
-              background: "linear-gradient(135deg, var(--entra) 0%, var(--purview) 100%)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 16, flexShrink: 0, boxShadow: "0 2px 8px rgba(56,139,253,0.3)",
-            }}>🛡️</div>
+            <img
+              src="/secrole-mark.svg"
+              alt=""
+              aria-hidden="true"
+              width="32"
+              height="32"
+              style={{ display: "block", flexShrink: 0 }}
+            />
             <div>
               <div style={{ fontWeight: 700, fontSize: 16, color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1 }}>
                 SecRole
