@@ -11,6 +11,7 @@
  *   node scripts/check-role-drift.js --dry-run
  */
 
+import process from "node:process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -120,23 +121,81 @@ function parseEntraDoc(markdown) {
   }));
 }
 
-export function parsePurviewDoc(markdown) {
-  // Learn Markdown adds table padding and escaped footnote markers before some names.
-  const parseTable = (section, kind) =>
-    [...section.matchAll(/^\|\s*(?:\^\\\*\^)?\*\*([^*]+)\*\*[^|]*\|([^|]+)\|([^|]*)\|\s*$/gm)].map((match) => ({
-      name: match[1].trim(),
-      description: match[2].trim(),
-      defaultRoles: match[3].trim().replace(/<br\s*\/?><br\s*\/?>| {2,}/g, ", "),
-      kind,
-    }));
+// Microsoft publishes both Unicode superscripts in Learn Markdown and <sup>
+// markers in repository Markdown. Resolve only the notes referenced by each row.
+const FOOTNOTE_MARKER = String.raw`(?:[⁰¹²³⁴⁵⁶⁷⁸⁹]+|<sup>\s*\d+\s*</sup>|\^\d+\^|\[\^[\w-]+\])`;
 
-  const groupsSection = (markdown.split(/^## Role groups in Microsoft Defender/m)[1] || "")
-    .split(/^## Roles in Microsoft Defender/m)[0];
-  const rolesSection = markdown.split(/^## Roles in Microsoft Defender/m)[1] || "";
+function footnoteKey(marker) {
+  return marker.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, (digit) => String("⁰¹²³⁴⁵⁶⁷⁸⁹".indexOf(digit)))
+    .replace(/<\/?sup>|[\s^[\]]/g, "");
+}
+
+function parseFootnotes(section) {
+  const notes = new Map();
+  let current;
+  for (const line of section.split("\n")) {
+    const text = line.replace(/^\s*>\s?/, "").trim();
+    const match = text.match(new RegExp(`^(${FOOTNOTE_MARKER}):?\\s+(.+)$`, "i"));
+    if (match) {
+      current = footnoteKey(match[1]);
+      notes.set(current, match[2]);
+    } else if (!text || /^(?:#|\||\[!|Note\b)/.test(text)) {
+      current = undefined;
+    } else if (current) {
+      notes.set(current, `${notes.get(current)} ${text}`);
+    }
+  }
+  return notes;
+}
+
+export function parsePurviewDoc(markdown) {
+  const document = markdown.replace(/\r\n?/g, "\n");
+  const parseTable = (section, kind) => {
+    const notes = parseFootnotes(section);
+    return [...section.matchAll(/^\|\s*([^|]+)\|([^|]*)\|([^|]*)\|\s*$/gm)].flatMap((match) => {
+      const nameMatch = match[1].match(/\*\*([^*]+)\*\*/);
+      if (!nameMatch) return [];
+      const name = nameMatch[1].trim();
+      const markers = [...match[1].matchAll(new RegExp(FOOTNOTE_MARKER, "gi"))];
+      const footnotes = [...new Set(markers.map((marker) => footnoteKey(marker[0])))].map((marker) => {
+        const text = notes.get(marker);
+        // Missing restrictions are unsafe drafting evidence; abort instead of
+        // silently presenting a restricted preview role as generally available.
+        if (!text) throw new Error(`Unresolved Purview footnote ${marker} for "${name}".`);
+        return { marker, text };
+      });
+      return [{
+        name,
+        description: match[2].trim(),
+        defaultRoles: match[3].trim().replace(/<br\s*\/?>(?:\s*<br\s*\/?>)?| {2,}/gi, ", "),
+        kind,
+        footnotes,
+      }];
+    });
+  };
+
+  const groupsSection = (document.split(/^## Role groups in Microsoft Defender/m)[1] || "")
+    .split(/^## /m)[0];
+  const rolesSection = (document.split(/^## Roles in Microsoft Defender/m)[1] || "")
+    .split(/^## /m)[0];
 
   return {
     roleGroups: parseTable(groupsSection, "role group"),
     roles: parseTable(rolesSection, "role"),
+  };
+}
+
+export function buildPurviewEvidence(role) {
+  const notes = (role.footnotes || []).map(({ marker, text }) => `[${marker}] ${text}`);
+  return {
+    // Separate capabilities from membership labels and applicability notes for
+    // deterministic checks, but retain all of them for the drafting model.
+    officialCapabilities: role.description,
+    officialDocumentation: [
+      role.description,
+      `Included default roles: ${role.defaultRoles}`,
+      ...(notes.length ? [`Applicable official notes:\n${notes.join("\n")}`] : []),
+    ].join("\n\n"),
   };
 }
 
@@ -185,58 +244,106 @@ function riskBelow(actual, minimum) {
   return (RISK_RANK[actual] ?? -1) < (RISK_RANK[minimum] ?? 99);
 }
 
-export function evaluateRiskGuardrails(draft) {
-  const capabilityText = [
-    draft.name,
-    draft.description,
-    draft.permissions,
-    draft.officialDocumentation,
-  ].filter(Boolean).join(" ").toLowerCase();
-  const flags = [];
+const WRITE_ACTION = /\b(?:assign(?:s|ing)?|grant(?:s|ing)?|remov(?:e|es|ing)|manag(?:e|es|ing)|elevat(?:e|es|ing)|creat(?:e|es|ing)|updat(?:e|es|ing)|modif(?:y|ies|ying)|delet(?:e|es|ing)|configur(?:e|es|ing)|approv(?:e|es|ing)|releas(?:e|es|ing)|restor(?:e|es|ing)|purg(?:e|es|ing)|writ(?:e|es|ing)|reset(?:s|ting)?|edit(?:s|ing)?|defin(?:e|es|ing)|activat(?:e|es|ing)|deactivat(?:e|es|ing)|enabl(?:e|es|ing)|disabl(?:e|es|ing)|control(?:s|ling)?)\b/g;
+const READ_ACTION = /\b(?:read(?:s|ing)?|view(?:s|ing)?|access(?:es|ing)?|search(?:es|ing)?|export(?:s|ing)?|discover(?:s|ing)?|inspect(?:s|ing)?)\b/g;
+const NEGATION = /\b(?:cannot|can't|can not|does not|doesn't|do not|don't|not(?!\s+only\b)|unable to|without|no|neither)\b/;
 
+function capabilityClauses(value) {
+  return String(value || "")
+    // Accept older evidence as well as the structured evidence emitted now.
+    .replace(/^(?:Default roles assigned to this role group|Included default roles):[^\n]*(?:\n|$)/gim, "\n")
+    .replace(/^Applicable official notes:[\s\S]*$/im, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/<br\s*\/?>/gi, ". ")
+    .replace(/[*_`]/g, "")
+    .replace(/[’‘]/g, "'")
+    .toLowerCase()
+    .split(/[.;\n]|\b(?:but|however)\b|(?=\bwithout\b)|,\s*(?=(?:not|no)\b)|\b(?:and|or)\s+(?=(?:can|cannot|can't|may|allows?|provides?|has|have|not|no)\b)|\b(?:plus|and|with)\s+(?=(?:permissions?|rights?|ability|capabilit(?:y|ies))\s+to\b)/)
+    .map((clause) => clause.trim()).filter(Boolean);
+}
+
+function affirmativeActions(clause, pattern, write = false) {
+  return [...clause.matchAll(pattern)].filter((match) => {
+    const prefix = clause.slice(0, match.index);
+    if (NEGATION.test(clause.slice(0, match.index + match[0].length))) return false;
+    // A list or feature name such as "View-Only Manage Alerts" is not a write.
+    if (write && /\b(?:read|view)[- ]only\b/.test(prefix)) return false;
+    // Instructions to assign the group, or descriptions of assigned members,
+    // do not mean the group can itself assign roles.
+    const suffix = clause.slice(match.index + match[0].length);
+    // "View ... for the Manage Alerts feature" names a feature; it does not
+    // authorize managing alerts. The imperative "Manage alerts" still counts.
+    if (write && /\b(?:for|of|in|about)\s+(?:the\s+)?$/.test(prefix)
+      && /^(?:\s+[\w-]+){0,5}\s+(?:feature|page|reports?|settings)\b/.test(suffix)) return false;
+    if (write && /^(?:assign|grant)/.test(match[0]) && (
+      (/\buse this (?:role )?group to\s*$/.test(prefix) && /^\s+(?:(?:read|view)[- ]only\s+)?permissions?\b/.test(suffix))
+      || (/\b(?:should only|must|need to)\s*$/.test(prefix) && /^\s+(?:this|the) (?:role|group)\b/.test(suffix))
+    )) return false;
+    return true;
+  });
+}
+
+export function evaluateRiskGuardrails(draft) {
+  // Names, membership tables and applicability footnotes are context, not
+  // capability claims. Never join fields into one synthetic permission clause.
+  const clauses = [draft.description, draft.permissions, draft.officialCapabilities ?? draft.officialDocumentation]
+    .flatMap(capabilityClauses);
+  const flags = [];
   const add = (code, minimum, message) => {
     if (!flags.some((flag) => flag.code === code)) {
       flags.push({ code, suggestedMinimumRisk: minimum, message });
     }
   };
+  const hasWriteTo = (target) => clauses.some((clause) =>
+    affirmativeActions(clause, WRITE_ACTION, true).some((action) => {
+      const afterAction = clause.slice(action.index + action[0].length);
+      // Coordinated verbs can share an object ("manage and view roles").
+      // Once an object exists ("manage reports and view roles"), a later read
+      // cannot turn that unrelated write into privilege management.
+      const nextRead = [...afterAction.matchAll(READ_ACTION)].find((read) => read[0] !== "access");
+      const beforeRead = afterAction.slice(0, nextRead?.index ?? afterAction.length);
+      const hasOwnObject = beforeRead.replace(WRITE_ACTION, "")
+        .replace(/\b(?:and|or|also)\b|[,\s]/g, "").length > 0;
+      const object = nextRead && hasOwnObject ? beforeRead : afterAction;
+      return target.test(object);
+    }));
 
   if (draft.privileged && riskBelow(draft.risk, "High")) {
     add("privileged-role-understated", "High", "Microsoft marks this role privileged, but the proposed risk is below High.");
   }
 
   if (
-    /(assign|grant|remove|manage|elevat)[^.]{0,45}(directory |entra |privileged )?roles?|role assignments?|global administrator|privileged identity management/.test(capabilityText)
+    hasWriteTo(/\b(?:(?:directory|entra|privileged)\s+)?roles?\b|\bglobal administrator\b|\bprivileged identity management\b/)
     && riskBelow(draft.risk, "High")
   ) {
     add("privilege-management-understated", "High", "The official capability appears to manage or escalate privileged role access.");
   }
 
   if (
-    /(conditional access|authentication methods?|password reset|credentials?|client secrets?|certificates?|federation|domains?|oauth consent|admin consent|identity protection|security policies?|security configuration)/.test(capabilityText)
-    && /(manage|create|update|modify|delete|reset|configure|approve|grant|write)/.test(capabilityText)
+    hasWriteTo(/\b(?:conditional access|authentication methods?|passwords?|credentials?|client secrets?|certificates?|federation|domains?|oauth consent|admin consent|identity protection|security policies?|security configuration)\b/)
     && riskBelow(draft.risk, "High")
   ) {
     add("identity-security-write-understated", "High", "The role appears to modify identity, authentication, credential, consent, or security-critical configuration.");
   }
 
-  const broadScope = /(tenant-wide|organization-wide|all users|all mailboxes|all sites|all microsoft 365|sharepoint|onedrive|exchange|teams)/.test(capabilityText);
-  const sensitiveContent = /(email|mailbox|messages?|chats?|documents?|files?|content|communications?|evidence|investigation data|personal data|user activity)/.test(capabilityText);
-  const readCapability = /(read|view|access|search|export|discover|inspect)/.test(capabilityText);
-  if (broadScope && sensitiveContent && readCapability && riskBelow(draft.risk, "High")) {
+  const hasSensitiveRead = clauses.some((clause) => {
+    const broadScope = /\b(?:tenant-wide|organization-wide|all users|all mailboxes|all sites|all cases|across (?:all )?cases|all microsoft 365|sharepoint|onedrive|exchange|teams)\b/.test(clause);
+    const sensitiveContent = /\b(?:email|mailbox(?:es)?|messages?|chats?|documents?|files?|content|communications?|evidence|investigation data|personal data|user activity)\b/.test(clause);
+    return broadScope && sensitiveContent && affirmativeActions(clause, READ_ACTION).length;
+  });
+  if (hasSensitiveRead && riskBelow(draft.risk, "High")) {
     add("sensitive-content-access-understated", "High", "Broad read access to tenant content, communications, evidence, or personal data can have High confidentiality impact.");
   }
 
   if (
-    /(sensitive metadata|identity data|audit logs?|sign-in logs?|security alerts?|risk detections?|configuration visibility)/.test(capabilityText)
+    clauses.some((clause) => /\b(?:sensitive metadata|identity data|audit logs?|sign-in logs?|security alerts?|risk detections?|configuration visibility)\b/.test(clause)
+      && affirmativeActions(clause, READ_ACTION).length)
     && riskBelow(draft.risk, "Medium")
   ) {
     add("sensitive-metadata-understated", "Medium", "Broad sensitive metadata or security evidence should not be treated as narrow low-impact visibility.");
   }
 
-  if (
-    draft.risk === "Low"
-    && /(create|update|modify|delete|manage|configure|approve|release|restore|purge|write|assign|reset)/.test(capabilityText)
-  ) {
+  if (draft.risk === "Low" && clauses.some((clause) => affirmativeActions(clause, WRITE_ACTION, true).length)) {
     add("write-capability-rated-low", "Medium", "The draft contains a meaningful write or approval capability but is rated Low.");
   }
 
@@ -251,18 +358,18 @@ function sampleEntries(rolesSource, product, count = 3) {
   const prefix = product === "Entra" ? "e" : "p";
   const lines = rolesSource
     .split("\n")
-    .filter((line) => new RegExp(`^\\s*\\{ id:\"${prefix}[\\w]*\",`).test(line));
+    .filter((line) => new RegExp(`^\\s*\\{ id:"${prefix}[\\w]*",`).test(line));
   const picks = [lines[0], lines[Math.floor(lines.length / 2)], lines[lines.length - 1]].filter(Boolean);
   return picks.slice(0, count).join("\n");
 }
 
-async function draftWithClaude({ toDraft, myRoles, rolesSource, categories }) {
+export function buildDraftPrompt({ toDraft, myRoles, rolesSource, categories }) {
   const roleOptions = [
     ...myRoles.map((role) => `${role.id}=${role.name}`),
     ...toDraft.map((role) => `${role.proposedId}=${role.name} [new in this same batch]`),
   ].join("; ");
 
-  const prompt = `You are the content author for SecRole (secrole.com), a Microsoft Entra ID and Microsoft Purview RBAC role reference for IT administrators, security engineers, and compliance officers.
+  return `You are the content author for SecRole (secrole.com), a Microsoft Entra ID and Microsoft Purview RBAC role reference for IT administrators, security engineers, and compliance officers.
 
 Below are NEW official Microsoft roles missing from SecRole. Every draft must be grounded only in the official Microsoft text supplied for that role.
 
@@ -274,7 +381,7 @@ RULES:
 1. "name" must EXACTLY match the official name. Never rename it.
 2. "description": 1-2 plain-English sentences based only on the supplied official text.
 3. "permissions": one specific sentence describing what the role can actually do, based only on the supplied official text.
-4. "leastPrivilege": practical assignment guidance. State plainly when Microsoft marks a role privileged, deprecated, restricted, or not intended for general use.
+4. "leastPrivilege": practical assignment guidance. State plainly when Microsoft marks a role privileged, deprecated, restricted, or not intended for general use. Preserve applicable official footnotes, including preview/private-preview status, unsupported or no-operational-effect restrictions, and cloud availability limitations. Planned support is not current availability.
 5. "risk" rubric:
    - Critical: tenant takeover, role escalation, control of privileged authentication/credentials, or equivalent persistent control.
    - High: broad write access to identity, security, compliance, or data-protection controls; OR tenant-wide access to sensitive content, communications, investigation evidence, or identity data even when read-only.
@@ -291,6 +398,10 @@ RULES:
 NEW ROLES TO DRAFT:
 ${JSON.stringify(toDraft, null, 1)}`;
 
+}
+
+async function draftWithClaude(input) {
+  const prompt = buildDraftPrompt(input);
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -379,6 +490,7 @@ function validateDrafts(drafts, toDraft, myRoles, categories) {
       sourceUrl: source.url,
       privileged: source.privileged || false,
       officialDocumentation: source.officialDocumentation,
+      officialCapabilities: source.officialCapabilities,
     };
     validated.reviewFlags = evaluateRiskGuardrails(validated);
     output.push(validated);
@@ -630,7 +742,7 @@ async function main() {
           name: role.name,
           privileged: false,
           url: PURVIEW_ROLES_PAGE,
-          officialDocumentation: `${role.description}\n\nDefault roles assigned to this role group: ${role.defaultRoles}`.slice(0, 4500),
+          ...buildPurviewEvidence(role),
         });
       }
     }

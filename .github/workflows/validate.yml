@@ -1,0 +1,35 @@
+name: Validate SecRole
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run credential-free regression tests
+        run: npm test
+      - name: Validate catalog
+        run: npm run validate:roles
+      - name: Lint role-drift changes
+        run: npm run lint:role-drift
+      - name: Build production bundle and route entrypoints
+        run: npm run build
