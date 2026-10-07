@@ -12,9 +12,11 @@
     "preview": "vite preview",
     "test:startup": "node --test scripts/app-startup.test.js",
     "validate:roles": "node scripts/validate-role-data.js",
-    "test:role-drift": "node --test scripts/role-data-validation.test.js scripts/check-role-drift.test.js",
+    "test:role-drift": "node --test scripts/role-data-validation.test.js scripts/check-role-drift.test.js scripts/purview-role-content.test.js",
     "role-drift:validate": "node scripts/check-role-drift.js --validate-only",
-    "role-drift:dry-run": "node scripts/check-role-drift.js --dry-run"
+    "role-drift:dry-run": "node scripts/check-role-drift.js --dry-run",
+    "test": "node --test scripts/*.test.js",
+    "lint:role-drift": "eslint scripts/check-role-drift.js scripts/check-role-drift.test.js scripts/purview-role-content.test.js src/data/roles.js"
   },
   "dependencies": {
     "react": "^19.2.5",

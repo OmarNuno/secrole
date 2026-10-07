@@ -1,6 +1,6 @@
 # SecRole Role Drift Automation
 
-Last updated: September 19, 2026
+Last updated: October 7, 2026
 
 ## Purpose
 
@@ -42,6 +42,18 @@ Drafted roles are flagged when the proposed rating appears inconsistent with the
 - The draft omits a useful risk rationale.
 
 Flags do not silently rewrite the rating. They are shown in the generated pull request so the reviewer can make the final decision.
+
+## Official Purview evidence
+
+The parser resolves numbered notes for the specific table row that references them, including Learn superscripts and repository `<sup>` markers. Restrictions remain separate from capability text and default-role membership, but all three are supplied to the drafting model. An unresolved numbered footnote aborts discovery rather than silently dropping restrictions.
+
+For example, the six Information Protection ABAC groups and their six individual roles carry Microsoft's note that they are in private preview, unsupported and without operational effect outside that preview, with support **planned only** for GCC High and DoD. The prompt explicitly requires retaining these limitations; planned support must not be described as current availability. Purview notes are not removed by the capability-text length cap.
+
+Guardrails evaluate affirmative capability clauses rather than role names, membership labels, or applicability notes. This prevents `Default roles assigned to this role group` and `View-Only Manage Alerts` from being mistaken for assignment or write powers. Checks keep word boundaries, common negations and read-only contexts, and do not combine unrelated fields into one capability. Broad read-only access to content across all investigation cases still warrants a High confidentiality flag.
+
+These checks are conservative text heuristics, not a permission evaluator or general natural-language parser. A clean report does not establish that a risk rating is correct. Reviewers must still check the source, scope, included roles, and restrictions.
+
+The offline fixture in `scripts/fixtures/purview-scc-permissions.md` is a source-attributed excerpt of Microsoft's current table. Regression tests cover footnote applicability, prompt retention, false membership flags, positive privileged/security/write capabilities, negation, read-only access, and confidential content scope without invoking the drafting API.
 
 ## Same-batch related roles
 
