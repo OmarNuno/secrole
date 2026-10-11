@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-10T11:29:07.110Z",
-  "fetchedAt": "2026-10-10T11:29:07.110Z",
+  "lastUpdated": "2026-10-11T11:42:36.620Z",
+  "fetchedAt": "2026-10-11T11:42:36.620Z",
   "updates": [
     {
-      "id": "purview-dlp-ocr-endpoint-support",
-      "title": "Microsoft Purview DLP: OCR Support for Endpoint Devices",
-      "summary": "Purview Data Loss Prevention is gaining optical character recognition (OCR) capabilities to detect sensitive content embedded in images (JPG, PNG, TIFF, BMP, PDF) on Windows endpoints and automatically apply DLP policies to prevent exfiltration. This extends data protection beyond text-based documents to visual media, closing a significant gap in endpoint data loss prevention.",
+      "id": "purview-dlp-ocr-endpoint",
+      "title": "Microsoft Purview DLP: Optical Character Recognition Support for Endpoint",
+      "summary": "DLP policies will now detect sensitive content within images (JPG, PNG, TIFF, BMP, PDF) on Windows endpoints using OCR, preventing exfiltration of data hidden in image files. This extends DLP protection beyond text-based documents to visual content, closing a gap in endpoint data protection.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -14,8 +14,8 @@
     },
     {
       "id": "purview-dspm-new-experience",
-      "title": "Microsoft Purview: Data Security Posture Management Redesign",
-      "summary": "Microsoft is launching a major evolution of Purview DSPM with AI-driven capabilities, including unified visibility across traditional and AI environments, Security Copilot integration for automated triage and policy management, and enhanced posture reporting. This redesign helps security teams prioritize and remediate data risks faster in AI-forward organizations.",
+      "title": "Microsoft Purview Data Security Posture Management: Enhanced AI-Driven Experience",
+      "summary": "Purview is introducing a redesigned DSPM interface with AI observability, intelligent Security Copilot agents for automated policy management and triage, and outcome-based workflows to prioritize and remediate data risks faster. The upgrade extends coverage to AI-driven environments alongside traditional data stores, helping organizations prepare for secure AI adoption.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -24,8 +24,8 @@
     },
     {
       "id": "purview-sensitivity-labels-entra-security-groups",
-      "title": "Microsoft Purview: Sensitivity Labels for Entra Security Groups",
-      "summary": "Administrators can now apply sensitivity labels directly to Microsoft Entra cloud security groups, leveraging the same label configurations already in use for Microsoft 365 groups and sites with no additional setup required. This extends Purview's governance and classification capabilities to identity-based security groups, improving data governance consistency across the identity and collaboration surfaces.",
+      "title": "Microsoft Purview Information Protection: Sensitivity Labels for Entra Security Groups",
+      "summary": "Sensitivity labels can now be applied directly to Microsoft Entra cloud security groups using the same label configuration already in use for Microsoft 365 groups and sites. This unifies governance and classification across group types without requiring separate label setup.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -33,19 +33,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568217"
     },
     {
-      "id": "purview-dlp-label-policy-export",
+      "id": "purview-dlp-export-configs",
       "title": "Microsoft Purview: Export DLP and Label Policy Configurations",
-      "summary": "Purview now allows administrators to export their DLP policies and label publishing configurations as a downloadable ZIP file directly from the portal, streamlining troubleshooting by enabling quick attachment of complete policy schemas to support tickets. This operational improvement reduces the friction in diagnosing policy configuration issues.",
+      "summary": "Admins can now export DLP policies and label publishing configurations as a downloadable ZIP file containing schema details, streamlining support troubleshooting and policy documentation. This capability is now generally available.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
-      "importance": "low",
+      "importance": "medium",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566321"
     },
     {
-      "id": "purview-auto-expanding-archive-beyond-1-5tb",
-      "title": "Microsoft Purview: Auto-Expanding Archive Mailboxes Beyond 1.5 TB",
-      "summary": "Archive mailboxes can now automatically expand beyond the previous 1.5 TB limit for eligible E5 licensees, ensuring uninterrupted retention and data availability without mailbox lockout. This capability addresses scalability concerns for organizations with large compliance retention requirements.",
+      "id": "purview-archive-mailbox-expansion-limit",
+      "title": "Microsoft Purview Data Lifecycle Management: Archive Mailbox Expansion Beyond 1.5 TB",
+      "summary": "Archive mailboxes with eligible E5 licenses can now automatically expand beyond the previous 1.5 TB limit, ensuring continuous retention and enabling scalable archive growth without operational interruption. This removes a critical constraint on long-term data retention.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -54,8 +54,8 @@
     },
     {
       "id": "purview-graph-api-archive-mailboxes",
-      "title": "Microsoft Purview: Graph API Support for Archive Mailboxes",
-      "summary": "Microsoft Graph API now provides unified access to archive mailboxes (main and auxiliary), offering administrators a seamless, consolidated archive view and enabling modern API-driven management as EWS Graph APIs are deprecated. This API enhancement improves integration options for compliance and retention workflows.",
+      "title": "Microsoft Purview Data Lifecycle Management: Graph API Support for Archive Mailboxes",
+      "summary": "Microsoft Graph API now provides unified access to archive mailboxes (main and auxiliary) through a single view, replacing deprecated EWS Graph APIs. This enables programmatic archive mailbox management and streamlines integration with modern applications.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -65,7 +65,7 @@
     {
       "id": "purview-permissions-audit-log-improvements",
       "title": "Microsoft Purview: Permissions Audit Log Improvements",
-      "summary": "Enhanced audit logging in the Purview portal now provides clearer visibility into role and scoped-role access decisions, helping administrators troubleshoot access denial issues and monitor authorization outcomes. Better audit trails improve security operations and access governance visibility.",
+      "summary": "Enhanced audit logging now provides clearer visibility into role and scoped-role access decisions when users access the Purview portal, helping administrators troubleshoot authorization issues and monitor compliance with role-based access controls. This improves accountability for portal access.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -73,9 +73,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573447"
     },
     {
-      "id": "purview-dlp-inline-protection-edge-entra-managed-apps",
-      "title": "Microsoft Purview: DLP Inline Protection for Entra-Managed Apps in Edge for Business",
-      "summary": "Purview DLP inline protection for Microsoft Entra-managed apps in Edge for Business now integrates with Conditional Access controls, supporting expanded conditions, multiple activities per rule, simulation mode, and enhanced alerting. This integration simplifies configuration and extends DLP enforcement across browser-based productivity scenarios.",
+      "id": "purview-dlp-edge-business-entra-managed-apps",
+      "title": "Microsoft Purview DLP: Upgraded Inline Protection for Entra-Managed Apps in Edge for Business",
+      "summary": "DLP inline protection for Entra-managed applications in Edge for Business now integrates with Conditional Access grant controls, supporting expanded conditions, multiple activities per rule, simulation mode, and configurable alerts. Admins gain finer control over data protection without Purview policy restrictions.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -83,9 +83,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571397"
     },
     {
-      "id": "purview-auto-labeling-scale-increase-sharepoint-onedrive",
-      "title": "Microsoft Purview: Auto-Labeling Scale Increase to 500K Files Daily",
-      "summary": "The maximum auto-labeling capacity for SharePoint and OneDrive has increased from 100,000 to 500,000 files per tenant per day, allowing organizations to label and protect more data at rest faster. This capacity improvement helps close data classification gaps and prepares data estates more quickly for Microsoft 365 Copilot adoption.",
+      "id": "purview-autolabeling-scale-increase",
+      "title": "Microsoft Purview Information Protection: Auto-Labeling Scale Increase for SharePoint and OneDrive",
+      "summary": "Maximum daily auto-labeling capacity for SharePoint and OneDrive has increased from 100,000 to 500,000 files per tenant, enabling faster bulk classification and protection of resting data at scale. This helps organizations close data labeling gaps and prepare their data estate for Microsoft 365 Copilot.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -94,8 +94,8 @@
     },
     {
       "id": "purview-dlp-intune-mam-mobile-apps",
-      "title": "Microsoft Purview: DLP and Collections for Intune-Managed Mobile Apps",
-      "summary": "Purview DLP now extends to Intune Mobile Application Management (MAM)-protected mobile apps, enabling content-aware protection policies that evaluate clipboard actions and data sharing against DLP rules on mobile devices. This integration addresses mobile data exfiltration risks and insider threats across Intune-managed workflows.",
+      "title": "Microsoft Purview DLP: DLP and Collection Policies for Intune-Managed Mobile Apps",
+      "summary": "Purview DLP now protects sensitive data in Intune Mobile Application Management (MAM)-protected mobile apps by evaluating clipboard actions against policies before sharing, reducing data leakage and insider risk on mobile devices. Collection policies can also govern sensitive data handling in managed mobile workflows.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -103,29 +103,29 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567311"
     },
     {
-      "id": "purview-irm-alert-notes-collaboration",
-      "title": "Microsoft Purview: Insider Risk Management Alert Notes and Collaboration",
-      "summary": "Insider Risk Management now supports direct note-taking within alerts for analysts to document investigation progress and share findings, plus automatic system-generated notes for status changes and assignments. This centralized investigation history improves collaboration and creates an auditable timeline for triage and case work.",
+      "id": "purview-irm-notes-alerts-cases",
+      "title": "Microsoft Purview Insider Risk Management: Note Capabilities for Alerts and Cases",
+      "summary": "Analysts can now add manual notes directly in Insider Risk Management alerts to document investigation progress, with system-generated notes automatically recording status changes and assignments. This centralizes investigation history and improves team collaboration and auditability.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
-      "importance": "low",
+      "importance": "medium",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564620"
     },
     {
       "id": "purview-irm-enhanced-user-profile",
-      "title": "Microsoft Purview: Insider Risk Management Enhanced User Profile Context",
-      "summary": "IRM alerts now display enriched user profile data (employee type, office location, start date, policy inclusion, priority user status, last working day) directly in the alert workflow, reducing the need for analysts to context-switch. Enhanced user context helps investigators make faster, more informed risk assessments during triage.",
+      "title": "Microsoft Purview Insider Risk Management: Enhanced User Profile in IRM Alerts",
+      "summary": "The User section in IRM alerts now displays contextual details such as employee type, office location, start date, priority user group status, and last working day, allowing investigators to build complete user context without leaving the alert interface. This streamlines alert triage and decision-making.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
-      "importance": "low",
+      "importance": "medium",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564619"
     },
     {
-      "id": "purview-dlp-entra-global-secure-access-integration",
-      "title": "Microsoft Purview: DLP Integration with Entra Global Secure Access",
-      "summary": "Purview DLP now integrates with Microsoft Entra Global Secure Access to protect sensitive data at the network layer, including text, files, and AI interactions across browsers, apps, APIs, and generative AI platforms, with detection of risky activity through Insider Risk Management. This network-level enforcement prevents data exfiltration to untrusted cloud applications and collaborative platforms.",
+      "id": "purview-dlp-global-secure-access",
+      "title": "Microsoft Purview DLP: Integration with Entra Global Secure Access (General Availability)",
+      "summary": "Purview DLP now integrates with Microsoft Entra Global Secure Access to protect text, files, and AI interactions at the network layer, preventing sensitive data from being shared with untrusted cloud applications through browsers, apps, APIs, and AI platforms. This extends DLP enforcement to network-level access controls.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
@@ -133,9 +133,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-information-barriers-compliance-report",
-      "title": "Microsoft Purview: Information Barriers Compliance Report",
-      "summary": "A new Information Barriers compliance report capability helps administrators identify SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that no longer comply after policy changes. This reporting feature simplifies governance tracking and remediation of policy drift.",
+      "id": "purview-info-barriers-compliance-report",
+      "title": "Microsoft Purview Information Barriers: Policy Compliance Reporting",
+      "summary": "A new compliance report feature identifies SharePoint sites, OneDrive accounts, and user-owned SharePoint Embedded containers that fall out of compliance after Information Barriers policy changes. This helps admins track policy impact and ensure consistent enforcement across the organization.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
@@ -145,7 +145,7 @@
     {
       "id": "cve-2026-96940-exchange-elevation-privilege",
       "title": "CVE-2026-96940: Microsoft Exchange Server Elevation of Privilege",
-      "summary": "A weak authorization vulnerability in Microsoft Exchange Server allows authenticated attackers to elevate privileges over the network. Organizations should apply patches immediately to close this authenticated escalation path.",
+      "summary": "Weak authorization controls in Microsoft Exchange Server allow an authenticated attacker to escalate privileges over the network. Organizations should apply available patches immediately to prevent privilege escalation attacks from internal or compromised accounts.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
@@ -153,9 +153,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-96940"
     },
     {
-      "id": "cve-2026-69435-azure-sre-agent-elevation-privilege",
+      "id": "cve-2026-69435-azure-sre-elevation-privilege",
       "title": "CVE-2026-69435: Azure SRE Agent Elevation of Privilege",
-      "summary": "Missing authorization checks in Azure SRE Agent allow authorized attackers to elevate privileges over the network. This vulnerability affects Azure control-plane operations and should be patched to prevent privilege escalation by authenticated actors.",
+      "summary": "Missing authorization controls in Azure SRE Agent enable an authorized attacker to escalate privileges over the network. Administrators should review and restrict SRE Agent permissions and apply patches to prevent unauthorized privilege escalation.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
@@ -165,7 +165,7 @@
     {
       "id": "cve-2026-94510-bookings-elevation-privilege",
       "title": "CVE-2026-94510: Microsoft Bookings Authorization Bypass and Elevation of Privilege",
-      "summary": "An authorization bypass vulnerability in Microsoft Bookings allows unauthorized attackers to elevate privileges over the network through user-controlled key manipulation. Organizations using Bookings should apply available patches.",
+      "summary": "An authorization bypass vulnerability in Microsoft Bookings allows unauthorized attackers to elevate privileges through user-controlled keys over the network. Organizations using Bookings should apply patches to prevent unauthorized access escalation.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
