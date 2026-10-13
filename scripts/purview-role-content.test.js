@@ -118,3 +118,44 @@ test("IRM Auditors includes export, independent-log scope, and inherited Copilot
   assert.match(entry("p75").leastPrivilege, /not exclusively read-only/);
   assert.ok(!entry("p75").tags.includes("read-only"));
 });
+
+// p76-p90 reviewed against scc-permissions and edisc-permissions on 2026-10-13.
+test("restricted IRM groups preserve operational boundaries", () => {
+  assert.match(entry("p76").description, /Does not grant access to investigations, alerts, cases, or sensitive content/);
+  assert.match(entry("p76").leastPrivilege, /internal approval use only/);
+  assert.match(entry("p77").leastPrivilege, /Do not assign manually/);
+  assert.match(entry("p77").permissions, /background services only/);
+  assert.doesNotMatch(content("p78"), /compliance training/i);
+});
+
+test("mail flow and organization management retain separate Exchange permissions", () => {
+  assert.doesNotMatch(content("p79"), /device|Basic Mobility/i);
+  assert.match(entry("p79").permissions, /separately an Exchange Administrator/);
+  assert.match(entry("p80").permissions, /separate Exchange Online permissions/);
+  assert.match(entry("p80").leastPrivilege, /emergency-use warning applies to Global Administrator/);
+});
+
+test("privacy contribution and approval expose content and exports", () => {
+  for (const id of ["p82", "p90"]) {
+    assert.equal(entry(id).risk, "High");
+    for (const capability of [/search mailboxes/i, /preview/i, /export search results/i, /custodians/i]) assert.match(entry(id).permissions, capability);
+  }
+});
+
+test("billing readers and case reviewers do not acquire management rights", () => {
+  assert.match(entry("p84").permissions, /does not grant Role Management/);
+  assert.equal(entry("p84").risk, "Low");
+  assert.match(entry("p85").permissions, /Does not grant search-result preview/);
+  assert.match(entry("p85").permissions, /tags requires the separate Manage Review Set Tags role/);
+  assert.doesNotMatch(entry("p85").permissions, /manage review set content/);
+});
+
+test("security groups distinguish capability, assignment guidance, and related roles", () => {
+  assert.match(entry("p86").leastPrivilege, /PIM approval is not universal/);
+  assert.deepEqual(relatedNames("p86"), ["Security Reader", "Security Operator", "Organization Management"]);
+  assert.deepEqual(relatedNames("p88"), ["Security Administrator", "Security Operator", "Global Reader"]);
+  assert.equal(entry("p88").risk, "Medium");
+  assert.equal(entry("p87").risk, "High");
+  assert.match(entry("p87").permissions, /Tenant Allow\/Block List/);
+  assert.match(entry("p87").permissions, /search mailboxes/);
+});

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { buildDraftPrompt, buildPurviewEvidence, evaluateRiskGuardrails, parsePurviewDoc } from "./check-role-drift.js";
+import { buildPrBody, buildDraftPrompt, buildPurviewEvidence, evaluateRiskGuardrails, parsePurviewDoc } from "./check-role-drift.js";
 
 test("parses the legacy raw Purview tables", () => {
   const result = parsePurviewDoc([
@@ -290,4 +290,21 @@ test("official View-Only Manage Alerts description names a feature, not a write 
   assert.deepEqual(codes({ name: role.name, description: role.description, permissions: role.description, ...buildPurviewEvidence(role) }), []);
   assert.ok(codes({ permissions: "Manage alerts." }).includes("write-capability-rated-low"));
   assert.ok(codes({ permissions: "View reports and manage alerts." }).includes("write-capability-rated-low"));
+});
+
+
+test("Security Reader membership instructions do not grant role-management powers", () => {
+  const flags = evaluateRiskGuardrails({
+    risk: "Low", description: "View security alerts and configuration visibility.",
+    officialCapabilities: "Members have read-only access to security features. To manage permissions centrally, add and remove group members in the Microsoft Entra admin center. If you edit this role group in the portals (membership or roles), those changes apply only to security and compliance areas and not to any other services.",
+    riskRationale: "Broad security metadata and configuration visibility warrant Medium risk.",
+  });
+  assert.deepEqual(flags.map(flag => flag.code), ["sensitive-metadata-understated"]);
+  assert.ok(evaluateRiskGuardrails({risk: "Low", permissions: "Manage role group membership."}).some(flag => flag.code === "privilege-management-understated"));
+});
+
+test("Purview reporting does not equate a missing privileged marker with no privilege", () => {
+  const body = buildPrBody({added: [{id: "p80", name: "Organization Management", product: "Purview", risk: "Critical", privileged: false, reviewFlags: [], sourceUrl: "https://learn.microsoft.com/en-us/defender-office-365/scc-permissions"}], deferred: [], skippedDeprecated: [], retired: [], counts: {entra: 136, purview: 90}});
+  assert.match(body, /Not assessed \(no source marker\)/);
+  assert.doesNotMatch(body, /\| No \|/);
 });

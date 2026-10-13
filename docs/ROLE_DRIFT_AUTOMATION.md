@@ -104,3 +104,28 @@ Before merging a drift pull request, verify:
 - Deprecated, reserved, or restricted status
 
 Nothing ships until a human merges the pull request.
+
+## Purview review reporting
+
+The Purview source does not provide the Entra privileged marker. Reports therefore
+show `Not assessed (no source marker)` for Purview, never infer absence of privilege
+from the generator's false default. The capability-based risk rating is separate;
+Organization Management remains Critical because it controls role groups.
+
+Two explicit Microsoft sentences about centrally administering group membership
+and the scope of portal edits are excluded from capability heuristics. This narrow
+exclusion prevents Security Reader assignment instructions from becoming fictitious
+write powers; genuine role-management capabilities still trigger the guardrail.
+
+The p76–p90 review preserves service-only and internal-use restrictions, separate
+Exchange permissions, case review limitations, and content/export capabilities.
+Privacy Management Contributors and Subject Rights Request Approvers are High for
+bundled content search, preview, export, and custodian access; Security Operator is
+High for tenant allow/block settings. Security Reader is Medium for broad security
+visibility. Reviewer remains Medium for assigned-case review-set access, with no
+search-result preview or case administration. Current eDiscovery documentation
+requires a separate Manage Review Set Tags role for tag management.
+
+Sources checked October 13, 2026:
+- https://learn.microsoft.com/en-us/defender-office-365/scc-permissions
+- https://learn.microsoft.com/en-us/purview/edisc-permissions

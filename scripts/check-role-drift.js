@@ -252,6 +252,10 @@ function capabilityClauses(value) {
   return String(value || "")
     // Accept older evidence as well as the structured evidence emitted now.
     .replace(/^(?:Default roles assigned to this role group|Included default roles):[^\n]*(?:\n|$)/gim, "\n")
+    // These specific source sentences instruct an administrator how to assign
+    // membership; they do not confer assignment powers on Security Reader.
+    .replace(/To manage permissions centrally, add and remove group members in the Microsoft Entra admin center\./gi, "")
+    .replace(/If you edit this role group in (?:these|the) portals \(membership or roles\), those changes apply only to (?:the )?security and compliance areas and not to any other services\./gi, "")
     .replace(/^Applicable official notes:[\s\S]*$/im, "")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
     .replace(/<br\s*\/?>/gi, ". ")
@@ -537,7 +541,7 @@ function markdownCell(value) {
     .replace(/\r?\n/g, "<br>");
 }
 
-function buildPrBody({ added, deferred, skippedDeprecated, retired, counts }) {
+export function buildPrBody({ added, deferred, skippedDeprecated, retired, counts }) {
   const riskIcon = { Critical: "🔴", High: "🟠", Medium: "🟡", Low: "🟢" };
   const lines = [];
   lines.push("## 🤖 Role drift detected — official Microsoft roles drafted for human review");
@@ -556,7 +560,7 @@ function buildPrBody({ added, deferred, skippedDeprecated, retired, counts }) {
       const flags = role.reviewFlags.length
         ? role.reviewFlags.map((flag) => `⚠️ ${flag.message} Suggested minimum: **${flag.suggestedMinimumRisk}**.`).join("<br>")
         : "—";
-      lines.push(`| \`${role.id}\` | ${markdownCell(role.name)} | ${role.product} | ${riskIcon[role.risk] || ""} ${role.risk} | ${markdownCell(role.riskRationale)} | ${markdownCell(flags)} | ${role.privileged ? "Yes 🔒" : "No"} | ${markdownCell(role.category)} | [Microsoft](${role.sourceUrl}) |`);
+      lines.push(`| \`${role.id}\` | ${markdownCell(role.name)} | ${role.product} | ${riskIcon[role.risk] || ""} ${role.risk} | ${markdownCell(role.riskRationale)} | ${markdownCell(flags)} | ${role.product === "Purview" ? "Not assessed (no source marker)" : role.privileged ? "Yes 🔒" : "No source marker"} | ${markdownCell(role.category)} | [Microsoft](${role.sourceUrl}) |`);
     }
   } else {
     lines.push("");
