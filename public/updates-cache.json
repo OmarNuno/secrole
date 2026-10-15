@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-14T10:44:48.021Z",
-  "fetchedAt": "2026-10-14T10:44:48.021Z",
+  "lastUpdated": "2026-10-15T10:27:32.679Z",
+  "fetchedAt": "2026-10-15T10:27:32.679Z",
   "updates": [
     {
-      "id": "purview-dlp-admin-units-copilot",
-      "title": "Microsoft Purview: Data Loss Prevention – Admin Units Support for Copilot & Cowork",
-      "summary": "Microsoft Purview DLP is extending Administrative Units support to Copilot, Copilot Chat, and Cowork, allowing organizations to delegate DLP policy management to unit-scoped administrators without granting tenant-wide permissions. This enables better compliance with regional and departmental governance boundaries while maintaining optional organization-wide policy application.",
+      "id": "purview-dlp-admin-units-copilot-cowork",
+      "title": "Microsoft Purview: Data Loss Prevention Admin Units Support for Copilot & Cowork",
+      "summary": "DLP policies can now be scoped to Administrative Units for Microsoft 365 Copilot, Copilot Chat, and Cowork, enabling delegated policy management without granting tenant-wide permissions. This supports organizations with regional, departmental, or regulatory boundaries by allowing AU-scoped administrators to manage Copilot DLP independently.",
       "category": "Permission Change",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -13,19 +13,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575287"
     },
     {
-      "id": "purview-rms-connector-certificate-auth",
-      "title": "Microsoft Purview: Rights Management Connector – Certificate-Based Authentication",
-      "summary": "The Microsoft Rights Management connector is transitioning from shared-secret to certificate-based authentication, requiring admins to configure their own Entra app registration and certificate via new PowerShell cmdlets. This change improves security posture but requires manual setup for certificate import, registry configuration, and workload-specific validation across Connector, Exchange, SharePoint, and FCI.",
-      "category": "Permission Change",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564617"
-    },
-    {
-      "id": "sharepoint-elevation-privilege-vulnerabilities",
+      "id": "sharepoint-elevation-of-privilege-vulnerabilities",
       "title": "3 Elevation of Privilege Vulnerabilities Patched in Microsoft Office SharePoint",
-      "summary": "Three authorization-related vulnerabilities in SharePoint (CVE-2026-102861, CVE-2026-102862, CVE-2026-105720) allow authorized attackers to escalate privileges over the network due to missing or incorrect authorization controls. Admins should apply patches promptly to prevent privilege escalation within SharePoint environments.",
+      "summary": "Microsoft Office SharePoint received security patches for three authorization flaws (CVE-2026-102861, CVE-2026-102862, CVE-2026-105720) that could allow authorized attackers to escalate privileges over the network. Admins should apply these updates to prevent unauthorized privilege escalation in their SharePoint environments.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
@@ -33,19 +23,49 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-102861"
     },
     {
-      "id": "sharepoint-information-disclosure-vulnerability",
-      "title": "CVE-2026-102865 Microsoft Office SharePoint Information Disclosure Vulnerability",
-      "summary": "Incorrect authorization in SharePoint permits authorized attackers to disclose sensitive information over the network due to flawed access controls. Organizations should prioritize patching to prevent unauthorized data exposure through SharePoint.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
+      "id": "purview-dlp-guided-diagnostics-copilot",
+      "title": "Microsoft Purview: DLP Guided Diagnostics Experience with Copilot Insights",
+      "summary": "A new diagnostic tool helps admins understand and troubleshoot DLP policy behavior by showing which policies triggered, evaluation order, and condition details; E5 customers also get Copilot-powered recommendations for policy optimization. This reduces troubleshooting time and improves DLP policy effectiveness across the organization.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-102865"
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561032"
     },
     {
-      "id": "purview-dlp-network-data-security-scope",
-      "title": "Microsoft Purview: Data Loss Prevention – Network Data Security Scope to All or Specific Websites",
-      "summary": "Admins can now scope Purview network data security DLP policies integrated with Entra GSA Internet Access to apply across all websites or exclude specific cloud apps, enabling protection for apps not in the Defender Cloud App Catalog. This extends DLP governance beyond pre-cataloged applications to broader web traffic.",
+      "id": "purview-adaptive-scope-lifecycle-evaluation",
+      "title": "Microsoft Purview: Adaptive Scope Lifecycle Status Evaluation Control",
+      "summary": "Adaptive Scopes will now provide explicit control over how recipient and site owner lifecycle states are evaluated during policy targeting, ensuring scope membership stays aligned with organizational needs. This gives admins finer control over who is included or excluded from adaptive scope-based policies.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=572676"
+    },
+    {
+      "id": "purview-rms-connector-certificate-auth",
+      "title": "Microsoft Purview: Rights Management Connector Certificate-Based Authentication",
+      "summary": "The Microsoft RMS connector is transitioning from shared-secret to certificate-based authentication, improving security by requiring admins to configure their own Entra app registration and certificate. New PowerShell cmdlets simplify deployment and certificate management across Connector, Exchange, SharePoint, and FCI workloads.",
+      "category": "Permission Change",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=564617"
+    },
+    {
+      "id": "purview-information-protection-legacy-office-autolabel",
+      "title": "Microsoft Purview: Auto-Labeling for Legacy Office File Formats",
+      "summary": "Server-side auto-labeling now supports legacy Office formats (.doc, .xls, .ppt) in SharePoint and OneDrive, automatically applying sensitivity labels based on policy rules. This closes a gap for organizations with older file repositories and ensures consistent labeling across legacy and modern file types.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=574363"
+    },
+    {
+      "id": "purview-dlp-network-security-entra-gsa",
+      "title": "Microsoft Purview: Network DLP Scoping for All Websites via Entra GSA Integration",
+      "summary": "DLP policies integrated with Entra Global Secure Access can now scope protection to all websites or all websites except specific cloud apps, extending coverage beyond the Defender Cloud App Catalog. This allows admins to protect emerging and niche cloud services with network-layer data loss prevention.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -53,9 +73,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575285"
     },
     {
-      "id": "purview-dlp-alert-auto-resolution-tagging",
-      "title": "Microsoft Purview: Data Loss Prevention – Rule-Based Alert Auto-Resolution and Tagging",
-      "summary": "Organizations can now define rules to automatically resolve or tag DLP alerts based on custom business criteria, such as low-severity mail to trusted partners or alerts from specific departments. This reduces alert fatigue and improves triage efficiency by pre-filtering predictable alert patterns.",
+      "id": "purview-dlp-alert-autoresolution-tagging",
+      "title": "Microsoft Purview: DLP Alert Auto-Resolution and Rule-Based Tagging",
+      "summary": "Admins can now define rules to automatically resolve predictable DLP alerts and tag alerts for routing and categorization, reducing alert fatigue and improving triage efficiency. For example, rules can auto-resolve low-severity alerts to trusted partners or auto-tag legal department alerts for business-process routing.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -63,9 +83,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568371"
     },
     {
-      "id": "purview-sharepoint-default-library-labels",
-      "title": "Microsoft Purview: Information Protection – Apply Default SharePoint Library Labels to Data at Rest",
-      "summary": "Purview now supports auto-labeling of existing SharePoint files to match the default sensitivity label configured on their document library, closing labeling gaps for data at rest without manual user intervention. This ensures consistent, secure-by-default protection across SharePoint libraries.",
+      "id": "purview-information-protection-sharepoint-default-labels",
+      "title": "Microsoft Purview: Apply Default SharePoint Library Labels to Data at Rest",
+      "summary": "Auto-labeling can now retroactively apply a SharePoint library's default sensitivity label to existing files, automatically closing labeling gaps without requiring manual user action. This ensures consistent, secure-by-default protection across all SharePoint libraries.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -73,9 +93,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575283"
     },
     {
-      "id": "purview-sharepoint-retention-archiving",
-      "title": "Microsoft Purview: Data Lifecycle Management – Archive SharePoint Files Under Retention Policies",
-      "summary": "Administrators can now include file archiving actions within Purview retention policies, moving inactive SharePoint content to low-cost storage while maintaining compliance and discoverability. This extends data lifecycle management beyond keep/delete to include cost-optimized archival.",
+      "id": "purview-dlm-retention-last-accessed",
+      "title": "Microsoft Purview: Retention Based on Last Accessed for SharePoint and OneDrive Files",
+      "summary": "Data Lifecycle Management can now apply retention schedules based on when files were last accessed in SharePoint and OneDrive, enabling more nuanced governance based on file usage patterns. This helps organizations optimize storage and retention costs by targeting truly inactive content.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=472030"
+    },
+    {
+      "id": "purview-dlm-sharepoint-archiving",
+      "title": "Microsoft Purview: Archive SharePoint Files Under Retention Policies",
+      "summary": "Admins can now include file archiving actions within SharePoint retention policies, moving inactive content to low-cost storage while keeping it discoverable and accessible. This extends DLM capabilities beyond keep/delete decisions and improves cost management for long-term data governance.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -83,39 +113,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562345"
     },
     {
-      "id": "purview-information-barriers-compliance-report",
-      "title": "Microsoft Purview: Information Barriers – Compliance Report for Policy Changes",
-      "summary": "A new Information Barriers policy compliance report identifies SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that fall out of compliance after policy changes. This helps admins track and remediate compliance gaps when updating organizational barriers.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-network-data-security-ga",
-      "title": "Microsoft Purview: Network Data Security – General Availability with Entra Global Secure Access",
-      "summary": "Purview Network Data Security is now generally available, integrating with Entra Global Secure Access to protect text, files, and AI interactions at the network layer and enforce DLP policies against untrusted cloud applications. This provides defense-in-depth against data exfiltration through browsers, apps, APIs, and generative AI platforms.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "September 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-info-protection-auto-label-legacy-office",
-      "title": "Microsoft Purview: Information Protection – Auto-Labeling for Legacy Office Files",
-      "summary": "Server-side auto-labeling now supports legacy Office formats (.doc, .xls, .ppt) in SharePoint and OneDrive, allowing organizations to automatically apply sensitivity labels to older file types. This extends data classification coverage to legacy content that may not receive manual attention.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=574363"
-    },
-    {
-      "id": "purview-info-protection-macos-labeler-viewer",
-      "title": "Microsoft Purview: Information Protection – File Labeler and Viewer for macOS",
-      "summary": "Microsoft Purview's File Labeler and File Viewer applications are being brought to macOS, providing Mac users with the same data protection and labeling capabilities available on Windows. Advanced label-based protection features will be available in a phased rollout.",
+      "id": "purview-information-protection-macos-labeler-viewer",
+      "title": "Microsoft Purview: Information Protection File Labeler and Viewer for macOS",
+      "summary": "The Information Protection File Labeler and Viewer applications are now available on macOS, bringing core labeling and viewing capabilities to Mac users (except advanced label-based protection). This extends unified data protection to Apple ecosystem users.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -123,34 +123,34 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561327"
     },
     {
-      "id": "purview-retention-last-accessed-files",
-      "title": "Microsoft Purview: Data Lifecycle Management – Retention Based on Last Accessed for Files",
-      "summary": "Organizations can now apply retention policies to SharePoint and OneDrive files based on last access date, enabling time-based cleanup of stale content. This helps admins optimize storage and compliance by automatically managing inactive files.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=472030"
-    },
-    {
-      "id": "purview-insider-risk-temp-file-noise",
-      "title": "Microsoft Purview: Insider Risk Management – Reduce Temporary File Noise for Endpoint Activities",
-      "summary": "Insider Risk Management is addressing high-volume, low-signal temporary file events from Windows and applications by introducing enhanced exclusion patterns for temporary file naming conventions. This reduces alert noise while maintaining visibility into genuine insider risk indicators.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560601"
-    },
-    {
-      "id": "purview-endpoint-dlp-policy-sync-ai",
-      "title": "Microsoft Purview: Endpoint Data Loss Prevention – AI-Powered Policy Sync and Device Health Investigation",
-      "summary": "An AI agent skill detects and alerts on unhealthy policy synchronization and device configuration issues in Endpoint DLP, enabling proactive remediation of compliance gaps. This improves visibility into endpoint DLP deployment health across the organization.",
+      "id": "purview-endpoint-dlp-device-health-investigation",
+      "title": "Microsoft Purview: Endpoint DLP AI-Powered Device Health Investigation",
+      "summary": "An AI agent skill has been added to detect and alert on unhealthy DLP policy sync and device configuration issues across Endpoint DLP deployments. This proactively identifies configuration drift and policy synchronization problems that could leave endpoints unprotected.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
       "importance": "low",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562016"
+    },
+    {
+      "id": "purview-information-barriers-compliance-report",
+      "title": "Microsoft Purview: Information Barriers Policy Compliance Report",
+      "summary": "A new Information Barriers compliance report identifies SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that no longer comply after policy changes, helping admins quickly remediate non-compliant content. This improves visibility and compliance tracking for Information Barriers implementations.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "September 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview-network-data-security-general-availability",
+      "title": "Microsoft Purview: Network Data Security General Availability with Entra GSA Integration",
+      "summary": "Microsoft Purview Network Data Security is now generally available, integrating with Entra Global Secure Access to enforce DLP policies at the network layer for text, files, and AI interactions. This prevents sensitive data exfiltration to untrusted cloud apps, social media, and generative AI platforms while enabling Insider Risk Management detection.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "September 2026",
+      "importance": "high",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     }
   ]
 }
