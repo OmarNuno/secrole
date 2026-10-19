@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-18T10:00:23.979Z",
-  "fetchedAt": "2026-10-18T10:00:23.979Z",
+  "lastUpdated": "2026-10-19T11:24:05.846Z",
+  "fetchedAt": "2026-10-19T11:24:05.846Z",
   "updates": [
     {
       "id": "endpoint-dlp-ftp-sftp-monitoring",
       "title": "Endpoint DLP Now Monitors FTP and SFTP Transfers",
-      "summary": "Microsoft Purview Endpoint DLP can now detect and block sensitive data transfers over FTP and SFTP protocols from managed Windows devices, helping prevent data exfiltration through these file transfer methods. Admins can configure FTP/SFTP activities directly in Endpoint DLP policies to enforce restrictive actions.",
+      "summary": "Microsoft Purview Endpoint DLP has reached general availability for monitoring sensitive data transferred over FTP and SFTP protocols from managed Windows devices, with enforcement of restrictive actions to prevent exfiltration. Admins can now configure FTP and SFTP transfer activities directly in their Endpoint DLP policies to protect data in transit across these common file transfer protocols.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
@@ -15,17 +15,17 @@
     {
       "id": "purview-network-data-security-entra-integration",
       "title": "Microsoft Purview Network Data Security Integrates with Entra Global Secure Access",
-      "summary": "Purview now integrates with Microsoft Entra Global Secure Access to protect sensitive data at the network layer, enforce DLP policies across browsers, apps, and AI platforms, and detect insider risk activities. This integration prevents data sharing with untrusted cloud applications including generative AI and social media platforms.",
+      "summary": "Purview Network Data Security now integrates with Microsoft Entra Global Secure Access to enforce DLP policies at the network layer and detect risky user activity through Insider Risk Management. This integration protects sensitive text, files, and AI interactions while preventing data sharing with untrusted cloud applications across browsers, apps, APIs, and generative AI platforms.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
-      "importance": "high",
+      "importance": "medium",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "information-barriers-policy-compliance-report",
-      "title": "Information Barriers Policy Compliance Report Now Available",
-      "summary": "Microsoft Purview now provides a dedicated compliance report for Information Barriers policies that identifies SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that no longer comply after policy changes. This helps admins track and remediate compliance drift across the organization.",
+      "id": "information-barriers-compliance-reporting",
+      "title": "Information Barriers Policy Compliance Reporting Available",
+      "summary": "Administrators can now generate an Information Barriers policy compliance report to identify SharePoint sites, OneDrive accounts, and user-owned SharePoint Embedded containers that no longer meet policy requirements after changes are made. This reporting capability simplifies the audit and remediation process for organizations managing information barriers across their Microsoft 365 environment.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
