@@ -129,3 +129,22 @@ requires a separate Manage Review Set Tags role for tag management.
 Sources checked October 13, 2026:
 - https://learn.microsoft.com/en-us/defender-office-365/scc-permissions
 - https://learn.microsoft.com/en-us/purview/edisc-permissions
+
+## Supervisory Review review — October 19, 2026
+
+PR #25 adds the Supervisory Review role group (p91), whose sole documented default
+role is Supervisory Review Administrator (p35). Reciprocal links distinguish the
+group from the role. The current Microsoft table lists both and does not identify
+p35 as retired, so its categorical legacy/replaced wording and legacy tag were
+removed. This does not assert that every tenant exposes the same solution UI.
+
+The descriptions stay within policy scope and reviewer selection. They do not
+infer message-content or investigation permission, or unconditional tenant-wide
+access, from policy administration. Independent approval is optional organizational
+guidance, not a documented Microsoft requirement. High remains SecRole's reasoned
+assessment of the impact of changing compliance monitoring policies, not an
+official Microsoft risk label or evidence of unrestricted access.
+
+Sources:
+- https://learn.microsoft.com/en-us/defender-office-365/scc-permissions#role-groups-in-microsoft-defender-for-office-365-and-microsoft-purview
+- https://learn.microsoft.com/en-us/purview/communication-compliance-permissions
