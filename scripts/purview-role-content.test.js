@@ -159,3 +159,21 @@ test("security groups distinguish capability, assignment guidance, and related r
   assert.match(entry("p87").permissions, /Tenant Allow\/Block List/);
   assert.match(entry("p87").permissions, /search mailboxes/);
 });
+
+// Reviewed October 19, 2026 against scc-permissions and
+// communication-compliance-permissions: group membership is not a new role.
+test("Supervisory Review distinguishes its role group from the included administrator role", () => {
+  assert.match(entry("p91").description, /role group whose default role is Supervisory Review Administrator/);
+  assert.match(entry("p35").description, /Individual policy-administration role/);
+  assert.ok(relatedNames("p91").includes("Supervisory Review Administrator"));
+  assert.ok(relatedNames("p35").includes("Supervisory Review"));
+  assert.ok(!entry("p35").tags.includes("legacy"));
+  assert.doesNotMatch(content("p35"), /Legacy role|replaced by|only relevant in older/i);
+  for (const id of ["p35", "p91"]) {
+    assert.equal(entry(id).risk, "High");
+    assert.match(entry(id).leastPrivilege, /consider independent approval/i);
+    assert.doesNotMatch(content(id), /requires approval workflows/i);
+  }
+  assert.match(entry("p35").permissions, /should not be treated as permission to investigate alerts or read message content/);
+  assert.match(entry("p91").leastPrivilege, /Keep policy configuration separate from investigation and message-review duties/);
+});
