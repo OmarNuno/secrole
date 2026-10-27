@@ -1,71 +1,11 @@
 {
-  "lastUpdated": "2026-10-26T11:42:08.290Z",
-  "fetchedAt": "2026-10-26T11:42:08.290Z",
+  "lastUpdated": "2026-10-27T11:10:03.455Z",
+  "fetchedAt": "2026-10-27T11:10:03.455Z",
   "updates": [
     {
-      "id": "dlp-policy-tips-email-notifications-decoupling",
-      "title": "Data Loss Prevention: Decouple Policy Tips from Email Notifications",
-      "summary": "Admins can now independently configure policy tips and email notifications for SharePoint and OneDrive DLP rules, instead of enabling both or neither. This gives compliance teams finer control over user notifications and reduces alert fatigue by allowing selective enablement of each notification type.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=396575"
-    },
-    {
-      "id": "irm-alert-classification",
-      "title": "Insider Risk Management: Alert Classification Feature",
-      "summary": "Analysts with appropriate Purview permissions can now classify insider risk alerts as True Positive, Benign (operational), or False Positive with predefined reasons. This replaces existing dismissal workflows and helps organizations better categorize risk signals to improve reporting, tuning, and incident response.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=576710"
-    },
-    {
-      "id": "data-lifecycle-management-graph-api-archive-mailboxes",
-      "title": "Data Lifecycle Management: Microsoft Graph API for Archive Mailboxes",
-      "summary": "Microsoft Graph API now provides unified access to archive mailboxes (main and auxiliary), eliminating the need for deprecated Exchange Web Services. This modernization lets admins manage archive retention and lifecycle policies programmatically with a single seamless interface.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573701"
-    },
-    {
-      "id": "auto-labeling-per-policy-coverage-report",
-      "title": "Information Protection: Auto-Labeling Per-Policy Coverage Report",
-      "summary": "Admins can now view detailed per-policy coverage reports showing how many files have been labeled, remain unlabeled, and were included in simulation snapshots during auto-labeling enforcement. This visibility helps identify labeling progress and data drift for tuning classification policies.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568935"
-    },
-    {
-      "id": "adaptive-protection-data-lifecycle-management-integration",
-      "title": "Data Lifecycle Management: Adaptive Protection Integration",
-      "summary": "Adaptive Protection now integrates with Data Lifecycle Management to automatically apply retention labels based on dynamic insider risk levels. Users' risk scores automatically trigger retention policy changes, enabling dynamic data preservation aligned with security posture.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566324"
-    },
-    {
-      "id": "azure-pst-import-data-lifecycle-management",
-      "title": "Data Lifecycle Management: Azure PST Import Migration",
-      "summary": "Admins can now import PST files stored in Azure Blob Storage directly into Exchange Online mailboxes using the standard Exchange Migration Service workflow. This modern alternative to network-based PST uploads streamlines mailbox migrations with built-in validation and analysis phases.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565865"
-    },
-    {
-      "id": "cve-2026-97785-aad-app-proxy-eop",
-      "title": "CVE-2026-97785: Azure AD App Proxy Elevation of Privilege",
-      "summary": "An improper authentication vulnerability in Azure AD Application Proxy allows unauthorized attackers to elevate privileges over the network. Admins should apply available security updates immediately to prevent unauthorized access escalation in hybrid identity scenarios.",
+      "id": "cve-2026-97785-aad-app-proxy-elevation-privilege",
+      "title": "CVE-2026-97785: AAD App Proxy Elevation of Privilege Vulnerability",
+      "summary": "A critical authentication bypass in Azure AD App Proxy allows unauthenticated attackers to escalate privileges over the network. Admins should apply the available security update immediately to protect hybrid identity infrastructure and on-premises application access.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
@@ -73,9 +13,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-97785"
     },
     {
-      "id": "cve-2026-80092-microsoft-identity-web-eop",
-      "title": "CVE-2026-80092: Microsoft Identity Web Elevation of Privilege",
-      "summary": "Microsoft Identity Web versions 3 and 4 contain an elevation of privilege vulnerability that can allow attackers to bypass authentication controls. Organizations using Microsoft Identity Web for custom authentication integrations should update to version 3.16.0 or 4.16.1 respectively.",
+      "id": "cve-2026-80092-microsoft-identity-web-elevation-privilege",
+      "title": "CVE-2026-80092: Microsoft Identity Web Elevation of Privilege Vulnerability",
+      "summary": "An elevation of privilege vulnerability in Microsoft Identity Web (versions 3 and 4) has been patched in versions 3.16.0 and 4.16.1 respectively. Organizations using Identity Web for authentication should update to these versions to secure their authentication pipeline.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
@@ -83,9 +23,79 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-80092"
     },
     {
-      "id": "dlp-endpoint-ftp-sftp-transfers",
-      "title": "Endpoint Data Loss Prevention: FTP and SFTP Transfer Monitoring",
-      "summary": "Endpoint DLP now monitors sensitive data transferred over FTP and SFTP protocols and can apply restrictive actions based on DLP policies. Admins can configure these legacy transfer activities in Endpoint DLP policies to prevent data exfiltration through file transfer protocols.",
+      "id": "dlp-policy-tips-email-notifications-decoupling",
+      "title": "Microsoft Purview DLP: Decouple Policy Tips and Email Notifications",
+      "summary": "Admins can now independently configure policy tips and email notifications in Data Loss Prevention rules for SharePoint and OneDrive, instead of requiring both to be enabled together. This gives compliance teams finer control over user notifications and audit trails for DLP policy violations.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=396575"
+    },
+    {
+      "id": "purview-irm-alert-classification",
+      "title": "Microsoft Purview: IRM Alert Classification",
+      "summary": "Insider Risk Management now supports manual classification of alerts as True Positive, Benign (operational), or False Positive with predefined reasons, replacing the previous dismissal workflow. This capability helps compliance teams better track and report on actual risk signals versus noise, improving tuning and governance.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=576710"
+    },
+    {
+      "id": "purview-information-protection-autolabeling-coverage-report",
+      "title": "Microsoft Purview: Information Protection Auto-Labeling Coverage Report",
+      "summary": "Compliance admins can now view per-policy coverage reports that compare which files were labeled during enforcement against the latest simulation snapshot. This transparency helps identify labeling progress and detect files processing outside the simulated dataset, enabling better policy tuning.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568935"
+    },
+    {
+      "id": "purview-adaptive-protection-data-lifecycle-integration",
+      "title": "Microsoft Purview: Adaptive Protection Integration with Data Lifecycle Management",
+      "summary": "Adaptive Protection now integrates with Data Lifecycle Management to automatically apply retention labels based on a user's dynamic insider risk level. This allows admins to preserve deleted emails and files for high-risk users while deleting them for low-risk users, balancing governance with operational efficiency.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=566324"
+    },
+    {
+      "id": "purview-graph-api-archive-mailboxes",
+      "title": "Microsoft Purview: Graph API Support for Archive Mailboxes",
+      "summary": "Microsoft Graph will provide unified access to archive mailboxes (main and auxiliary) for Data Lifecycle Management, replacing deprecated EWS APIs. This modernization simplifies compliance workflows and ensures long-term API compatibility as Exchange Online moves away from legacy protocols.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573701"
+    },
+    {
+      "id": "purview-azure-pst-import",
+      "title": "Microsoft Purview: Azure PST Import for Data Lifecycle Management",
+      "summary": "A new PST import method allows admins to migrate PST files stored in Azure Blob Storage directly into Exchange Online mailboxes using the standard Exchange Migration Service workflow. This capability streamlines data ingestion for compliance and archive scenarios without requiring on-premises infrastructure.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565865"
+    },
+    {
+      "id": "purview-data-lifecycle-hard-delete-onedrive-sharepoint",
+      "title": "Microsoft Purview: Hard Delete Capability for OneDrive and SharePoint",
+      "summary": "Data Lifecycle Management will support hard delete through secure priority cleanup workflows, allowing compliance admins to permanently remove content after the standard 93-day recycle bin retention period. This feature addresses regulatory requirements for irreversible data destruction while including safeguards against misconfigured policy incidents.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558343"
+    },
+    {
+      "id": "purview-dlp-endpoint-ftp-sftp-protection",
+      "title": "Microsoft Purview: Endpoint DLP Now Monitors FTP and SFTP Transfers",
+      "summary": "Endpoint Data Loss Prevention can now detect and restrict sensitive data transfers over FTP and SFTP protocols, closing a gap in data protection for file transfer scenarios. Organizations can configure FTP/SFTP transfer activities within Endpoint DLP policies to enforce restrictive actions based on compliance requirements.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
@@ -93,9 +103,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "purview-network-data-security-global-secure-access",
-      "title": "Data Loss Prevention: Global Secure Access Integration with Network Data Security",
-      "summary": "Microsoft Entra Global Secure Access now integrates with Purview to enforce DLP policies at the network layer, protecting data in browsers, apps, APIs, and AI interactions while blocking risky uploads to untrusted cloud apps. This enables centralized access control and insider risk detection for cloud and AI platform usage.",
+      "id": "purview-entra-gsa-network-data-security-integration",
+      "title": "Microsoft Purview Network Data Security: Entra Global Secure Access Integration",
+      "summary": "Microsoft Entra Global Secure Access now integrates with Purview to enforce DLP policies and monitor user risk activity at the network layer across browsers, apps, APIs, and AI platforms. This prevents sensitive data from reaching untrusted cloud applications while detecting insider risk signals in real time.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
@@ -103,9 +113,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "information-barriers-policy-compliance-report",
-      "title": "Information Barriers: Policy Compliance Report",
-      "summary": "A new Information Barriers policy compliance report helps admins identify SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that no longer comply after policy changes. This visibility enables rapid remediation of compliance drift when information barrier policies are updated.",
+      "id": "purview-information-barriers-compliance-report",
+      "title": "Microsoft Purview: Information Barriers Policy Compliance Report",
+      "summary": "A new compliance report for Information Barriers policies identifies SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that no longer comply after policy changes. This helps admins quickly detect and remediate non-compliant resources when information barriers are updated or tightened.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "September 2026",
