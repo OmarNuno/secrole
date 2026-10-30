@@ -1,41 +1,31 @@
 {
-  "lastUpdated": "2026-10-29T11:52:39.301Z",
-  "fetchedAt": "2026-10-29T11:52:39.301Z",
+  "lastUpdated": "2026-10-30T11:46:09.075Z",
+  "fetchedAt": "2026-10-30T11:46:09.075Z",
   "updates": [
     {
-      "id": "purview-dlp-endpoint-ftp-sftp-monitoring",
-      "title": "Endpoint DLP Now Monitors FTP and SFTP Transfers",
-      "summary": "Endpoint Data Loss Prevention can now detect and restrict sensitive data transfers over FTP and SFTP protocols, extending protection beyond traditional cloud services. Admins can configure these transfer activities directly in Endpoint DLP policies to enforce organizational data protection requirements across additional transfer channels.",
+      "id": "purview-scanner-data-export-custom-reporting",
+      "title": "Microsoft Purview: Scanner Data Export for Custom Reporting",
+      "summary": "The information protection scanner now stores labeling, classification, and protection actions in SQL tables, enabling admins to build custom reports on scanned repository states. This gives compliance officers deeper visibility into data classification effectiveness across their organization.",
       "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
+      "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
       "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=494839"
     },
     {
-      "id": "purview-network-data-security-entra-integration",
-      "title": "Microsoft Purview Network Data Security Integrates with Entra Global Secure Access",
-      "summary": "Purview now integrates with Microsoft Entra Global Secure Access to monitor and protect sensitive data, files, and AI interactions at the network layer while enforcing DLP policies and detecting risky user behavior. This integration prevents data exfiltration to untrusted cloud applications including browsers, APIs, and generative AI platforms.",
+      "id": "purview-data-lifecycle-legacy-teams-retention-copilot",
+      "title": "Microsoft Purview: Legacy Teams Retention Policies Scoped Away from Copilot",
+      "summary": "Existing retention policies targeting Teams will be converted to Teams-only policies and will no longer implicitly govern Microsoft 365 Copilot interactions. Admins should review retention policies to ensure Copilot governance is explicitly configured if needed.",
       "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "September 2026",
-      "importance": "high",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "purview-information-barriers-compliance-report",
-      "title": "Information Barriers Policy Compliance Report Now Available",
-      "summary": "Compliance admins can now generate reports to identify SharePoint sites, OneDrive accounts, and SharePoint Embedded containers that fall out of compliance following Information Barriers policy changes. This new reporting capability helps teams quickly remediate policy violations and maintain data segregation controls.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "September 2026",
+      "source": "Microsoft 365 Roadmap",
+      "date": "October 2026",
       "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571306"
     },
     {
-      "id": "purview-dlp-endpoint-excluded-folders-protection",
-      "title": "Endpoint DLP Extends Protection to Windows Excluded Folders",
-      "summary": "Endpoint DLP now protects sensitive data stored in commonly excluded Windows folders such as Temp and AppData, closing a coverage gap where users might inadvertently store confidential information. This improvement strengthens data protection across the full Windows file system.",
+      "id": "purview-endpoint-dlp-excluded-windows-folders",
+      "title": "Microsoft Purview: Endpoint DLP Protection for Excluded Windows Folders",
+      "summary": "Endpoint DLP is expanding to monitor sensitive data in commonly excluded Windows directories such as Temp and AppData, closing a coverage gap that previously allowed sensitive files to persist outside DLP oversight. This improves data protection posture by detecting threats in locations often overlooked by standard policies.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -43,19 +33,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562992"
     },
     {
-      "id": "purview-dlp-policy-tips-email-notifications-decoupling",
-      "title": "DLP Policy Tips and Email Notifications Now Configurable Independently",
-      "summary": "Admins can now decouple policy tips from email notifications when configuring SharePoint and OneDrive DLP rules, allowing independent control over user-facing alerts and administrator notifications. This flexibility enables organizations to implement notification strategies tailored to their specific compliance and user experience needs.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=396575"
-    },
-    {
-      "id": "purview-communication-compliance-enhanced-conditions",
-      "title": "Communication Compliance Adds External Email Detection and Policy Testing",
-      "summary": "Communication Compliance policies now support detection of messages to and from external email addresses, introduce OR logic for combining multiple conditions, and allow testing policies before deployment. These enhancements give compliance teams finer control over external communication monitoring and reduce risk of misconfigured policies.",
+      "id": "purview-communication-compliance-enhanced-policy-conditions",
+      "title": "Microsoft Purview: Communication Compliance – Enhanced Policy Conditions",
+      "summary": "Communication Compliance policies gain three new capabilities: detection of external email exchanges, OR logic to combine multiple conditions, and a condition testing tool before deployment. These enhancements let compliance officers build more sophisticated and flexible communication monitoring rules.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -64,8 +44,8 @@
     },
     {
       "id": "purview-unified-classification-management",
-      "title": "Unified Classification Management Consolidates All Purview Classifiers",
-      "summary": "A new unified experience brings Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers into one management interface for discovery, creation, validation, and ongoing administration. This centralized approach simplifies classifier governance and reduces admin overhead across Microsoft Purview.",
+      "title": "Microsoft Purview: Unified Classification Management Experience",
+      "summary": "A single console now consolidates all classifiers in Purview—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers—enabling admins to discover, validate, and manage classification logic from one place. This streamlines governance of data classification strategy across the organization.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -73,34 +53,24 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570844"
     },
     {
-      "id": "purview-data-lifecycle-hard-delete-capability",
-      "title": "Data Lifecycle Management Adds Secure Hard Delete for OneDrive and SharePoint",
-      "summary": "Compliance admins gain the ability to permanently hard-delete content in OneDrive and SharePoint through secure priority cleanup workflows, moving beyond the standard 93-day recycle bin retention. The feature includes safeguards to prevent accidental data loss while meeting strict compliance deletion requirements.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558343"
-    },
-    {
-      "id": "purview-insider-risk-management-alert-classification",
-      "title": "Insider Risk Management Introduces Alert Classification",
-      "summary": "Insider Risk Management alerts can now be classified as True Positive, Benign (Operational), or False Positive with predefined classification reasons, enabling authorized analysts to better tune and report on risk signals. This replaces the previous dismissal workflow and supports more granular risk tuning.",
+      "id": "purview-data-lifecycle-hard-delete-onedrive-sharepoint",
+      "title": "Microsoft Purview: Hard Delete Capability for OneDrive and SharePoint via Secure Priority Cleanup",
+      "summary": "Data Lifecycle Management is introducing hard delete functionality for OneDrive and SharePoint content through secure priority cleanup workflows, allowing compliance admins to permanently remove data beyond the standard 93-day recycle bin retention. This gives organizations tighter control over permanent data removal for sensitive compliance scenarios.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=576710"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558343"
     },
     {
-      "id": "purview-data-lifecycle-teams-retention-policies-copilot-scope",
-      "title": "Legacy Teams Retention Policies Will No Longer Apply to Copilot Interactions",
-      "summary": "Existing retention policies scoped to Microsoft Teams will be converted to Teams-only policies and will no longer implicitly govern Microsoft 365 Copilot workloads. Organizations should review and update retention strategies to ensure Copilot interactions are covered by appropriate policies if governance is required.",
+      "id": "purview-endpoint-dlp-ftp-sftp-monitoring",
+      "title": "Microsoft Purview: Endpoint DLP Now Monitors FTP and SFTP Transfers",
+      "summary": "Endpoint DLP has reached general availability for monitoring sensitive data transferred over FTP and SFTP protocols, allowing admins to enforce DLP restrictions on file-transfer activities beyond standard cloud and web channels. This closes a compliance gap for organizations using legacy file-transfer protocols.",
       "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
+      "source": "Microsoft Purview What's New",
       "date": "October 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571306"
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     }
   ]
 }
