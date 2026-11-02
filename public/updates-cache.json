@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-11-01T12:10:19.734Z",
-  "fetchedAt": "2026-11-01T12:10:19.734Z",
+  "lastUpdated": "2026-11-02T13:59:02.174Z",
+  "fetchedAt": "2026-11-02T13:59:02.174Z",
   "updates": [
     {
-      "id": "purview-unified-classification-management",
+      "id": "microsoft-purview-unified-classification-management",
       "title": "Microsoft Purview: Unified Classification Management Experience",
-      "summary": "Microsoft Purview is consolidating all classifiers—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers—into a single unified interface for discovery, creation, validation, and management. This streamlines the workflow for compliance officers and security teams managing data classification across the organization.",
+      "summary": "Microsoft Purview is consolidating all classifier types—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers—into a single unified interface for discovery, creation, validation, and management. This streamlines compliance workflows by eliminating the need to navigate multiple tools and reduces administrative overhead.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -13,9 +13,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570844"
     },
     {
-      "id": "purview-endpoint-dlp-excluded-folders",
-      "title": "Microsoft Purview: Endpoint DLP – Ability to protect files in excluded Windows folders",
-      "summary": "Endpoint DLP is expanding coverage to protect sensitive data stored in commonly excluded Windows folders such as Temp and AppData, which were previously outside normal DLP scanning. This enhancement reduces blind spots in data protection by monitoring folders attackers frequently target or where sensitive data may be inadvertently stored.",
+      "id": "microsoft-purview-endpoint-dlp-excluded-folders",
+      "title": "Microsoft Purview: Endpoint DLP – Protection for Excluded Windows Folders",
+      "summary": "Endpoint DLP is expanding protection coverage to include commonly excluded Windows folders such as Temp and AppData, closing a gap where sensitive data could previously hide. This enhancement increases detection capabilities and reduces the risk of unmonitored data exposure in system directories.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -23,9 +23,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=562992"
     },
     {
-      "id": "purview-communication-compliance-enhanced-conditions",
+      "id": "microsoft-purview-communication-compliance-enhanced-conditions",
       "title": "Microsoft Purview: Communication Compliance – Enhanced Policy Conditions",
-      "summary": "Communication Compliance policies now support detection of messages sent to and from external email addresses, OR logic to combine multiple conditions, and pre-implementation condition testing. These enhancements give compliance officers more precise control over communication monitoring and reduce false positives in policy enforcement.",
+      "summary": "Communication Compliance policies now support external email detection, OR condition logic for custom rule combinations, and pre-implementation testing capabilities. These improvements give compliance officers more granular control over message monitoring and reduce deployment risk through condition validation before go-live.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -33,9 +33,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=336046"
     },
     {
-      "id": "purview-scanner-data-export-custom-reporting",
-      "title": "Microsoft Purview: Scanner data export for custom reporting",
-      "summary": "The information protection scanner now exports labeling, classification, and protection actions to SQL tables, enabling compliance teams to build custom reports on the state of scanned repositories. This gives admins deeper insights into their data protection posture across file shares and hybrid environments.",
+      "id": "microsoft-purview-scanner-data-export-custom-reporting",
+      "title": "Microsoft Purview: Information Protection Scanner Data Export for Custom Reporting",
+      "summary": "The information protection scanner now exports labeling, classification, and protection action data to SQL tables, enabling compliance teams to build custom reports on repository state and protection effectiveness. This provides deeper visibility into data governance activities across scanned locations.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -43,9 +43,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=494839"
     },
     {
-      "id": "purview-dlm-hard-delete-onedrive-sharepoint",
-      "title": "Microsoft Purview: Data Lifecycle Management – Hard delete for OneDrive and SharePoint",
-      "summary": "Data Lifecycle Management is introducing secure priority cleanup workflows that enable hard deletion of content in OneDrive and SharePoint beyond the standard 93-day recycle bin retention. Compliance admins can now enforce permanent data removal for retention policy compliance while maintaining audit trails and safeguards against accidental deletion.",
+      "id": "microsoft-purview-data-lifecycle-hard-delete-capability",
+      "title": "Microsoft Purview: Data Lifecycle Management – Hard Delete for OneDrive and SharePoint",
+      "summary": "Data Lifecycle Management will introduce hard delete capabilities through secure priority cleanup workflows for OneDrive and SharePoint content, providing admins with more aggressive content disposal options beyond standard retention label and policy deletion. This addresses compliance scenarios requiring permanent data removal within controlled timeframes.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -53,9 +53,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558343"
     },
     {
-      "id": "purview-dlm-legacy-teams-retention-copilot",
-      "title": "Microsoft Purview: Data Lifecycle Management – Legacy Teams retention policies will no longer govern Copilot",
-      "summary": "Existing retention policies scoped to Microsoft Teams that currently cover Copilot interactions will be converted to Teams-only policies, no longer implicitly applying to Copilot workloads. Compliance officers should review and update retention policies to ensure Copilot data is governed separately according to organizational requirements.",
+      "id": "microsoft-purview-data-lifecycle-teams-retention-copilot-scope",
+      "title": "Microsoft Purview: Data Lifecycle Management – Legacy Teams Retention Policies Scoped to Teams Only",
+      "summary": "Existing retention policies targeting Microsoft Teams will be converted to Teams-only policies and will no longer implicitly govern Copilot interactions. Admins should review and adjust retention policies if they intended to cover Copilot data to avoid unintended compliance gaps.",
       "category": "Permission Change",
       "source": "Microsoft 365 Roadmap",
       "date": "October 2026",
@@ -63,19 +63,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571306"
     },
     {
-      "id": "purview-endpoint-dlp-ftp-sftp",
-      "title": "Microsoft Purview: Endpoint DLP – FTP and SFTP transfer monitoring (General Availability)",
-      "summary": "Endpoint DLP now generally supports monitoring sensitive data transfers over FTP and SFTP protocols with restrictive actions based on policy. Security teams can configure these transfer activities in Endpoint DLP policies to prevent data exfiltration through file transfer protocols.",
+      "id": "microsoft-purview-endpoint-dlp-ftp-sftp-monitoring",
+      "title": "Microsoft Purview: Endpoint DLP – FTP and SFTP Transfer Monitoring",
+      "summary": "Endpoint DLP now generally supports monitoring sensitive data transfers over FTP and SFTP protocols with configurable restrictive actions. This closes a critical gap for organizations that rely on legacy file transfer methods and need to prevent data exfiltration across all transfer channels.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
-      "importance": "medium",
+      "importance": "high",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "chromium-authorization-vulnerabilities-microsoft-edge",
-      "title": "Microsoft Edge: 11 Authorization Vulnerabilities Patched in Chromium",
-      "summary": "Microsoft Edge has patched 11 authorization-related vulnerabilities inherited from Chromium affecting components including Video, Chromoting, BrowserTag, Downloads, WebProtect, USB, Select, SiteIsolation, Extensions, Core, and BFCache. Organizations should apply these patches promptly to prevent privilege escalation and unauthorized access through Edge.",
+      "id": "multiple-chromium-authorization-vulnerabilities-microsoft-edge",
+      "title": "Multiple Authorization Vulnerabilities in Chromium (Microsoft Edge)",
+      "summary": "Microsoft Edge addressed nine Chromium-based authorization and access control vulnerabilities across video, remote control, tag handling, downloads, USB, site isolation, extensions, and browser core components. Admins should deploy the latest Edge updates to protect against potential privilege escalation and unauthorized feature access.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
