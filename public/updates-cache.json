@@ -1,81 +1,11 @@
 {
-  "lastUpdated": "2026-11-03T13:07:48.890Z",
-  "fetchedAt": "2026-11-03T13:07:48.890Z",
+  "lastUpdated": "2026-11-04T13:23:00.127Z",
+  "fetchedAt": "2026-11-04T13:23:00.127Z",
   "updates": [
     {
-      "id": "purview-permissions-audit-log-improvements",
-      "title": "Microsoft Purview: Permissions Audit Log Improvements",
-      "summary": "Microsoft Purview is enhancing audit logs to provide clearer visibility into role and scoped-role access decisions when users access the portal. Administrators will gain better troubleshooting capabilities and improved monitoring of authorization outcomes across the compliance environment.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573447"
-    },
-    {
-      "id": "purview-dlp-non-microsoft-connected-apps",
-      "title": "Microsoft Purview: Data Loss Prevention Extended to Non-Microsoft Connected Apps",
-      "summary": "Purview Data Loss Prevention and Information Protection auto-labeling now protect non-Microsoft cloud applications including Google Workspace, Box, Dropbox, Salesforce, ServiceNow, AWS, and Cisco Webex. Admins can apply consistent DLP policies and sensitivity labeling across a broader ecosystem of third-party platforms.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
-    },
-    {
-      "id": "purview-network-dlp-palo-alto-integration",
-      "title": "Microsoft Purview: Network Data Security Integration with Palo Alto Prisma Access",
-      "summary": "Purview network data security now integrates with Palo Alto Prisma Access to discover and protect sensitive data shared with unmanaged cloud apps over HTTP/HTTPS traffic. This enriches Purview's Data Security Posture Management by using existing classifiers, sensitive information types, and sensitivity labels across network monitoring.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=558939"
-    },
-    {
-      "id": "purview-unified-classification-management",
-      "title": "Microsoft Purview: Unified Classification Management Experience",
-      "summary": "Purview is consolidating all classifiers—Sensitive Information Types, Exact Data Match, fingerprint SITs, and trainable classifiers—into a single unified interface for discovery, creation, validation, and management. This centralized approach reduces complexity and improves governance over classification policies.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570844"
-    },
-    {
-      "id": "purview-scanner-data-export-custom-reporting",
-      "title": "Microsoft Purview: Information Protection Scanner Data Export for Custom Reporting",
-      "summary": "The information protection scanner now exports labeling, classification, and protection action data to SQL tables, enabling administrators to build custom reports and gain deeper insights into the state of scanned repositories. This data foundation supports compliance auditing and regulatory reporting needs.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=494839"
-    },
-    {
-      "id": "purview-data-lifecycle-copilot-memory-retention",
-      "title": "Microsoft Purview: Data Lifecycle Management – Retention for Copilot Memory",
-      "summary": "Administrators can now configure retention policies for Microsoft 365 Copilot memory stored in hidden Exchange mailbox folders, enabling preservation of historical memory versions for security and compliance investigations. This capability helps maintain visibility into memory changes while active memory remains user-managed.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569612"
-    },
-    {
-      "id": "purview-teams-retention-copilot-separation",
-      "title": "Microsoft Purview: Legacy Teams Retention Policies to Be Scoped Teams-Only",
-      "summary": "Existing retention policies scoped to Microsoft Teams that currently implicitly apply to Copilot interactions will be converted to Teams-only policies, ending their coverage of Copilot workloads. Administrators should review and update policies to explicitly govern Copilot retention if needed.",
-      "category": "Permission Change",
-      "source": "Microsoft 365 Roadmap",
-      "date": "October 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571306"
-    },
-    {
-      "id": "purview-endpoint-dlp-ftp-sftp",
-      "title": "Microsoft Purview: Endpoint Data Loss Prevention Now Monitors FTP and SFTP Transfers",
-      "summary": "Endpoint DLP is now generally available for monitoring sensitive data transfers over FTP and SFTP protocols, allowing administrators to apply restrictive actions based on organizational policy. This closes a gap in data protection for file transfer methods commonly used in enterprise environments.",
+      "id": "endpoint-dlp-ftp-sftp-monitoring",
+      "title": "Endpoint DLP now monitors FTP and SFTP transfers",
+      "summary": "Microsoft Purview Endpoint DLP has reached general availability for monitoring sensitive data transferred over FTP and SFTP protocols, allowing admins to enforce restrictive actions on these transfer methods. This extends data protection beyond traditional cloud and email channels to legacy file transfer protocols commonly used in enterprise environments.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
@@ -83,9 +13,9 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "chromium-multiple-authorization-cves",
-      "title": "Chromium: 11 Authorization Vulnerabilities Patched in Microsoft Edge",
-      "summary": "Microsoft Edge has addressed 11 Chromium-based authorization vulnerabilities spanning multiple components including Chromoting, BrowserTag, Downloads, WebProtect, USB, Select, SiteIsolation, Extensions, Core, and BFCache. Administrators should ensure Edge is updated to the latest version to mitigate potential privilege escalation and cross-origin access risks.",
+      "id": "chromium-authorization-vulnerabilities-consolidated",
+      "title": "Multiple Authorization Vulnerabilities Patched in Chromium (10 CVEs)",
+      "summary": "Microsoft Edge has addressed ten authorization-related vulnerabilities in Chromium components including Extensions, USB, Downloads, SiteIsolation, and Core functionality. Admins should update Microsoft Edge to the latest version to protect against potential privilege escalation and data access risks in browser-based identity and authentication workflows.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
