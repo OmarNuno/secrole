@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-11-04T13:23:00.127Z",
-  "fetchedAt": "2026-11-04T13:23:00.127Z",
+  "lastUpdated": "2026-11-05T13:37:40.129Z",
+  "fetchedAt": "2026-11-05T13:37:40.129Z",
   "updates": [
     {
-      "id": "endpoint-dlp-ftp-sftp-monitoring",
-      "title": "Endpoint DLP now monitors FTP and SFTP transfers",
-      "summary": "Microsoft Purview Endpoint DLP has reached general availability for monitoring sensitive data transferred over FTP and SFTP protocols, allowing admins to enforce restrictive actions on these transfer methods. This extends data protection beyond traditional cloud and email channels to legacy file transfer protocols commonly used in enterprise environments.",
+      "id": "purview-endpoint-dlp-ftp-sftp-monitoring",
+      "title": "Purview Endpoint DLP: FTP and SFTP Transfer Monitoring",
+      "summary": "Endpoint DLP now monitors sensitive data transferred over FTP and SFTP protocols, allowing admins to enforce restrictive actions based on organizational policy. This expands data protection coverage beyond standard web and cloud transfer methods to legacy file transfer protocols.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
@@ -13,14 +13,24 @@
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
-      "id": "chromium-authorization-vulnerabilities-consolidated",
-      "title": "Multiple Authorization Vulnerabilities Patched in Chromium (10 CVEs)",
-      "summary": "Microsoft Edge has addressed ten authorization-related vulnerabilities in Chromium components including Extensions, USB, Downloads, SiteIsolation, and Core functionality. Admins should update Microsoft Edge to the latest version to protect against potential privilege escalation and data access risks in browser-based identity and authentication workflows.",
+      "id": "purview-auto-labeling-legacy-office-files",
+      "title": "Purview Information Protection: Auto-Labeling for Legacy Office Formats",
+      "summary": "Microsoft Purview's server-side auto-labeling is being extended to support legacy Office file formats (.doc, .xls, .ppt) stored in SharePoint and OneDrive. This allows organizations to automatically classify and label older file formats alongside modern Office documents.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=578872"
+    },
+    {
+      "id": "chromium-authorization-vulnerabilities-microsoft-edge",
+      "title": "8 Authorization Vulnerabilities Patched in Microsoft Edge (Chromium)",
+      "summary": "Microsoft Edge has ingested security patches from Chromium addressing multiple authorization vulnerabilities across various components. These CVEs span missing or incorrect authorization in Video, Chromoting, BrowserTag, Downloads, WebProtect, USB, Extensions, and SiteIsolation, requiring immediate updates to maintain security posture.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
       "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-78892"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-118333"
     }
   ]
 }
