@@ -1,21 +1,31 @@
 {
-  "lastUpdated": "2026-11-05T13:37:40.129Z",
-  "fetchedAt": "2026-11-05T13:37:40.129Z",
+  "lastUpdated": "2026-11-06T13:20:47.398Z",
+  "fetchedAt": "2026-11-06T13:20:47.398Z",
   "updates": [
     {
-      "id": "purview-endpoint-dlp-ftp-sftp-monitoring",
-      "title": "Purview Endpoint DLP: FTP and SFTP Transfer Monitoring",
-      "summary": "Endpoint DLP now monitors sensitive data transferred over FTP and SFTP protocols, allowing admins to enforce restrictive actions based on organizational policy. This expands data protection coverage beyond standard web and cloud transfer methods to legacy file transfer protocols.",
+      "id": "purview-version-trimming-retention",
+      "title": "Microsoft Purview: Data Lifecycle Management – Version Trimming for Retained Files",
+      "summary": "SharePoint and OneDrive admins can now enable automatic trimming of file versions created by retention policies, reclaiming storage without breaking compliance holds or legal-hold promises. Admins with appropriate Purview RBAC roles will control this via a policy-scoped setting that overrides the default version-retention behavior.",
       "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "October 2026",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
       "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575284"
     },
     {
-      "id": "purview-auto-labeling-legacy-office-files",
-      "title": "Purview Information Protection: Auto-Labeling for Legacy Office Formats",
-      "summary": "Microsoft Purview's server-side auto-labeling is being extended to support legacy Office file formats (.doc, .xls, .ppt) stored in SharePoint and OneDrive. This allows organizations to automatically classify and label older file formats alongside modern Office documents.",
+      "id": "purview-graph-api-archive-mailboxes",
+      "title": "Microsoft Purview: Data Lifecycle Management – Graph API Support for Archive Mailboxes",
+      "summary": "Microsoft Graph will provide unified access to both Main and Auxiliary Archive mailboxes before EWS Graph APIs deprecate in October 2026, giving users a seamless archive view across multiple physical mailbox locations. This modernizes API access for archive data management and compliance scenarios.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567313"
+    },
+    {
+      "id": "purview-auto-labeling-legacy-office",
+      "title": "Microsoft Purview: Information Protection – Auto-Labeling for Legacy Office Formats",
+      "summary": "Server-side auto-labeling in Microsoft Purview will now support legacy Office file formats (.doc, .xls, .ppt) in SharePoint and OneDrive, automatically evaluating and applying sensitivity labels to these older files. This extends classification capabilities to organizations with legacy document repositories.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -23,9 +33,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=578872"
     },
     {
-      "id": "chromium-authorization-vulnerabilities-microsoft-edge",
-      "title": "8 Authorization Vulnerabilities Patched in Microsoft Edge (Chromium)",
-      "summary": "Microsoft Edge has ingested security patches from Chromium addressing multiple authorization vulnerabilities across various components. These CVEs span missing or incorrect authorization in Video, Chromoting, BrowserTag, Downloads, WebProtect, USB, Extensions, and SiteIsolation, requiring immediate updates to maintain security posture.",
+      "id": "purview-endpoint-dlp-ftp-sftp",
+      "title": "Microsoft Purview: Endpoint DLP – FTP and SFTP Transfer Monitoring",
+      "summary": "Endpoint data loss prevention now monitors and restricts sensitive data transfers over FTP and SFTP protocols based on configured policies, extending DLP protection beyond HTTP-based channels. Admins must configure these transfer activities in Endpoint DLP policies to enforce controls on these legacy protocols.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "chromium-authorization-vulnerabilities-consolidated",
+      "title": "Multiple Authorization Vulnerabilities Patched in Microsoft Edge (Chromium)",
+      "summary": "Microsoft Edge ingested 11 Chromium vulnerabilities related to missing or incorrect authorization across multiple components (Video, Downloads, BFCache, Extensions, Core, USB, SiteIsolation, Chromoting, BrowserTag, WebProtect, Select). Admins should ensure Edge is updated to the latest version to close these authorization bypasses.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "October 2026",
