@@ -1,31 +1,31 @@
 {
-  "lastUpdated": "2026-11-09T14:31:40.456Z",
-  "fetchedAt": "2026-11-09T14:31:40.456Z",
+  "lastUpdated": "2026-11-10T13:52:22.568Z",
+  "fetchedAt": "2026-11-10T13:52:22.568Z",
   "updates": [
     {
       "id": "purview-dlp-endpoint-ftp-sftp",
-      "title": "Endpoint Data Loss Prevention: FTP and SFTP Support",
-      "summary": "Microsoft Purview Endpoint DLP now monitors and protects sensitive data transferred over FTP and SFTP protocols from managed endpoints. Security admins can configure restrictive actions in Endpoint DLP policies to prevent unauthorized data exfiltration across these file transfer methods.",
+      "title": "Purview Endpoint DLP Now Protects FTP and SFTP Transfers",
+      "summary": "Microsoft Purview Endpoint DLP has expanded to monitor and block sensitive data transfers over FTP and SFTP protocols from managed endpoints. Admins can now configure FTP/SFTP activities in Endpoint DLP policies to prevent unauthorized data exfiltration across these file transfer methods.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
-      "importance": "medium",
+      "importance": "high",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     },
     {
       "id": "purview-dlp-cowork-integration",
-      "title": "Data Loss Prevention Expansion to Microsoft Cowork",
-      "summary": "Purview DLP policies now extend to Microsoft Cowork, allowing admins to apply consistent data security controls across AI interactions by blocking sensitive knowledge sources, restricting sensitive prompts, and preventing Bing web search integration for protected data. This unifies DLP enforcement for both Copilot and Cowork within a single policy framework.",
+      "title": "Purview DLP Expands to Microsoft Cowork",
+      "summary": "Microsoft Purview Data Loss Prevention now extends to Microsoft Cowork, allowing admins to enforce unified DLP policies across Microsoft 365 Copilot and Cowork environments. This integration enables protection of sensitive AI interactions by blocking labeled knowledge sources, filtering sensitive information types in prompts, and preventing sensitive data from being sent to external search services.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
-      "importance": "medium",
+      "importance": "high",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570845"
     },
     {
-      "id": "purview-dlp-unmanaged-ai-apps-edge",
-      "title": "Data Loss Prevention: Inline Protection for Unmanaged AI Apps in Edge for Business",
-      "summary": "Microsoft Purview DLP policies will support inline protection across a significantly broader set of unmanaged generative AI applications within Edge for Business. Admins can detect and protect sensitive data shared through browser activities using existing policy experiences, extending consistent data security controls to more destinations.",
+      "id": "purview-dlp-edge-unmanaged-apps",
+      "title": "Purview DLP Inline Protection Expands for Unmanaged Apps in Edge for Business",
+      "summary": "Microsoft Purview DLP policies will gain browser inline protection support for a significantly broader range of unmanaged generative AI applications in Edge for Business. Admins can leverage existing Purview policy experiences to detect and protect sensitive data shared through these browser activities, extending data security controls to more cloud and AI destinations.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -34,8 +34,8 @@
     },
     {
       "id": "purview-dlp-external-email-copilot",
-      "title": "Data Loss Prevention: Restrict External Email Processing in Copilot",
-      "summary": "Purview DLP will expand to block Microsoft 365 Copilot and Copilot Chat from processing emails originating from senders external to your organization. This real-time control helps mitigate data risks by preventing sensitive information in external emails from being exposed to generative AI processing.",
+      "title": "Purview DLP Restricts External Email Processing in Copilot",
+      "summary": "Microsoft Purview DLP is expanding to prevent Microsoft 365 Copilot and Copilot Chat from processing emails originating from senders external to your organization. This real-time control mitigates data exfiltration risks by blocking external email content from being consumed by AI models without explicit organizational approval.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -43,34 +43,44 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561552"
     },
     {
-      "id": "purview-data-lifecycle-version-trimming",
-      "title": "Data Lifecycle Management: Version Trimming for Retained Files",
-      "summary": "Compliance admins will be able to enable version trimming for OneDrive and SharePoint files covered by retention policies, reducing storage bloat while maintaining legal-hold and records compliance promises. This policy-scoped setting allows SharePoint's version management to trim retained file versions when enabled, helping large regulated enterprises reclaim storage.",
+      "id": "purview-information-protection-auto-label-legacy-office",
+      "title": "Purview Auto-Labeling Supports Legacy Office File Formats",
+      "summary": "Microsoft Purview server-side auto-labeling is expanding to support legacy Microsoft Office file formats (.doc, .xls, .ppt) in SharePoint and OneDrive. Organizations can now automatically evaluate and apply sensitivity labels to these older file formats, improving compliance across mixed legacy and modern document environments.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575284"
-    },
-    {
-      "id": "purview-information-protection-legacy-office-autolabel",
-      "title": "Information Protection: Auto-labeling for Legacy Office File Formats",
-      "summary": "Microsoft Purview server-side auto-labeling will support legacy Office formats (.doc, .xls, .ppt), enabling organizations to automatically evaluate and apply sensitivity labels to these older files in SharePoint and OneDrive. This extends labeling coverage to environments still managing legacy file formats.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "low",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=578872"
     },
     {
-      "id": "purview-graph-api-archive-mailboxes",
-      "title": "Data Lifecycle Management: Graph API Support for Archive Mailboxes",
-      "summary": "Archive mailboxes (Main and Auxiliary) will become accessible through Microsoft Graph API, providing users a unified Archive view even when data spans multiple auxiliary mailboxes. This transition prepares organizations for the October 2026 deprecation of EWS Graph APIs.",
+      "id": "purview-data-lifecycle-version-trimming",
+      "title": "Purview Data Lifecycle Management Enables Version Trimming in Retention",
+      "summary": "Admins with appropriate Purview RBAC permissions can now enable controlled file-version trimming for OneDrive and SharePoint content governed by retention policies. This capability allows organizations to reclaim storage consumed by retained file versions while maintaining compliance with legal holds and records management policies.",
+      "category": "Permission Change",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "high",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575284"
+    },
+    {
+      "id": "purview-data-lifecycle-graph-api-archive-mailboxes",
+      "title": "Purview Graph API Now Supports Archive Mailbox Access",
+      "summary": "Microsoft Graph API now provides unified access to archive mailboxes (main and auxiliary) for compliance workflows, offering admins a single seamless archive view across potentially distributed mailbox storage. This enhancement prepares organizations for the October 2026 deprecation of EWS Graph APIs.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
-      "importance": "low",
+      "importance": "medium",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=567313"
+    },
+    {
+      "id": "chromium-authorization-vulnerabilities-consolidated",
+      "title": "Multiple Authorization Vulnerabilities Patched in Microsoft Edge (Chromium)",
+      "summary": "Microsoft Edge (Chromium-based) has ingested patches for multiple authorization-related vulnerabilities identified in Chromium components including Chromoting, BrowserTag, Downloads, WebProtect, USB, Select, SiteIsolation, Extensions, Core, and BFCache. Organizations should ensure Edge is updated to the latest version to receive these security fixes.",
+      "category": "Security Advisory",
+      "source": "MSRC Security Update Guide",
+      "date": "October 2026",
+      "importance": "high",
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-78892"
     }
   ]
 }
