@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-11-11T13:04:01.196Z",
-  "fetchedAt": "2026-11-11T13:04:01.196Z",
+  "lastUpdated": "2026-11-12T14:06:38.005Z",
+  "fetchedAt": "2026-11-12T14:06:38.005Z",
   "updates": [
     {
       "id": "purview-view-only-device-management-role",
       "title": "Microsoft Purview: View-Only Device Management Role for Endpoint DLP",
-      "summary": "A new least-privilege Purview RBAC role enables auditors and security analysts to view device onboarding status without requiring broad administrative permissions like Compliance Administrator or Global Administrator. This granular role-based access control improves security posture by following the principle of least privilege for Endpoint DLP device management.",
+      "summary": "A new View-Only Device Management role is being introduced to grant least-privilege access to device onboarding settings in Endpoint DLP, allowing auditors and security analysts to view device status without requiring broad admin roles. This reduces the attack surface by eliminating the need to assign Compliance Administrator or Global Administrator roles for read-only device management tasks.",
       "category": "New Role",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -15,7 +15,7 @@
     {
       "id": "entra-private-network-connector-information-disclosure",
       "title": "CVE-2026-109460: Microsoft Entra Private Network Connector Information Disclosure Vulnerability",
-      "summary": "A vulnerability in Microsoft Entra Private Network Connector exposes sensitive information to unauthorized actors through local access. Admins must apply security patches immediately to prevent potential exposure of identity and access control data.",
+      "summary": "A sensitive information exposure vulnerability in Microsoft Entra Private Network Connector allows an authorized attacker to disclose information locally. Organizations should apply the latest security patch to prevent potential unauthorized access to sensitive connector data.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -23,19 +23,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109460"
     },
     {
-      "id": "windows-kerberos-denial-of-service",
-      "title": "CVE-2026-70240: Windows Kerberos Denial of Service Vulnerability",
-      "summary": "A memory leak in Windows Kerberos allows unauthorized attackers to cause denial of service over the network, potentially disrupting authentication services across your organization. This affects core identity infrastructure and requires immediate patching.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "November 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-70240"
-    },
-    {
-      "id": "windows-adcs-certificate-validation-bypass",
-      "title": "CVE-2026-105590: Windows Active Directory Certificate Services Security Feature Bypass",
-      "summary": "Improper certificate validation in Active Directory Certificate Services allows authorized attackers to bypass security features over the network. This can undermine PKI-based authentication and encryption across your environment.",
+      "id": "windows-ad-certificate-services-vulnerabilities",
+      "title": "2 Active Directory Certificate Services Vulnerabilities (CVE-2026-105590, CVE-2026-95884)",
+      "summary": "Two vulnerabilities affecting Windows Active Directory Certificate Services have been patched: a security feature bypass via improper certificate validation (CVE-2026-105590) and an information disclosure via buffer over-read (CVE-2026-95884). Organizations managing certificate-based authentication should prioritize applying these security updates to protect their PKI infrastructure.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -43,19 +33,29 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-105590"
     },
     {
-      "id": "adcs-buffer-overread-information-disclosure",
-      "title": "CVE-2026-95884: Windows Active Directory Certificate Services Information Disclosure Vulnerability",
-      "summary": "A buffer over-read vulnerability in Active Directory Certificate Services allows authorized attackers to disclose sensitive information over the network. Organizations running AD CS should prioritize patching to protect certificate infrastructure.",
+      "id": "windows-kerberos-denial-of-service",
+      "title": "CVE-2026-70240: Windows Kerberos Denial of Service Vulnerability",
+      "summary": "A memory leak vulnerability in Windows Kerberos can be exploited by an unauthorized attacker to cause denial of service over the network. This impacts authentication availability across Windows environments and should be patched to maintain service continuity.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
       "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-95884"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-70240"
     },
     {
-      "id": "purview-auto-labeling-scale-increase",
+      "id": "purview-permissions-audit-log-improvements",
+      "title": "Microsoft Purview: Permissions Audit Log Improvements",
+      "summary": "Enhanced audit logging for Purview portal access now provides clearer visibility into role and scoped-role authorization decisions, making it easier for administrators to troubleshoot access issues and monitor who accessed what and why. This strengthens the ability to audit compliance and security posture across your information governance infrastructure.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=569363"
+    },
+    {
+      "id": "purview-autolabeling-scale-increase",
       "title": "Microsoft Purview: Auto-Labeling Scale Increase for SharePoint and OneDrive",
-      "summary": "Maximum auto-labeling capacity has increased from 100,000 to 500,000 files per tenant per day, allowing organizations to protect more data at rest faster. This enhancement helps close labeling gaps and better prepare data estates for Microsoft 365 Copilot.",
+      "summary": "The maximum daily auto-labeling capacity for SharePoint and OneDrive has increased from 100,000 to 500,000 files per tenant, enabling organizations to label and protect significantly more data at rest. This accelerates data protection coverage and helps close labeling gaps across existing content estates.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -63,19 +63,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571309"
     },
     {
-      "id": "purview-dlp-guided-diagnostics",
-      "title": "Microsoft Purview: DLP Guided Diagnostics and AI-Powered Troubleshooting",
-      "summary": "A new guided diagnostics experience helps admins understand why DLP policies trigger and provides detailed insights into policy evaluation, with Copilot-powered recommendations for E5 customers. This accelerates troubleshooting and policy optimization across your organization.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561032"
-    },
-    {
-      "id": "purview-auto-labeling-policy-coverage-report",
-      "title": "Microsoft Purview: Per-Policy Auto-Labeling Coverage Report",
-      "summary": "Admins can now view detailed coverage reports for each enforced auto-labeling policy, showing file volumes labeled and unlabeled compared to simulation snapshots. This visibility helps track enforcement progress and identify gaps in policy coverage.",
+      "id": "purview-autolabeling-per-policy-coverage-report",
+      "title": "Microsoft Purview: Auto-Labeling Per-Policy Coverage Report",
+      "summary": "A new per-policy coverage report allows administrators to compare auto-labeling enforcement results against simulation snapshots, showing which files have been labeled and which remain unlabeled. This visibility helps admins track enforcement progress and identify data gaps in labeling coverage.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -83,9 +73,19 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568935"
     },
     {
+      "id": "purview-dlp-guided-diagnostics",
+      "title": "Microsoft Purview: Data Loss Prevention Guided Diagnostics Experience",
+      "summary": "A new guided diagnostics tool helps users and administrators understand why DLP policies triggered on a document, including which policies matched, evaluation order, and condition-by-condition results. For E5 customers, Copilot-powered insights provide tailored remediation recommendations to accelerate troubleshooting.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=561032"
+    },
+    {
       "id": "purview-dlp-fabric-restrict-access",
       "title": "Microsoft Purview: DLP Restrict Access Action for Fabric Semantic Models and Lakehouses",
-      "summary": "DLP policies can now control access to Fabric semantic models and lakehouses based on detected sensitive information, blocking guest or all users as needed. This extends consistent data security controls to your Fabric analytics environment.",
+      "summary": "DLP policies can now block access to sensitive data in Fabric semantic models and lakehouses, with the ability to restrict access by guest users or all users based on detected sensitive information types or labels. This extends Purview's data protection controls to the Fabric analytics platform.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -93,44 +93,54 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=422501"
     },
     {
-      "id": "purview-dlp-edge-business-unmanaged-apps",
-      "title": "Microsoft Purview: Expanded DLP Inline Protection for Unmanaged Apps in Edge for Business",
-      "summary": "Purview DLP policies will support browser inline protection for a broader set of unmanaged generative AI apps in Edge for Business, allowing detection and protection of sensitive data shared through supported browser activities. This extends data security controls to more SaaS destinations.",
+      "id": "purview-archive-expansion-beyond-1-5tb",
+      "title": "Microsoft Purview: Archive Mailbox Auto-Expansion Beyond 1.5 TB Limit",
+      "summary": "Archive mailboxes can now automatically expand beyond the previous 1.5 TB limitation, eliminating operational disruption and enabling continuous retention at scale. This is available to organizations with eligible E5 licenses.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
       "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571396"
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=560820"
     },
     {
-      "id": "purview-endpoint-dlp-ftp-sftp",
-      "title": "Microsoft Purview: Endpoint DLP FTP and SFTP Transfer Monitoring",
-      "summary": "Endpoint DLP now monitors sensitive data transferred over FTP and SFTP protocols, allowing admins to apply restrictive actions based on organizational requirements. This closes a gap in file transfer protection for organizations using these legacy protocols.",
+      "id": "purview-endpoint-dlp-policy-sync-health",
+      "title": "Microsoft Purview: Endpoint DLP Policy Sync & Device Health AI-Powered Investigation",
+      "summary": "AI-powered visibility into DLP policy deployment across devices automatically detects sync failures and unhealthy configurations, providing root-cause analysis and recommended remediation actions. This accelerates diagnosis and resolution of device-level compliance issues.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=565374"
+    },
+    {
+      "id": "purview-dspm-copilot-readiness",
+      "title": "Microsoft Purview: DSPM Copilot Readiness and Data Explorer",
+      "summary": "New readiness assessment and data explorer experiences in Data Security Posture Management provide visibility into an organization's data security posture and readiness for Microsoft Copilot, including metrics on sensitive data exposure, oversharing, and protection coverage. This helps security teams prioritize remediation efforts.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=571157"
+    },
+    {
+      "id": "purview-autolabeling-scalability-enhancements",
+      "title": "Microsoft Purview: Auto-Labeling Scalability, Policy Management, and Reporting Enhancements",
+      "summary": "Enterprise-scale auto-labeling improvements expand support for larger SharePoint scopes, enhance policy management flexibility, and provide richer visibility into labeling activity. These enhancements enable organizations to manage sensitive data classification more effectively across their entire data estate.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=570445"
+    },
+    {
+      "id": "purview-endpoint-dlp-ftp-sftp-support",
+      "title": "Microsoft Purview: Endpoint DLP FTP and SFTP Transfer Protection",
+      "summary": "Endpoint DLP can now monitor sensitive data transferred over FTP and SFTP protocols and apply restrictive actions based on policy configuration. Organizations can configure these transfer activities in their Endpoint DLP policies to extend protection beyond traditional endpoints.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
       "importance": "medium",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "sharepoint-incorrect-authorization-disclosure",
-      "title": "CVE-2026-109455: Microsoft SharePoint Incorrect Authorization Information Disclosure",
-      "summary": "A flawed authorization check in SharePoint allows authorized attackers to disclose sensitive information over the network. Admins should apply patches to prevent unauthorized data exposure.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "November 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109455"
-    },
-    {
-      "id": "sharepoint-missing-authorization-privilege",
-      "title": "CVE-2026-109466: Microsoft SharePoint Missing Authorization Elevation of Privilege",
-      "summary": "A missing authorization check in SharePoint allows authorized attackers to escalate privileges over an adjacent network. This vulnerability can lead to unauthorized administrative access.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "November 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109466"
     }
   ]
 }
