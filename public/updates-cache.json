@@ -1,101 +1,11 @@
 {
-  "lastUpdated": "2026-11-18T14:41:46.729Z",
-  "fetchedAt": "2026-11-18T14:41:46.729Z",
+  "lastUpdated": "2026-11-19T14:48:40.322Z",
+  "fetchedAt": "2026-11-19T14:48:40.322Z",
   "updates": [
     {
-      "id": "purview-adaptive-scope-lifecycle-control",
-      "title": "Microsoft Purview: Adaptive Scope Evaluation with Lifecycle Status Control",
-      "summary": "Administrators will gain explicit control over how Microsoft Purview Adaptive Scopes evaluate recipient and site owner lifecycle states, ensuring policy targeting remains accurate as organizational membership changes. This enhancement helps prevent policies from inadvertently applying to or missing users whose status has changed.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568785"
-    },
-    {
-      "id": "purview-sensitivity-labels-entra-security-groups",
-      "title": "Microsoft Purview: Sensitivity Labels for Microsoft Entra Security Groups",
-      "summary": "Sensitivity labels published in Purview can now be applied directly to Microsoft Entra cloud security groups, extending classification and governance capabilities without requiring separate label configuration. This unifies label management across M365 groups, sites, and Entra security groups.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568217"
-    },
-    {
-      "id": "purview-dlm-priority-cleanup-role",
-      "title": "Microsoft Purview: Data Lifecycle Management - Priority Cleanup with Secure Workflow",
-      "summary": "A new secure workflow for Data Lifecycle Management enables administrators to create recurring exceptions to delete items under retention policies and legal holds, requiring a dedicated security role, multiple approvers, and full audit trail. This feature provides controlled, auditable access to bypass retention policies while maintaining compliance oversight.",
-      "category": "New Role",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "high",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=392838"
-    },
-    {
-      "id": "purview-endpoint-dlm-ai-agents",
-      "title": "Microsoft Purview: Endpoint DLP Expansion for AI Agent Interactions",
-      "summary": "Microsoft Purview DLP is expanding inline protection to local AI agents, allowing organizations to enforce DLP policies on prompts, files, and tool interactions to prevent sensitive data exposure across human-to-agent and agent-to-tool workflows. Admins can now apply data loss prevention controls at supported agent interaction points.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=577862"
-    },
-    {
-      "id": "purview-endpoint-dlp-azure-firewall",
-      "title": "Microsoft Purview: Endpoint DLP Integration with Azure Firewall",
-      "summary": "Purview DLP now extends data security controls to the network layer by integrating with Azure Firewall, enabling detection and enforcement of DLP policies on network traffic including text, files, and AI interactions from servers, VMs, and automated workloads. This provides network-level protection for sensitive data in transit across cloud applications and APIs.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=577828"
-    },
-    {
-      "id": "purview-information-protection-sensitive-types",
-      "title": "Microsoft Purview: Improved Sensitive Information Types",
-      "summary": "Microsoft is enhancing its out-of-the-box sensitive information types (SITs) to identify and classify sensitive data with greater precision and reliability. These improvements help admins reduce false positives and strengthen data discovery accuracy across DLP and compliance policies.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=579195"
-    },
-    {
-      "id": "purview-classifier-refresh-recurring",
-      "title": "Microsoft Purview: Recurring Classifier Refresh",
-      "summary": "On-Demand Classification is being evolved into recurring classification refreshes that automatically update the classification of existing content as data and organizational context change over time. This reduces manual effort and keeps data classifications current and compliant with updated policies.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=579194"
-    },
-    {
-      "id": "purview-adaptive-protection-dlm-insider-risk",
-      "title": "Microsoft Purview: Automatic Data Preservation for High-Risk Users",
-      "summary": "Adaptive Protection in Purview now integrates insider risk levels with Data Lifecycle Management to automatically apply retention labels based on a user's risk profile, automatically moving users in and out of policies as their risk status changes. This enables proactive data preservation for users exhibiting suspicious behavior.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "medium",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=392839"
-    },
-    {
-      "id": "purview-endpoint-dlp-ftp-sftp",
-      "title": "Microsoft Purview: Endpoint DLP - FTP and SFTP Transfer Protection",
-      "summary": "Endpoint DLP now monitors sensitive data transferred over FTP and SFTP protocols and can apply restrictive actions based on organizational policies, closing a gap in legacy file transfer method monitoring. Organizations can configure FTP and SFTP activities directly in Endpoint DLP policies.",
-      "category": "Feature Update",
-      "source": "Microsoft Purview What's New",
-      "date": "October 2026",
-      "importance": "medium",
-      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "cve-2026-105590-ad-cs-security-bypass",
-      "title": "CVE-2026-105590: Windows Active Directory Certificate Services Security Feature Bypass",
-      "summary": "An improper certificate validation flaw in Windows Active Directory Certificate Services allows authorized attackers to bypass security features over the network, potentially compromising certificate-based authentication and trust validation. Identity and security admins should prioritize patching systems running ADCS.",
+      "id": "ad-certificate-services-security-feature-bypass",
+      "title": "CVE-2026-105590: Active Directory Certificate Services Security Feature Bypass",
+      "summary": "A security feature bypass vulnerability in Windows Active Directory Certificate Services allows an authorized attacker to bypass certificate validation controls over the network. Admins managing certificate infrastructure should apply patches immediately to prevent unauthorized certificate issuance or spoofing attacks.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -103,19 +13,19 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-105590"
     },
     {
-      "id": "cve-2026-121680-windows-ntlm-spoofing",
-      "title": "CVE-2026-121680: Windows NTLM Spoofing Vulnerability",
-      "summary": "A spoofing vulnerability in Windows NTLM authentication allows attackers to impersonate users or systems under certain conditions, potentially compromising identity verification and access control mechanisms. Microsoft has extended patches to include Microsoft Office software, so admins should update both OS and Office components.",
+      "id": "ad-domain-services-elevation-of-privilege",
+      "title": "CVE-2026-118148: Active Directory Domain Services Elevation of Privilege Vulnerability",
+      "summary": "An elevation of privilege vulnerability in Active Directory Domain Services has been updated with corrected information and CVSS scoring. Identity administrators should review this vulnerability and patch accordingly to prevent unauthorized privilege escalation within their directory.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
       "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-121680"
+      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-118148"
     },
     {
-      "id": "cve-2026-109467-azure-devops-rce",
-      "title": "CVE-2026-109467: Azure DevOps Server Remote Code Execution",
-      "summary": "An improper authentication vulnerability in Azure DevOps Server allows authorized attackers to execute arbitrary code over the network, potentially leading to compromise of CI/CD pipelines and source code repositories. Organizations using on-premises Azure DevOps Server should apply security updates immediately.",
+      "id": "azure-devops-server-rce",
+      "title": "CVE-2026-109467: Azure DevOps Server Remote Code Execution Vulnerability",
+      "summary": "An improper authentication flaw in Azure DevOps Server permits an authorized attacker to execute arbitrary code remotely. Organizations using Azure DevOps for source control and CI/CD should prioritize patching to prevent unauthorized code execution and potential supply-chain attacks.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -123,19 +33,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109467"
     },
     {
-      "id": "cve-2026-109455-sharepoint-info-disclosure",
-      "title": "CVE-2026-109455: Microsoft SharePoint Information Disclosure",
-      "summary": "An incorrect authorization flaw in Microsoft SharePoint allows authorized users to disclose sensitive information over the network, potentially exposing confidential documents or metadata beyond their intended access scope. Admins should review SharePoint permissions and apply available patches.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "November 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109455"
-    },
-    {
-      "id": "cve-2026-62903-sqlclient-auth-bypass",
-      "title": "CVE-2026-62903: Microsoft.Data.SqlClient Authentication Bypass",
-      "summary": "A capture-replay authentication bypass vulnerability in Microsoft.Data.SqlClient allows unauthorized attackers to disclose information from SQL Server over the network by replaying captured credentials. Applications using this library should update to patched versions to prevent credential compromise.",
+      "id": "sql-client-auth-bypass-info-disclosure",
+      "title": "CVE-2026-62903: Microsoft.Data.SqlClient Information Disclosure via Authentication Bypass",
+      "summary": "A capture-replay authentication bypass vulnerability in Microsoft.Data.SqlClient allows unauthorized attackers to disclose sensitive information from SQL Server over the network. Applications and services using this library should update immediately to prevent credential compromise and data leakage.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -143,14 +43,104 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-62903"
     },
     {
-      "id": "cve-2026-105588-dhcp-elevation-privilege",
-      "title": "CVE-2026-105588: Windows DHCP Server Elevation of Privilege",
-      "summary": "A missing authentication flaw in Windows DHCP Server allows authorized local attackers to escalate privileges on a system running the DHCP Server role, potentially leading to complete system compromise. Organizations should patch DHCP servers, particularly those exposed to untrusted networks.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
+      "id": "purview-sensitivity-labels-entra-security-groups",
+      "title": "Microsoft Purview: Sensitivity Labels for Microsoft Entra Security Groups",
+      "summary": "Administrators can now apply Microsoft Purview sensitivity labels directly to Entra cloud security groups, automatically inheriting the same label policies used for Microsoft 365 groups and sites. This extends data classification governance to identity objects without requiring separate label configuration, improving compliance consistency.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-105588"
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568217"
+    },
+    {
+      "id": "purview-adaptive-scope-lifecycle-control",
+      "title": "Microsoft Purview: Adaptive Scope Lifecycle State Evaluation Control",
+      "summary": "Microsoft Purview Adaptive Scopes now offer explicit controls for evaluating recipient and site owner lifecycle states in scope membership rules. This enhancement helps admins ensure retention policies and DLP rules remain correctly targeted as users and resources transition through their organizational lifecycle.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568785"
+    },
+    {
+      "id": "purview-dlp-ai-agents-protection",
+      "title": "Microsoft Purview: Endpoint DLP Protection for Local AI Agents",
+      "summary": "Microsoft Purview DLP now expands inline protection to local AI agents, allowing admins to enforce policies on prompts, files, and tool interactions to prevent sensitive data exposure through agent-to-human and agent-to-tool workflows. This addresses security risks as enterprises integrate AI agents with identity and data systems.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=577862"
+    },
+    {
+      "id": "purview-dlp-azure-firewall-integration",
+      "title": "Microsoft Purview: Endpoint DLP Integration with Azure Firewall for Network Layer Protection",
+      "summary": "Microsoft Purview extends DLP enforcement to the network layer through Azure Firewall integration, enabling detection and protection of sensitive data in network traffic from servers, VMs, and automated workloads. This allows admins to block unauthorized cloud application access and API calls while monitoring AI-generated traffic.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=577828"
+    },
+    {
+      "id": "purview-dlp-non-microsoft-apps",
+      "title": "Microsoft Purview: Data Loss Prevention for Non-Microsoft Connected Apps",
+      "summary": "Microsoft Purview DLP and Information Protection auto-labeling capabilities now extend to non-Microsoft SaaS platforms including Google Workspace, Box, Dropbox, Salesforce, ServiceNow, AWS, and Cisco Webex. This broader coverage helps admins enforce consistent data protection policies across hybrid cloud environments.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=568075"
+    },
+    {
+      "id": "purview-irm-alert-classification",
+      "title": "Microsoft Purview: Insider Risk Management Alert Classification",
+      "summary": "Microsoft Purview Insider Risk Management now enables analysts with appropriate permissions to classify alerts as True Positive, Benign (operational), or False Positive with predefined reasons. This replaces the previous dismissal workflow and helps admins better tune policies and generate more accurate risk reporting.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=576710"
+    },
+    {
+      "id": "purview-sensitivity-label-teams-artifacts",
+      "title": "Microsoft Purview: Sensitivity Label Inheritance for Teams Meeting Artifacts",
+      "summary": "Teams meeting recordings, transcripts, and Loop notes can now automatically inherit the sensitivity label from the meeting itself, eliminating manual labeling overhead. This ensures consistent protection across collaboration artifacts and reduces the risk of unprotected meeting-generated content.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=581739"
+    },
+    {
+      "id": "purview-improved-sensitive-information-types",
+      "title": "Microsoft Purview: Improved Sensitive Information Types",
+      "summary": "Microsoft has enhanced its out-of-the-box sensitive information types (SITs) to more accurately and reliably identify sensitive data patterns. Admins benefit from improved precision in DLP rule matching and auto-labeling, reducing false positives and false negatives in content classification.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=579195"
+    },
+    {
+      "id": "purview-recurring-classification-refresh",
+      "title": "Microsoft Purview: Recurring Classifier Refresh",
+      "summary": "Microsoft Purview's on-demand classification capability will evolve to support recurring refresh schedules, allowing administrators to automatically re-evaluate existing content as business context and data sensitivity change over time. This helps maintain current classification accuracy without manual intervention.",
+      "category": "Feature Update",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "low",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=579194"
+    },
+    {
+      "id": "purview-dlp-ftp-sftp-transfers",
+      "title": "Microsoft Purview: Endpoint DLP Monitoring for FTP and SFTP Transfers",
+      "summary": "Microsoft Purview Endpoint DLP now monitors and enforces policies on sensitive data transferred over FTP and SFTP protocols. Admins can configure transfer activities and apply restrictive actions to prevent unauthorized data exfiltration through legacy file transfer protocols.",
+      "category": "Feature Update",
+      "source": "Microsoft Purview What's New",
+      "date": "October 2026",
+      "importance": "medium",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
     }
   ]
 }
