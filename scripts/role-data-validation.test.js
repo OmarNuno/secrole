@@ -61,3 +61,25 @@ test("rejects unknown and self-referencing related roles", () => {
   assert.ok(result.errors.some((issue) => issue.code === "self-related-role"));
   assert.ok(result.errors.some((issue) => issue.code === "unknown-related-role"));
 });
+
+
+test("resource policy roles retain reviewed capability boundaries and risk", () => {
+  const byId = new Map(ENTRA_ROLES.map((entry) => [entry.id, entry]));
+  const admin = byId.get("e137");
+  const evaluator = byId.get("e138");
+  const reader = byId.get("e139");
+  assert.equal(admin.risk, "High");
+  assert.match(admin.permissions, /privileged-read application ID/i);
+  assert.match(admin.permissions, /tenant-wide configuration/i);
+  assert.match(admin.leastPrivilege, /PIM/);
+  assert.equal(evaluator.risk, "Low");
+  assert.match(evaluator.permissions, /Does not grant.*read or write/i);
+  assert.equal(reader.risk, "Low");
+  assert.match(reader.permissions, /No policy-management write access/i);
+  assert.ok(byId.get("e54").relatedRoles.includes("e137"));
+  for (const id of ["e137", "e138", "e139"]) {
+    const role = byId.get(id);
+    assert.ok(role);
+    assert.ok(role.relatedRoles.every((relatedId) => byId.has(relatedId)));
+  }
+});
