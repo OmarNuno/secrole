@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-11-26T15:55:01.104Z",
-  "fetchedAt": "2026-11-26T15:55:01.104Z",
+  "lastUpdated": "2026-11-27T15:43:19.460Z",
+  "fetchedAt": "2026-11-27T15:43:19.460Z",
   "updates": [
     {
-      "id": "ad-certificate-services-security-bypass",
-      "title": "CVE-2026-105590: Active Directory Certificate Services Security Feature Bypass",
-      "summary": "A certificate validation flaw in Windows Active Directory Certificate Services allows authorized attackers to bypass security features over the network. Admins managing PKI infrastructure should apply patches promptly to prevent certificate-based attacks.",
+      "id": "ad-certificate-services-bypass-cve-2026-105590",
+      "title": "CVE-2026-105590 Active Directory Certificate Services Security Feature Bypass",
+      "summary": "A certificate validation flaw in Windows Active Directory Certificate Services allows authorized attackers to bypass security features over the network. Admins should prioritize patching systems running AD CS to prevent potential issuance of unauthorized certificates.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -13,9 +13,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-105590"
     },
     {
-      "id": "ad-domain-services-elevation-privilege",
-      "title": "CVE-2026-118148: Active Directory Domain Services Elevation of Privilege Vulnerability",
-      "summary": "An elevation of privilege vulnerability in Active Directory Domain Services was discovered and updated with corrected CVSS scoring. Identity admins should review and patch affected AD infrastructure to prevent unauthorized privilege escalation.",
+      "id": "ad-elevation-of-privilege-cve-2026-118148",
+      "title": "CVE-2026-118148 Active Directory Domain Services Elevation of Privilege Vulnerability",
+      "summary": "An elevation of privilege vulnerability in Active Directory Domain Services was identified and updated with corrected information. Organizations should review and apply security updates to prevent unauthorized privilege escalation.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -23,9 +23,9 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-118148"
     },
     {
-      "id": "windows-ntlm-spoofing-vulnerability",
-      "title": "CVE-2026-121680: Windows NTLM Spoofing Vulnerability",
-      "summary": "A spoofing vulnerability in Windows NTLM authentication allows attackers to impersonate users on the network; Microsoft Office applications are now included in the affected software list. Admins should prioritize patching systems relying on NTLM for authentication to prevent identity spoofing attacks.",
+      "id": "windows-ntlm-spoofing-cve-2026-121680",
+      "title": "CVE-2026-121680 Windows NTLM Spoofing Vulnerability",
+      "summary": "A spoofing vulnerability in Windows NTLM authentication was updated to include Microsoft Office software in the affected products list. Admins managing identity and authentication systems should ensure Office installations are patched to protect against NTLM-based attacks.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
@@ -33,19 +33,19 @@
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-121680"
     },
     {
-      "id": "windows-kerberos-denial-service",
-      "title": "CVE-2026-96082: Windows Kerberos Denial of Service Vulnerability",
-      "summary": "A denial of service vulnerability was identified in Windows Kerberos authentication. Admins should review and apply available patches to prevent disruption to authentication services.",
+      "id": "windows-kerberos-dos-cve-2026-96082",
+      "title": "CVE-2026-96082 Windows Kerberos Denial of Service Vulnerability",
+      "summary": "A denial of service vulnerability in Windows Kerberos authentication was updated with clarifying information. Organizations should apply available patches to prevent attackers from disrupting authentication services.",
       "category": "Security Advisory",
       "source": "MSRC Security Update Guide",
       "date": "November 2026",
-      "importance": "high",
+      "importance": "medium",
       "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-96082"
     },
     {
       "id": "purview-auto-labeling-sharepoint-default-labels",
       "title": "Microsoft Purview: Auto-labeling SharePoint Library Default Labels",
-      "summary": "Microsoft Purview will automatically apply default sensitivity labels configured on SharePoint document libraries to existing files at rest. This feature closes labeling gaps and enforces consistent, secure-by-default data classification without manual user intervention.",
+      "summary": "Organizations will be able to automatically apply default sensitivity labels configured on SharePoint document libraries to existing files at rest, eliminating manual labeling gaps and enforcing consistent data protection across libraries. This reduces administrative overhead while ensuring compliance-ready default labeling across all SharePoint content.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -53,9 +53,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575283"
     },
     {
-      "id": "purview-dlp-policy-sync-sla-reduction",
-      "title": "Microsoft Purview: DLP Policy Sync Status SLA Reduction to 30 Minutes",
-      "summary": "Admins will see updated Endpoint DLP policy sync status in the Purview UI within 30 minutes instead of the previous 2-hour window. This faster feedback loop helps security teams validate policy deployment more quickly.",
+      "id": "purview-endpoint-dlp-policy-sync-sla-reduction",
+      "title": "Microsoft Purview: Endpoint DLP Policy Sync Status SLA Reduction",
+      "summary": "The Purview UI will display Endpoint DLP policy sync status updates within 30 minutes instead of the previous 2-hour window, providing admins faster visibility into policy deployment across endpoints. This improvement enables quicker identification and resolution of policy synchronization issues.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -65,7 +65,7 @@
     {
       "id": "purview-communication-compliance-alert-improvements",
       "title": "Microsoft Purview: Communication Compliance Alert Customization",
-      "summary": "Communication Compliance now enables admins to customize alert frequency per policy and adjust email alert recipients during policy creation. This granular control helps organizations tailor compliance monitoring to their governance workflows.",
+      "summary": "Admins will gain granular control over Communication Compliance alerting, including per-policy frequency settings and customizable email alert recipients and cadence during policy creation. This flexibility allows organizations to tune compliance notifications to their operational needs and reduce alert fatigue.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -74,8 +74,8 @@
     },
     {
       "id": "purview-auto-labeling-legacy-office-files",
-      "title": "Microsoft Purview: Auto-labeling Support for Legacy Office File Formats",
-      "summary": "Server-side auto-labeling now supports legacy Microsoft Office formats (.doc, .xls, .ppt) in SharePoint and OneDrive, enabling organizations to automatically classify and protect older file formats. This expands coverage for organizations managing mixed file format environments.",
+      "title": "Microsoft Purview: Server-Side Auto-labeling for Legacy Office Formats",
+      "summary": "Microsoft Purview server-side auto-labeling will now support legacy Office formats (.doc, .xls, .ppt), enabling automatic sensitivity label application to these files in SharePoint and OneDrive. This extends labeling coverage to older file formats that may still exist in many organizations.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -83,9 +83,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=574363"
     },
     {
-      "id": "purview-archive-expansion-beyond-1-5tb",
-      "title": "Microsoft Purview: Archive Mailbox Expansion Beyond 1.5 TB",
-      "summary": "Auto-expanding archive mailboxes can now grow beyond the previous 1.5 TB limit, ensuring uninterrupted retention and scalable archive growth for E5-licensed customers. This addresses storage constraints for large-scale retention environments.",
+      "id": "purview-archive-mailbox-expansion-beyond-1-5tb",
+      "title": "Microsoft Purview: Archive Mailbox Expansion Beyond 1.5 TB Limit",
+      "summary": "Auto-expanding archive mailboxes can now grow beyond the previous 1.5 TB limitation, ensuring uninterrupted retention and scalable storage for E5-licensed customers. This removes a previous operational constraint that could cause mailboxes to become inoperative when reaching storage limits.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -93,9 +93,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=573702"
     },
     {
-      "id": "purview-auto-labeling-coverage-report",
-      "title": "Microsoft Purview: Auto-labeling Per-Policy Coverage Report",
-      "summary": "Admins can now view per-policy coverage reports showing which files have been labeled, remain unlabeled, and how enforcement correlates with simulation data. This visibility helps track auto-labeling progress and identify gaps in policy coverage.",
+      "id": "purview-auto-labeling-per-policy-coverage-report",
+      "title": "Microsoft Purview: Auto-labeling Per-Policy Coverage Reports",
+      "summary": "Admins can now view detailed coverage metrics for each auto-labeling policy, showing labeled file volumes, unlabeled files, and discrepancies between simulation and actual enforcement runs. These reports help track policy effectiveness and identify gaps in coverage.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -103,29 +103,29 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=572677"
     },
     {
-      "id": "purview-ediscovery-hold-reports-gov-cloud",
-      "title": "Microsoft Purview: eDiscovery Premium Hold Reports for U.S. Government Clouds",
-      "summary": "Out-of-the-box hold reports for eDiscovery cases are now available in U.S. Government cloud environments, allowing admins to view, sort, filter, and export information about all legal holds associated with cases. This improves litigation readiness and audit capabilities.",
-      "category": "Feature Update",
-      "source": "Microsoft 365 Roadmap",
-      "date": "November 2026",
-      "importance": "low",
-      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=93269"
-    },
-    {
-      "id": "purview-version-trimming-retention-policies",
-      "title": "Microsoft Purview: Version Trimming for Retained SharePoint and OneDrive Files",
-      "summary": "Authorized Purview RBAC admins can enable version cleanup for OneDrive and SharePoint content covered by retention policies, reducing storage bloat while maintaining compliance promises. This policy-scoped setting allows version management even when retention is active.",
+      "id": "purview-ediscovery-premium-hold-reports-gov-cloud",
+      "title": "Microsoft Purview: eDiscovery Premium Hold Reports for Government Clouds",
+      "summary": "Government cloud tenants will gain out-of-the-box reporting for all legal holds in eDiscovery cases, with sorting, filtering, and export capabilities for compliance and audit purposes. This improves visibility into hold status and simplifies compliance documentation.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
       "importance": "medium",
+      "url": "https://www.microsoft.com/microsoft-365/roadmap?id=93269"
+    },
+    {
+      "id": "purview-version-trimming-retention-policies",
+      "title": "Microsoft Purview: Enable Version Trimming Under Retention Policies",
+      "summary": "Authorized Purview RBAC admins will be able to enable file version cleanup in SharePoint and OneDrive even when retention policies are active, reducing storage bloat while maintaining compliance and legal-hold integrity. This policy-scoped setting allows organizations to reclaim storage consumed by retained file versions.",
+      "category": "Permission Change",
+      "source": "Microsoft 365 Roadmap",
+      "date": "November 2026",
+      "importance": "high",
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575284"
     },
     {
-      "id": "purview-dlp-network-security-entra-gsa-integration",
-      "title": "Microsoft Purview: Network DLP Scoping via Entra GSA Internet Access",
-      "summary": "Admins can now scope network data security DLP policies to all websites or exclude specific cloud apps through Entra GSA Internet Access integration, extending protection to unmapped and custom cloud applications. This broadens DLP coverage beyond the Defender Cloud App Catalog.",
+      "id": "purview-dlp-network-security-website-scoping",
+      "title": "Microsoft Purview: DLP Network Security Broad Website Scoping",
+      "summary": "Admins will be able to scope Purview network data security DLP policies integrated with Entra GSA Internet Access to target all websites or all websites except specific cloud apps, extending protection beyond the Defender Cloud App Catalog. This provides broader flexibility in applying DLP controls to web traffic.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -133,9 +133,9 @@
       "url": "https://www.microsoft.com/microsoft-365/roadmap?id=575285"
     },
     {
-      "id": "purview-delete-inactive-user-containers",
-      "title": "Microsoft Purview: Automated Deletion of Inactive User OneDrives and Mailboxes",
-      "summary": "Admins can now automatically delete both content and containers for departed users at scale, ensuring regulatory compliance without manual intervention. This streamlines offboarding workflows for large organizations.",
+      "id": "purview-offboarding-inactive-mailboxes-ondrive",
+      "title": "Microsoft Purview: Automated Deletion of Inactive Departed Employee Mailboxes and OneDrives",
+      "summary": "Admins will be able to delete both content and containers for departed users at scale through Purview, automating compliance-required cleanups without manual intervention. This capability streamlines offboarding processes and ensures tenant data hygiene for regulatory compliance.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -145,7 +145,7 @@
     {
       "id": "purview-graph-api-archive-mailboxes",
       "title": "Microsoft Purview: Microsoft Graph API Support for Archive Mailboxes",
-      "summary": "Archive mailboxes (main and auxiliary) are now accessible through Microsoft Graph APIs, providing a unified view across multiple archive locations ahead of EWS Graph API deprecation in October 2026. This eases API migration for applications managing large archive environments.",
+      "summary": "Archive mailboxes (main and auxiliary) are now accessible via Microsoft Graph API, providing a unified view of archive data before EWS APIs deprecate in October 2026. This enables developers and admins to programmatically access and manage archive data across multiple mailboxes seamlessly.",
       "category": "Feature Update",
       "source": "Microsoft 365 Roadmap",
       "date": "November 2026",
@@ -154,23 +154,13 @@
     },
     {
       "id": "purview-endpoint-dlp-ftp-sftp-monitoring",
-      "title": "Microsoft Purview: Endpoint DLP Monitoring for FTP and SFTP Transfers",
-      "summary": "Endpoint DLP now monitors sensitive data transferred over FTP and SFTP protocols with configurable restrictive actions. This extends data protection capabilities to legacy file transfer methods commonly used in regulated industries.",
+      "title": "Microsoft Purview: Endpoint DLP FTP and SFTP Transfer Monitoring",
+      "summary": "Endpoint DLP now monitors sensitive data transfers over FTP and SFTP protocols and can apply restrictive actions based on organizational policies, closing a gap in legacy file transfer protocol coverage. Admins can configure FTP/SFTP transfer activities in existing Endpoint DLP policies.",
       "category": "Feature Update",
       "source": "Microsoft Purview What's New",
       "date": "October 2026",
       "importance": "medium",
       "url": "https://learn.microsoft.com/en-us/purview/whats-new"
-    },
-    {
-      "id": "azure-devops-server-rce-vulnerability",
-      "title": "CVE-2026-109467: Azure DevOps Server Remote Code Execution Vulnerability",
-      "summary": "An authentication flaw in Azure DevOps Server allows authorized attackers to execute remote code over the network. Identity and DevOps admins should apply patches to prevent unauthorized code execution and lateral movement.",
-      "category": "Security Advisory",
-      "source": "MSRC Security Update Guide",
-      "date": "November 2026",
-      "importance": "high",
-      "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-109467"
     }
   ]
 }
